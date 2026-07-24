@@ -1,0 +1,20 @@
+project:
+  name: explainable-municipal-prioritization-framework
+  country: BR
+  state_code: PA
+  state_ibge_code: 15
+  expected_municipalities: 144
+
+runtime:
+  request_timeout_seconds: 30
+  cache_enabled: true
+  cache_directory: data/cache
+  output_directory: data/processed
+
+sources:
+  ibge_localities:
+    enabled: true
+    base_url: https://servicodados.ibge.gov.br/api/v1/localidades
+  sidra:
+    enabled: true
+    base_url: https://apisidra.ibge.gov.br/values
