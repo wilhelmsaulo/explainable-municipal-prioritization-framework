@@ -22,6 +22,14 @@ class SidraQuery:
     periods: str = "last"
     classifications: dict[int, str] = field(default_factory=dict)
 
+    def __post_init__(self) -> None:
+        if self.table <= 0:
+            raise ValueError("SIDRA table must be a positive integer.")
+        if self.territorial_level <= 0:
+            raise ValueError("SIDRA territorial level must be a positive integer.")
+        if any(identifier <= 0 for identifier in self.classifications):
+            raise ValueError("SIDRA classification identifiers must be positive integers.")
+
     def as_parameters(self) -> dict[str, Any]:
         return {
             "table": self.table,
