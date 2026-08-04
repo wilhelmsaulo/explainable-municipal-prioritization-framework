@@ -3,13 +3,14 @@ from __future__ import annotations
 import json
 from dataclasses import asdict
 from pathlib import Path
+from typing import Iterable
 
 import pandas as pd
 
 from empriority.catalog import load_indicator_catalog
 from empriority.config import Settings
 from empriority.connectors.sidra import SidraQuery
-from empriority.police import load_police_file
+from empriority.police import load_police_file, load_police_files
 from empriority.source_registry import build_data_source_manager
 from empriority.storage import ArtifactStore
 from empriority.validation import MunicipalityValidationResult, validate_municipalities
@@ -95,13 +96,19 @@ def collect_catalog_indicator(
 
 def import_police_data(
     settings: Settings,
-    source_path: str | Path,
+    source_paths: str | Path | Iterable[str | Path],
 ) -> tuple[pd.DataFrame, Path, Path]:
-    """Import a police CSV/XLSX file and preserve an auditable normalized snapshot."""
-    frame = load_police_file(source_path)
+    """Import one or multiple annual police files and preserve an auditable snapshot."""
+    if isinstance(source_paths, (str, Path)):
+        paths = [source_paths]
+        frame = load_police_file(source_paths)
+    else:
+        paths = list(source_paths)
+        frame = load_police_files(paths)
+
     metadata = {
         "source": "public police dataset",
-        "source_path": str(Path(source_path)),
+        "source_paths": [str(Path(path)) for path in paths],
         "record_count": len(frame),
         "years": sorted(frame["year"].unique().tolist()),
     }
@@ -116,7 +123,7 @@ def import_police_data(
 def collect_project(
     settings: Settings,
     catalog_path: str | Path = "config/indicators.yml",
-    police_path: str | Path | None = None,
+    police_path: str | Path | Iterable[str | Path] | None = None,
     *,
     refresh: bool = False,
 ) -> dict[str, Path]:
