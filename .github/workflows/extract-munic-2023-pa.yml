@@ -1,0 +1,64 @@
+name: extract-munic-2023-pa
+
+on:
+  push:
+    paths:
+      - ".github/workflows/extract-munic-2023-pa.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  extract:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+      - name: Install package
+        run: |
+          python -m pip install --upgrade pip
+          pip install -e ".[dev]"
+      - name: Download MUNIC 2023
+        run: empriority munic --year 2023
+      - name: Extract Pará sheets and dictionary
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import pandas as pd
+
+          source = Path('data/raw/munic/Base_MUNIC_2023.xlsx')
+          out = Path('data/catalog/munic_2023_pa')
+          out.mkdir(parents=True, exist_ok=True)
+
+          dictionary = pd.read_excel(source, sheet_name='Dicionário', dtype=str)
+          dictionary.to_csv(out / 'dictionary.csv', index=False, encoding='utf-8')
+
+          sheets = ['Política para Mulheres', 'Segurança Pública', 'Direitos Humanos', 'Assistência Social']
+          for sheet in sheets:
+              frame = pd.read_excel(source, sheet_name=sheet, dtype=str)
+              normalized = {str(c).strip().lower().replace(' ', '').replace('_', ''): c for c in frame.columns}
+              uf_col = None
+              for candidate in ('coduf', 'codigouf'):
+                  if candidate in normalized:
+                      uf_col = normalized[candidate]
+                      break
+              if uf_col is None:
+                  raise RuntimeError(f'UF code column not found in {sheet}: {list(frame.columns)}')
+              pa = frame[frame[uf_col].astype(str).str.replace('.0', '', regex=False).eq('15')].copy()
+              safe = (sheet.lower().replace(' ', '_').replace('í', 'i').replace('ú', 'u').replace('ç', 'c').replace('ã', 'a'))
+              pa.to_csv(out / f'{safe}.csv', index=False, encoding='utf-8')
+              print(sheet, len(pa), len(pa.columns))
+          PY
+      - name: Commit extracted MUNIC files
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -f data/catalog/munic_2023_pa
+          git commit -m "Store MUNIC 2023 Pará extracts" || exit 0
+          git push origin main
