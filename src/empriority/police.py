@@ -34,6 +34,10 @@ ALIASES = {
     "cod_ibge": "municipality_code",
 }
 
+MUNICIPALITY_ALIASES = {
+    "ALTAMIRA/CASTELO DOS SONHOS": "ALTAMIRA",
+}
+
 OUTPUT_COLUMNS = [
     "municipality",
     "year",
@@ -70,6 +74,10 @@ def _normalize_text(series: pd.Series) -> pd.Series:
     )
 
 
+def _normalize_municipality(series: pd.Series) -> pd.Series:
+    return _normalize_text(series).replace(MUNICIPALITY_ALIASES)
+
+
 def _read_table(source: Path) -> pd.DataFrame:
     suffix = source.suffix.lower()
     if suffix == ".csv":
@@ -94,7 +102,7 @@ def _aggregate_raw_microdata(frame: pd.DataFrame) -> pd.DataFrame:
         raise ValueError(f"Raw police data missing fields: {', '.join(sorted(missing))}")
 
     local = frame.copy()
-    local["municipality"] = _normalize_text(local["municipality"])
+    local["municipality"] = _normalize_municipality(local["municipality"])
     local["crime"] = _normalize_text(local["crime"])
     local["crime_specification"] = _normalize_text(local["crime_specification"])
     local["victim_sex"] = _normalize_text(local["victim_sex"])
@@ -148,7 +156,7 @@ def load_police_file(path: str | Path) -> pd.DataFrame:
 
     frame["year"] = pd.to_numeric(frame["year"], errors="raise").astype("int64")
     frame["records"] = pd.to_numeric(frame["records"], errors="raise")
-    frame["municipality"] = frame["municipality"].astype(str).str.strip()
+    frame["municipality"] = _normalize_municipality(frame["municipality"])
     frame["occurrence_type"] = frame["occurrence_type"].astype(str).str.strip()
     if "municipality_code" in frame:
         frame["municipality_code"] = (
