@@ -105,7 +105,11 @@ def import_police_data(
         "record_count": len(frame),
         "years": sorted(frame["year"].unique().tolist()),
     }
-    data_path, metadata_path, _ = _store(settings).write_output("police_occurrences", frame, metadata)
+    data_path, metadata_path, _ = _store(settings).write_output(
+        "police_occurrences",
+        frame,
+        metadata,
+    )
     return frame, data_path, metadata_path
 
 
