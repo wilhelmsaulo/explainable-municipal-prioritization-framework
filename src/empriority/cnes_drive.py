@@ -4,12 +4,38 @@ import json
 from pathlib import Path
 
 import pandas as pd
+from pandas.errors import EmptyDataError
 
 from empriority.cnes import (
     build_cnes_municipal_indicators,
     extract_para_establishments,
     fetch_cnes_unit_types,
 )
+
+
+def _load_or_rebuild_unit_types(types_path: Path) -> pd.DataFrame:
+    """Load the unit-type snapshot, rebuilding it when it is empty or invalid."""
+    if types_path.exists() and types_path.stat().st_size > 0:
+        try:
+            frame = pd.read_csv(types_path, low_memory=False)
+            if not frame.empty and len(frame.columns) > 0:
+                return frame
+        except (EmptyDataError, pd.errors.ParserError):
+            pass
+
+    try:
+        frame = fetch_cnes_unit_types()
+    except Exception as exc:  # noqa: BLE001
+        # The monthly establishment table often already contains the unit-type
+        # description. In that case an empty dictionary is safe and the
+        # aggregation proceeds without another network dependency.
+        print(f"CNES unit-type dictionary unavailable; continuing without it: {exc}", flush=True)
+        frame = pd.DataFrame(
+            columns=["codigo_tipo_unidade", "descricao_tipo_unidade"]
+        )
+
+    frame.to_csv(types_path, index=False, encoding="utf-8")
+    return frame
 
 
 def collect_cnes_pa_from_archive(
@@ -36,11 +62,7 @@ def collect_cnes_pa_from_archive(
         establishments = extract_para_establishments(archive, raw_path)
         snapshot_reused = False
 
-    if types_path.exists() and types_path.stat().st_size > 0:
-        unit_types = pd.read_csv(types_path, low_memory=False)
-    else:
-        unit_types = fetch_cnes_unit_types()
-        unit_types.to_csv(types_path, index=False, encoding="utf-8")
+    unit_types = _load_or_rebuild_unit_types(types_path)
 
     indicators = build_cnes_municipal_indicators(establishments, unit_types)
     indicators.to_csv(indicators_path, index=False, encoding="utf-8")
