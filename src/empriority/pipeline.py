@@ -41,6 +41,41 @@ def build_municipality_reference(
     return frame, validation, output_path
 
 
+def collect_munic(
+    settings: Settings,
+    year: int = 2023,
+) -> dict[str, Path]:
+    """Download MUNIC, preserve the workbook and export a worksheet inventory."""
+    manager = build_data_source_manager(settings)
+    workbook = manager.run("ibge.munic.workbook", year)
+    inventory = manager.run("ibge.munic.inventory", year)
+
+    raw_directory = settings.runtime.output_directory.parent / "raw" / "munic"
+    raw_directory.mkdir(parents=True, exist_ok=True)
+    workbook_path = raw_directory / f"Base_MUNIC_{year}.xlsx"
+    workbook_path.write_bytes(workbook)
+
+    metadata = {
+        "source": "IBGE MUNIC",
+        "year": year,
+        "official_url": (
+            f"https://ftp.ibge.gov.br/Perfil_Municipios/{year}/"
+            f"Base_de_Dados/Base_MUNIC_{year}.xlsx"
+        ),
+        "worksheet_count": len(inventory),
+    }
+    inventory_path, metadata_path, _ = _store(settings).write_output(
+        f"munic_{year}_inventory",
+        inventory,
+        metadata,
+    )
+    return {
+        "munic_workbook": workbook_path,
+        "munic_inventory": inventory_path,
+        "munic_metadata": metadata_path,
+    }
+
+
 def collect_sidra_table(
     settings: Settings,
     query: SidraQuery,
