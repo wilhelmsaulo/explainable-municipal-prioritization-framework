@@ -1,0 +1,91 @@
+name: inspect-cnes-professionals
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - ".github/workflows/inspect-cnes-professionals.yml"
+
+permissions:
+  contents: write
+
+jobs:
+  inspect:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+      - name: Install tools
+        run: |
+          python -m pip install --upgrade pip
+          pip install pandas gdown
+      - name: Download CNES archive
+        run: |
+          mkdir -p data/processed/cnes_bulk
+          gdown "1QrSnlZt-5tF_7uVvn1YSSsZ38NWrMWBb" \
+            -O data/processed/cnes_bulk/BASE_DE_DADOS_CNES_202606.ZIP
+      - name: Inspect professional tables
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import io
+          import zipfile
+          import pandas as pd
+
+          archive_path = Path("data/processed/cnes_bulk/BASE_DE_DADOS_CNES_202606.ZIP")
+          output = Path("data/processed/cnes_professional_tables_inventory.txt")
+          keywords = ("prof", "cbo", "ocup", "vinc", "equipe", "carga")
+          lines = []
+
+          with zipfile.ZipFile(archive_path) as archive:
+              members = [m for m in archive.namelist() if m.lower().endswith((".csv", ".txt"))]
+              candidates = [m for m in members if any(k in Path(m).name.lower() for k in keywords)]
+              lines.append(f"archive={archive_path.name}")
+              lines.append(f"candidate_count={len(candidates)}")
+              lines.append("")
+
+              for member in sorted(candidates):
+                  lines.append(f"## {member}")
+                  info = archive.getinfo(member)
+                  lines.append(f"compressed_size={info.compress_size}")
+                  lines.append(f"uncompressed_size={info.file_size}")
+                  parsed = False
+                  errors = []
+                  for encoding in ("latin1", "utf-8", "utf-8-sig"):
+                      for sep in (";", ","):
+                          try:
+                              with archive.open(member) as handle:
+                                  sample = pd.read_csv(handle, encoding=encoding, sep=sep, nrows=5, low_memory=False)
+                              if len(sample.columns) > 1:
+                                  lines.append(f"encoding={encoding}")
+                                  lines.append(f"separator={repr(sep)}")
+                                  lines.append("columns=" + " | ".join(map(str, sample.columns)))
+                                  lines.append("sample_rows=" + str(len(sample)))
+                                  parsed = True
+                                  break
+                          except Exception as exc:
+                              errors.append(f"{encoding}/{sep}: {exc}")
+                      if parsed:
+                          break
+                  if not parsed:
+                      lines.append("parse_error=" + " || ".join(errors[-3:]))
+                  lines.append("")
+
+          output.parent.mkdir(parents=True, exist_ok=True)
+          output.write_text("\n".join(lines), encoding="utf-8")
+          print(output.read_text(encoding="utf-8")[:12000])
+          PY
+      - name: Commit inventory
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -f data/processed/cnes_professional_tables_inventory.txt
+          git diff --cached --quiet || git commit -m "Inventory CNES professional tables"
+          git pull --rebase origin main
+          git push
