@@ -30,6 +30,7 @@ class SourceConfig(BaseModel):
 class SourcesConfig(BaseModel):
     ibge_localities: SourceConfig
     sidra: SourceConfig
+    munic: SourceConfig
 
 
 class Settings(BaseModel):
