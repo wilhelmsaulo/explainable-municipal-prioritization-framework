@@ -64,5 +64,9 @@ def load_police_file(path: str | Path) -> pd.DataFrame:
     frame["municipality"] = frame["municipality"].astype(str).str.strip()
     frame["occurrence_type"] = frame["occurrence_type"].astype(str).str.strip()
     if "municipality_code" in frame:
-        frame["municipality_code"] = frame["municipality_code"].astype(str).str.replace(r"\.0$", "", regex=True)
+        frame["municipality_code"] = (
+            frame["municipality_code"]
+            .astype(str)
+            .str.replace(r"\.0$", "", regex=True)
+        )
     return frame
