@@ -1,0 +1,11 @@
+sources:
+  cnes:
+    provider: DATASUS
+    dataset: Cadastro Nacional de Estabelecimentos de Saúde
+    transport: https_zip
+    url_template: "https://ftp.datasus.gov.br/cnes/BASE_DE_DADOS_CNES_{competence}.ZIP"
+    competence_lag_months: 2
+    fallback_months: 8
+    state_code: "15"
+    snapshot: "data/processed/cnes_establishments_pa.csv"
+    notes: "Monthly complete CNES database. The connector selects the newest available competence and filters Pará locally."
