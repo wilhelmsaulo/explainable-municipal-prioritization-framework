@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import json
 from dataclasses import asdict
 from pathlib import Path
 
@@ -68,7 +69,9 @@ def collect_sidra_table(
 
     data_path, metadata_path, snapshot_path = store.write_output(output_name, frame, metadata)
     metadata["snapshot_directory"] = str(snapshot_path)
-    metadata_path.write_text(pd.io.json.dumps(metadata, indent=2), encoding="utf-8")
+    metadata_path.write_text(
+        json.dumps(metadata, ensure_ascii=False, indent=2, default=str), encoding="utf-8"
+    )
     return frame, data_path, metadata_path
 
 
