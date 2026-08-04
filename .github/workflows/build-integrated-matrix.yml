@@ -105,10 +105,10 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           if [ -f data/processed/integrated_municipal_matrix.csv ]; then
-            git add data/processed/integrated_municipal_matrix.csv
+            git add -f data/processed/integrated_municipal_matrix.csv
           fi
           if [ -f data/processed/integration_error.txt ]; then
-            git add data/processed/integration_error.txt
+            git add -f data/processed/integration_error.txt
           fi
           git diff --cached --quiet || git commit -m "Store integrated matrix result"
           git push
