@@ -1,0 +1,13 @@
+{
+  "source": "DATASUS monthly CNES complete database",
+  "archive_name": "BASE_DE_DADOS_CNES_202606.ZIP",
+  "archive_size_bytes": 729856031,
+  "establishments": 12463,
+  "municipal_rows": 144,
+  "snapshot_reused": false,
+  "limitations": [
+    "Establishment indicators are derived from the monthly CNES database.",
+    "Professional indicators require the CNES professional table.",
+    "Obstetric-center count remains unavailable pending the installations table."
+  ]
+}
