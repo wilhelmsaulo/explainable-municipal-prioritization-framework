@@ -42,14 +42,20 @@ def fetch_cnes_establishments(
     state_code: int = 15,
     *,
     status: int = 1,
-    page_size: int = 20,
-    timeout: float = 60.0,
+    page_size: int = 500,
+    timeout: float = 45.0,
+    max_pages: int = 200,
 ) -> pd.DataFrame:
     """Collect active CNES establishments from the official DEMAS open-data API."""
+    if page_size < 1:
+        raise ValueError("page_size must be positive.")
+
     rows: list[dict[str, Any]] = []
     offset = 0
+    previous_signature: tuple[str, ...] | None = None
+
     with httpx.Client(timeout=timeout, follow_redirects=True) as client:
-        while True:
+        for page_number in range(1, max_pages + 1):
             response = client.get(
                 f"{BASE_URL}/cnes/estabelecimentos",
                 params={
@@ -62,16 +68,41 @@ def fetch_cnes_establishments(
             )
             response.raise_for_status()
             page = _records(response.json())
+            print(
+                f"CNES page={page_number} offset={offset} "
+                f"records={len(page)} total={len(rows) + len(page)}",
+                flush=True,
+            )
             if not page:
                 break
+
+            signature = tuple(
+                str(item.get("codigo_cnes") or item.get("cnes") or item) for item in page[:5]
+            )
+            if signature == previous_signature:
+                raise RuntimeError(
+                    f"CNES API repeated the same page at offset {offset}; pagination stopped."
+                )
+            previous_signature = signature
+
             rows.extend(page)
             if len(page) < page_size:
                 break
-            offset += 1
-    return pd.json_normalize(rows)
+
+            # The API offset is a record offset, not a page number.
+            offset += len(page)
+        else:
+            raise RuntimeError(
+                f"CNES collection exceeded the safety limit of {max_pages} pages."
+            )
+
+    frame = pd.json_normalize(rows)
+    if frame.empty:
+        raise ValueError("CNES returned no establishments for the requested filters.")
+    return frame.drop_duplicates().reset_index(drop=True)
 
 
-def fetch_cnes_unit_types(timeout: float = 60.0) -> pd.DataFrame:
+def fetch_cnes_unit_types(timeout: float = 45.0) -> pd.DataFrame:
     with httpx.Client(timeout=timeout, follow_redirects=True) as client:
         response = client.get(
             f"{BASE_URL}/cnes/tipounidades",
@@ -118,16 +149,12 @@ def build_cnes_municipal_indicators(
     local["municipality_code"] = (
         local[municipal_code].astype(str).str.replace(r"\.0$", "", regex=True).str.zfill(6)
     )
-    # CNES commonly uses the six-digit municipality code; append the IBGE verifier digit later
-    # by joining on the first six digits of the seven-digit IBGE code.
     local["_type"] = local[type_name].map(_norm) if type_name else ""
     local["_is_ubs"] = local["_type"].str.contains(
         "posto de saude|centro de saude|unidade basica|saude da familia", regex=True
     )
     local["_is_hospital"] = local["_type"].str.contains("hospital", regex=False)
-    local["_is_caps"] = local["_type"].str.contains(
-        "atencao psicossocial|caps", regex=True
-    )
+    local["_is_caps"] = local["_type"].str.contains("atencao psicossocial|caps", regex=True)
     local["_is_emergency"] = local["_type"].str.contains(
         "pronto atendimento|pronto socorro|upa", regex=True
     )
@@ -167,17 +194,22 @@ def collect_cnes_pa(output_directory: str | Path = "data/processed") -> dict[str
     output = Path(output_directory)
     output.mkdir(parents=True, exist_ok=True)
 
-    establishments = fetch_cnes_establishments(15)
-    unit_types = fetch_cnes_unit_types()
-    indicators = build_cnes_municipal_indicators(establishments, unit_types)
-
     raw_path = output / "cnes_establishments_pa.csv"
     types_path = output / "cnes_unit_types.csv"
     indicators_path = output / "cnes_municipal_indicators_pa.csv"
     metadata_path = output / "cnes_municipal_indicators_pa.metadata.json"
 
-    establishments.to_csv(raw_path, index=False, encoding="utf-8")
-    unit_types.to_csv(types_path, index=False, encoding="utf-8")
+    if raw_path.exists() and types_path.exists():
+        print("Using existing CNES snapshot.", flush=True)
+        establishments = pd.read_csv(raw_path)
+        unit_types = pd.read_csv(types_path)
+    else:
+        establishments = fetch_cnes_establishments(15)
+        unit_types = fetch_cnes_unit_types()
+        establishments.to_csv(raw_path, index=False, encoding="utf-8")
+        unit_types.to_csv(types_path, index=False, encoding="utf-8")
+
+    indicators = build_cnes_municipal_indicators(establishments, unit_types)
     indicators.to_csv(indicators_path, index=False, encoding="utf-8")
     metadata_path.write_text(
         json.dumps(
@@ -188,6 +220,7 @@ def collect_cnes_pa(output_directory: str | Path = "data/processed") -> dict[str
                 "status": 1,
                 "establishments": int(len(establishments)),
                 "municipal_rows": int(len(indicators)),
+                "snapshot_reused": raw_path.exists() and types_path.exists(),
                 "limitations": [
                     "This endpoint covers establishments and unit types.",
                     "Professional occupation indicators require a separate CNES human-resources source.",
