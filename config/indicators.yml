@@ -1,0 +1,11 @@
+indicators:
+  municipal_population_area_density_2022:
+    source: sidra
+    description: Population, territorial area and population density for Pará municipalities.
+    dimension: base_municipal
+    output: municipal_population_area_density_2022
+    table: 4714
+    territorial_level: 6
+    territories: all/in/n3/15
+    variables: all
+    periods: "2022"
