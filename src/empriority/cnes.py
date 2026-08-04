@@ -2,27 +2,17 @@ from __future__ import annotations
 
 import json
 import unicodedata
-from concurrent.futures import ThreadPoolExecutor, as_completed
+import zipfile
 from pathlib import Path
-from typing import Any, Iterable
+from typing import Any
 
 import httpx
 import pandas as pd
 
-BASE_URL = "https://apidadosabertos.saude.gov.br"
-
-
-def _records(payload: Any) -> list[dict[str, Any]]:
-    if isinstance(payload, list):
-        return [item for item in payload if isinstance(item, dict)]
-    if isinstance(payload, dict):
-        for key in ("data", "items", "results", "resultados", "estabelecimentos"):
-            value = payload.get(key)
-            if isinstance(value, list):
-                return [item for item in value if isinstance(item, dict)]
-        if payload and all(not isinstance(value, (dict, list)) for value in payload.values()):
-            return [payload]
-    return []
+CKAN_PACKAGE_URL = (
+    "https://ckan-dadosabertos.saude.gov.br/api/3/action/package_show"
+)
+DATASET_ID = "cnes-cadastro-nacional-de-estabelecimentos-de-saude"
 
 
 def _norm(value: object) -> str:
@@ -39,106 +29,193 @@ def _column(frame: pd.DataFrame, *names: str) -> str | None:
     return None
 
 
-def _fetch_one_municipality(
-    municipality_code: str,
-    *,
-    status: int = 1,
-    page_size: int = 20,
-    timeout: float = 45.0,
-    max_pages: int = 100,
-) -> list[dict[str, Any]]:
-    rows: list[dict[str, Any]] = []
-    previous_signature: tuple[str, ...] | None = None
-
+def discover_cnes_csv_resource(timeout: float = 60.0) -> dict[str, Any]:
+    """Discover the newest official CNES establishments CSV in OpenDataSUS."""
     with httpx.Client(timeout=timeout, follow_redirects=True) as client:
-        for page_number in range(max_pages):
-            response = client.get(
-                f"{BASE_URL}/cnes/estabelecimentos",
-                params={
-                    "codigo_municipio": int(municipality_code),
-                    "status": status,
-                    "limit": page_size,
-                    "offset": page_number,
-                },
-                headers={"Accept": "application/json"},
-            )
-            response.raise_for_status()
-            page = _records(response.json())
-            if not page:
-                break
+        response = client.get(CKAN_PACKAGE_URL, params={"id": DATASET_ID})
+        response.raise_for_status()
+        payload = response.json()
 
-            signature = tuple(
-                str(item.get("codigo_cnes") or item.get("cnes") or item) for item in page[:5]
-            )
-            if signature == previous_signature:
-                raise RuntimeError(
-                    f"CNES repeated page {page_number} for municipality {municipality_code}."
-                )
-            previous_signature = signature
-            rows.extend(page)
+    if not payload.get("success"):
+        raise RuntimeError("OpenDataSUS CKAN did not return a successful package response.")
 
-            if len(page) < page_size:
-                break
-        else:
-            raise RuntimeError(
-                f"CNES exceeded {max_pages} pages for municipality {municipality_code}."
-            )
+    resources = payload.get("result", {}).get("resources", [])
+    candidates = []
+    for resource in resources:
+        fmt = str(resource.get("format", "")).upper()
+        name = _norm(resource.get("name", ""))
+        url = str(resource.get("url", ""))
+        if fmt == "CSV" and "estabelecimento" in name and url:
+            candidates.append(resource)
 
-    return rows
+    if not candidates:
+        raise RuntimeError("No official CNES establishments CSV resource was found in OpenDataSUS.")
+
+    candidates.sort(
+        key=lambda item: str(
+            item.get("last_modified")
+            or item.get("metadata_modified")
+            or item.get("created")
+            or ""
+        ),
+        reverse=True,
+    )
+    selected = candidates[0]
+    print(
+        "CNES resource selected: "
+        f"{selected.get('name')} | {selected.get('last_modified') or selected.get('created')}",
+        flush=True,
+    )
+    return selected
 
 
-def fetch_cnes_establishments(
-    municipality_codes: Iterable[str],
+def download_cnes_resource(
+    destination: str | Path,
     *,
-    status: int = 1,
-    page_size: int = 20,
-    timeout: float = 45.0,
-    max_workers: int = 8,
+    timeout: float = 300.0,
+) -> tuple[Path, dict[str, Any]]:
+    """Download the current official CNES bulk CSV exactly once."""
+    resource = discover_cnes_csv_resource()
+    destination_path = Path(destination)
+    destination_path.parent.mkdir(parents=True, exist_ok=True)
+
+    with httpx.stream(
+        "GET",
+        resource["url"],
+        timeout=timeout,
+        follow_redirects=True,
+    ) as response:
+        response.raise_for_status()
+        total = int(response.headers.get("content-length", "0") or 0)
+        downloaded = 0
+        with destination_path.open("wb") as file_handle:
+            for chunk in response.iter_bytes(chunk_size=1024 * 1024):
+                file_handle.write(chunk)
+                downloaded += len(chunk)
+                if total:
+                    print(
+                        f"CNES download: {downloaded / 1_048_576:.1f} MB / "
+                        f"{total / 1_048_576:.1f} MB",
+                        flush=True,
+                    )
+
+    if destination_path.stat().st_size == 0:
+        raise RuntimeError("Downloaded CNES resource is empty.")
+    return destination_path, resource
+
+
+def _read_csv_robust(path: Path, **kwargs: Any) -> pd.DataFrame | Any:
+    errors: list[str] = []
+    for encoding in ("utf-8", "utf-8-sig", "latin1"):
+        for separator in (";", ","):
+            try:
+                return pd.read_csv(
+                    path,
+                    encoding=encoding,
+                    sep=separator,
+                    low_memory=False,
+                    **kwargs,
+                )
+            except Exception as exc:  # noqa: BLE001
+                errors.append(f"{encoding}/{separator}: {exc}")
+    raise RuntimeError("Unable to read CNES CSV. " + " | ".join(errors[-4:]))
+
+
+def extract_para_establishments(
+    downloaded_path: str | Path,
+    output_path: str | Path,
 ) -> pd.DataFrame:
-    """Collect active CNES establishments in parallel for selected municipalities."""
-    if not 1 <= page_size <= 20:
-        raise ValueError("CNES page_size must be between 1 and 20.")
+    """Filter the national bulk resource to Pará and create the reusable state snapshot."""
+    source = Path(downloaded_path)
+    target = Path(output_path)
 
-    codes = sorted({str(code).replace(".0", "").zfill(6)[:6] for code in municipality_codes})
-    rows: list[dict[str, Any]] = []
+    if zipfile.is_zipfile(source):
+        extract_directory = source.parent / "cnes_bulk_extracted"
+        extract_directory.mkdir(parents=True, exist_ok=True)
+        with zipfile.ZipFile(source) as archive:
+            csv_members = [name for name in archive.namelist() if name.lower().endswith(".csv")]
+            if not csv_members:
+                raise RuntimeError("CNES ZIP contains no CSV file.")
+            archive.extract(csv_members[0], extract_directory)
+            source = extract_directory / csv_members[0]
 
-    with ThreadPoolExecutor(max_workers=max_workers) as executor:
-        futures = {
-            executor.submit(
-                _fetch_one_municipality,
-                code,
-                status=status,
-                page_size=page_size,
-                timeout=timeout,
-            ): code
-            for code in codes
-        }
-        completed = 0
-        for future in as_completed(futures):
-            code = futures[future]
-            municipality_rows = future.result()
-            rows.extend(municipality_rows)
-            completed += 1
-            print(
-                f"CNES municipality={code} records={len(municipality_rows)} "
-                f"completed={completed}/{len(codes)} total={len(rows)}",
-                flush=True,
-            )
+    sample = _read_csv_robust(source, nrows=10)
+    uf_column = _column(sample, "UF", "sigla_uf", "estado", "codigo_uf")
+    municipality_code = _column(
+        sample,
+        "IBGE",
+        "codigo_municipio",
+        "codigo_ibge",
+        "municipio_codigo",
+    )
+    if uf_column is None and municipality_code is None:
+        raise RuntimeError(f"CNES bulk file has no UF or municipality code column: {list(sample.columns)}")
 
-    frame = pd.json_normalize(rows)
-    if frame.empty:
-        raise ValueError("CNES returned no establishments for the requested municipalities.")
-    return frame.drop_duplicates().reset_index(drop=True)
+    chunks: list[pd.DataFrame] = []
+    for encoding in ("utf-8", "utf-8-sig", "latin1"):
+        for separator in (";", ","):
+            try:
+                iterator = pd.read_csv(
+                    source,
+                    encoding=encoding,
+                    sep=separator,
+                    chunksize=100_000,
+                    low_memory=False,
+                )
+                chunks.clear()
+                total_seen = 0
+                for chunk in iterator:
+                    total_seen += len(chunk)
+                    if uf_column in chunk.columns:
+                        uf_values = chunk[uf_column].astype(str).str.strip().str.upper()
+                        mask = uf_values.isin(["PA", "15", "15.0", "PARA", "PARÁ"])
+                    else:
+                        codes = (
+                            chunk[municipality_code]
+                            .astype(str)
+                            .str.replace(r"\.0$", "", regex=True)
+                            .str.zfill(6)
+                        )
+                        mask = codes.str.startswith("15")
+                    if mask.any():
+                        chunks.append(chunk.loc[mask].copy())
+                    print(
+                        f"CNES bulk filter: scanned={total_seen} pa={sum(len(item) for item in chunks)}",
+                        flush=True,
+                    )
+                if chunks:
+                    frame = pd.concat(chunks, ignore_index=True).drop_duplicates()
+                    target.parent.mkdir(parents=True, exist_ok=True)
+                    frame.to_csv(target, index=False, encoding="utf-8")
+                    return frame
+            except Exception:  # noqa: BLE001
+                continue
+
+    raise RuntimeError("CNES bulk file was read, but no Pará establishments were identified.")
 
 
-def fetch_cnes_unit_types(timeout: float = 45.0) -> pd.DataFrame:
+def fetch_cnes_unit_types(timeout: float = 60.0) -> pd.DataFrame:
+    """Get the official CNES unit-type dictionary from the DEMAS API."""
     with httpx.Client(timeout=timeout, follow_redirects=True) as client:
         response = client.get(
-            f"{BASE_URL}/cnes/tipounidades",
+            "https://apidadosabertos.saude.gov.br/cnes/tipounidades",
             headers={"Accept": "application/json"},
         )
         response.raise_for_status()
-        return pd.json_normalize(_records(response.json()))
+        payload = response.json()
+
+    if isinstance(payload, list):
+        records = payload
+    else:
+        records = next(
+            (
+                payload[key]
+                for key in ("data", "items", "results", "resultados")
+                if isinstance(payload.get(key), list)
+            ),
+            [],
+        )
+    return pd.json_normalize(records)
 
 
 def build_cnes_municipal_indicators(
@@ -150,11 +227,17 @@ def build_cnes_municipal_indicators(
         raise ValueError("CNES returned no establishments.")
 
     local = establishments.copy()
-    municipal_code = _column(local, "codigo_municipio", "codigo_ibge", "municipio_codigo")
-    municipal_name = _column(local, "nome_municipio", "municipio", "municipio_nome")
-    type_code = _column(local, "codigo_tipo_unidade", "tipo_unidade_codigo")
-    type_name = _column(local, "descricao_tipo_unidade", "tipo_unidade", "tipo_unidade_descricao")
-    cnes_code = _column(local, "codigo_cnes", "cnes")
+    municipal_code = _column(local, "IBGE", "codigo_municipio", "codigo_ibge", "municipio_codigo")
+    municipal_name = _column(local, "MUNICIPIO", "nome_municipio", "municipio_nome")
+    type_code = _column(local, "codigo_tipo_unidade", "tipo_unidade_codigo", "TIPO UNIDADE")
+    type_name = _column(
+        local,
+        "descricao_tipo_unidade",
+        "tipo_unidade",
+        "tipo_unidade_descricao",
+        "DESCRICAO TIPO UNIDADE",
+    )
+    cnes_code = _column(local, "CNES", "codigo_cnes")
     obstetric = _column(
         local,
         "estabelecimento_possui_centro_obstetrico",
@@ -227,40 +310,42 @@ def collect_cnes_pa(output_directory: str | Path = "data/processed") -> dict[str
     types_path = output / "cnes_unit_types.csv"
     indicators_path = output / "cnes_municipal_indicators_pa.csv"
     metadata_path = output / "cnes_municipal_indicators_pa.metadata.json"
-    matrix_path = output / "integrated_municipal_matrix.csv"
+    bulk_path = output / "cnes_establishments_national_download"
 
-    reused_snapshot = raw_path.exists() and types_path.exists()
-    if reused_snapshot:
-        print("Using existing CNES snapshot.", flush=True)
-        establishments = pd.read_csv(raw_path)
-        unit_types = pd.read_csv(types_path)
+    resource: dict[str, Any] | None = None
+    snapshot_reused = raw_path.exists() and raw_path.stat().st_size > 0
+    if snapshot_reused:
+        print("Using existing Pará CNES snapshot.", flush=True)
+        establishments = pd.read_csv(raw_path, low_memory=False)
     else:
-        if not matrix_path.exists():
-            raise FileNotFoundError(
-                "Integrated matrix is required to obtain the 144 municipality codes."
-            )
-        matrix = pd.read_csv(matrix_path, dtype={"municipality_code": str})
-        municipality_codes = matrix["municipality_code"].astype(str).str[:6].tolist()
-        establishments = fetch_cnes_establishments(municipality_codes)
+        downloaded, resource = download_cnes_resource(bulk_path)
+        establishments = extract_para_establishments(downloaded, raw_path)
+
+    if types_path.exists() and types_path.stat().st_size > 0:
+        unit_types = pd.read_csv(types_path, low_memory=False)
+    else:
         unit_types = fetch_cnes_unit_types()
-        establishments.to_csv(raw_path, index=False, encoding="utf-8")
         unit_types.to_csv(types_path, index=False, encoding="utf-8")
 
     indicators = build_cnes_municipal_indicators(establishments, unit_types)
     indicators.to_csv(indicators_path, index=False, encoding="utf-8")
+
     metadata_path.write_text(
         json.dumps(
             {
-                "source": "DEMAS Open Data API / CNES",
-                "official_endpoint": f"{BASE_URL}/cnes/estabelecimentos",
+                "source": "OpenDataSUS / CNES bulk CSV",
+                "dataset": DATASET_ID,
+                "resource_url": resource.get("url") if resource else None,
+                "resource_last_modified": (
+                    resource.get("last_modified") if resource else None
+                ),
                 "state_code": 15,
-                "status": 1,
                 "establishments": int(len(establishments)),
                 "municipal_rows": int(len(indicators)),
-                "snapshot_reused": reused_snapshot,
+                "snapshot_reused": snapshot_reused,
                 "limitations": [
-                    "This endpoint covers establishments and unit types.",
-                    "Professional occupation indicators require a separate CNES human-resources source.",
+                    "Bulk establishments data support facility indicators.",
+                    "Professional occupation indicators require the CNES professionals extraction.",
                 ],
             },
             ensure_ascii=False,
