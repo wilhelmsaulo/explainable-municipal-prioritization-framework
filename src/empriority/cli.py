@@ -6,6 +6,7 @@ from empriority.analysis import run_prioritization
 from empriority.catalog import load_indicator_catalog
 from empriority.config import load_settings
 from empriority.connectors.sidra import SidraQuery
+from empriority.integration import build_integrated_matrix
 from empriority.pipeline import (
     build_municipality_reference,
     collect_catalog_indicator,
@@ -169,6 +170,39 @@ def collect(
     )
     for name, path in outputs.items():
         typer.echo(f"OK {name}: {path}")
+
+
+@app.command("build-matrix")
+def build_matrix(
+    municipalities: str = typer.Option(
+        "data/processed/municipalities.csv", help="Municipality reference CSV."
+    ),
+    indicator: list[str] | None = typer.Option(
+        None,
+        "--indicator",
+        "-i",
+        help="Indicator as NAME=CSV_PATH; repeat for multiple indicators.",
+    ),
+    police: str | None = typer.Option(None, help="Optional normalized police CSV."),
+    output: str = typer.Option(
+        "data/processed/integrated_municipal_matrix.csv", help="Integrated matrix path."
+    ),
+) -> None:
+    """Build one-row-per-municipality analytical matrix from collected outputs."""
+    indicator_paths: dict[str, str] = {}
+    for item in indicator or []:
+        try:
+            name, path = item.split("=", maxsplit=1)
+        except ValueError as exc:
+            raise typer.BadParameter("Indicators must use NAME=CSV_PATH.") from exc
+        indicator_paths[name] = path
+    path = build_integrated_matrix(
+        municipalities,
+        indicator_paths,
+        police_path=police,
+        output_path=output,
+    )
+    typer.echo(f"OK integrated_matrix: {path}")
 
 
 @app.command("prioritize")
