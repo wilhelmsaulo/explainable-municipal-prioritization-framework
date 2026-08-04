@@ -1,0 +1,63 @@
+name: build-integrated-matrix
+
+on:
+  push:
+    paths:
+      - ".github/workflows/build-integrated-matrix.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+      - name: Install project
+        run: |
+          python -m pip install --upgrade pip
+          pip install -e ".[dev]"
+      - name: Collect municipal reference and SIDRA indicators
+        run: |
+          empriority municipalities
+          empriority collect-all-indicators --refresh
+      - name: Build integrated matrix
+        run: |
+          empriority build-matrix \
+            -i municipal_population_area_density_2022=data/processed/municipal_population_area_density_2022.csv \
+            -i municipal_population_by_sex_2022=data/processed/municipal_population_by_sex_2022.csv \
+            -i munic_2023=data/processed/munic_2023_institutional_indicators_pa.csv \
+            -i police_2022_2025=data/processed/police_aggregated_2022_2025_pa.csv \
+            --output data/processed/integrated_municipal_matrix.csv
+      - name: Validate matrix
+        run: |
+          python - <<'PY'
+          import pandas as pd
+          path = 'data/processed/integrated_municipal_matrix.csv'
+          frame = pd.read_csv(path)
+          assert len(frame) == 144, f'Expected 144 municipalities, got {len(frame)}'
+          assert frame['municipality_code'].astype(str).nunique() == 144
+          police_columns = [c for c in frame if c.startswith('police_2022_2025__')]
+          munic_columns = [c for c in frame if c.startswith('munic_2023__')]
+          assert police_columns, 'Police indicators were not integrated.'
+          assert munic_columns, 'MUNIC indicators were not integrated.'
+          assert frame[police_columns].notna().any(axis=1).sum() == 144
+          print(f'Validated {len(frame)} municipalities, {len(frame.columns)} columns.')
+          PY
+      - name: Commit integrated outputs
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/processed/municipalities.csv \
+                  data/processed/municipal_population_area_density_2022.csv \
+                  data/processed/municipal_population_area_density_2022.metadata.json \
+                  data/processed/municipal_population_by_sex_2022.csv \
+                  data/processed/municipal_population_by_sex_2022.metadata.json \
+                  data/processed/integrated_municipal_matrix.csv
+          git diff --cached --quiet || git commit -m "Store integrated municipal matrix"
+          git push
