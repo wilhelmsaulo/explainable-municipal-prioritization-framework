@@ -1,0 +1,61 @@
+name: map-munic-2023-variables
+
+on:
+  push:
+    paths:
+      - ".github/workflows/map-munic-2023-variables.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  map:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Map relevant MUNIC variables
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import re
+          import unicodedata
+          import pandas as pd
+
+          source = Path('data/catalog/munic_2023_pa/dictionary.csv')
+          frame = pd.read_csv(source, dtype=str).fillna('')
+
+          def norm(value):
+              text = unicodedata.normalize('NFKD', str(value)).encode('ascii', 'ignore').decode('ascii')
+              return re.sub(r'\s+', ' ', text.lower()).strip()
+
+          text = frame.astype(str).agg(' | '.join, axis=1).map(norm)
+          patterns = {
+              'specialized_police_station': r'delegacia.*mulher|especializada.*mulher',
+              'programs_actions_for_women': r'programa.*mulher|acao.*mulher|acoes.*mulher',
+              'campaigns_against_violence': r'campanha.*violencia.*mulher|campanha.*mulher',
+              'rights_or_policies_for_women': r'direito.*mulher|politica.*mulher',
+              'human_rights_protection_women': r'direitos humanos.*mulher|protecao.*mulher.*violencia',
+          }
+          rows = []
+          for indicator, pattern in patterns.items():
+              mask = text.str.contains(pattern, regex=True, na=False)
+              for _, row in frame.loc[mask].iterrows():
+                  rows.append({'indicator': indicator, **row.to_dict()})
+          out = pd.DataFrame(rows).drop_duplicates()
+          path = Path('data/catalog/munic_2023_pa/variable_matches.csv')
+          out.to_csv(path, index=False, encoding='utf-8')
+          print(out.to_string(index=False))
+          PY
+      - name: Commit variable mapping
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -f data/catalog/munic_2023_pa/variable_matches.csv
+          git commit -m "Map MUNIC 2023 institutional variables" || exit 0
+          git push origin main
