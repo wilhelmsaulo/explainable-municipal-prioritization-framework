@@ -18,46 +18,82 @@ jobs:
         with:
           python-version: "3.11"
           cache: pip
-      - name: Install project
-        run: |
-          python -m pip install --upgrade pip
-          pip install -e ".[dev]"
-      - name: Collect municipal reference and SIDRA indicators
-        run: |
-          empriority municipalities
-          empriority collect-all-indicators --refresh
+      - name: Install dependencies
+        run: pip install pandas
       - name: Build integrated matrix
         run: |
-          empriority build-matrix \
-            -i municipal_population_area_density_2022=data/processed/municipal_population_area_density_2022.csv \
-            -i municipal_population_by_sex_2022=data/processed/municipal_population_by_sex_2022.csv \
-            -i munic_2023=data/processed/munic_2023_institutional_indicators_pa.csv \
-            -i police_2022_2025=data/processed/police_aggregated_2022_2025_pa.csv \
-            --output data/processed/integrated_municipal_matrix.csv
-      - name: Validate matrix
-        run: |
           python - <<'PY'
+          import re
+          import unicodedata
+          from pathlib import Path
           import pandas as pd
-          path = 'data/processed/integrated_municipal_matrix.csv'
-          frame = pd.read_csv(path)
-          assert len(frame) == 144, f'Expected 144 municipalities, got {len(frame)}'
-          assert frame['municipality_code'].astype(str).nunique() == 144
-          police_columns = [c for c in frame if c.startswith('police_2022_2025__')]
-          munic_columns = [c for c in frame if c.startswith('munic_2023__')]
-          assert police_columns, 'Police indicators were not integrated.'
-          assert munic_columns, 'MUNIC indicators were not integrated.'
-          assert frame[police_columns].notna().any(axis=1).sum() == 144
-          print(f'Validated {len(frame)} municipalities, {len(frame.columns)} columns.')
+
+          def key(value):
+              text = unicodedata.normalize('NFKD', str(value)).encode('ascii', 'ignore').decode()
+              return re.sub(r'[^a-zA-Z0-9]+', '', text).lower()
+
+          munic = pd.read_csv(
+              'data/processed/munic_2023_institutional_indicators_pa.csv',
+              dtype={'municipality_code': str},
+          )
+          population = pd.read_csv(
+              'data/catalog/munic_2023_pa/politica_para_mulheres.csv',
+              dtype={'CodMun': str},
+          )[['CodMun', 'Mun', 'PopMun']].rename(
+              columns={
+                  'CodMun': 'municipality_code',
+                  'Mun': 'population_municipality',
+                  'PopMun': 'population_2023',
+              }
+          )
+          police = pd.read_csv('data/processed/police_aggregated_2022_2025_pa.csv')
+          police['_municipality_key'] = police['municipality'].map(key)
+          police = police.drop(columns='municipality').rename(
+              columns={c: f'police_{c}' for c in police.columns if c != '_municipality_key'}
+          )
+
+          matrix = munic.merge(population, on='municipality_code', how='left')
+          matrix['_municipality_key'] = matrix['municipality'].map(key)
+          matrix = matrix.merge(police, on='_municipality_key', how='left').drop(
+              columns=['_municipality_key', 'population_municipality']
+          )
+          matrix['population_2023'] = pd.to_numeric(matrix['population_2023'], errors='coerce')
+
+          rate_sources = {
+              'all_female_records': 'police_all_female_records',
+              'violencia_domestica_lesao': 'police_violencia_domestica_lesao',
+              'lesao_corporal': 'police_lesao_corporal',
+              'violencia_sexual': 'police_violencia_sexual',
+              'estupro': 'police_estupro',
+              'estupro_vulneravel': 'police_estupro_vulneravel',
+              'homicidio_mulher': 'police_homicidio_mulher',
+              'feminicidio_any': 'police_feminicidio_any',
+          }
+          for label, column in rate_sources.items():
+              matrix[f'rate_{label}_per_100k_population_2022_2025'] = (
+                  pd.to_numeric(matrix[column], errors='coerce')
+                  / matrix['population_2023']
+                  * 100_000
+              )
+
+          matrix['institutional_deficit_available_4'] = (
+              matrix['institutional_coverage'] - matrix['institutional_score_available_4']
+          )
+          matrix = matrix.sort_values('municipality_code')
+
+          assert len(matrix) == 144, len(matrix)
+          assert matrix['municipality_code'].nunique() == 144
+          assert matrix['population_2023'].notna().sum() == 144
+          assert matrix['police_all_female_records'].notna().sum() == 144
+
+          path = Path('data/processed/integrated_municipal_matrix.csv')
+          matrix.to_csv(path, index=False, encoding='utf-8')
+          print(f'Validated {len(matrix)} municipalities and {len(matrix.columns)} columns.')
           PY
-      - name: Commit integrated outputs
+      - name: Commit integrated matrix
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add data/processed/municipalities.csv \
-                  data/processed/municipal_population_area_density_2022.csv \
-                  data/processed/municipal_population_area_density_2022.metadata.json \
-                  data/processed/municipal_population_by_sex_2022.csv \
-                  data/processed/municipal_population_by_sex_2022.metadata.json \
-                  data/processed/integrated_municipal_matrix.csv
+          git add data/processed/integrated_municipal_matrix.csv
           git diff --cached --quiet || git commit -m "Store integrated municipal matrix"
           git push
