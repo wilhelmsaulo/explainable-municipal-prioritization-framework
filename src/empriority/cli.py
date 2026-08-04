@@ -8,6 +8,7 @@ from empriority.connectors.sidra import SidraQuery
 from empriority.pipeline import (
     build_municipality_reference,
     collect_catalog_indicator,
+    collect_project,
     collect_sidra_table,
 )
 
@@ -43,6 +44,7 @@ def sidra(
     ),
     output: str = typer.Option("sidra_table", help="Output base name without extension."),
     config: str = typer.Option("config/project.yml", help="Path to the project configuration."),
+    refresh: bool = typer.Option(False, help="Ignore cache and request the official source again."),
 ) -> None:
     """Collect a table from the official SIDRA API with provenance metadata."""
     classifications: dict[int, str] = {}
@@ -64,7 +66,9 @@ def sidra(
         periods=periods,
         classifications=classifications,
     )
-    frame, data_path, metadata_path = collect_sidra_table(settings, query, output)
+    frame, data_path, metadata_path = collect_sidra_table(
+        settings, query, output, refresh=refresh
+    )
     typer.echo(
         f"Collected {len(frame)} SIDRA records. Data: {data_path}. Metadata: {metadata_path}"
     )
@@ -92,11 +96,14 @@ def collect_indicator(
         "config/indicators.yml", help="Path to the declarative indicator catalog."
     ),
     config: str = typer.Option("config/project.yml", help="Path to the project configuration."),
+    refresh: bool = typer.Option(False, help="Ignore cache and request the official source again."),
 ) -> None:
     """Collect one named indicator from its official source."""
     settings = load_settings(config)
     try:
-        frame, data_path, metadata_path = collect_catalog_indicator(settings, name, catalog)
+        frame, data_path, metadata_path = collect_catalog_indicator(
+            settings, name, catalog, refresh=refresh
+        )
     except KeyError as exc:
         raise typer.BadParameter(str(exc)) from exc
     typer.echo(
@@ -111,6 +118,7 @@ def collect_all_indicators(
         "config/indicators.yml", help="Path to the declarative indicator catalog."
     ),
     config: str = typer.Option("config/project.yml", help="Path to the project configuration."),
+    refresh: bool = typer.Option(False, help="Ignore cache and request every source again."),
 ) -> None:
     """Collect every indicator declared in the catalog."""
     settings = load_settings(config)
@@ -120,7 +128,9 @@ def collect_all_indicators(
 
     for name in loaded.names():
         try:
-            frame, data_path, metadata_path = collect_catalog_indicator(settings, name, catalog)
+            frame, data_path, metadata_path = collect_catalog_indicator(
+                settings, name, catalog, refresh=refresh
+            )
         except Exception as exc:  # noqa: BLE001 - batch command must report all failures
             failures.append(f"{name}: {exc}")
             typer.echo(f"FAILED {name}: {exc}", err=True)
@@ -134,6 +144,30 @@ def collect_all_indicators(
     typer.echo(f"Completed {completed} of {len(loaded.names())} indicators.")
     if failures:
         raise typer.Exit(code=1)
+
+
+@app.command("collect")
+def collect(
+    catalog: str = typer.Option(
+        "config/indicators.yml", help="Path to the declarative indicator catalog."
+    ),
+    config: str = typer.Option("config/project.yml", help="Path to the project configuration."),
+    police_file: str | None = typer.Option(
+        None,
+        help="Optional public police CSV/XLSX file covering the 2022-2025 period.",
+    ),
+    refresh: bool = typer.Option(False, help="Ignore cache and request official APIs again."),
+) -> None:
+    """Run the current end-to-end data collection pipeline."""
+    settings = load_settings(config)
+    outputs = collect_project(
+        settings,
+        catalog_path=catalog,
+        police_path=police_file,
+        refresh=refresh,
+    )
+    for name, path in outputs.items():
+        typer.echo(f"OK {name}: {path}")
 
 
 if __name__ == "__main__":
