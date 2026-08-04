@@ -9,3 +9,18 @@ indicators:
     territories: all/in/n3/15
     variables: all
     periods: "2022"
+
+  municipal_population_by_sex_2022:
+    source: sidra
+    description: Total, male and female resident population for Pará municipalities.
+    dimension: base_municipal
+    output: municipal_population_by_sex_2022
+    table: 9514
+    territorial_level: 6
+    territories: all/in/n3/15
+    variables: "93"
+    periods: "2022"
+    classifications:
+      2: all
+      287: "100362"
+      286: "0"
