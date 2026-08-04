@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import typer
 
+from empriority.analysis import run_prioritization
 from empriority.catalog import load_indicator_catalog
 from empriority.config import load_settings
 from empriority.connectors.sidra import SidraQuery
@@ -167,6 +168,28 @@ def collect(
         refresh=refresh,
     )
     for name, path in outputs.items():
+        typer.echo(f"OK {name}: {path}")
+
+
+@app.command("prioritize")
+def prioritize(
+    data: str = typer.Option(..., help="Integrated municipal CSV containing the criteria."),
+    criteria: str = typer.Option(
+        "config/criteria.yml", help="Path to the multicriteria configuration."
+    ),
+    output: str = typer.Option("data/results", help="Directory for analytical results."),
+    iterations: int = typer.Option(200, min=1, help="Sensitivity-analysis iterations."),
+    seed: int = typer.Option(42, help="Random seed for reproducibility."),
+) -> None:
+    """Run hybrid entropy-CRITIC weighting, TOPSIS and sensitivity analysis."""
+    paths = run_prioritization(
+        data,
+        criteria_path=criteria,
+        output_directory=output,
+        sensitivity_iterations=iterations,
+        seed=seed,
+    )
+    for name, path in paths.items():
         typer.echo(f"OK {name}: {path}")
 
 
