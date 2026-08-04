@@ -9,30 +9,25 @@ The framework currently provides:
 - an authoritative municipality reference collected from the IBGE Localities API;
 - standardization and validation of the 144 municipalities of Pará;
 - a generic connector for the official SIDRA values API;
-- a unified `DataSourceManager` for registering and executing heterogeneous official-source operations;
-- a declarative indicator catalog in YAML;
-- auditable provenance metadata for every SIDRA collection;
+- a unified `DataSourceManager`;
+- declarative indicator and criteria catalogs in YAML;
+- cache, snapshots and provenance metadata;
+- police-data import from CSV/XLSX;
+- hybrid Entropy-CRITIC weighting;
+- TOPSIS municipal prioritization;
+- criterion-level local explanations;
+- perturbation-based rank sensitivity analysis;
 - command-line execution, automated tests and continuous integration.
 
 ## Architecture
 
 ```text
 Official sources -> Connectors -> DataSourceManager -> Validation -> Standardization
-                 -> Integration -> Indicators -> Decision model -> Explainability
+                 -> Integration -> Indicators -> Hybrid MCDA -> Explainability
+                 -> Sensitivity -> Results
 ```
 
-The repository is API-first. Local files are generated only as reproducible outputs, cache or audit snapshots. Source-specific communication remains inside each connector, while pipelines execute named operations through the data-source manager.
-
-Built-in operations currently registered are:
-
-```text
-ibge.localities.municipalities
-ibge.sidra.values
-```
-
-## Requirements
-
-- Python 3.11 or newer
+The repository is API-first. Local files are generated only as reproducible outputs, cache or audit snapshots.
 
 ## Installation
 
@@ -43,57 +38,60 @@ python -m pip install --upgrade pip
 pip install -e ".[dev]"
 ```
 
-## Municipality reference
+## Data collection
+
+Run the current collection pipeline:
 
 ```bash
-empriority municipalities
+empriority collect
 ```
 
-The command reads `config/project.yml`, queries the official IBGE API, validates the municipal coverage and writes:
+Include a public police file when available:
 
-```text
-data/processed/municipalities.csv
+```bash
+empriority collect --police-file path/to/police_2022_2025.xlsx
 ```
 
-## Declarative indicator catalog
+Ignore cache and refresh official sources:
 
-Indicators are declared in `config/indicators.yml`. Each entry records its source, analytical dimension, output name and official query parameters.
+```bash
+empriority collect --refresh
+```
 
-The initial Base Municipal catalog contains:
+## Declarative indicators
 
-- `municipal_population_area_density_2022`;
-- `municipal_population_by_sex_2022`.
-
-List the declared indicators:
+Indicators are declared in `config/indicators.yml`. The initial municipal catalog includes population, area, density and population by sex.
 
 ```bash
 empriority indicators
-```
-
-Collect one indicator by name:
-
-```bash
-empriority collect-indicator municipal_population_by_sex_2022
-```
-
-Collect every indicator declared in the catalog:
-
-```bash
 empriority collect-all-indicators
 ```
 
-Each collection produces both data and provenance metadata, for example:
+## Municipal prioritization
 
-```text
-data/processed/municipal_population_by_sex_2022.csv
-data/processed/municipal_population_by_sex_2022.metadata.json
+Copy `config/criteria.example.yml` to `config/criteria.yml`, replace the example columns with the final integrated indicators and run:
+
+```bash
+empriority prioritize \
+  --data data/processed/integrated_municipal_matrix.csv \
+  --criteria config/criteria.yml \
+  --iterations 500
 ```
 
-The population-by-sex query uses SIDRA table 9514, selecting all sex categories while fixing age and age-declaration form at their total categories. This returns total, male and female resident population by municipality without downloading unnecessary age detail.
+The analytical command exports:
 
-## Generic SIDRA collection
+```text
+data/results/municipal_priority_ranking.csv
+data/results/criterion_weights.csv
+data/results/municipal_contributions.csv
+data/results/rank_sensitivity.csv
+```
 
-Direct SIDRA queries remain available for exploration or catalog development:
+The methodological core is documented in `docs/methodology.md`.
+
+## Direct SIDRA collection
+
+Direct SIDRA queries remain available for exploration and catalog development:
 
 ```bash
 empriority sidra \
@@ -105,12 +103,6 @@ empriority sidra \
   --output municipal_population_area_density_2022
 ```
 
-A classification can be supplied more than once using `ID=CATEGORIES`:
-
-```bash
-empriority sidra --table 9514 --level 6 -c "2=all" -c "287=100362" -c "286=0"
-```
-
 ## Tests
 
 ```bash
@@ -120,4 +112,4 @@ pytest
 
 ## Development status
 
-This repository is private and under active development. Additional official-source connectors, integration contracts, indicator construction, prioritization models and explainability modules will be added incrementally and reviewed through pull requests.
+This repository is private and under active development. The implemented core is sufficient to collect initial official data, receive the police dataset, execute the hybrid multicriteria model and generate explainable and sensitivity-aware municipal rankings. Additional thematic connectors and final indicator definitions will be added as the study dataset is consolidated.
