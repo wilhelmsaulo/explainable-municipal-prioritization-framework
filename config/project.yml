@@ -6,7 +6,7 @@ project:
   expected_municipalities: 144
 
 runtime:
-  request_timeout_seconds: 30
+  request_timeout_seconds: 60
   cache_enabled: true
   cache_directory: data/cache
   output_directory: data/processed
@@ -18,3 +18,6 @@ sources:
   sidra:
     enabled: true
     base_url: https://apisidra.ibge.gov.br/values
+  munic:
+    enabled: true
+    base_url: https://ftp.ibge.gov.br/Perfil_Municipios
