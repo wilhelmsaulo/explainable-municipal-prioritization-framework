@@ -4,7 +4,7 @@ on:
   push:
     paths:
       - ".github/workflows/collect-cnes.yml"
-      - "src/empriority/cnes.py"
+      - "src/empriority/cnes_xml.py"
   workflow_dispatch:
 
 permissions:
@@ -29,7 +29,7 @@ jobs:
           from pathlib import Path
           import pandas as pd
 
-          from empriority.cnes import collect_cnes_pa
+          from empriority.cnes_xml import collect_cnes_pa
 
           outputs = collect_cnes_pa("data/processed")
           matrix_path = Path("data/processed/integrated_municipal_matrix.csv")
