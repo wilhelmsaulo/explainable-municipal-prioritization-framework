@@ -10,6 +10,7 @@ from empriority.integration import build_integrated_matrix
 from empriority.pipeline import (
     build_municipality_reference,
     collect_catalog_indicator,
+    collect_munic,
     collect_project,
     collect_sidra_table,
 )
@@ -31,6 +32,18 @@ def municipalities(
     typer.echo(frame.head().to_string(index=False))
 
 
+@app.command("munic")
+def munic(
+    year: int = typer.Option(2023, min=2000, max=2100, help="MUNIC reference year."),
+    config: str = typer.Option("config/project.yml", help="Path to project configuration."),
+) -> None:
+    """Download the official MUNIC workbook and create its worksheet inventory."""
+    settings = load_settings(config)
+    outputs = collect_munic(settings, year=year)
+    for name, path in outputs.items():
+        typer.echo(f"OK {name}: {path}")
+
+
 @app.command("sidra")
 def sidra(
     table: int = typer.Option(..., help="SIDRA table number."),
@@ -42,10 +55,10 @@ def sidra(
         None,
         "--classification",
         "-c",
-        help="Classification as ID=CATEGORIES; repeat the option for multiple classifications.",
+        help="Classification as ID=CATEGORIES; repeat for multiple classifications.",
     ),
     output: str = typer.Option("sidra_table", help="Output base name without extension."),
-    config: str = typer.Option("config/project.yml", help="Path to the project configuration."),
+    config: str = typer.Option("config/project.yml", help="Path to project configuration."),
     refresh: bool = typer.Option(False, help="Ignore cache and request the official source again."),
 ) -> None:
     """Collect a table from the official SIDRA API with provenance metadata."""
@@ -56,7 +69,7 @@ def sidra(
             classifications[int(identifier)] = categories
         except ValueError as exc:
             raise typer.BadParameter(
-                "Classifications must use the format ID=CATEGORIES, for example 2=4,5."
+                "Classifications must use ID=CATEGORIES, for example 2=4,5."
             ) from exc
 
     settings = load_settings(config)
@@ -97,7 +110,7 @@ def collect_indicator(
     catalog: str = typer.Option(
         "config/indicators.yml", help="Path to the declarative indicator catalog."
     ),
-    config: str = typer.Option("config/project.yml", help="Path to the project configuration."),
+    config: str = typer.Option("config/project.yml", help="Path to project configuration."),
     refresh: bool = typer.Option(False, help="Ignore cache and request the official source again."),
 ) -> None:
     """Collect one named indicator from its official source."""
@@ -119,7 +132,7 @@ def collect_all_indicators(
     catalog: str = typer.Option(
         "config/indicators.yml", help="Path to the declarative indicator catalog."
     ),
-    config: str = typer.Option("config/project.yml", help="Path to the project configuration."),
+    config: str = typer.Option("config/project.yml", help="Path to project configuration."),
     refresh: bool = typer.Option(False, help="Ignore cache and request every source again."),
 ) -> None:
     """Collect every indicator declared in the catalog."""
@@ -133,7 +146,7 @@ def collect_all_indicators(
             frame, data_path, metadata_path = collect_catalog_indicator(
                 settings, name, catalog, refresh=refresh
             )
-        except Exception as exc:  # noqa: BLE001 - batch command must report all failures
+        except Exception as exc:  # noqa: BLE001
             failures.append(f"{name}: {exc}")
             typer.echo(f"FAILED {name}: {exc}", err=True)
             continue
@@ -153,7 +166,7 @@ def collect(
     catalog: str = typer.Option(
         "config/indicators.yml", help="Path to the declarative indicator catalog."
     ),
-    config: str = typer.Option("config/project.yml", help="Path to the project configuration."),
+    config: str = typer.Option("config/project.yml", help="Path to project configuration."),
     police_file: str | None = typer.Option(
         None,
         help="Optional public police CSV/XLSX file covering the 2022-2025 period.",
@@ -209,7 +222,7 @@ def build_matrix(
 def prioritize(
     data: str = typer.Option(..., help="Integrated municipal CSV containing the criteria."),
     criteria: str = typer.Option(
-        "config/criteria.yml", help="Path to the multicriteria configuration."
+        "config/criteria.yml", help="Path to multicriteria configuration."
     ),
     output: str = typer.Option("data/results", help="Directory for analytical results."),
     iterations: int = typer.Option(200, min=1, help="Sensitivity-analysis iterations."),
