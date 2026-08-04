@@ -5,20 +5,19 @@ from pathlib import Path
 import pandas as pd
 
 from empriority.config import Settings
-from empriority.connectors.ibge_localities import IBGELocalitiesConnector
-from empriority.connectors.sidra import SidraConnector, SidraQuery
+from empriority.connectors.sidra import SidraQuery
+from empriority.source_registry import build_data_source_manager
 from empriority.validation import MunicipalityValidationResult, validate_municipalities
 
 
 def build_municipality_reference(
     settings: Settings,
 ) -> tuple[pd.DataFrame, MunicipalityValidationResult, Path]:
-    source = settings.sources.ibge_localities
-    connector = IBGELocalitiesConnector(
-        base_url=str(source.base_url),
-        timeout=settings.runtime.request_timeout_seconds,
+    manager = build_data_source_manager(settings)
+    frame = manager.run(
+        "ibge.localities.municipalities",
+        settings.project.state_code,
     )
-    frame = connector.fetch_municipalities(settings.project.state_code)
     validation = validate_municipalities(
         frame,
         expected_count=settings.project.expected_municipalities,
@@ -39,12 +38,8 @@ def collect_sidra_table(
     output_name: str,
 ) -> tuple[pd.DataFrame, Path, Path]:
     """Collect one SIDRA table and persist data plus an audit metadata sidecar."""
-    source = settings.sources.sidra
-    connector = SidraConnector(
-        base_url=str(source.base_url),
-        timeout=settings.runtime.request_timeout_seconds,
-    )
-    frame, metadata = connector.fetch(query)
+    manager = build_data_source_manager(settings)
+    frame, metadata = manager.run("ibge.sidra.values", query)
 
     safe_name = Path(output_name).stem
     output_dir = settings.runtime.output_directory
