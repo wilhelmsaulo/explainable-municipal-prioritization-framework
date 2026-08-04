@@ -26,12 +26,17 @@ jobs:
           import re
           import traceback
           import unicodedata
+          from difflib import SequenceMatcher
           from pathlib import Path
+
           import pandas as pd
 
           output = Path('data/processed/integrated_municipal_matrix.csv')
           error_path = Path('data/processed/integration_error.txt')
+          match_path = Path('data/processed/municipality_name_matches.csv')
+          output.unlink(missing_ok=True)
           error_path.unlink(missing_ok=True)
+          match_path.unlink(missing_ok=True)
 
           def key(value):
               text = unicodedata.normalize('NFKD', str(value)).encode('ascii', 'ignore').decode()
@@ -53,13 +58,42 @@ jobs:
                   }
               )
               police = pd.read_csv('data/processed/police_aggregated_2022_2025_pa.csv')
+              police['police_municipality'] = police['municipality']
               police['_municipality_key'] = police['municipality'].map(key)
-              police = police.drop(columns='municipality').rename(
+
+              munic['_municipality_key'] = munic['municipality'].map(key)
+              municipal_keys = set(munic['_municipality_key'])
+              police_keys = set(police['_municipality_key'])
+              unmatched_munic = sorted(municipal_keys - police_keys)
+              unmatched_police = sorted(police_keys - municipal_keys)
+
+              mappings = []
+              used_police_keys = set()
+              for municipal_key in unmatched_munic:
+                  candidates = []
+                  for police_key in unmatched_police:
+                      if police_key in used_police_keys:
+                          continue
+                      score = SequenceMatcher(None, municipal_key, police_key).ratio()
+                      candidates.append((score, police_key))
+                  candidates.sort(reverse=True)
+                  if candidates and candidates[0][0] >= 0.88:
+                      score, police_key = candidates[0]
+                      mappings.append({
+                          'municipal_key': municipal_key,
+                          'police_key_original': police_key,
+                          'similarity': score,
+                      })
+                      used_police_keys.add(police_key)
+                      police.loc[police['_municipality_key'] == police_key, '_municipality_key'] = municipal_key
+
+              pd.DataFrame(mappings).to_csv(match_path, index=False, encoding='utf-8')
+
+              police = police.drop(columns=['municipality', 'police_municipality']).rename(
                   columns={c: f'police_{c}' for c in police.columns if c != '_municipality_key'}
               )
 
               matrix = munic.merge(population, on='municipality_code', how='left')
-              matrix['_municipality_key'] = matrix['municipality'].map(key)
               matrix = matrix.merge(police, on='_municipality_key', how='left').drop(
                   columns=['_municipality_key', 'population_municipality']
               )
@@ -87,10 +121,26 @@ jobs:
               )
               matrix = matrix.sort_values('municipality_code')
 
-              assert len(matrix) == 144, f'rows={len(matrix)}'
-              assert matrix['municipality_code'].nunique() == 144
-              assert matrix['population_2023'].notna().sum() == 144
-              assert matrix['police_all_female_records'].notna().sum() == 144
+              checks = {
+                  'rows': len(matrix),
+                  'unique_codes': matrix['municipality_code'].nunique(),
+                  'population_coverage': int(matrix['population_2023'].notna().sum()),
+                  'police_coverage': int(matrix['police_all_female_records'].notna().sum()),
+              }
+              if checks != {
+                  'rows': 144,
+                  'unique_codes': 144,
+                  'population_coverage': 144,
+                  'police_coverage': 144,
+              }:
+                  missing_police = matrix.loc[
+                      matrix['police_all_female_records'].isna(),
+                      ['municipality_code', 'municipality'],
+                  ].to_dict('records')
+                  raise AssertionError(
+                      f'Validation failed: {checks}; missing police matches: {missing_police}; '
+                      f'automatic mappings: {mappings}'
+                  )
 
               output.parent.mkdir(parents=True, exist_ok=True)
               matrix.to_csv(output, index=False, encoding='utf-8')
@@ -104,11 +154,13 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          if [ -f data/processed/integrated_municipal_matrix.csv ]; then
-            git add -f data/processed/integrated_municipal_matrix.csv
-          fi
-          if [ -f data/processed/integration_error.txt ]; then
-            git add -f data/processed/integration_error.txt
-          fi
+          for file in \
+            data/processed/integrated_municipal_matrix.csv \
+            data/processed/integration_error.txt \
+            data/processed/municipality_name_matches.csv; do
+            if [ -f "$file" ]; then
+              git add -f "$file"
+            fi
+          done
           git diff --cached --quiet || git commit -m "Store integrated matrix result"
           git push
