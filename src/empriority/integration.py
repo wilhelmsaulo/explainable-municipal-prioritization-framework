@@ -30,6 +30,10 @@ def _slug(value: object) -> str:
     return re.sub(r"[^a-zA-Z0-9]+", "_", text).strip("_").lower()
 
 
+def _municipality_key(value: object) -> str:
+    return _slug(value).replace("_", "")
+
+
 def _first_existing(columns: Iterable[str], candidates: Iterable[str]) -> str | None:
     normalized = {_slug(column): column for column in columns}
     for candidate in candidates:
@@ -154,6 +158,28 @@ def reshape_indicator(frame: pd.DataFrame, indicator_name: str) -> pd.DataFrame:
     )
 
 
+def _merge_indicator(matrix: pd.DataFrame, reshaped: pd.DataFrame) -> pd.DataFrame:
+    if "municipality_code" in reshaped.columns:
+        merged = matrix.merge(
+            reshaped,
+            on="municipality_code",
+            how="left",
+            suffixes=("", "_new"),
+        )
+        if "municipality_new" in merged.columns:
+            merged = merged.drop(columns="municipality_new")
+        return merged
+
+    local = reshaped.copy()
+    local["_municipality_key"] = local["municipality"].map(_municipality_key)
+    base = matrix.copy()
+    base["_municipality_key"] = base["municipality"].map(_municipality_key)
+    local = local.drop(columns="municipality")
+    return base.merge(local, on="_municipality_key", how="left").drop(
+        columns="_municipality_key"
+    )
+
+
 def build_integrated_matrix(
     municipalities_path: str | Path,
     indicator_paths: dict[str, str | Path],
@@ -174,20 +200,27 @@ def build_integrated_matrix(
     for name, path in indicator_paths.items():
         indicator = pd.read_csv(path, dtype=str)
         reshaped = reshape_indicator(indicator, name)
-        if "municipality_code" in reshaped.columns:
-            matrix = matrix.merge(reshaped, on="municipality_code", how="left", suffixes=("", "_new"))
-            if "municipality_new" in matrix.columns:
-                matrix = matrix.drop(columns="municipality_new")
-        else:
-            matrix = matrix.merge(reshaped, on="municipality", how="left")
+        matrix = _merge_indicator(matrix, reshaped)
 
     if police_path is not None:
         police = pd.read_csv(police_path)
         aggregated = aggregate_police(police)
-        join_key = "municipality_code" if "municipality_code" in aggregated.columns else "municipality"
-        matrix = matrix.merge(aggregated, on=join_key, how="left", suffixes=("", "_police"))
-        if "municipality_police" in matrix.columns:
-            matrix = matrix.drop(columns="municipality_police")
+        if "municipality_code" in aggregated.columns:
+            matrix = matrix.merge(
+                aggregated,
+                on="municipality_code",
+                how="left",
+                suffixes=("", "_police"),
+            )
+        else:
+            aggregated["_municipality_key"] = aggregated["municipality"].map(
+                _municipality_key
+            )
+            matrix["_municipality_key"] = matrix["municipality"].map(_municipality_key)
+            aggregated = aggregated.drop(columns="municipality")
+            matrix = matrix.merge(aggregated, on="_municipality_key", how="left").drop(
+                columns="_municipality_key"
+            )
 
     path = Path(output_path)
     path.parent.mkdir(parents=True, exist_ok=True)
