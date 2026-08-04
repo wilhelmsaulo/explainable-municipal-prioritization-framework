@@ -107,3 +107,5 @@ jobs:
           git add data/processed/integrated_municipal_matrix.csv data/processed/integration_error.txt 2>/dev/null || true
           git diff --cached --quiet || git commit -m "Store integrated matrix result"
           git push
+
+# retry-trigger: 2026-08-04T17:21-03:00
