@@ -2,9 +2,14 @@ from __future__ import annotations
 
 import typer
 
+from empriority.catalog import load_indicator_catalog
 from empriority.config import load_settings
 from empriority.connectors.sidra import SidraQuery
-from empriority.pipeline import build_municipality_reference, collect_sidra_table
+from empriority.pipeline import (
+    build_municipality_reference,
+    collect_catalog_indicator,
+    collect_sidra_table,
+)
 
 app = typer.Typer(no_args_is_help=True)
 
@@ -65,6 +70,39 @@ def sidra(
     )
     if not frame.empty:
         typer.echo(frame.head().to_string(index=False))
+
+
+@app.command("indicators")
+def indicators(
+    catalog: str = typer.Option(
+        "config/indicators.yml", help="Path to the declarative indicator catalog."
+    ),
+) -> None:
+    """List indicators currently declared in the project catalog."""
+    loaded = load_indicator_catalog(catalog)
+    for name in loaded.names():
+        item = loaded.get(name)
+        typer.echo(f"{name}\t{item.dimension}\t{item.description}")
+
+
+@app.command("collect-indicator")
+def collect_indicator(
+    name: str = typer.Argument(..., help="Indicator name declared in the catalog."),
+    catalog: str = typer.Option(
+        "config/indicators.yml", help="Path to the declarative indicator catalog."
+    ),
+    config: str = typer.Option("config/project.yml", help="Path to the project configuration."),
+) -> None:
+    """Collect one named indicator from its official source."""
+    settings = load_settings(config)
+    try:
+        frame, data_path, metadata_path = collect_catalog_indicator(settings, name, catalog)
+    except KeyError as exc:
+        raise typer.BadParameter(str(exc)) from exc
+    typer.echo(
+        f"Collected indicator '{name}' with {len(frame)} records. "
+        f"Data: {data_path}. Metadata: {metadata_path}"
+    )
 
 
 if __name__ == "__main__":
