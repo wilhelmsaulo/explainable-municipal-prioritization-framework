@@ -1,0 +1,154 @@
+archive=BASE_DE_DADOS_CNES_202606.ZIP
+candidate_count=19
+
+## rlEquipeAldeia202606.csv
+compressed_size=3115
+uncompressed_size=26349
+encoding=latin1
+separator=';'
+columns=CO_MUNICIPIO | CO_AREA | CO_SEQ_EQUIPE | CO_ALDEIA | CO_UNIDADE | TO_CHAR(DT_ATUALIZACAO,'DD/MM/YYYY') | CO_USUARIO | TO_CHAR(DT_ATUALIZACAO_ORIGEM,'DD/MM/YYYY')
+sample_rows=5
+
+## rlEquipeNasfEsf202606.csv
+compressed_size=4149956
+uncompressed_size=16860038
+encoding=latin1
+separator=';'
+columns=CO_MUNICIPIO | CO_AREA | SEQ_EQUIPE | CO_MUNICIPIO_ESF | CO_AREA_ESF | SEQ_EQUIPE_ESF | NU_SEQUENCIAL | CO_UNIDADE | TP_EQUIPE_ESF | CO_CNES_ESF | NO_FANTASIA_ESF | CO_SEGMENTO_ESF | DS_SEGMENTO_ESF | DS_AREA_ESF | TO_CHAR(DT_ATUALIZACAO,'DD/MM/YYYY') | CO_USUARIO | TO_CHAR(DT_ATUALIZACAO_ORIGEM,'DD/MM/YYYY')
+sample_rows=5
+
+## rlEstabEquipeMun202606.csv
+compressed_size=100
+uncompressed_size=157
+encoding=latin1
+separator=';'
+columns=CO_MUNICIPIO | CO_AREA | SEQ_EQUIPE | CO_MUNICIPIO_ATEND | TO_CHAR(DT_ATUALIZACAO,'DD/MM/YYYY') | CO_USUARIO | TO_CHAR(DT_ATUALIZACAO_ORIGEM,'DD/MM/YYYY')
+sample_rows=0
+
+## rlEstabEquipeProf202606.csv
+compressed_size=18545821
+uncompressed_size=129921484
+encoding=latin1
+separator=';'
+columns=CO_MUNICIPIO | CO_AREA | SEQ_EQUIPE | CO_PROFISSIONAL_SUS | CO_UNIDADE | CO_CBO | TP_SUS_NAO_SUS | IND_VINCULACAO | CO_MICROAREA | DT_ENTRADA | DT_DESLIGAMENTO | CO_CNES_OUTRAEQUIPE | CO_MUNICIPIO_OUTRAEQUIPE | CO_AREA_OUTRAEQUIPE | CO_PROFISSIONAL_SUS_COMPL | CO_CBO_CH_COMPL | ST_EQUIPEMINIMA | CO_MUN_ATUACAO | TO_CHAR(DT_ATUALIZACAO,'DD/MM/YYYY') | NO_USUARIO | TO_CHAR(DT_ATUALIZACAO_ORIGEM,'DD/MM/YYYY')
+sample_rows=5
+
+## rlEstabProfComissao202606.csv
+compressed_size=1112949
+uncompressed_size=6072879
+encoding=latin1
+separator=';'
+columns=CO_UNIDADE | CO_COMISSAO | CO_PROFISSIONAL_SUS | CO_CBO | TP_SUS_NAO_SUS | TP_VINCULACAO | ST_RESP_TECNICO | TO_CHAR(DT_ATUALIZACAO,'DD/MM/YYYY') | CO_USUARIO | TO_CHAR(DT_ATUALIZACAO_ORIGEM,'DD/MM/YYYY')
+sample_rows=5
+
+## tbAtividadeProfissional202606.csv
+compressed_size=33245
+uncompressed_size=156518
+encoding=latin1
+separator=';'
+columns=CO_CBO | DS_ATIVIDADE_PROFISSIONAL | TP_CLASSIFICACAO_PROFISSIONAL | TP_CBO_SAUDE | ST_CBO_REGULAMENTADO | NO_ANO_CMPT
+sample_rows=5
+
+## tbCargaHorariaSus202606.csv
+compressed_size=147799592
+uncompressed_size=870296696
+encoding=latin1
+separator=';'
+columns=CO_UNIDADE | CO_PROFISSIONAL_SUS | CO_CBO | TP_SUS_NAO_SUS | IND_VINCULACAO | TP_TERCEIRO_SIH | QT_CARGA_HORARIA_AMBULATORIAL | CO_CONSELHO_CLASSE | NU_REGISTRO | SG_UF_CRM | TP_PRECEPTOR | TP_RESIDENTE | NU_CNPJ_DETALHAMENTO_VINCULO | TO_CHAR(A.DT_ATUALIZACAO,'DD/MM/YYYY') | CO_USUARIO | TO_CHAR(A.DT_ATUALIZACAO_ORIGEM,'DD/MM/YYYY') | QT_CARGA_HORARIA_OUTROS | QT_CARGA_HOR_HOSP_SUS
+sample_rows=5
+
+## tbDadosProfissionalSus202606.csv
+compressed_size=340271601
+uncompressed_size=956297451
+encoding=latin1
+separator=';'
+columns=CO_PROFISSIONAL_SUS | CO_CPF | NO_PROFISSIONAL | CO_CNS | TO_CHAR(DT_ATUALIZACAO,'DD/MM/YYYY') | CO_USUARIO | ST_NMPROF_CADSUS | CO_NACIONALIDADE | CO_SEQ_INCLUSAO | TO_CHAR(DT_ATUALIZACAO_ORIGEM,'DD/MM/YYYY') | NO_SOCIAL
+sample_rows=5
+
+## tbEquipe202606.csv
+compressed_size=4689592
+uncompressed_size=25124429
+encoding=latin1
+separator=';'
+columns=CO_MUNICIPIO | CO_AREA | SEQ_EQUIPE | CO_UNIDADE | TP_EQUIPE | CO_SUB_TIPO_EQUIPE | NO_REFERENCIA | DT_ATIVACAO | DT_DESATIVACAO | TP_POP_ASSIST_QUILOMB | TP_POP_ASSIST_ASSENT | TP_POP_ASSIST_GERAL | TP_POP_ASSIST_ESCOLA | TP_POP_ASSIST_PRONASCI | TP_POP_ASSIST_INDIGENA | TP_POP_ASSIST_RIBEIRINHA | TP_POP_ASSIST_SITUACAO_RUA | TP_POP_ASSIST_PRIV_LIBERDADE | TP_POP_ASSIST_CONFLITO_LEI | TP_POP_ASSIST_ADOL_CONF_LEI | CO_CNES_UOM | NU_CH_AMB_UOM | CD_MOTIVO_DESATIV | CD_TP_DESATIV | CO_PROF_SUS_PRECEPTOR | CO_CNES_PRECEPTOR | CO_EQUIPE | TO_CHAR(DT_ATUALIZACAO,'DD/MM/YYYY') | NO_USUARIO | TO_CHAR(DT_ATUALIZACAO_ORIGEM,'DD/MM/YYYY')
+sample_rows=5
+
+## tbEquipeAtendCompl202606.csv
+compressed_size=114
+uncompressed_size=178
+encoding=latin1
+separator=';'
+columns=CO_MUNICIPIO | CO_AREA | SEQ_EQUIPE | CO_PROFISSIONAL_SUS | CO_CNES_ATENDCOMP | TO_CHAR(DT_ATUALIZACAO,'DD/MM/YYYY') | CO_USUARIO | TO_CHAR(DT_ATUALIZACAO_ORIGEM,'DD/MM/YYYY')
+sample_rows=0
+
+## tbEquipeChDifer202606.csv
+compressed_size=266
+uncompressed_size=788
+encoding=latin1
+separator=';'
+columns=CO_MUNICIPIO | CO_AREA | SEQ_EQUIPE | CO_PROFISSIONAL_SUS | TP_CHDIFER | SEQ_CHDIFER | CNES_CHDIFER | CGHORAOUTR | TO_CHAR(DATA_ATU,'DD/MM/YYYY') | CO_USUARIO | TO_CHAR(DT_ATUALIZACAO_ORIGEM,'DD/MM/YYYY')
+sample_rows=5
+
+## tbGrupoEquipe202606.csv
+compressed_size=177
+uncompressed_size=388
+encoding=latin1
+separator=';'
+columns=CO_GRUPO_EQUIPE | NO_GRUPO_EQUIPE
+sample_rows=5
+
+## tbModVinculo202606.csv
+compressed_size=154
+uncompressed_size=246
+encoding=latin1
+separator=';'
+columns=CD_VINCULACAO | DS_VINCULACAO
+sample_rows=5
+
+## tbMotivoDesativEquipe202606.csv
+compressed_size=304
+uncompressed_size=974
+encoding=latin1
+separator=';'
+columns=CO_MOTIVO_DESATIV | DS_MOTIVO_DESATIV
+sample_rows=5
+
+## tbProfResidencia202606.csv
+compressed_size=172234
+uncompressed_size=776490
+encoding=latin1
+separator=';'
+columns=CO_UNIDADE | NU_RESIDENCIA | CO_PROFISSIONAL_SUS | CO_CBO | IND_VINCULACAO | TP_SUS_NAO_SUS | TO_CHAR(DT_ATUALIZACAO,'DD/MM/YYYY') | CO_USUARIO | TO_CHAR(DT_ATUALIZACAO_ORIGEM,'DD/MM/YYYY')
+sample_rows=5
+
+## tbSubTipoEquipe202606.csv
+compressed_size=75
+uncompressed_size=96
+encoding=latin1
+separator=';'
+columns=CO_SUB_TIPO_EQUIPE | DS_SUB_TIPO_EQUIPE
+sample_rows=3
+
+## tbSubTpModVinculo202606.csv
+compressed_size=2257
+uncompressed_size=11927
+encoding=latin1
+separator=';'
+columns=CD_VINCULACAO | TP_VINCULO | TP_SUBVINCULO | DS_SUBVINCULO | TP_CATEGORIA | DS_CONCEITO
+sample_rows=5
+
+## tbTipoEquipe202606.csv
+compressed_size=1082
+uncompressed_size=4303
+encoding=latin1
+separator=';'
+columns=TP_EQUIPE | DS_EQUIPE | CO_GRUPO_EQUIPE
+sample_rows=5
+
+## tbTpModVinculo202606.csv
+compressed_size=491
+uncompressed_size=1380
+encoding=latin1
+separator=';'
+columns=CD_VINCULACAO | TP_VINCULO | DS_VINCULO
+sample_rows=5
