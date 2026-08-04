@@ -4,6 +4,7 @@ from pathlib import Path
 
 import pandas as pd
 
+from empriority.catalog import load_indicator_catalog
 from empriority.config import Settings
 from empriority.connectors.sidra import SidraQuery
 from empriority.source_registry import build_data_source_manager
@@ -50,3 +51,14 @@ def collect_sidra_table(
     frame.to_csv(data_path, index=False, encoding="utf-8")
     metadata.write_json(metadata_path)
     return frame, data_path, metadata_path
+
+
+def collect_catalog_indicator(
+    settings: Settings,
+    indicator_name: str,
+    catalog_path: str | Path = "config/indicators.yml",
+) -> tuple[pd.DataFrame, Path, Path]:
+    """Collect a named indicator declared in the project catalog."""
+    catalog = load_indicator_catalog(catalog_path)
+    indicator = catalog.get(indicator_name)
+    return collect_sidra_table(settings, indicator.to_query(), indicator.output)
