@@ -105,5 +105,36 @@ def collect_indicator(
     )
 
 
+@app.command("collect-all-indicators")
+def collect_all_indicators(
+    catalog: str = typer.Option(
+        "config/indicators.yml", help="Path to the declarative indicator catalog."
+    ),
+    config: str = typer.Option("config/project.yml", help="Path to the project configuration."),
+) -> None:
+    """Collect every indicator declared in the catalog."""
+    settings = load_settings(config)
+    loaded = load_indicator_catalog(catalog)
+    completed = 0
+    failures: list[str] = []
+
+    for name in loaded.names():
+        try:
+            frame, data_path, metadata_path = collect_catalog_indicator(settings, name, catalog)
+        except Exception as exc:  # noqa: BLE001 - batch command must report all failures
+            failures.append(f"{name}: {exc}")
+            typer.echo(f"FAILED {name}: {exc}", err=True)
+            continue
+
+        completed += 1
+        typer.echo(
+            f"OK {name}: {len(frame)} records. Data: {data_path}. Metadata: {metadata_path}"
+        )
+
+    typer.echo(f"Completed {completed} of {len(loaded.names())} indicators.")
+    if failures:
+        raise typer.Exit(code=1)
+
+
 if __name__ == "__main__":
     app()
