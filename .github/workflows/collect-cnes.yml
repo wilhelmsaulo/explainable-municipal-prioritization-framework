@@ -1,6 +1,10 @@
 name: collect-cnes
 
 on:
+  push:
+    paths:
+      - ".github/workflows/collect-cnes.yml"
+      - "src/empriority/cnes.py"
   workflow_dispatch:
 
 permissions:
