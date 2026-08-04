@@ -18,7 +18,14 @@ def _binary(series: pd.Series) -> pd.Series:
 
 
 def _municipal_id_columns(frame: pd.DataFrame) -> tuple[str, str]:
-    code = next((column for column in frame.columns if str(column).replace(" ", "").lower() == "codmun"), None)
+    code = next(
+        (
+            column
+            for column in frame.columns
+            if str(column).replace(" ", "").lower() in {"codmun", "codmunic"}
+        ),
+        None,
+    )
     name = next(
         (
             column
@@ -55,12 +62,17 @@ def extract_munic_2023_institutional_indicators(
             "MPPM01": "women_policy_body_exists_raw",
         }
     )
-    base["municipality_code"] = base["municipality_code"].astype(str).str.replace(r"\.0$", "", regex=True)
+    base["municipality_code"] = base["municipality_code"].astype(str).str.replace(
+        r"\.0$", "", regex=True
+    )
     base["women_policy_body_exists"] = _binary(base["women_policy_body_exists_raw"])
 
     security_local = security[[security_code, "MSEG168"]].copy()
     security_local = security_local.rename(
-        columns={security_code: "municipality_code", "MSEG168": "specialized_women_police_station_raw"}
+        columns={
+            security_code: "municipality_code",
+            "MSEG168": "specialized_women_police_station_raw",
+        }
     )
     security_local["municipality_code"] = security_local["municipality_code"].astype(str).str.replace(
         r"\.0$", "", regex=True
@@ -88,9 +100,15 @@ def extract_munic_2023_institutional_indicators(
     )
 
     result = base.merge(security_local, on="municipality_code", how="left").merge(
-        rights_local, on="municipality_code", how="left"
+        rights_local,
+        on="municipality_code",
+        how="left",
     )
-    result["campaigns_against_violence_women"] = pd.Series(pd.NA, index=result.index, dtype="Int64")
+    result["campaigns_against_violence_women"] = pd.Series(
+        pd.NA,
+        index=result.index,
+        dtype="Int64",
+    )
     result["campaigns_indicator_status"] = "not_available_in_munic_2023_questionnaire"
 
     binary_columns = [
