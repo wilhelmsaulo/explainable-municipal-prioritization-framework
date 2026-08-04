@@ -4,6 +4,8 @@
   "archive_size_bytes": 729856031,
   "establishments": 12463,
   "municipal_rows": 144,
+  "unit_type_records": 39,
+  "classified_service_units": 3625,
   "snapshot_reused": true,
   "limitations": [
     "Establishment indicators are derived from the monthly CNES database.",
