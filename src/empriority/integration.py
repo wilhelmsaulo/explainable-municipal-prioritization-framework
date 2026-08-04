@@ -43,37 +43,65 @@ def _clean_code(series: pd.Series) -> pd.Series:
 
 
 def aggregate_police(frame: pd.DataFrame) -> pd.DataFrame:
-    """Aggregate normalized police records into municipal analytical criteria."""
-    required = {"municipality", "year", "occurrence_type", "records"}
+    """Aggregate long or wide municipal-year police records into criteria."""
+    if {"municipality", "year", "occurrence_type", "records"}.issubset(frame.columns):
+        local = frame.copy()
+        local["criterion"] = "police_" + local["occurrence_type"].map(_slug)
+        keys = ["municipality"]
+        if "municipality_code" in local.columns:
+            local["municipality_code"] = _clean_code(local["municipality_code"])
+            keys.insert(0, "municipality_code")
+
+        totals = local.pivot_table(
+            index=keys,
+            columns="criterion",
+            values="records",
+            aggfunc="sum",
+            fill_value=0,
+        ).reset_index()
+        totals.columns.name = None
+        years = local.groupby(keys)["year"].nunique().rename("police_years_observed")
+        positive = (
+            local.assign(has_record=local["records"].gt(0).astype(int))
+            .groupby(keys)["has_record"]
+            .sum()
+            .rename("police_positive_rows")
+        )
+        return totals.merge(years.reset_index(), on=keys).merge(
+            positive.reset_index(), on=keys
+        )
+
+    required = {"municipality", "year"}
     missing = required.difference(frame.columns)
     if missing:
         raise ValueError(f"Police frame missing: {', '.join(sorted(missing))}")
 
     local = frame.copy()
-    local["criterion"] = "police_" + local["occurrence_type"].map(_slug)
     keys = ["municipality"]
     if "municipality_code" in local.columns:
         local["municipality_code"] = _clean_code(local["municipality_code"])
         keys.insert(0, "municipality_code")
 
-    totals = local.pivot_table(
-        index=keys,
-        columns="criterion",
-        values="records",
-        aggfunc="sum",
-        fill_value=0,
-    ).reset_index()
-    totals.columns.name = None
+    value_columns = [
+        column
+        for column in local.columns
+        if column not in {*keys, "year"}
+        and pd.to_numeric(local[column], errors="coerce").notna().any()
+    ]
+    for column in value_columns:
+        local[column] = pd.to_numeric(local[column], errors="coerce").fillna(0)
 
+    totals = local.groupby(keys, as_index=False)[value_columns].sum()
+    totals = totals.rename(columns={column: f"police_{_slug(column)}" for column in value_columns})
     years = local.groupby(keys)["year"].nunique().rename("police_years_observed").reset_index()
-    persistence = (
-        local.assign(has_record=local["records"].gt(0).astype(int))
+    positive = (
+        local.assign(has_record=local[value_columns].sum(axis=1).gt(0).astype(int))
         .groupby(keys)["has_record"]
         .sum()
-        .rename("police_positive_rows")
+        .rename("police_positive_years")
         .reset_index()
     )
-    return totals.merge(years, on=keys, how="left").merge(persistence, on=keys, how="left")
+    return totals.merge(years, on=keys, how="left").merge(positive, on=keys, how="left")
 
 
 def reshape_indicator(frame: pd.DataFrame, indicator_name: str) -> pd.DataFrame:
@@ -121,10 +149,9 @@ def reshape_indicator(frame: pd.DataFrame, indicator_name: str) -> pd.DataFrame:
         raise ValueError(f"Indicator '{indicator_name}' has no usable numeric values.")
     selected = local[id_columns + numeric_columns].drop_duplicates(subset=id_columns)
     selected = selected.rename(columns=rename)
-    selected = selected.rename(
+    return selected.rename(
         columns={column: f"{indicator_name}__{_slug(column)}" for column in numeric_columns}
     )
-    return selected
 
 
 def build_integrated_matrix(
