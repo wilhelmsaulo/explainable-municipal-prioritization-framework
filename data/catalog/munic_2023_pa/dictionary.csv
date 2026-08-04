@@ -1,0 +1,1467 @@
+Temas disponíveis,Unnamed: 1,Unnamed: 2,Unnamed: 3,Unnamed: 4,variável
+,,,,,
+1. RECURSOS HUMANOS POR VÍNCULO,,,,,título link
+2. ASSISTÊNCIA SOCIAL,,,,,título link
+3. TRABALHO E INCLUSÃO PRODUTIVA,,,,,título link
+4. SEGURANÇA ALIMENTAR E NUTRICIONAL,,,,,título link
+5. POLÍTICA PARA MULHERES,,,,,título link
+6. Segurança Pública,,,,,título link
+7. DIREITOS HUMANOS,,,,,título link
+8. PRIMEIRA INFÂNCIA,,,,,título link
+,,,,,
+,,,,,
+Código do Município,,,,,CodMun
+Código da Unidade da Federação,,,,,UF
+Sigla da Unidade da Federação,,,,,Cod UF
+Nome do Município,,,,,Mun
+População dos Municípios publicada no DOU em 2023*,,,,,PopMun
+Faixa da população,,,,,Faixa_pop
+Grande Região,,,,,Regiao
+"(*) Em anos de Censo Demográfico, o IBGE divulga os dados de população recenseada. Para 2023, em cumprimento ao Art. 102 da Lei n° 8.443, de 16.07.1992, foram publicadas no Diário Oficial da União, em 31 de agosto de 2023, as populações do Censo Demográfico 2022, com atualizações de limites territoriais que tenham sido comunicadas ao IBGE entre 1 de agosto de 2022 e 30 de abril de 2023, no âmbito dos acordos de cooperação técnica mantidos com órgãos estaduais, visando à consolidação dos limites.",,,,,
+,,,,,
+1. RECURSOS HUMANOS POR VÍNCULO,,,,,
+1.1 Composição do quadro de pessoal da administração direta,,,,subtítulo link,
+1.2 Composição do quadro de pessoal da administração indireta,,,,subtítulo link,
+,,,,,
+"Fonte: IBGE, Pesquisa de Informações Básicas Municipais - 2023",,,,,
+,,,,,
+1. RECURSOS HUMANOS POR VÍNCULO,,,,,
+1.1 Composição do quadro de pessoal da administração direta,,,,,
+,Estatutários,,,,MREH0111
+,Celetistas,,,,MREH0112
+,Somente comissionados,,,,MREH0113
+,Estagiários,,,,MREH0114
+,Sem vínculo permanente,,,,MREH0115
+Total (1),,,,,MREH0116
+,,,,,
+"Fonte: IBGE, Pesquisa de Informações Básicas Municipais – 2023",,,,,
+(1) Inclusive os sem declaração de vínculo.,,,,,
+"(*) Não soube informar - sabe que existe, mas não soube informar.",,,,,
+,,,,,
+1.2 Composição do quadro de pessoal da administração indireta,,,,,
+Administração indireta - existência,,,,,MREH02
+,Estatutários,,,,MREH0311
+,Celetistas,,,,MREH0312
+,Somente comissionados,,,,MREH0313
+,Estagiários,,,,MREH0314
+,Sem vínculo permanente,,,,MREH0315
+Total (1),,,,,MREH0316
+,,,,,
+"Fonte: IBGE, Pesquisa de Informações Básicas Municipais – 2023",,,,,
+(1) Inclusive os sem declaração de vínculo.,,,,,
+"(*) Não soube informar - sabe que existe, mas não soube informar.",,,,,
+,,,,,
+2. ASSISTÊNCIA SOCIAL,,,,,
+2.1 Órgão gestor da assistência social e perfil do gestor,,,,,subtítulo link
+2.2 Capacitação do recursos humanos da área de assistência social,,,,,subtítulo link
+"2.3 Apoio técnico do órgão gestor da assistência social do estado, Plano Municipal de Assistência Social e Cadastramento Único para Programas Sociais do Governo Federal",,,,,subtítulo link
+2.4 Conselho e Fundo Municipal de Assistência Social,,,,,subtítulo link
+2.5 Serviços socioassistenciais,,,,,subtítulo link
+2.6 Unidades físicas que existem no município,,,,,subtítulo link
+2.7 Serviços sociassistenciais a que grupos específicos,,,,,subtítulo link
+2.8 Concessão de benefícios eventuais,,,,,subtítulo link
+,,,,,
+"Fonte: IBGE, Pesquisa de Informações Básicas Municipais - 2023",,,,,
+,,,,,
+2. ASSISTÊNCIA SOCIAL,,,,,
+2.1 Órgão gestor da assistência social e perfil do gestor,,,,,
+Caracterização do órgão gestor ,,,,,MASS01
+,,,,,
+Perfil do gestor:,,,,,
+,Sexo,,,,MASS03
+,Idade ,,,,MASS04
+,Cor/raça,,,,MASS05
+,,Este quesito foi respondido pelo próprio titular,,,MASS051
+,Escolaridade,,,,MASS06
+,,Formação de nível superior do titular do órgão gestor,,,MASS07
+,,,,,
+"Fonte: IBGE, Pesquisa de Informações Básicas Municipais - 2023",,,,,
+"(**)Sem gestor - apesar de ter estrutura para a política, no momento da coleta da informação não tinha gestor nomeado.",,,,,
+,,,,,
+2.2 Capacitação do recursos humanos da área de assistência social,,,,,
+"No ano de 2022, o pessoal ocupado na área de assistência social no município participou de cursos de capacitação em quais grupos de temas:",,,,,
+,"Política Nacional de Assistência Social, Organização do Sistema Único da Assistência Social (SUAS) e Legislação correlata",,,,MASS091
+,Organização e Serviços da Proteção Social Básica,,,,MASS092
+,Organização e Serviços da Proteção Social Especial,,,,MASS093
+,Gestão e financiamento do SUAS,,,,MASS094
+,Controle Social,,,,MASS095
+,Atendimento de povos e comunidades tradicionais,,,,MASS096
+,Atendimento a usuários de álcool e outras drogas,,,,MASS097
+,Inclusão de pessoas com deficiência,,,,MASS098
+,"Vigilância socioassistencial, monitoramento e avaliação",,,,MASS099
+,Planejamento e gestão,,,,MASS0910
+,Violências e violações de direitos,,,,MASS0911
+,Outros,,,,MASS0912
+,Não participou de nenhum dos cursos citados,,,,MASS0913
+,,,,,
+"Fonte: IBGE, Pesquisa de Informações Básicas Municipais - 2023",,,,,
+,,,,,
+"2.3 Apoio técnico do órgão gestor da assistência social do estado, Cadastramento Único para Programas Sociais do Governo Federal e Plano Municipal de Assistência Social ",,,,,
+A gestão municipal de assistência social recebe orientações e apoio técnico do órgão gestor da assistência social do estado,,,,,MASS10
+,,,,,
+O Cadastramento Único para Programas Sociais do Governo Federal é realizado no município pelo órgão gestor da assistência social,,,,,MASS10a
+,O órgão gestor de assistência social utiliza o Cadastro Único para Programas Sociais para:,,,,
+,,Definição de público alvo de programas e serviços,,,MASS10b1
+,,Elaboração de diagnóstico territorial,,,MASS10b2
+,,Identificação de crianças e adolescentes em situação de trabalho infantil,,,MASS10b3
+,,Identificação de população em situação de rua,,,MASS10b4
+,,Identificação de pessoas com deficiência,,,MASS10b5
+,,Identificação de povos e comunidades tradicionais,,,MASS10b6
+,,Outra finalidade,,,MASS10b7
+,,,,,
+Plano Municipal de Assistência Social - existência,,,,,MASS11
+,Ano da última atualização do plano,,,,MASS111
+,O plano foi aprovado pelo Conselho Municipal de Assistência Social,,,,MASS12
+,O desenvolvimento do plano é avaliado anualmente,,,,MASS13
+,,A avaliação anual é realizada pelo: ,,,
+,,,Órgão gestor da assistência social,,MASS1311
+,,,Conselho Municipal de Assistência Social,,MASS1312
+,,,Outro,,MASS1313
+,,,,,
+"Fonte: IBGE, Pesquisa de Informações Básicas Municipais - 2023",,,,,
+,,,,,
+2.4 Conselho e Fundo Municipal de Assistência Social,,,,,
+Conselho Municipal de Assistência Social - existência,,,,,MASS16
+,Lei de criação,,,,MASS161a
+,Ano de criação,,,,MASS161b
+,O conselho está,,,,MASS161c
+,Formação,,,,MASS162
+,Quantidade de reuniões (presenciais ou remotas) nos últimos 12 meses,,,,MASS17
+,Número de conselheiros (titulares e suplentes),,,,MASS18
+,Capacitação para os membros:,,,,
+,,Continuada,,,MASS191
+,,Eventualmente,,,MASS192
+,,Não realiza,,,MASS193
+,Disponibiliza infraestrutura para o funcionamento,,,,MASS20
+,,Sala própria,,,MASS2011
+,,Computador,,,MASS2012
+,,Impressora,,,MASS2013
+,,Acesso à internet,,,MASS2014
+,,Veículo próprio,,,MASS2015
+,,Telefone,,,MASS2016
+,,Diárias,,,MASS2017
+,,Dotação orçamentária própria,,,MASS2018
+,,Transporte/locomoção,,,MASS2019
+,Composição do Conselho:,,,,
+,,Representante governamental da área de assistência social,,,MASS211
+,,Representante governamental da área de saúde,,,MASS212
+,,Representante governamental da área de educação,,,MASS213
+,,Representante governamental de outras áreas,,,MASS214
+,,Representante da sociedade civil de entidades e organizações da assistência social,,,MASS215
+,,Representante da sociedade civil de organização de trabalhadores,,,MASS216
+,,Representante da sociedade civil de organização de usuários dos serviços socioassistenciais,,,MASS217
+,,Representante da sociedade civil de usuários dos serviços dos serviços socioassistenciais,,,MASS218
+,,,,,
+Fundo Municipal de Assistência Social - existência ,,,,,MASS22
+,Responsável pela gestão do fundo,,,,MASS221
+,,,,,
+"Fonte: IBGE, Pesquisa de Informações Básicas Municipais - 2023",,,,,
+,,,,,
+2.5 Serviços socioassistenciais,,,,,
+O município executa diretamente serviços socioassistenciais,,,,,MASS23
+,Serviço de Proteção e Atendimento Integral à Família (PAIF/CRAS),,,,MASS241
+,Serviço de Convivência para crianças de 0 a 6 anos,,,,MASS242
+,Serviço de Convivência para crianças e adolescentes de 6 a 15 anos,,,,MASS243
+,Serviço de Convivência para adolescentes e jovens de 15 a 17 anos,,,,MASS244
+,Serviço de Convivência para jovens e adultos de 18 a 59 anos,,,,MASS245
+,Serviço de Convivência para idosos,,,,MASS246
+,Serviço de Proteção Social Básica no Domicílio para Pessoas com Deficiência e Idosas,,,,MASS247
+,Serviço de Proteção e Atendimento Especializado a Famílias e Indivíduos (PAEFI/CREAS),,,,MASS248
+,Serviço Especializado para Pessoas em Situação de Rua,,,,MASS249
+,"Serviço Especializado para Pessoas com Deficiência, Idosas e suas Famílias",,,,MASS2410
+,Serviço de Proteção Social a Adolescentes em Cumprimento de Medida Socioeducativa de Liberdade Assistida (LA) e de Prestação de Serviços à Comunidade (PSC),,,,MASS2411
+,Serviço Especializado em Abordagem Social,,,,MASS2412
+,Programa/Serviço de acolhimento em Família Acolhedora para Criança e Adolescente,,,,MASS2413
+,,É regulamentado por lei municipal,,,MASS24131
+,Serviço de Acolhimento Institucional para crianças e adolescentes,,,,MASS2414
+,Serviço de Acolhimento Institucional para adultos e famílias,,,,MASS2415
+,Serviço de Acolhimento Institucional para Idosos,,,,MASS2416
+,Serviço de Acolhimento Institucional para jovens e adultos com deficiência,,,,MASS2417
+,Serviço de Acolhimento Institucional para mulheres em situação de violência,,,,MASS2418
+,Serviço de Acolhimento em Repúblicas para Jovens (maiores de 18 anos),,,,MASS2419
+,,,,,
+"Fonte: IBGE, Pesquisa de Informações Básicas Municipais - 2023",,,,,
+,,,,,
+2.6 Unidades físicas que existem no município,,,,,
+Centro de Referência de Assistência Social (CRAS),,,,,MASS251
+,Quantos,,,,MASS2511
+Centro de convivência,,,,,MASS252
+Centro de Referência Especializado de Assistência Social (CREAS),,,,,MASS253
+,Quantos,,,,MASS2531
+Centro de Referência Especializado para População em Situação de Rua,,,,,MASS254
+,Quantos,,,,MASS2541
+Centro dia,,,,,MASS255
+Unidade de atendimento ao adolescente em conflito com a lei,,,,,MASS256
+,Quantos,,,,MASS2561
+Abrigo institucional ou Casa lar para crianças e adolescentes,,,,,MASS257
+Abrigo institucional para pessoas com deficiência,,,,,MASS258
+Residência inclusiva,,,,,MASS259
+Abrigo institucional ou Casa de passagem para população em situação de rua,,,,,MASS2510
+República para adultos em processo de saída das ruas,,,,,MASS2511
+Abrigo institucional ou Casa de passagem para migrantes e/ou refugiados,,,,,MASS2512
+Abrigo para famílias desabrigadas/desalojadas vítimas de desastres,,,,,MASS2513
+Abrigo institucional para mulheres em situação de violência,,,,,MASS2514
+Abrigo institucional ou Casa lar para idosos,,,,,MASS2515
+República para idosos,,,,,MASS2516
+República para jovens egressos de serviço de acolhimento,,,,,MASS2517
+Centro de múltiplo uso,,,,,MASS2518
+Unidades exclusivas de cadastramento e/ou revisão cadastral,,,,,MASS2519
+,,,,,
+"Fonte: IBGE, Pesquisa de Informações Básicas Municipais - 2023",,,,,
+,,,,,
+2.7 Serviços sociassistenciais para grupos específicos,,,,,
+O município realiza prestação de serviços sociassistenciais a:,,,,,
+,Povos indígenas,,,,MASS261
+,Povos ciganos,,,,MASS262
+,Comunidades quilombolas,,,,MASS263
+,Ribeirinhos,,,,MASS264
+,Povos de matriz africana,,,,MASS265
+,"Outros povos ou
+comunidades tradicionais",,,,MASS266
+,População em situação de rua,,,,MASS267
+,Agricultores familiares,,,,MASS268
+,Assentados da reforma agrária,,,,MASS269
+,Pescadores artesanais,,,,MASS2610
+,Catadores de materiais recicláveis,,,,MASS2611
+,Migrantes/Imigrantes/Refugiados/Apátridas,,,,MASS2612
+,Atingidas por empreendimentos de infraestrutura,,,,MASS2613
+,Encarcerado/egressos do sistema carcerário,,,,MASS2614
+,Nenhum dos citados,,,,MASS2615
+,,,,,
+"Fonte: IBGE, Pesquisa de Informações Básicas Municipais - 2023",,,,,
+,,,,,
+2.8 Concessão de benefícios eventuais,,,,,
+O município realiza concessão de benefícios eventuais,,,,,MASS27
+,Benefícios concedidos:,,,,
+,,Benefício eventual por situação de morte,,,MASS2711
+,,Benefício eventual por situação de natalidade,,,MASS2712
+,,Benefício eventual para situação de calamidade pública,,,MASS2713
+,,Outros benefícios eventuais para famílias em situação de vulnerabilidade temporária,,,MASS2714
+,,,,,
+"Fonte: IBGE, Pesquisa de Informações Básicas Municipais - 2023",,,,,
+,,,,,
+,,,,,
+3. TRABALHO E INCLUSÃO PRODUTIVA,,,,,
+3.1 Diagnóstico socioeconômico do município,,,,,subtítulo link
+"3.2 Ações, programas ou projetos de inclusão produtiva para a geração de trabalho e renda",,,,,subtítulo link
+"3.3 Ações, programas ou projetos de inclusão produtiva rural",,,,,subtítulo link
+"3.4 Ações, programas ou projetos de qualificação profissional e intermediação de mão de obra",,,,,subtítulo link
+"3.5 Ações, programas ou projetos de inclusão produtiva urbana",,,,,subtítulo link
+"3.6 Ações, programas ou projetos de de crédito, microcrédito e seguro",,,,,subtítulo link
+,,,,,
+"Fonte: IBGE, Pesquisa de Informações Básicas Municipais - 2023",,,,,
+,,,,,
+3. TRABALHO E INCLUSÃO PRODUTIVA,,,,,
+3.1 Diagnóstico socioeconômico do município,,,,,
+Existe algum tipo de estudo setorial e/ou diagnóstico socioeconômico do município que tenha sido realizado no período entre 2021 e 2022,,,,,MTIP01
+,Ano do diagnóstico,,,,MTIP011
+,Órgão responsável pela elaboração do diagnóstico:,,,,
+,,Agricultura,,,MTIP021
+,,Assistência social,,,MTIP022
+,,Fazenda,,,MTIP023
+,,Planejamento,,,MTIP024
+,,Trabalho,,,MTIP025
+,,Desenvolvimento econômico,,,MTIP026
+,,Outro órgão,,,MTIP027
+,,Não sabe informar,,,MTIP028
+,,,,,
+"Fonte: IBGE, Pesquisa de Informações Básicas Municipais - 2023",,,,,
+,,,,,
+"3.2 Ações, programas ou projetos de inclusão produtiva para a geração de trabalho e renda",,,,,
+"O município desenvolve ações, programas ou projetos de inclusão produtiva para a geração de trabalho e renda",,,,,MTIP03
+,"Órgão gestor responsável pelas ações, programas ou projetos:",,,,
+,,Agricultura,,,MTIP041
+,,Assistência social,,,MTIP042
+,,Fazenda,,,MTIP043
+,,Planejamento,,,MTIP044
+,,Trabalho,,,MTIP045
+,,Desenvolvimento econômico,,,MTIP046
+,,Outro órgão,,,MTIP047
+,,Não sabe informar,,,MTIP048
+,,,,,
+"Fonte: IBGE, Pesquisa de Informações Básicas Municipais - 2023",,,,,
+,,,,,
+"3.3 Ações, programas ou projetos de inclusão produtiva rural",,,,,
+"O município desenvolve ações, programas ou projetos de inclusão produtiva rural",,,,,MTIP05
+,"Ações, programas ou projetos desenvolvidos:",,,,
+,,Ações de assistência técnica e extensão rural,,,MTIP061
+,,Ações de fomento a atividades produtivas,,,MTIP062
+,,Ações de incentivo para acesso ao crédito e ao seguro rural,,,MTIP063
+,,Ações de aquisição ou empréstimo de tratores e implementos agrícolas,,,MTIP064
+,,Ações de doação de sementes ou matrizes de pequenos animais,,,MTIP065
+,,Ações de aquisição de alimentos no âmbito do Programa de Aquisição de Alimentos (PAA) ou do Programa Nacional de Alimentação Escolar (PNAE),,,MTIP066
+,,"Ações de aquisição de alimentos para atender a demandas regulares de restaurantes universitários, presídios, hospitais, entre outros",,,MTIP067
+,,"Ações de apoio a transporte, armazenagem, comercialização e distribuição de alimentos (2)",,,MTIP068
+,,"Ações de fomento a empreendimentos coletivos rurais (associativismo, cooperativismo e economia solidária)",,,MTIP069
+,,"Ações de assistência técnico-gerencial a empreendimentos coletivos rurais (para formalização, melhora da produção, aspectos jurídicos e comerciais)",,,MTIP0610
+,,,,,
+"Fonte: IBGE, Pesquisa de Informações Básicas Municipais - 2023",,,,,
+"(2) Empréstimos de caminhões, manutenção de centrais de recebimento de alimentos provenientes de programas como o PAA e o PNAE.",,,,,
+,,,,,
+"3.4 Ações, programas ou projetos de qualificação profissional e intermediação de mão de obra",,,,,
+"O município desenvolve ações, programas ou projetos de qualificação profissional e intermediação de mão de obra",,,,,MTIP07
+,"Ações, programas ou projetos desenvolvidos:",,,,
+,,Ações de qualificação profissional,,,MTIP081
+,,Ações de intermediação de mão de obra,,,MTIP082
+,,Ações de mobilização e sensibilização para cursos de qualificação profissional,,,MTIP083
+,,,,,
+"Fonte: IBGE, Pesquisa de Informações Básicas Municipais - 2023",,,,,
+,,,,,
+"3.5 Ações, programas ou projetos para empreendimentos urbanos",,,,,
+"O município desenvolve ações, programas ou projetos para empreendimentos urbanos",,,,,MTIP09
+,"Ações, programas ou projetos desenvolvidos:",,,,
+,,Ações de fomento a empreendimentos individuais urbanos,,,MTIP101
+,,"Ações fomento a empreendimentos coletivos urbanos (Associativismo, Cooperativismo e Economia Solidária urbana e outros grupos não formalizados)",,,MTIP102
+,,"Ações de assistência técnico-gerencial a empreendimentos individuais urbanos (para formalização, melhora da produção, aspectos jurídicos e comerciais)",,,MTIP103
+,,Ações de incubação de empreendimentos,,,MTIP104
+,,Ações de fomento ao artesanato,,,MTIP105
+,,Ações de doação de equipamentos ou kit básico para desempenho do trabalho,,,MTIP106
+,,,,,
+"Fonte: IBGE, Pesquisa de Informações Básicas Municipais - 2023",,,,,
+,,,,,
+"3.6 Ações, programas ou projetos de crédito, microcrédito e seguro",,,,,
+"O município desenvolve ações, programas ou projetos de crédito, microcrédito e seguro",,,,,MTIP11
+,"Ações, programas ou projetos desenvolvidos:",,,,
+,,Ações para promover o acesso a microcrédito produtivo orientado (Programa CRESCER e/ou similar),,,MTIP121
+,,Ações de acesso a crédito por meio do Banco do Povo ou outras organizações congêneres,,,MTIP122
+,,Ações de acesso a crédito do Proger urbano,,,MTIP123
+,,,,,
+"Fonte: IBGE, Pesquisa de Informações Básicas Municipais - 2023",,,,,
+,,,,,
+"3.7 Ações, programas ou projetos de geração de trabalho e renda",,,,,
+"O município desenvolve ações, programas ou projetos de geração de trabalho e renda",,,,,MTIP13
+,"Ações, programas ou projetos desenvolvidos:",,,,
+,,"Projeto(s) de apoio à comercialização de negócios, cooperativas e empreendimentos solidários",,,MTIP141
+,,"Projeto(s) de apoio ao associativismo, cooperativismo e economia solidária",,,MTIP142
+,,,,,
+"Fonte: IBGE, Pesquisa de Informações Básicas Municipais - 2023",,,,,
+,,,,,
+,,,,,
+4. SEGURANÇA ALIMENTAR E NUTRICIONAL,,,,,
+4.1 Órgão gestor da segurança alimentar,,,,,subtítulo link
+4.2 Lei de segurança alimentar,,,,,subtítulo link
+"4.3 Conselho, câmara ou instância governamental intersetorial e plano de segurança alimentar",,,,,subtítulo link
+4.4 Orçamento ,,,,,subtítulo link
+4.5 Ações desenvolvidas,,,,,subtítulo link
+,,,,,
+"Fonte: IBGE, Pesquisa de Informações Básicas Municipais - 2023",,,,,
+,,,,,
+4. SEGURANÇA ALIMENTAR E NUTRICIONAL,,,,,
+4.1 Órgão gestor da segurança alimentar,,,,,
+Caracterização do órgão gestor ,,,,,MSAN01
+,Secretaria ou setor está associada ou subordinada:,,,,
+,,Assistência social,,,MSAN021
+,,Agricultura,,,MSAN022
+,,Planejamento,,,MSAN023
+,,Saúde,,,MSAN024
+,,Direitos humanos,,,MSAN025
+,,Outra,,,MSAN026
+,,,,,
+"Fonte: IBGE, Pesquisa de Informações Básicas Municipais - 2023",,,,,
+,,,,,
+4.2 Lei de segurança alimentar,,,,,
+Lei municipal de segurança alimentar - existência,,,,,MSAN04
+,Número da lei,,,,MSAN041
+,Mês promulgação,,,,MSAN042A
+,Ano da promulgação,,,,MSAN042B
+,Mês da apresentação do projeto de lei,,,,MSAN043A
+,Ano da apresentação do projeto de lei,,,,MSAN043B
+,,,,,
+"Fonte: IBGE, Pesquisa de Informações Básicas Municipais - 2023",,,,,
+,,,,,
+"4.3 Conselho, câmara ou instância governamental intersetorial e plano de segurança alimentar",,,,,
+Conselho Municipal de Segurança Alimentar - existência,,,,,MSAN05
+,Lei de criação,,,,MSAN051a
+,Ano de criação,,,,MSAN051b
+,O conselho está,,,,MSAN051c
+,Formação,,,,MSAN052
+,Caráter:,,,,
+,,Consultivo,,,MSAN061
+,,Deliberativo,,,MSAN062
+,,Normativo,,,MSAN063
+,,Fiscalizador,,,MSAN064
+,Quantidade de reuniões (presenciais ou remotas) nos últimos 12 meses,,,,MSAN07
+,Número de conselheiros (titulares e suplentes),,,,MSAN08
+,Capacitação para os membros:,,,,
+,,Continuada,,,MSAN091
+,,Eventualmente,,,MSAN092
+,,Não realiza,,,MSAN093
+,Disponibiliza infraestrutura para o funcionamento,,,,MSAN10
+,,Sala própria,,,MSAN1011
+,,Computador,,,MSAN1012
+,,Impressora,,,MSAN1013
+,,Acesso à internet,,,MSAN1014
+,,Veículo próprio,,,MSAN1015
+,,Telefone,,,MSAN1016
+,,Diárias,,,MSAN1017
+,,Dotação orçamentária própria,,,MSAN1018
+,,Transporte/locomoção,,,MSAN1019
+,,,,,
+Câmara ou instância governamental intersetorial de segurança alimentar e nutricional - existência,,,,,MSAN11
+,Áreas do governo representadas:,,,,
+,,Fazenda,,,MSAN121
+,,Planejamento,,,MSAN122
+,,Agricultura,,,MSAN123
+,,Saúde,,,MSAN124
+,,Trabalho,,,MSAN125
+,,Educação,,,MSAN126
+,,Assistência social,,,MSAN127
+,,Segurança Alimentar,,,MSAN128
+,,Casa Civil,,,MSAN129
+,,Direitos Humanos,,,MSAN1210
+,,Outras,,,MSAN1211
+,Recursos orçamentários municipais para apoiar o funcionamento,,,,MSAN14
+,,,,,
+Plano de segurança alimentar - existência,,,,,MSAN15
+,,,,,
+"Fonte: IBGE, Pesquisa de Informações Básicas Municipais - 2023",,,,,
+,,,,,
+4.4 Orçamento ,,,,,
+Recursos orçamentários municipais previstos para o financiamento da política (3) - existência,,,,,MSAN16
+,,,,,
+"Fonte: IBGE, Pesquisa de Informações Básicas Municipais - 2023",,,,,
+(3) Recursos orçamentários municipais previstos para o financiamento de políticas de segurança alimentar e nutricional (exceto contrapartidas de convênios com o governo federal).,,,,,
+,,,,,
+4.5 Ações desenvolvidas,,,,,
+Atividades de educação alimentar e nutricional,,,,,MSAN171
+,Com recurso repassado pelo governo federal,,,,MSAN17111
+,Com recurso repassado pelo governo estadual,,,,MSAN17112
+,Com recurso próprio,,,,MSAN17113
+"Atividades de capacitação, fomento ou incentivo à produção orgânica e/ou agroecológica",,,,,MSAN172
+,Com recurso repassado pelo governo federal,,,,MSAN17211
+,Com recurso repassado pelo governo estadual,,,,MSAN17212
+,Com recurso próprio,,,,MSAN17213
+Doação de alimentos4,,,,,MSAN173
+,Com recurso repassado pelo governo federal,,,,MSAN17311
+,Com recurso repassado pelo governo estadual,,,,MSAN17312
+,Com recurso próprio,,,,MSAN17313
+Manutenção de feiras livres/populares ou mercados públicos de alimentos,,,,,MSAN174
+,Com recurso repassado pelo governo federal,,,,MSAN17411
+,Com recurso repassado pelo governo estadual,,,,MSAN17412
+,Com recurso próprio,,,,MSAN17413
+Manutenção de bancos de alimentos,,,,,MSAN175
+,Com recurso repassado pelo governo federal,,,,MSAN17511
+,Com recurso repassado pelo governo estadual,,,,MSAN17512
+,Com recurso próprio,,,,MSAN17513
+Manutenção de cozinhas comunitárias,,,,,MSAN176
+,Com recurso repassado pelo governo federal,,,,MSAN17611
+,Com recurso repassado pelo governo estadual,,,,MSAN17612
+,Com recurso próprio,,,,MSAN17613
+Manutenção de restaurantes populares,,,,,MSAN177
+,Com recurso repassado pelo governo federal,,,,MSAN17711
+,Com recurso repassado pelo governo estadual,,,,MSAN17712
+,Com recurso próprio,,,,MSAN17713
+Manutenção de equipamentos de abastecimento público de alimentos (5),,,,,MSAN178
+,Com recurso repassado pelo governo federal,,,,MSAN17811
+,Com recurso repassado pelo governo estadual,,,,MSAN17812
+,Com recurso próprio,,,,MSAN17813
+Atividades de agricultura urbana (6),,,,,MSAN179
+,Com recurso repassado pelo governo federal,,,,MSAN17911
+,Com recurso repassado pelo governo estadual,,,,MSAN17912
+,Com recurso próprio,,,,MSAN17913
+Programa de alimentação escolar,,,,,MSAN1710
+,Com recurso repassado pelo governo federal,,,,MSAN171011
+,Com recurso repassado pelo governo estadual,,,,MSAN171012
+,Com recurso próprio,,,,MSAN171013
+Programa de hortas escolares,,,,,MSAN1711
+,Com recurso repassado pelo governo federal,,,,MSAN171111
+,Com recurso repassado pelo governo estadual,,,,MSAN171112
+,Com recurso próprio,,,,MSAN171113
+Serviços de Assistência Técnica e Extensão Rural para agricultores familiares e povos e comunidades tradicionais,,,,,MSAN1712
+,Com recurso repassado pelo governo federal,,,,MSAN171211
+,Com recurso repassado pelo governo estadual,,,,MSAN171212
+,Com recurso próprio,,,,MSAN171213
+Compras públicas da agricultura familiar,,,,,MSAN1713
+,Por meio de qual programa:,,,,
+,,Programa Nacional de Alimentação Escolar (PNAE),,,MSAN171311
+,,Programa de Aquisição de Alimentos (PAA),,,MSAN171312
+,,Programas estaduais,,,MSAN171313
+,,Programas próprios,,,MSAN171314
+,Com recurso repassado pelo governo federal,,,,MSAN171321
+,Com recurso repassado pelo governo estadual,,,,MSAN171322
+,Com recurso próprio,,,,MSAN171323
+Atividades relacionadas ao público do Cadastro Único e/ou Programa Bolsa Família,,,,,MSAN1714
+,Por meio de qual programa:,,,,
+,,Cursos de capacitação e/ou educação alimentar e nutricional,,,MSAN171411
+,,"Encaminhamento a outras redes de serviços (assistência, saúde, educação)",,,MSAN171412
+,,Avaliação nutricional,,,MSAN171413
+,,Disseminação de orientações técnicas e materiais informativos,,,MSAN171414
+,,Atividades relacionadas à geração de trabalho e renda,,,MSAN171415
+,Com recurso repassado pelo governo federal,,,,MSAN171421
+,Com recurso repassado pelo governo estadual,,,,MSAN171422
+,Com recurso próprio,,,,MSAN171423
+"Programa cisternas, incluindo água para consumo e produção",,,,,MSAN1715
+,,,,,
+"Fonte: IBGE, Pesquisa de Informações Básicas Municipais - 2023",,,,,
+"(4) Para grupos específicos e/ou povos indígenas, comunidades quilombolas, e demais povos ou comunidades tradicionais.",,,,,
+"(5) Centrais de abastecimento - Ceasas, entrepostos.",,,,,
+(6) Hortas comunitárias em terrenos urbanos.,,,,,
+,,,,,
+,,,,,
+5. POLÍTICA PARA MULHERES,,,,,
+5.1 Organismo executivo de políticas para as mulheres e perfil do gestor,,,,,
+5.2 Plano municipal de políticas para as mulheres,,,,,
+5.3 Conselho e fundo estadual de direitos da mulher,,,,,
+5.4 Estrutura e serviços,,,,,
+5.5 Levantamento de informações,,,,,
+,,,,,
+5. POLÍTICA PARA MULHERES,,,,,
+5.1 Organismo executivo de políticas para as mulheres e perfil do gestor,,,,,
+Organismo executivo de políticas para as mulheres - existência,,,,,MPPM01
+,Caracteriza-se como,,,,MPPM02
+,,Secretaria ou setor a qual está associada ou subordinada:,,,
+,,,Assistência social,,MPPM031
+,,,Direitos humanos,,MPPM032
+,,,Justiça,,MPPM033
+,,,Segurança pública,,MPPM034
+,,,Saúde,,MPPM035
+,,,Outra,,MPPM036
+,Nome do organismo executivo da política para mulheres,,,,MPPM04
+,,,,,
+,Perfil do gestor:,,,,
+,,Sexo,,,MPPM05
+,,Idade ,,,MPPM06
+,,Cor/raça,,,MPPM07
+,,,Este quesito foi respondido pelo próprio titular,,MPPM071
+,,Escolaridade,,,MPPM08
+,,,,,
+"Principais áreas de atuação do organismo executivo de políticas para as mulheres, seja na execução direta ou na articulação com outros órgãos:",,,,,
+,Educação,,,,MPPM10a1
+,Trabalho,,,,MPPM10a2
+,Cultura,,,,MPPM10a3
+,Esporte,,,,MPPM10a4
+,Assistência social,,,,MPPM10a5
+,Segurança pública,,,,MPPM10a6
+,Justiça,,,,MPPM10a7
+,Comunicação,,,,MPPM10a8
+,Meio ambiente,,,,MPPM10a9
+,Saúde,,,,MPPM10a10
+,Outra,,,,MPPM10a11
+,,,,,
+"Fonte: IBGE, Pesquisa de Informações Básicas Municipais - 2023",,,,,
+"Não soube informar - existe, mas não soube informar o número. ",,,,,
+"(**) Sem gestor - apesar de ter estrutura para a política, no momento da coleta da informação não tinha gestor nomeado.",,,,,
+,,,,,
+"5.2 Plano municipal de políticas para as mulheres e programa, projeto ou ação em cooperação",,,,,
+Plano municipal de políticas para as mulheres - existência,,,,,MPPM11
+,Ano de criação,,,,MPPM11a
+,Por qual instrumento,,,,MPPM111
+,Último ano de vigência do plano,,,,MPPM112
+,,,,,
+"O município desenvolve na área de políticas para mulheres, programa, projeto ou ação em cooperação, convênio e/ou articulação com:",,,,,
+,Administração pública federal,,,,MPPM121
+,Administração pública estadual,,,,MPPM122
+,Administração pública municipal,,,,MPPM123
+,Organizações não-governamentais,,,,MPPM124
+,Outras instituições privadas,,,,MPPM125
+,Organismos internacionais (exceto ONG),,,,MPPM126
+,Entidades religiosas,,,,MPPM127
+,Entidade de trabalhadores,,,,MPPM128
+,Poder judiciário,,,,MPPM129
+,Poder legislativo,,,,MPPM1210
+,Não desenvolve,,,,MPPM1211
+,,,,,
+"Fonte: IBGE, Pesquisa de Informações Básicas Municipais - 2023",,,,,
+,,,,,
+5.3 Conselho e fundo municipal de direitos da mulher,,,,,
+Conselho municipal de direitos da mulher - existência,,,,,MPPM13
+,Lei de criação ,,,,MPPM131a
+,Ano de criação ,,,,MPPM131b
+,O conselho está,,,,MPPM13c
+,Formação,,,,MPPM132
+,Carater:,,,,
+,,Consultivo,,,MPPM14a1
+,,Deliberativo,,,MPPM14a2
+,,Normativo,,,MPPM14a3
+,,Fiscalizador,,,MPPM14a4
+,Quantidade de reuniões (presenciais ou remotas) nos últimos 12 meses,,,,MPPM14
+,Número de conselheiros (titulares e suplentes),,,,MPPM15
+,Capacitação para os membros:,,,,
+,,Continuada,,,MPPM161
+,,Eventualmente,,,MPPM162
+,,Não realiza,,,MPPM163
+,Disponibiliza infraestrutura para o funcionamento,,,,MPPM17
+,,Sala própria,,,MPPM1711
+,,Computador,,,MPPM1712
+,,Impressora,,,MPPM1713
+,,Acesso à internet,,,MPPM1714
+,,Veículo próprio,,,MPPM1715
+,,Telefone,,,MPPM1716
+,,Diárias,,,MPPM1717
+,,Dotação orçamentária própria,,,MPPM1718
+,,Transporte/Locomoção,,,MPPM1719
+,O Conselho é vinculado administrativamente,,,,MPPM18
+,Quem preside o conselho,,,,MPPM19
+,,,,,
+"Fonte: IBGE, Pesquisa de Informações Básicas Municipais - 2023",,,,,
+,,,,,
+5.4 Estrutura e serviços,,,,,
+Casas-abrigo para Mulheres em situação de violência doméstica e familiar (7) ou Serviços de Acolhimento para Mulheres em situação de violência (Sistema Único de Assistência Social - SUAS) (8),,,,,MPPM20
+,Quantidade,,,,MPPM201
+,O endereço da casa ou abrigo é sigiloso,,,,MPPM202
+,Principais atividades realizadas:,,,,
+,,Atendimento psicológico individual,,,MPPM211
+,,Atendimento psicológico em grupo,,,MPPM212
+,,Atividades culturais e educativas,,,MPPM213
+,,Atividades profissionalizantes,,,MPPM214
+,,Atendimento social9,,,MPPM215
+,,Atendimento jurídico10,,,MPPM216
+,,Atendimento médico11,,,MPPM217
+,,Acompanhamento pedagógico das crianças,,,MPPM218
+,,Encaminhamento para programas de emprego e geração de renda,,,MPPM219
+,,Garantia de inserção/permanência das crianças na escola,,,MPPM2110
+,,Creche,,,MPPM2111
+,,Outras atividades,,,MPPM2112
+,,Não sabe informar,,,MPPM2113
+,,,,,
+Serviços especializados de enfrentamento à violência contra mulheres no estado - existência,,,,,MPPM23
+,Serviços especializados existentes:,,,,
+,,Centro Especializado de Atendimento à Mulher (CEAM) ou Núcleos Integrados de Atendimento às Mulheres em Situação de Violência (NIAM) (12),,,MPPM24a1
+,,Serviços especializados de atendimento à violência sexual (13),,,MPPM24a2
+,,Centro Integrado de Serviços de Atendimento a Mulheres em Situação de Violência (14),,,MPPM24a3
+,,Unidades Móveis de Atendimento à Mulher (15),,,MPPM24a4
+,,Casas de Acolhimento de Curta Duração (Casa de Passagem),,,MPPM24a5
+,,,,,
+"Fonte: IBGE, Pesquisa de Informações Básicas Municipais - 2023",,,,,
+"(7) Casa(s) Abrigo são locais seguros que oferecem abrigo protegido e integral a mulheres em situação de violência doméstica e familiar sob risco de morte iminente. Constitui serviço temporário e em geral de caráter sigiloso, no qual as usuárias poderão permanecer por período determinado, durante o qual deverão reunir condições necessárias para retomar o curso de suas vidas. Atendem exclusivamente mulheres e seus dependentes (sejam homens ou mulheres). Forão consideradas apenas as casas-abrigos de responsabilidade da gestão municipal.",,,,,
+"(8) Serviços de Acolhimento para Mulheres em situação de violência acolhimento provisório para mulheres, acompanhadas ou não de seus filhos, em situação de risco de morte ou ameaças em razão da violência doméstica e familiar, causadora de lesão, sofrimento físico, sexual, psicológico ou dano moral. Deve ser desenvolvido em local sigiloso. Forão consideradas apenas os serviços de responsabilidade da gestão municipal.",,,,,
+"(9) Atendimento social acompanhado por assistente social que insira a mulher em programas sociais do governo, como Bolsa-Família e/ou Benefícios de Prestação Continuada.",,,,,
+(10) Atendimento jurídico no caso de advogado próprio ou de encaminhamentos para Defensoria Pública.,,,,,
+"(11) Atendimento médico, hospitalar ou de outra especialidade da área de saúde, ou encaminhamento para serviço de saúde da rede pública.",,,,,
+"(12) Centros de Referência/Especializados ou Núcleos Integrados de Atendimento às Mulheres em Situação de Violência: prestam acolhimento, acompanhamento psicossocial e orientação jurídica às mulheres em situação de violência (violência doméstica e familiar contra a mulher; tráfico de mulheres, assédio sexual; assédio moral; etc).",,,,,
+"(13) Serviços Especializados de Atendimento à Violência Sexual são serviços de saúde especializados no atendimento a mulheres em situação de violência contam com equipes multidisciplinares (psicólogos, assistentes sociais, enfermeiras/os e medicas/os) capacitadas para atender os casos de violência sexual e outras violências. Esses serviços fazem parte do Sistema Único de Saúde (SUS), que é universal e presta atendimento a toda população de forma gratuita.",,,,,
+"(14) Centro Integrado de Serviços de Atendimento a Mulheres em Situação de Violência reune em um mesmo espaço físico, diferentes serviços voltados à mulher em situação de violência, tais como: Apoio Psicossocial; Delegacia; Juizado Especializado em Violência Doméstica e Familiar contra as Mulheres; Ministério Público, Defensoria Pública; Serviço de Promoção de Autonomia Econômica; Alojamento de Passagem e Central de Transportes. Ressalta-se que esse tipo de serviço não se confunde com CEAM ou CRAM.",,,,,
+"(15) Unidades Móveis de Atendimento à Mulher são ônibus especialmente desenvolvidos para o trânsito fora de estrada, adaptados para o atendimento às mulheres do campo e da floresta.",,,,,
+,,,,,
+9.5 Levantamento de informações,,,,,
+Levantamento do quantitativo de mulheres atendidas pelos Centros de Referência/Especializados ou Núcleos Integrados de Atendimento às Mulheres em Situação de Violência - existência,,,,,MPPM25
+,Quantitativo é divulgado,,,,MPPM251
+,,Quantos atendimentos foram feitos em 2017,,,MPPM252
+,,,,,
+"Fonte: IBGE, Pesquisa de Informações Básicas Municipais - 2023",,,,,
+,,,,,
+,,,,,
+6. Segurança Pública,,,,,
+6.1 Órgão gestor da Segurança Pública,,,,,subtítulo link
+"6.2 Conselho, conselho comunitário, fundo e plano municipal de segurança",,,,,subtítulo link
+6.3 Estrutura existente ,,,,,subtítulo link
+6.4 Conselho municipal de defesa civil,,,,,subtítulo link
+6.5 Guarda Municipal,,,,,subtítulo link
+,,,,,
+"Fonte: IBGE, Pesquisa de Informações Básicas Municipais - 2023",,,,,
+,,,,,
+6. Segurança Pública,,,,,
+6.1 Órgão gestor da segurança pública e perfil do gestor,,,,,
+Caracterização do órgão de segurança pública,,,,,MSEG01
+,,,,,
+Perfil do gestor:,,,,,
+,Sexo,,,,MSEG03
+,Idade ,,,,MSEG04
+,Cor/raça,,,,MSEG05
+,,Foi respondido pelo próprio titular do órgão gestor,,,MSEG051
+,Escolaridade,,,,MSEG06
+,,,,,
+"Fonte: IBGE, Pesquisa de Informações Básicas Municipais - 2023",,,,,
+"(**) Sem gestor - apesar de ter estrutura para a política, no momento da coleta da informação não tinha gestor nomeado.",,,,,
+,,,,,
+"6.2 Conselho, conselho comunitário, fundo e plano municipal de segurança",,,,,
+Conselho municipal de segurança pública - existência,,,,,MSEG07
+,Lei de criação,,,,MSEG071a
+,Ano de criação,,,,MSEG071b
+,O conselho está,,,,MSEG071c
+,Formação ,,,,MSEG072
+,Caráter:,,,,
+,,Consultivo,,,MSEG081
+,,Deliberativo,,,MSEG082
+,,Normativo,,,MSEG083
+,,Fiscalizador,,,MSEG084
+,Quantidade de reuniões (presenciais ou remotas) nos últimos 12 meses ,,,,MSEG09
+,Número de conselheiros (titulares e suplentes),,,,MSEG10
+,Capacitação dos membros:,,,,
+,,Periodicamente,,,MSEG111
+,,Ocasionalmente,,,MSEG112
+,,Não realiza,,,MSEG113
+,Município disponibiliza infraestrutura ,,,,MSEG12
+,,Sala ,,,MSEG1211
+,,Computador,,,MSEG1212
+,,Impressora,,,MSEG1213
+,,Acesso à internet,,,MSEG1214
+,,Veículo,,,MSEG1215
+,,Telefone,,,MSEG1216
+,,Diárias,,,MSEG1217
+,,Dotação orçamentária própria,,,MSEG1218
+,,Transporte/locomoção,,,MSEG1219
+,,,,,
+Conselho comunitário de segurança pública - Existência,,,,,MSEG13
+,,,,,
+Fundo municipal de segurança pública - Existência,,,,,MSEG14
+,,,,,
+Plano municipal de segurança pública - Existência,,,,,MSEG15
+,,,,,
+"Fonte: IBGE, Pesquisa de Informações Básicas Municipais - 2023",,,,,
+,,,,,
+6.3 Estrutura existente ,,,,,
+Existe no município:,,,,,
+,Delegacia de Polícia Civil,,,,MSEG161
+,Delegacia de Homicídios,,,,MSEG162
+,Delegacia de Proteção à Pessoa Idosa,,,,MSEG163
+,Delegacia de Proteção à Criança e ao Adolescente (DPCA),,,,MSEG164
+,Delegacia da Criança e do Adolescente (DCA),,,,MSEG165
+,Delegacia da Criança e do Adolescente (especialidades não separadas),,,,MSEG166
+,Delegacia de Proteção ao Meio Ambiente,,,,MSEG167
+,Delegacia especializada no Atendimento à Mulher,,,,MSEG168
+,Delegacia especializada em Pessoas Desaparecidas,,,,MSEG169
+,Delegacia de Repressão aos Crimes de Informática,,,,MSEG1610
+,Nenhuma das citadas,,,,MSEG1611
+,,,,,
+,Instituto Médico Legal,,,,MSEG17
+,Sede de Comarca,,,,MSEG18
+,Unidade do Corpo de Bombeiros,,,,MSEG19
+,,,,,
+"Fonte: IBGE, Pesquisa de Informações Básicas Municipais - 2023",,,,,
+,,,,,
+6.4 Guarda Municipal,,,,,
+Guarda municipal - existência,,,,,MSEG27
+,Lei de criação,,,,MSEG271a
+,Ano de criação,,,,MSEG271b
+,Efetivo em 31 de dezembro de 2022:,,,,
+,,Homens,,,MSEG281
+,,Mulheres,,,MSEG282
+,,Total,,,MSEG283
+,Responsável pela realização do curso de formação dos profissionais:,,,,
+,,Guarda Municipal,,,MSEG291
+,,Polícia Militar,,,MSEG292
+,,Corpo de Bombeiros,,,MSEG293
+,,Polícia Civil,,,MSEG294
+,,Realizado em unidade conveniada/parceira,,,MSEG295
+,,Não possui,,,MSEG296
+,Cursos de capacitação e aperfeiçoamento dos profissionais ocorre:,,,,
+,,Periodicamente,,,MSEG301
+,,Ocasionalmente,,,MSEG302
+,,Não realiza,,,MSEG303
+,Temas:,,,,
+,,Ações socioeducativas,,,MSEG311
+,,Armas de fogo,,,MSEG312
+,,Armas não letais,,,MSEG313
+,,Atendimento ao público,,,MSEG314
+,,Códigos de conduta profissional,,,MSEG315
+,,Condução e operação de viaturas,,,MSEG316
+,,Defesa pessoal,,,MSEG317
+,,Defesa civil,,,MSEG318
+,,Direção defensiva,,,MSEG319
+,,"Educação ambiental (direito ambiental, crimes ambientais)",,,MSEG3110
+,,Enfrentamento à LGBTQIA+fobia,,,MSEG3111
+,,Enfrentamento ao racismo,,,MSEG3112
+,,Legislação de trânsito,,,MSEG3113
+,,Mediação de conflitos,,,MSEG3114
+,,Patrulhamento comunitário,,,MSEG3115
+,,Prevenção ao uso de substâncias psicoativas,,,MSEG3116
+,,Primeiros socorros,,,MSEG3117
+,,Uso diferenciado da força,,,MSEG3118
+,,Violência doméstica e de gênero,,,MSEG3119
+,,Violência nas escolas,,,MSEG3120
+,,Outros temas,,,MSEG3121
+,,Não houve capacitação em 2022,,,MSEG3122
+,,Não sabe informar,,,MSEG3123
+,Formação profissional do comandante,,,,MSEG32
+,Armas utilizadas,,,,MSEG33
+,Existência de plano de carreira ,,,,MSEG34
+,Faixa do salário inicial,,,,MSEG35
+,Órgãos de controle:,,,,
+,,Existência de Órgão de Controle Interno (Corregedoria),,,MSEG361
+,,Existência de Órgão de Controle Externo (Ouvidoria),,,MSEG362
+,,Órgão de Controle Social (Colegiado),,,MSEG363
+,,Não possui,,,MSEG364
+,Registro de ocorrências,,,,MSEG37
+,Principais atividades:,,,,
+,,  Ações educativas junto à população,,,MSEG381
+,,  Assistência ao judiciário,,,MSEG382
+,,  Atendimento de ocorrências policiais,,,MSEG383
+,,"  Atendimento sociais (assistência social, dentre outros)",,,MSEG384
+,,  Auxílio à defesa civil,,,MSEG385
+,,  Auxílio à polícia civil,,,MSEG386
+,,  Auxílio à polícia militar,,,MSEG387
+,,  Auxílio à vigilância sanitária,,,MSEG388
+,,  Auxílio ao público,,,MSEG389
+,,  Auxílio no aterndimento do conselho tutelar,,,MSEG3810
+,,  Auxílio no ordenamento e controle do trânsito,,,MSEG3811
+,,  Controle e fiscalização de comércio de ambulantes,,,MSEG3812
+,,  Patrulhamento de vias públicas,,,MSEG3813
+,,"  Patrulhamento ostensivo a pé, motorizado ou montado",,,MSEG3814
+,,"  Posto de guarda (bairros, entrada da cidade, entre outros)",,,MSEG3815
+,,  Programa de prevenção ao crime (16),,,MSEG3816
+,,  Proteção ao patrimônio (17),,,MSEG3817
+,,"  Proteção da população que utiliza os bens, serviços e instalações municipais",,,MSEG3818
+,,"  Proteção de bens, equipamentos e prédios do município",,,MSEG3819
+,,  Ronda escolar,,,MSEG3820
+,,  Segurança em eventos para comemorações,,,MSEG3821
+,,  Segurança e/ou proteção do prefeito e/ou outras autoridades,,,MSEG3822
+,,"  Serviços administrativos (serviços burocráticos, secretariar autoridades)",,,MSEG3823
+,Tipo de veículo utilizado pela guarda municipal em suas atividades diárias,,,,
+,, Automóvel,,,MSEG391
+,, Motocicleta,,,MSEG392
+,, Bicicleta,,,MSEG393
+,, Cavalo,,,MSEG394
+,, Barco,,,MSEG395
+,, Outros,,,MSEG396
+,, Não utiliza nenhum meio de transporte,,,MSEG397
+,,,,,
+"Fonte: IBGE, Pesquisa de Informações Básicas Municipais - 2023",,,,,
+"(16) Programas de prevenção ao crime e violência isoladamente ou em conjunto com os demais órgãos da própria municipalidae, de outros municípios ou das esferas estadual e federal.",,,,,
+"(17) Proteção ao patrimônio ecológico, histórico, cultural, arquitetônico e ambiental do município.",,,,,
+,,,,,
+,,,,,
+7. DIREITOS HUMANOS,,,,,
+7.1 Órgão gestor dos direitos humanos e perfil do gestor,,,,,subtítulo link
+7.2 Legislação municipal,,,,,subtítulo link
+7.3 Conselhos municipais,,,,,subtítulo link
+7.4 Comitês e comissões,,,,,subtítulo link
+7.5 Conferências municipais,,,,,subtítulo link
+7.6 Fundo municipal,,,,,subtítulo link
+7.7 Políticas ou programas na área de direitos humanos,,,,,subtítulo link
+7.8 Direitos das crianças e adolescentes,,,,,subtítulo link
+7.9 Direitos das pessoas com deficiência,,,,,subtítulo link
+7.10 Direitos da pessoa idosa,,,,,subtítulo link
+7.11 Direitos da pessoa em situação de rua,,,,,subtítulo link
+7.12 Acampamento cigano,,,,,subtítulo link
+7.13 Comunidades tradicionais,,,,,subtítulo link
+7.14 Denúncias de violação dos direitos humanos,,,,,subtítulo link
+,,,,,
+"Fonte: IBGE, Pesquisa de Informações Básicas Municipais - 2023",,,,,
+,,,,,
+7. DIREITOS HUMANOS,,,,,
+7.1 Órgão gestor dos direitos humanos e perfil do gestor,,,,,
+Caracterização do órgão gestor de direitos humanos,,,,,MDHU01
+Secretaria ou setor que a política de direitos humanos está associada,,,,,
+,Assistência social,,,,MDHU021
+,Educação,,,,MDHU022
+,Justiça,,,,MDHU023
+,Saúde,,,,MDHU024
+,Segurança pública,,,,MDHU025
+,Outra,,,,MDHU026
+,,,,,
+Perfil do gestor:,,,,,
+,Sexo ,,,,MDHU04
+,Idade ,,,,MDHU05
+,Cor/raça ,,,,MDHU06
+,,Foi respondido pelo próprio titular do órgão gestor,,,MDHU061
+,Escolaridade ,,,,MDHU07
+,,,,,
+Executa programas e ações para grupos específicos de:,,,,,
+,Ciganos,,,,MDHU081
+,Crianças e adolescentes,,,,MDHU082
+,Mulheres,,,,MDHU083
+,Pessoas idosas,,,,MDHU084
+,Pessoa com deficiência,,,,MDHU085
+,LGBTQIA+,,,,MDHU086
+,População em situação de rua,,,,MDHU087
+,População negra,,,,MDHU088
+,Povos indígenas,,,,MDHU089
+,Comunidades quilombolas,,,,MDHU0810
+,Povos de terreiro/matriz africana,,,,MDHU0811
+,Outros povos e comunidades tradicionais,,,,MDHU0812
+,Não executa,,,,MDHU0813
+,,,,,
+"Fonte: IBGE, Pesquisa de Informações Básicas Municipais - 2023",,,,,
+"(**) Sem gestor - apesar de ter estrutura para a política, no momento da coleta da informação não tinha gestor nomeado.",,,,,
+,,,,,
+7.2 Legislação municipal,,,,,
+O tema direitos humanos é tratado:,,,,,
+,Lei orgânica,,,,MDHU091
+,Plano plurianual,,,,MDHU092
+,Lei orçamentária Anual,,,,MDHU093
+,Lei de Diretrizes orçamentárias ,,,,MDHU094
+,Plano diretor,,,,MDHU095
+,Nenhum item citado,,,,MDHU096
+,,,,,
+Legislação específica:,,,,,
+,Enfrentamento à violência sexual contra crianças e adolescentes ,,,,MDHU101
+,,Lei ,,,MDHU1011A
+,,Ano de criação,,,MDHU1011B
+,Enfrentamento à violência contra a mulher,,,,MDHU102
+,,Lei ,,,MDHU1021A
+,,Ano de criação,,,MDHU1021B
+,Atendimento socioeducativo,,,,MDHU103
+,,Lei ,,,MDHU1031A
+,,Ano de criação,,,MDHU1031B
+,Promoção do direito de crianças e adolescentes à convivência familiar e comunitária,,,,MDHU104
+,,Lei ,,,MDHU1041A
+,,Ano de criação,,,MDHU1041B
+,Proteção integral a primeira infância,,,,MDHU105
+,,Lei ,,,MDHU1051A
+,,Ano de criação,,,MDHU1051B
+,Promoção da igualdade racial e/ou de enfrentamento ao racismo,,,,MDHU106
+,,Lei ,,,MDHU1061A
+,,Ano de criação,,,MDHU1061B
+,Combate à discriminação racial no âmbito da administração pública,,,,MDHU107
+,,Lei ,,,MDHU1071A
+,,Ano de criação,,,MDHU1071B
+,Política para a população em situação de rua,,,,MDHU108
+,,Lei ,,,MDHU1081A
+,,Ano de criação,,,MDHU1081B
+,"Proteção dos direitos de lésbicas, gays, bissexuais, travestis e transexuais",,,,MDHU109
+,,Lei ,,,MDHU1091A
+,,Ano de criação,,,MDHU1091B
+,Reconhecimento do nome social de travestis e transexuais,,,,MDHU1010
+,,Lei ,,,MDHU10101A
+,,Ano de criação,,,MDHU10101B
+,Garantia de atendimento diferenciado a povos não falantes da língua portuguesa,,,,MDHU1011
+,,Lei ,,,MDHU10111A
+,,Ano de criação,,,MDHU10111B
+,Reconhecimento e proteção do patrimônio (18),,,,MDHU1012
+,,Lei ,,,MDHU10121A
+,,Ano de criação,,,MDHU10121B
+,Adaptação de espaços públicos para facilitar a acessibilidade (19),,,,MDHU1013
+,,Lei ,,,MDHU10131A
+,,Ano de criação,,,MDHU10131B
+,Promoção de direitos das pessoas idosas,,,,MDHU1014
+,,Lei ,,,MDHU10141A
+,,Ano de criação,,,MDHU10141B
+,Constituição de centros de referência e atendimento em direitos humanos,,,,MDHU1015
+,,Lei ,,,MDHU10151A
+,,Ano de criação,,,MDHU10151B
+,Garantia de passe livre municipal a pessoa com deficiência no transporte coletivo,,,,MDHU1016
+,,Lei ,,,MDHU10161A
+,,Ano de criação,,,MDHU10161B
+,Nenhuma legislação citada,,,,MDHU1017
+,,,,,
+Plano municipal de direitos humanos - existência,,,,,MDHU11
+,Instrumento de regulamentação,,,,MDHU111
+,Número da legislação,,,,MDHU112A
+,Ano da legislação,,,,MDHU112B
+,Não regulamentado por instrumento legal - ano de elaboração,,,,MDHU113
+,,,,,
+"Fonte: IBGE, Pesquisa de Informações Básicas Municipais - 2023",,,,,
+"(18) Reconhecimento e proteção do patrimônio das comunidades indígenas, quilombolas e outros povos e comunidades tradicionais.",,,,,
+(19) Adaptação de espaços públicos para facilitar a acessibilidade a pessoas com deficiência ou mobilidade reduzida,,,,,
+,,,,,
+7.3 Conselhos municipais,,,,,
+Conselho Municipal de Direitos Humanos - existência,,,,,MDHU12
+,Lei de criação,,,,MDHU121A
+,Ano de criação,,,,MDHU121B
+,O Conselho está:,,,,MDHU121C
+,Formação ,,,,MDHU122
+,Caráter:,,,,
+,,Consultivo,,,MDHU131
+,,Deliberativo,,,MDHU132
+,,Normativo,,,MDHU133
+,,Fiscalizador,,,MDHU134
+,Quantidade de reuniões (presenciais ou remotas) nos últimos 12 meses,,,,MDHU14
+,Número de conselheiros (titulares e suplentes),,,,MDHU15
+,Capacitação dos membros:,,,,
+,,Periodicamente,,,MDHU161
+,,Ocasionalmente,,,MDHU162
+,,Não realiza,,,MDHU163
+,Município disponibiliza infraestrutura ,,,,MDHU17
+,,Sala ,,,MDHU1711
+,,Computador,,,MDHU1712
+,,Impressora,,,MDHU1713
+,,Acesso à internet,,,MDHU1714
+,,Veículo,,,MDHU1715
+,,Telefone,,,MDHU1716
+,,Diárias,,,MDHU1717
+,,Dotação orçamentária própria,,,MDHU1718
+,,Transporte/Locomoção,,,MDHU1719
+,,,,,
+Conselho Municipal de Direitos da Criança e do Adolescente - existência,,,,,MDHU18
+,Lei de criação,,,,MDHU181A
+,Ano de criação,,,,MDHU181B
+,O Conselho está:,,,,MDHU181C
+,Formação ,,,,MDHU182
+,Caráter:,,,,
+,,Consultivo,,,MDHU191
+,,Deliberativo,,,MDHU192
+,,Normativo,,,MDHU193
+,,Fiscalizador,,,MDHU194
+,Quantidade de reuniões (presenciais ou remotas) nos últimos 12 meses,,,,MDHU20
+,Número de conselheiros (titulares e suplentes),,,,MDHU21
+,Capacitação dos membros:,,,,
+,,Periodicamente,,,MDHU221
+,,Ocasionalmente,,,MDHU222
+,,Não realiza,,,MDHU223
+,Município disponibiliza infraestrutura ,,,,MDHU23
+,,Sala ,,,MDHU2311
+,,Computador,,,MDHU2312
+,,Impressora,,,MDHU2313
+,,Acesso à internet,,,MDHU2314
+,,Veículo,,,MDHU2315
+,,Telefone,,,MDHU2316
+,,Diárias,,,MDHU2317
+,,Dotação orçamentária própria,,,MDHU2318
+,,Transporte/Locomoção,,,MDHU2319
+,,,,,
+Conselho Municipal de Direitos da Pessoa Idosa - existência,,,,,MDHU24
+,Lei de criação,,,,MDHU241A
+,Ano de criação,,,,MDHU241B
+,O Conselho está:,,,,MDHU241C
+,Formação ,,,,MDHU242
+,Caráter:,,,,
+,,Consultivo,,,MDHU251
+,,Deliberativo,,,MDHU252
+,,Normativo,,,MDHU253
+,,Fiscalizador,,,MDHU254
+,Quantidade de reuniões (presenciais ou remotas) nos últimos 12 meses,,,,MDHU26
+,Número de conselheiros (titulares e suplentes),,,,MDHU27
+,Capacitação dos membros:,,,,
+,,Periodicamente,,,MDHU281
+,,Ocasionalmente,,,MDHU282
+,,Não realiza,,,MDHU283
+,Município disponibiliza infraestrutura ,,,,MDHU29
+,,Sala ,,,MDHU2911
+,,Computador,,,MDHU2912
+,,Impressora,,,MDHU2913
+,,Acesso à internet,,,MDHU2914
+,,Veículo,,,MDHU2915
+,,Telefone,,,MDHU2916
+,,Diárias,,,MDHU2917
+,,Dotação orçamentária própria,,,MDHU2918
+,,Transporte/Locomoção,,,MDHU2919
+,,,,,
+Conselho Municipal de Direitos da Pessoa com Deficiência - existência,,,,,MDHU30
+,Lei de criação,,,,MDHU301A
+,Ano de criação,,,,MDHU301B
+,O Conselho está:,,,,MDHU301C
+,Formação ,,,,MDHU302
+,Caráter:,,,,
+,,Consultivo,,,MDHU311
+,,Deliberativo,,,MDHU312
+,,Normativo,,,MDHU313
+,,Fiscalizador,,,MDHU314
+,Quantidade de reuniões (presenciais ou remotas) nos últimos 12 meses,,,,MDHU32
+,Número de conselheiros (titulares e suplentes),,,,MDHU33
+,Capacitação dos membros:,,,,
+,,Periodicamente,,,MDHU341
+,,Ocasionalmente,,,MDHU342
+,,Não realiza,,,MDHU343
+,Município disponibiliza infraestrutura ,,,,MDHU35
+,,Sala ,,,MDHU3511
+,,Computador,,,MDHU3512
+,,Impressora,,,MDHU3513
+,,Acesso à internet,,,MDHU3514
+,,Veículo,,,MDHU3515
+,,Telefone,,,MDHU3516
+,,Diárias,,,MDHU3517
+,,Dotação orçamentária própria,,,MDHU3518
+,,Transporte/Locomoção,,,MDHU3519
+,,,,,
+"Conselho Municipal de Direitos de Lésbicas, Gays, Bissexuais, Travestis e Transexuais - existência",,,,,MDHU36
+,Lei de criação,,,,MDHU361A
+,Ano de criação,,,,MDHU361B
+,O Conselho está:,,,,MDHU361C
+,Formação ,,,,MDHU362
+,Caráter:,,,,
+,,Consultivo,,,MDHU371
+,,Deliberativo,,,MDHU372
+,,Normativo,,,MDHU373
+,,Fiscalizador,,,MDHU374
+,Quantidade de reuniões (presenciais ou remotas) nos últimos 12 meses,,,,MDHU38
+,Número de conselheiros (titulares e suplentes),,,,MDHU39
+,Capacitação dos membros:,,,,
+,,Periodicamente,,,MDHU401
+,,Ocasionalmente,,,MDHU402
+,,Não realiza,,,MDHU403
+,Município disponibiliza infraestrutura ,,,,MDHU41
+,,Sala ,,,MDHU4111
+,,Computador,,,MDHU4112
+,,Impressora,,,MDHU4113
+,,Acesso à internet,,,MDHU4114
+,,Veículo,,,MDHU4115
+,,Telefone,,,MDHU4116
+,,Diárias,,,MDHU4117
+,,Dotação orçamentária própria,,,MDHU4118
+,,Transporte/Locomoção,,,MDHU4119
+,,,,,
+Conselho Municipal de Igualdade Racial - existência,,,,,MDHU42
+,Lei de criação,,,,MDHU421A
+,Ano de criação,,,,MDHU421B
+,O Conselho está:,,,,MDHU421C
+,Formação ,,,,MDHU422
+,Caráter:,,,,
+,,Consultivo,,,MDHU431
+,,Deliberativo,,,MDHU432
+,,Normativo,,,MDHU433
+,,Fiscalizador,,,MDHU434
+,Quantidade de reuniões (presenciais ou remotas) nos últimos 12 meses,,,,MDHU44
+,Número de conselheiros (titulares e suplentes),,,,MDHU45
+,Capacitação dos membros:,,,,
+,,Periodicamente,,,MDHU461
+,,Ocasionalmente,,,MDHU462
+,,Não realiza,,,MDHU463
+,Município disponibiliza infraestrutura ,,,,MDHU47
+,,Sala ,,,MDHU4711
+,,Computador,,,MDHU4712
+,,Impressora,,,MDHU4713
+,,Acesso à internet,,,MDHU4714
+,,Veículo,,,MDHU4715
+,,Telefone,,,MDHU4716
+,,Diárias,,,MDHU4717
+,,Dotação orçamentária própria,,,MDHU4718
+,,Transporte/Locomoção,,,MDHU4719
+,,,,,
+Conselho Municipal dos Povos e Comunidades Tradicionais - existência,,,,,MDHU48
+,Lei de criação,,,,MDHU481A
+,Ano de criação,,,,MDHU481B
+,O Conselho está:,,,,MDHU481C
+,Formação ,,,,MDHU482
+,Caráter:,,,,
+,,Consultivo,,,MDHU491
+,,Deliberativo,,,MDHU492
+,,Normativo,,,MDHU493
+,,Fiscalizador,,,MDHU494
+,Quantidade de reuniões (presenciais ou remotas) nos últimos 12 meses,,,,MDHU50
+,Número de conselheiros (titulares e suplentes),,,,MDHU51
+,Capacitação dos membros:,,,,
+,,Periodicamente,,,MDHU521
+,,Ocasionalmente,,,MDHU522
+,,Não realiza,,,MDHU523
+,Município disponibiliza infraestrutura ,,,,MDHU53
+,,Sala ,,,MDHU5311
+,,Computador,,,MDHU5312
+,,Impressora,,,MDHU5313
+,,Acesso à internet,,,MDHU5314
+,,Veículo,,,MDHU5315
+,,Telefone,,,MDHU5316
+,,Diárias,,,MDHU5317
+,,Dotação orçamentária própria,,,MDHU5318
+,,Trasporte/Locomoção,,,MDHU5319
+,,,,,
+"Fonte: IBGE, Pesquisa de Informações Básicas Municipais – 2023",,,,,
+,,,,,
+7.4 Comitês e comissões,,,,,
+Comissão para a implantação e acompanhamento do plano de promoção do direito de crianças e adolescentes à convivência familiar e comunitária - existência,,,,,MDHU541
+,Lei de criação,,,,MDHU5411A
+,Ano,,,,MDHU5411B
+,Quantidade de reuniões nos últimos 12 meses,,,,MDHU5412
+,,,,,
+Comitê gestor para o enfrentamento e erradicação do sub-registro de nascimento e a ampliação do acesso à documentação básica - existência,,,,,MDHU542
+,Lei de criação,,,,MDHU5421A
+,Ano,,,,MDHU5421B
+,Quantidade de reuniões nos últimos 12 meses,,,,MDHU5422
+,,,,,
+Comitê Gestor do Programa Nacional de Documentação da Trabalhadora Rural - existência,,,,,MDHU543
+,Lei de criação,,,,MDHU5431A
+,Ano,,,,MDHU5431B
+,Quantidade de reuniões nos últimos 12 meses,,,,MDHU5432
+,,,,,
+Comitê Gestor da política para a População em Situação de Rua - existência,,,,,MDHU544
+,Lei de criação,,,,MDHU5441A
+,Ano,,,,MDHU5441B
+,Quantidade de reuniões nos últimos 12 meses,,,,MDHU5442
+,,,,,
+Comitê Permanente de Acessibilidade - existência,,,,,MDHU545
+,Lei de criação,,,,MDHU5451A
+,Ano,,,,MDHU5451B
+,Quantidade de reuniões nos últimos 12 meses,,,,MDHU5452
+,,,,,
+Comitê para o enfrentamento à violência sexual contra crianças e adolescentes - existência,,,,,MDHU546
+,Lei de criação,,,,MDHU5461A
+,Ano,,,,MDHU5461B
+,Quantidade de reuniões nos últimos 12 meses,,,,MDHU5462
+,,,,,
+Comitê em Defesa da Liberdade Religiosa ou similar - existência,,,,,MDHU547
+,Lei de criação,,,,MDHU5471A
+,Ano,,,,MDHU5471B
+,Quantidade de reuniões nos últimos 12 meses,,,,MDHU5472
+,,,,,
+Comitê ou comissão de Gestão Orçamentária Participativa - existência,,,,,MDHU548
+,Lei de criação,,,,MDHU5481A
+,Ano,,,,MDHU5481B
+,Quantidade de reuniões nos últimos 12 meses,,,,MDHU5482
+,,,,,
+Comitê ou comissão de Enfrentamento do Trabalho Escravo - existência,,,,,MDHU549
+,Lei de criação,,,,MDHU5491A
+,Ano,,,,MDHU5491B
+,Quantidade de reuniões nos últimos 12 meses,,,,MDHU5492
+,,,,,
+Comitê gestor de enfrentamento à violência LGBTQIA+fóbica - existência,,,,,MDHU5410
+,Lei de criação,,,,MDHU54101A
+,Ano,,,,MDHU54101B
+,Quantidade de reuniões nos últimos 12 meses,,,,MDHU54102
+,,,,,
+Nenhum comitê ou comissão citado,,,,,MDHU5411
+,,,,,
+"Fonte: IBGE, Pesquisa de Informações Básicas Municipais – 2023",,,,,
+,,,,,
+7.5 Conferências municipais,,,,,
+Temas de conferências realizadas nos últimos quatro anos pelo governo municipal:,,,,,
+,Direitos humanos,,,,MDHU551
+,Direitos ou política para a criança e o adolescente,,,,MDHU552
+,Direitos ou política para a pessoa idosa,,,,MDHU553
+,"Direitos ou políticas para lésbicas, gays, bissexuais, travestis e transexuais",,,,MDHU554
+,Direitos ou política para mulheres,,,,MDHU555
+,Direitos ou política para pessoa deficiência,,,,MDHU556
+,Direitos ou política para igualdade racial,,,,MDHU557
+,Direitos ou política para população em situação de rua,,,,MDHU558
+,Direitos ou política para povos e comunidades tradicionais,,,,MDHU559
+,Direitos ou política para juventude,,,,MDHU5510
+,Nenhum dos temas citados,,,,MDHU5511
+,,,,,
+"Fonte: IBGE, Pesquisa de Informações Básicas Municipais – 2023",,,,,
+,,,,,
+7.6 Fundo municipal,,,,,
+Direitos humanos,,,,,MDHU561
+Direitos da criança e do adolescente,,,,,MDHU562
+Direitos do idoso,,,,,MDHU563
+Direitos da pessoa com deficiência,,,,,MDHU564
+Promoção da igualdade racial,,,,,MDHU565
+Nenhum dos fundos citados,,,,,MDHU566
+,,,,,
+"Fonte: IBGE, Pesquisa de Informações Básicas Municipais – 2023",,,,,
+,,,,,
+7.7 Políticas ou programas na área de direitos humanos,,,,,
+Proteção de mulheres vítimas de violência doméstica,,,,,MDHU571
+Promoção à igualdade racial e/ou enfrentamento ao racismo,,,,,MDHU572
+Proteção às vítimas diretas e/ou indiretas da violência,,,,,MDHU573
+Proteção às pessoas vítimas de violência ou conflitos agrários e outros conflitos territoriais,,,,,MDHU574
+Enfrentamento ao sub-registro civil de nascimento e emissão de documentação básica,,,,,MDHU575
+"Promoção de Direitos de Lésbicas, Gays, Bissexuais, Travestis e Transexuais e/ou de Enfrentamento à LGBTQIA+Fobia",,,,,MDHU576
+Atendimento a pessoas com transtorno mental,,,,,MDHU577
+Promoção da diversidade religiosa,,,,,MDHU578
+Documentação de trabalhadoras rurais,,,,,MDHU579
+Enfrentamento do trabalho forçado ou escravo e reinserção de suas vítimas,,,,,MDHU5710
+Enfrentamento à violência contra jovens,,,,,MDHU5711
+Proteção às pessoas vítimas de violência por intolerância religiosa,,,,,MDHU5712
+Documentação de indivíduos pertencentes a povos e comunidades tradicionais,,,,,MDHU5713
+Reconhecimento do patrimônio afro-brasileiro,,,,,MDHU5714
+"Atendimento a indivíduos falantes de línguas indígenas, línguas ciganas ou da língua pomerana",,,,,MDHU5715
+Nenhuma das políticas ou programas citados,,,,,MDHU5716
+,,,,,
+"Fonte: IBGE, Pesquisa de Informações Básicas Municipais – 2023",,,,,
+,,,,,
+7.8 Direitos das crianças e adolescentes,,,,,
+Desenvolvimento de política ou programa de promoção dos direitos e defesa das crianças e adolescentes - existência,,,,,MDHU58
+,Ações ou medidas da política ou programa de promoção dos direitos das crianças e adolescentes:,,,,
+,,Lazer para crianças e adolescentes,,,MDHU591
+,,"Promoção do voluntariado, protagonismo juvenil e da participação cidadã",,,MDHU592
+,,Vacinação contra o vírus do papiloma humano (HPV),,,MDHU593
+,,Incentivo ao esporte seguro e inclusivo,,,MDHU594
+,,Acolhimento institucional de crianças e adolescentes,,,MDHU595
+,,Acolhimento de crianças e adolescentes por famílias acolhedoras,,,MDHU596
+,,Prevenção de acidentes e autodefesa,,,MDHU597
+,,Planejamento da proteção de crianças e adolescentes em contexto de desastres,,,MDHU598
+,,Instâncias formais de participação política de adolescentes,,,MDHU599
+,,Apoio à formação e organização de redes de adolescentes,,,MDHU5910
+,,Cursos preparatórios e outras formas de apoio a adotantes,,,MDHU5911
+,,"Promoção do protagonismo da juventude de povos e comunidades tradicionais (indígenas, quilombolas, etc.)",,,MDHU5912
+,Ações ou medidas da política ou programa de defesa dos direitos das crianças e adolescentes:,,,,
+,,Enfrentamento ao bullying,,,MDHU601
+,,Enfrentamento e erradicação do trabalho infantil,,,MDHU602
+,,Enfrentamento à violência física contra crianças e adolescentes,,,MDHU603
+,,Enfrentamento à violência sexual contra crianças e adolescentes,,,MDHU604
+,,Proteção de crianças e adolescentes ameaçados de morte,,,MDHU605
+,,Atendimento à criança e ao adolescente em situação de rua,,,MDHU606
+,,Atendimento socioeducativo ao adolescente em conflito com a lei ,,,MDHU607
+,,Busca e localização de desaparecidos,,,MDHU608
+,,Combate ao uso de drogas,,,MDHU609
+,,Nenhuma das ações ou medidas citadas,,,MDHU6010
+,,,,,
+Conselho Tutelar - existência,,,,,MDHU61
+,Lei de criação,,,,MDHU611A
+,Ano,,,,MDHU611B
+,Quantidade de Conselhos Tutelares,,,,MDHU612
+,,,,,
+Executor(a) das medidas socioeducativas em meio aberto para adolescentes em conflito com a lei:,,,,,
+,Prefeitura - Assistência Social,,,,MDHU621
+,Prefeitura - Educação,,,,MDHU622
+,Prefeitura - Área específica de Socioeducação,,,,MDHU623
+,Prefeitura - Saúde,,,,MDHU624
+,Prefeitura - Outra área,,,,MDHU625
+,Governo estadual,,,,MDHU626
+,Poder judiciário,,,,MDHU627
+,Centro de Referência Especializado de Assistência Social,,,,MDHU628
+,Organização não-governamental,,,,MDHU629
+,Consórcio de municípios,,,,MDHU6210
+,Não há no município execução de medidas socioeducativas em meio aberto,,,,MDHU6211
+,,,,,
+Quantidade de unidades para o cumprimento de medidas socioeducativas:,,,,,
+,Internação,,,,MDHU631
+,Internação provisória,,,,MDHU632
+,Semiliberdade,,,,MDHU633
+,,,,,
+"Fonte: IBGE, Pesquisa de Informações Básicas Municipais – 2023",,,,,
+,,,,,
+7.9 Direitos das pessoas com deficiência,,,,,
+Existência de política ou programa de promoção de direitos da pessoa com deficiência,,,,,MDHU64
+,Ações ou medidas da política ou programa de promoção de direitos da pessoa com deficiência:,,,,
+,,Melhoria de acessibilidade a espaços públicos,,,MDHU651
+,,Melhoria e garantia de acessibilidade de transporte público,,,MDHU652
+,,Distribuição de órteses e próteses,,,MDHU653
+,,Geração de trabalho e renda ou inclusão no mercado de trabalho,,,MDHU654
+,,Inclusão no ambiente escolar,,,MDHU655
+,,Turismo acessível,,,MDHU656
+,,Prevenção à discriminação da pessoa com deficiência,,,MDHU657
+,,Acesso ao lazer,,,MDHU658
+,,Promoção de acessibilidade digital,,,MDHU659
+,,Nenhuma das ações ou medidas citadas,,,MDHU6510
+,,,,,
+Acessibilidade na sede do governo municipal:,,,,,
+,Rampas de acesso,,,,MDHU661
+,"Elevadores, plataformas elevatórias e outros",,,,MDHU662
+,Sanitário acessível,,,,MDHU663
+,Piso tátil,,,,MDHU664
+,Elevadores com braile e sonorização,,,,MDHU665
+,Telefone público adaptado,,,,MDHU666
+,Mobiliário de recepção adaptado,,,,MDHU667
+,Pessoal capacitado para atender pessoas com deficiência,,,,MDHU668
+,Pessoal capacitado em acessibilidade digital,,,,MDHU669
+,Área especial de (des)embarque para pessoas com deficiência ou mobilidade reduzida,,,,MDHU6610
+,Reserva de vaga para veículos que transportem pessoa com deficiência,,,,MDHU6611
+,"Sinalização, em lugar visível, de atendimento prioritário",,,,MDHU6612
+,Admissão de cão guia,,,,MDHU6613
+,Rampa externa e rebaixamento de calçadas para travessia de pedestre em nível,,,,MDHU6614
+,Pessoal capacitado para atendimento nas línguas indígenas,,,,MDHU6615
+,Pessoal capacitado para atendimento nas línguas ciganas,,,,MDHU6616
+,Pessoal capacitado para atendimento na língua pomerana,,,,MDHU6617
+,Pessoal capacitado para atendimento na língua brasileira de sinais (LIBRAS),,,,MDHU6618
+,Nenhum dos itens citados,,,,MDHU6619
+,,,,,
+"Fonte: IBGE, Pesquisa de Informações Básicas Municipais – 2023",,,,,
+,,,,,
+7.10 Direitos da pessoa idosa,,,,,
+Existência de política ou programa de promoção de direitos da pessoa idosa,,,,,MDHU67
+,Ações ou medidas da política ou programa de promoção de direitos da pessoa idosa:,,,,
+,,Enfrentamento à violência,,,MDHU681
+,,Vacinação contra a gripe e pneumonia,,,MDHU682
+,,Promoção da saúde e do cuidado de si,,,MDHU683
+,,Promoção da acessibilidade ou isenção de tarifas no transporte público,,,MDHU684
+,,Promoção à participação e integração na comunidade,,,MDHU685
+,,Capacitação de cuidador,,,MDHU686
+,,"Acesso à recreação, ao lazer e aos bens culturais",,,MDHU687
+,,Garantia de alimentação adequada,,,MDHU688
+,,Nenhuma das ações ou medidas citadas,,,MDHU689
+,,,,,
+"Fonte: IBGE, Pesquisa de Informações Básicas Municipais – 2023",,,,,
+,,,,,
+7.11 Direitos da pessoa em situação de rua,,,,,
+Existência de política ou programa de promoção de direitos da pessoa em situação de rua,,,,,MDHU69
+,Ações ou medidas da política ou programa de promoção de direitos da pessoa em situação de rua:,,,,
+,,Enfrentamento à violência,,,MDHU701
+,,Acesso à profissionalização especializada,,,MDHU702
+,,Acesso a serviços saúde,,,MDHU703
+,,Garantia de alimentação adequada,,,MDHU704
+,,Acesso a programas de habitação,,,MDHU705
+,,Proteção a crianças e adolescentes em situação de rua,,,MDHU706
+,,Acesso à documentação básica,,,MDHU707
+,,Busca ativa para inclusão no Cadúnico,,,MDHU708
+,,Nenhuma das ações ou medidas citadas,,,MDHU709
+,,,,,
+"Fonte: IBGE, Pesquisa de Informações Básicas Municipais – 2023",,,,,
+,,,,,
+7.12 Acampamento cigano,,,,,
+Existência de acampamento ou rancho cigano,,,,,MDHU71
+,,,,,
+"Fonte: IBGE, Pesquisa de Informações Básicas Municipais – 2023",,,,,
+,,,,,
+7.13 Comunidades tradicionais,,,,,
+"Existência de protocolo que defina os procedimentos para a consulta livre, prévia e esclarecida aos povos e comunidades tradicionais (20)",,,,,MDHU72
+,,,,,
+"Fonte: IBGE, Pesquisa de Informações Básicas Municipais – 2023",,,,,
+"(20) Existência de protocolo que defina os procedimentos para a consulta livre, prévia e esclarecida aos povos e comunidades tradicionais para os casos de medidas administrativas ou legislativas de qualquer natureza que lhes afete, incluindo obras de infraestrutura.",,,,,
+,,,,,
+7.14 Denúncias de violação dos direitos humanos,,,,,
+"Natureza do órgão responsável por receber, registrar e acompanhar denúncias de violação de direitos",,,,,MDHU73
+,Ouvidoria de direitos humanos,,,,MDHU731
+,Ouvidoria policial ou de serviço de segurança,,,,MDHU732
+,"Conselhos, comitês, comissões de cidadania",,,,MDHU733
+,Serviço de assistência jurídica,,,,MDHU734
+,Serviço de defesa ao cidadão,,,,MDHU735
+,Serviço de assistência social,,,,MDHU736
+,Outros,,,,MDHU737
+,Não existe órgão responsável,,,,MDHU738
+,Instrumentos utilizados para receber denúncias de violação de direitos:,,,,
+,,Telefone,,,MDHU741
+,,Balcão de atendimento,,,MDHU742
+,,Telefone gratuito,,,MDHU743
+,,Página na internet,,,MDHU744
+,,Correio,,,MDHU745
+,,E-mail,,,MDHU746
+,,Outros,,,MDHU747
+,,,,,
+"Fonte: IBGE, Pesquisa de Informações Básicas Municipais – 2023",,,,,
+,,,,,
+,,,,,
+8. PRIMEIRA INFÂNCIA,,,,,subtítulo link
+8.1 Plano Municipal de Primeira Infância,,,,,subtítulo link
+8.2 Comitê Intersetorial de Políticas Públicas para a Primeira Infância,,,,,subtítulo link
+8.3 Política ou programa especificamente direcionados à promoção e defesa de direitos das crianças de 0 a 6 anos,,,,,subtítulo link
+8.4 Creche para famílias com crianças na educação infantil e regulamentação de espaços públicos voltados à primeira infância (0 a 6 anos),,,,,subtítulo link
+8.5 Legislação municipal específica,,,,,
+,,,,,
+"Fonte: IBGE, Pesquisa de Informações Básicas Municipais – 2023",,,,,
+,,,,,
+8. PRIMEIRA INFÂNCIA,,,,,
+8.1 Plano Municipal de Primeira Infância,,,,,
+Plano Municipal de Primeira Infância - existência,,,,,MPRI01
+,Por qual instrumento,,,,MPRI011
+,,Número,,,MPRI012a
+,,Ano de criação,,,MPRI012b
+,Ano em que foi elaborado,,,,MPRI013
+,Foi criada uma Comissão para a elaboração do Plano,,,,MPRI014
+,,,,,
+"Fonte: IBGE, Pesquisa de Informações Básicas Municipais – 2023",,,,,
+,,,,,
+8.2 Comitê Intersetorial de Políticas Públicas para a Primeira Infância,,,,,
+Comitê Intersetorial de Políticas Públicas para a Primeira Infância - existência,,,,,MPRI02
+,Comitê é composto por representante:,,,,MPRI03
+,,Do governo municipal da área de:,,,
+,,,Assistência social,,MPRI031
+,,,Educação,,MPRI032
+,,,Saúde,,MPRI033
+,,,Outras áreas,,MPRI034
+,,Conselho tutelar,,,MPRI035
+,,Conselho Municipal dos Direitos da criança e do adolescente,,,MPRI036
+,,Da sociedade civil:,,,
+,,,"Organização da Sociedade Civil (OS, OSCIP, associações etc.)",,MPRI037
+,,,Setor privado,,MPRI038
+,,,Universidades,,MPRI039
+,,,Crianças e adolescentes,,MPRI0310
+,,,Outras áreas,,MPRI0311
+,Quantidade de reuniões (presenciais ou remotas) realizadas nos últimos 12 meses,,,,MPRI04
+,,,,,
+,,,,,
+"Fonte: IBGE, Pesquisa de Informações Básicas Municipais – 2023",,,,,
+,,,,,
+8.3 Política ou programa especificamente direcionados à promoção e defesa de direitos das crianças de 0 a 6 anos,,,,,
+Gestão municipal desenvolve política ou programa especificamente direcionados à promoção e defesa de direitos das crianças de 0 a 6 anos,,,,,MPRI05
+,Ações ou medidas:,,,,
+,,Acesso a serviços de saúde,,,MPRI061
+,,Acolhimento institucional,,,MPRI062
+,,Acolhimento por famílias acolhedoras,,,MPRI063
+,,Criação e/ou manutenção de parques infantis/praças com brinquedos para a primeira infância,,,MPRI064
+,,Garantia de alimentação adequada,,,MPRI065
+,,Incentivo à paternidade responsável,,,MPRI066
+,,Incentivo ao aleitamento materno,,,MPRI067
+,,Oferta de Educação Infantil,,,MPRI068
+,,Prevenção de acidentes,,,MPRI069
+,,Promoção de arte e cultura,,,MPRI0610
+,,Promoção do brincar,,,MPRI0611
+,,Promoção do Direito à Convivência Familiar e Comunitária,,,MPRI0612
+,,Proteção a crianças em situação de rua,,,MPRI0613
+,,Proteção à exposição precoce das crianças aos meios de comunicação,,,MPRI0614
+,,Proteção contra violências,,,MPRI0615
+,,Nenhuma das políticas ou programas citados,,,MPRI0616
+,,,,,
+"Fonte: IBGE, Pesquisa de Informações Básicas Municipais – 2023",,,,,
+,,,,,
+8.4 Creche para famílias com crianças na educação infantil e regulamentação de espaços públicos voltados à primeira infância (0 a 6 anos),,,,,
+Município oferece algum tipo de auxílio creche para famílias com crianças na educação infantil,,,,,MPRI07
+,Auxílio creche é oferecido em:,,,,
+,,Dinheiro,,,MPRI081
+,,Bolsa de estudo,,,MPRI082
+,,Vaga adquirida pelo governo,,,MPRI083
+,,Outro,,,MPRI084
+,,,,,
+Município possui regulamentação de espaços públicos voltados à primeira infância (0 a 6 anos),,,,,MPRI09
+,,,,,
+"Fonte: IBGE, Pesquisa de Informações Básicas Municipais – 2023",,,,,
+,,,,,
+8.5 Legislação municipal específica,,,,,
+Extensão da licença maternidade e/ou paternidade para os servidores e servidoras da gestão municipal - existência,,,,,MPRI10
+,Número,,,,MPRI101a
+,Ano de criação,,,,MPRI101b
+,,,,,
+Instituição de sistema próprio de ensino da educação/infantil - existência,,,,,MPRI11
+,Número,,,,MPRI111a
+,Ano de criação,,,,MPRI111b
+,,,,,
+"Fonte: IBGE, Pesquisa de Informações Básicas Municipais – 2023",,,,,
