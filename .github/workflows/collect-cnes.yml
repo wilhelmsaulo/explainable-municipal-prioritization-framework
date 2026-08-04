@@ -17,6 +17,8 @@ jobs:
     timeout-minutes: 60
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
       - uses: actions/setup-python@v5
         with:
           python-version: "3.11"
@@ -132,5 +134,10 @@ jobs:
           if [ -f data/processed/cnes_unmatched_municipalities.csv ]; then
             git add -f data/processed/cnes_unmatched_municipalities.csv
           fi
-          git diff --cached --quiet || git commit -m "Store CNES municipal indicators"
-          git push
+          if git diff --cached --quiet; then
+            echo "No CNES output changes to commit."
+            exit 0
+          fi
+          git commit -m "Store CNES municipal indicators"
+          git pull --rebase origin main
+          git push origin HEAD:main
