@@ -26,7 +26,11 @@ class ArtifactStore:
         directory = self.cache_directory / namespace
         return directory / f"{fingerprint}.csv", directory / f"{fingerprint}.metadata.json"
 
-    def read_cache(self, namespace: str, fingerprint: str) -> tuple[pd.DataFrame, dict[str, Any]] | None:
+    def read_cache(
+        self,
+        namespace: str,
+        fingerprint: str,
+    ) -> tuple[pd.DataFrame, dict[str, Any]] | None:
         data_path, metadata_path = self.cache_paths(namespace, fingerprint)
         if not data_path.exists() or not metadata_path.exists():
             return None
