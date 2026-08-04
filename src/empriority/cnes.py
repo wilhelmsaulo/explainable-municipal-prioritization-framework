@@ -2,8 +2,9 @@ from __future__ import annotations
 
 import json
 import unicodedata
+from concurrent.futures import ThreadPoolExecutor, as_completed
 from pathlib import Path
-from typing import Any
+from typing import Any, Iterable
 
 import httpx
 import pandas as pd
@@ -38,41 +39,31 @@ def _column(frame: pd.DataFrame, *names: str) -> str | None:
     return None
 
 
-def fetch_cnes_establishments(
-    state_code: int = 15,
+def _fetch_one_municipality(
+    municipality_code: str,
     *,
     status: int = 1,
-    page_size: int = 500,
+    page_size: int = 20,
     timeout: float = 45.0,
-    max_pages: int = 200,
-) -> pd.DataFrame:
-    """Collect active CNES establishments from the official DEMAS open-data API."""
-    if page_size < 1:
-        raise ValueError("page_size must be positive.")
-
+    max_pages: int = 100,
+) -> list[dict[str, Any]]:
     rows: list[dict[str, Any]] = []
-    offset = 0
     previous_signature: tuple[str, ...] | None = None
 
     with httpx.Client(timeout=timeout, follow_redirects=True) as client:
-        for page_number in range(1, max_pages + 1):
+        for page_number in range(max_pages):
             response = client.get(
                 f"{BASE_URL}/cnes/estabelecimentos",
                 params={
-                    "codigo_uf": state_code,
+                    "codigo_municipio": int(municipality_code),
                     "status": status,
                     "limit": page_size,
-                    "offset": offset,
+                    "offset": page_number,
                 },
                 headers={"Accept": "application/json"},
             )
             response.raise_for_status()
             page = _records(response.json())
-            print(
-                f"CNES page={page_number} offset={offset} "
-                f"records={len(page)} total={len(rows) + len(page)}",
-                flush=True,
-            )
             if not page:
                 break
 
@@ -81,24 +72,62 @@ def fetch_cnes_establishments(
             )
             if signature == previous_signature:
                 raise RuntimeError(
-                    f"CNES API repeated the same page at offset {offset}; pagination stopped."
+                    f"CNES repeated page {page_number} for municipality {municipality_code}."
                 )
             previous_signature = signature
-
             rows.extend(page)
+
             if len(page) < page_size:
                 break
-
-            # The API offset is a record offset, not a page number.
-            offset += len(page)
         else:
             raise RuntimeError(
-                f"CNES collection exceeded the safety limit of {max_pages} pages."
+                f"CNES exceeded {max_pages} pages for municipality {municipality_code}."
+            )
+
+    return rows
+
+
+def fetch_cnes_establishments(
+    municipality_codes: Iterable[str],
+    *,
+    status: int = 1,
+    page_size: int = 20,
+    timeout: float = 45.0,
+    max_workers: int = 8,
+) -> pd.DataFrame:
+    """Collect active CNES establishments in parallel for selected municipalities."""
+    if not 1 <= page_size <= 20:
+        raise ValueError("CNES page_size must be between 1 and 20.")
+
+    codes = sorted({str(code).replace(".0", "").zfill(6)[:6] for code in municipality_codes})
+    rows: list[dict[str, Any]] = []
+
+    with ThreadPoolExecutor(max_workers=max_workers) as executor:
+        futures = {
+            executor.submit(
+                _fetch_one_municipality,
+                code,
+                status=status,
+                page_size=page_size,
+                timeout=timeout,
+            ): code
+            for code in codes
+        }
+        completed = 0
+        for future in as_completed(futures):
+            code = futures[future]
+            municipality_rows = future.result()
+            rows.extend(municipality_rows)
+            completed += 1
+            print(
+                f"CNES municipality={code} records={len(municipality_rows)} "
+                f"completed={completed}/{len(codes)} total={len(rows)}",
+                flush=True,
             )
 
     frame = pd.json_normalize(rows)
     if frame.empty:
-        raise ValueError("CNES returned no establishments for the requested filters.")
+        raise ValueError("CNES returned no establishments for the requested municipalities.")
     return frame.drop_duplicates().reset_index(drop=True)
 
 
@@ -198,13 +227,21 @@ def collect_cnes_pa(output_directory: str | Path = "data/processed") -> dict[str
     types_path = output / "cnes_unit_types.csv"
     indicators_path = output / "cnes_municipal_indicators_pa.csv"
     metadata_path = output / "cnes_municipal_indicators_pa.metadata.json"
+    matrix_path = output / "integrated_municipal_matrix.csv"
 
-    if raw_path.exists() and types_path.exists():
+    reused_snapshot = raw_path.exists() and types_path.exists()
+    if reused_snapshot:
         print("Using existing CNES snapshot.", flush=True)
         establishments = pd.read_csv(raw_path)
         unit_types = pd.read_csv(types_path)
     else:
-        establishments = fetch_cnes_establishments(15)
+        if not matrix_path.exists():
+            raise FileNotFoundError(
+                "Integrated matrix is required to obtain the 144 municipality codes."
+            )
+        matrix = pd.read_csv(matrix_path, dtype={"municipality_code": str})
+        municipality_codes = matrix["municipality_code"].astype(str).str[:6].tolist()
+        establishments = fetch_cnes_establishments(municipality_codes)
         unit_types = fetch_cnes_unit_types()
         establishments.to_csv(raw_path, index=False, encoding="utf-8")
         unit_types.to_csv(types_path, index=False, encoding="utf-8")
@@ -220,7 +257,7 @@ def collect_cnes_pa(output_directory: str | Path = "data/processed") -> dict[str
                 "status": 1,
                 "establishments": int(len(establishments)),
                 "municipal_rows": int(len(indicators)),
-                "snapshot_reused": raw_path.exists() and types_path.exists(),
+                "snapshot_reused": reused_snapshot,
                 "limitations": [
                     "This endpoint covers establishments and unit types.",
                     "Professional occupation indicators require a separate CNES human-resources source.",
