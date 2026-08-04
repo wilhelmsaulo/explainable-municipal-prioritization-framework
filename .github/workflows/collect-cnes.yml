@@ -28,8 +28,8 @@ jobs:
       - name: Download official CNES archive from Drive
         run: |
           mkdir -p data/processed/cnes_bulk
-          gdown --id 1QrSnlZt-5tF_7uVvn1YSSsZ38NWrMWBb \
-            --output data/processed/cnes_bulk/BASE_DE_DADOS_CNES_202606.ZIP
+          gdown "1QrSnlZt-5tF_7uVvn1YSSsZ38NWrMWBb" \
+            -O data/processed/cnes_bulk/BASE_DE_DADOS_CNES_202606.ZIP
           python - <<'PY'
           from pathlib import Path
           import zipfile
