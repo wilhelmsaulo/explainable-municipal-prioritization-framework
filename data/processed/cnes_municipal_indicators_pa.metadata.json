@@ -4,7 +4,7 @@
   "archive_size_bytes": 729856031,
   "establishments": 12463,
   "municipal_rows": 144,
-  "snapshot_reused": false,
+  "snapshot_reused": true,
   "limitations": [
     "Establishment indicators are derived from the monthly CNES database.",
     "Professional indicators require the CNES professional table.",
