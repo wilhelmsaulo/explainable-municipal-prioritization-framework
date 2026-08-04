@@ -9,17 +9,25 @@ The framework currently provides:
 - an authoritative municipality reference collected from the IBGE Localities API;
 - standardization and validation of the 144 municipalities of Pará;
 - a generic connector for the official SIDRA values API;
+- a unified `DataSourceManager` for registering and executing heterogeneous official-source operations;
 - auditable provenance metadata for every SIDRA collection;
 - command-line execution, automated tests and continuous integration.
 
 ## Architecture
 
 ```text
-Official sources -> Connectors -> Validation -> Standardization -> Integration
-                 -> Indicators -> Decision model -> Explainability -> Results
+Official sources -> Connectors -> DataSourceManager -> Validation -> Standardization
+                 -> Integration -> Indicators -> Decision model -> Explainability
 ```
 
-The repository is API-first. Local files are generated only as reproducible outputs, cache or audit snapshots.
+The repository is API-first. Local files are generated only as reproducible outputs, cache or audit snapshots. Source-specific communication remains inside each connector, while pipelines execute named operations through the data-source manager.
+
+Built-in operations currently registered are:
+
+```text
+ibge.localities.municipalities
+ibge.sidra.values
+```
 
 ## Requirements
 
