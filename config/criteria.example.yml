@@ -1,0 +1,31 @@
+id_columns:
+  - municipality_code
+  - municipality_name
+
+alpha: 0.5
+
+criteria:
+  - column: violence_rate
+    label: Violence rate per 100,000 women
+    direction: benefit
+    dimension: violence
+
+  - column: feminicide_persistence
+    label: Persistence of feminicide records
+    direction: benefit
+    dimension: violence
+
+  - column: service_deficit
+    label: Deficit of specialized services
+    direction: benefit
+    dimension: institutional_capacity
+
+  - column: territorial_barrier
+    label: Territorial accessibility barrier
+    direction: benefit
+    dimension: accessibility
+
+  - column: socioeconomic_vulnerability
+    label: Socioeconomic vulnerability
+    direction: benefit
+    dimension: vulnerability
