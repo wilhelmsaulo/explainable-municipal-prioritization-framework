@@ -59,6 +59,11 @@ data/processed/municipalities.csv
 
 Indicators are declared in `config/indicators.yml`. Each entry records its source, analytical dimension, output name and official query parameters.
 
+The initial Base Municipal catalog contains:
+
+- `municipal_population_area_density_2022`;
+- `municipal_population_by_sex_2022`.
+
 List the declared indicators:
 
 ```bash
@@ -68,15 +73,23 @@ empriority indicators
 Collect one indicator by name:
 
 ```bash
-empriority collect-indicator municipal_population_area_density_2022
+empriority collect-indicator municipal_population_by_sex_2022
 ```
 
-The command resolves the catalog entry, calls the official source and produces both data and provenance metadata:
+Collect every indicator declared in the catalog:
+
+```bash
+empriority collect-all-indicators
+```
+
+Each collection produces both data and provenance metadata, for example:
 
 ```text
-data/processed/municipal_population_area_density_2022.csv
-data/processed/municipal_population_area_density_2022.metadata.json
+data/processed/municipal_population_by_sex_2022.csv
+data/processed/municipal_population_by_sex_2022.metadata.json
 ```
+
+The population-by-sex query uses SIDRA table 9514, selecting all sex categories while fixing age and age-declaration form at their total categories. This returns total, male and female resident population by municipality without downloading unnecessary age detail.
 
 ## Generic SIDRA collection
 
@@ -95,7 +108,7 @@ empriority sidra \
 A classification can be supplied more than once using `ID=CATEGORIES`:
 
 ```bash
-empriority sidra --table 202 --level 6 -c "2=4,5" -c "1=all"
+empriority sidra --table 9514 --level 6 -c "2=all" -c "287=100362" -c "286=0"
 ```
 
 ## Tests
