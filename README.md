@@ -10,6 +10,7 @@ The framework currently provides:
 - standardization and validation of the 144 municipalities of Pará;
 - a generic connector for the official SIDRA values API;
 - a unified `DataSourceManager` for registering and executing heterogeneous official-source operations;
+- a declarative indicator catalog in YAML;
 - auditable provenance metadata for every SIDRA collection;
 - command-line execution, automated tests and continuous integration.
 
@@ -54,18 +55,41 @@ The command reads `config/project.yml`, queries the official IBGE API, validates
 data/processed/municipalities.csv
 ```
 
+## Declarative indicator catalog
+
+Indicators are declared in `config/indicators.yml`. Each entry records its source, analytical dimension, output name and official query parameters.
+
+List the declared indicators:
+
+```bash
+empriority indicators
+```
+
+Collect one indicator by name:
+
+```bash
+empriority collect-indicator municipal_population_area_density_2022
+```
+
+The command resolves the catalog entry, calls the official source and produces both data and provenance metadata:
+
+```text
+data/processed/municipal_population_area_density_2022.csv
+data/processed/municipal_population_area_density_2022.metadata.json
+```
+
 ## Generic SIDRA collection
 
-The SIDRA command follows the official API path structure and accepts table, territorial level, territories, variables, periods and optional classifications.
+Direct SIDRA queries remain available for exploration or catalog development:
 
 ```bash
 empriority sidra \
-  --table 4709 \
+  --table 4714 \
   --level 6 \
   --territories "all/in/n3/15" \
-  --variables 93 \
+  --variables all \
   --periods 2022 \
-  --output population_2022
+  --output municipal_population_area_density_2022
 ```
 
 A classification can be supplied more than once using `ID=CATEGORIES`:
@@ -73,15 +97,6 @@ A classification can be supplied more than once using `ID=CATEGORIES`:
 ```bash
 empriority sidra --table 202 --level 6 -c "2=4,5" -c "1=all"
 ```
-
-Each collection produces both the data and an audit sidecar:
-
-```text
-data/processed/population_2022.csv
-data/processed/population_2022.metadata.json
-```
-
-The metadata records the official endpoint, query parameters, UTC collection time, number of records and the mapping of normalized columns to the labels returned by SIDRA.
 
 ## Tests
 
