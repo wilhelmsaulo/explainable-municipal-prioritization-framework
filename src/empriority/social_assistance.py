@@ -10,21 +10,22 @@ from typing import Any
 import httpx
 import pandas as pd
 
-ENDPOINTS = [
-    "https://dados.gov.br/dados/api/3/action/package_show",
-    "https://dados.gov.br/api/3/action/package_show",
+BASE_ENDPOINTS = [
+    "https://dados.gov.br/dados/api/3/action",
+    "https://dados.gov.br/api/3/action",
 ]
 PACKAGES = [
     "cadsuas---sistema-de-cadastro-do-sistema-unico-de-assistencia-social-suas",
     "unidades-de-atendimento-da-assistencia-social",
 ]
+SEARCH_TERMS = ["CADSUAS", "Unidades de Atendimento da Assistência Social"]
 PATTERNS = {
-    "cras": ["quantidade de cras", "brasil: cras"],
-    "creas": ["quantidade de creas", "brasil: creas"],
+    "cras": ["quantidade de cras", "brasil: cras", "centro de referencia de assistencia social"],
+    "creas": ["quantidade de creas", "brasil: creas", "centro de referencia especializado"],
     "centro_pop": ["quantidade de centro pop", "brasil: centro pop"],
-    "centro_dia": ["quantidade de centro dia", "brasil: centro-dia"],
-    "centro_convivencia": ["quantidade de centro de convivencia", "brasil: centro de convivencia"],
-    "unidade_acolhimento": ["quantidade de unidade de acolhimento", "brasil: unidades de acolhimento"],
+    "centro_dia": ["quantidade de centro dia", "centro dia e similares", "brasil: centro-dia"],
+    "centro_convivencia": ["quantidade de centro de convivencia", "centros de convivencias"],
+    "unidade_acolhimento": ["quantidade de unidade de acolhimento", "unidades de acolhimento"],
     "profissionais_cras": ["profissionais em cras"],
     "profissionais_creas": ["profissionais em creas"],
 }
@@ -44,31 +45,69 @@ def column(frame: pd.DataFrame, *names: str) -> str | None:
     return None
 
 
+def _package_resources(payload: dict[str, Any]) -> list[dict[str, Any]]:
+    if not payload.get("success"):
+        return []
+    result = payload.get("result", {})
+    if isinstance(result, dict) and isinstance(result.get("resources"), list):
+        return list(result["resources"])
+    resources: list[dict[str, Any]] = []
+    for package in result.get("results", []) if isinstance(result, dict) else []:
+        resources.extend(package.get("resources", []))
+    return resources
+
+
 def discover(timeout: float = 90.0) -> dict[str, dict[str, str]]:
     resources: list[dict[str, Any]] = []
+    attempts: list[str] = []
     with httpx.Client(timeout=timeout, follow_redirects=True) as client:
-        for package in PACKAGES:
-            for endpoint in ENDPOINTS:
+        for base in BASE_ENDPOINTS:
+            for package in PACKAGES:
                 try:
-                    response = client.get(endpoint, params={"id": package})
+                    response = client.get(f"{base}/package_show", params={"id": package})
+                    attempts.append(f"package_show {base} {package}: {response.status_code}")
                     response.raise_for_status()
-                    payload = response.json()
-                    if payload.get("success"):
-                        resources.extend(payload["result"].get("resources", []))
-                        break
-                except Exception:
-                    continue
+                    resources.extend(_package_resources(response.json()))
+                except Exception as exc:  # noqa: BLE001
+                    attempts.append(f"package_show {base} {package}: {type(exc).__name__}")
+            for term in SEARCH_TERMS:
+                try:
+                    response = client.get(f"{base}/package_search", params={"q": term, "rows": 10})
+                    attempts.append(f"package_search {base} {term}: {response.status_code}")
+                    response.raise_for_status()
+                    resources.extend(_package_resources(response.json()))
+                except Exception as exc:  # noqa: BLE001
+                    attempts.append(f"package_search {base} {term}: {type(exc).__name__}")
+
+    unique: dict[str, dict[str, Any]] = {}
+    for resource in resources:
+        url = str(resource.get("url", "")).strip()
+        if url:
+            unique[url] = resource
+    resources = list(unique.values())
+    print(f"CADSUAS catalog resources discovered: {len(resources)}", flush=True)
+    for attempt in attempts:
+        print(attempt, flush=True)
+
     selected: dict[str, dict[str, str]] = {}
     for indicator, patterns in PATTERNS.items():
-        matches = []
+        matches: list[tuple[int, dict[str, Any]]] = []
         for resource in resources:
-            haystack = norm(f"{resource.get('name', '')} {resource.get('description', '')}")
-            score = max((len(p) for p in patterns if p in haystack), default=0)
+            haystack = norm(
+                f"{resource.get('name', '')} {resource.get('description', '')} "
+                f"{resource.get('format', '')}"
+            )
+            score = max((len(pattern) for pattern in patterns if pattern in haystack), default=0)
             if score and resource.get("url"):
-                matches.append((score, resource))
+                format_bonus = 5 if "csv" in norm(resource.get("format", "")) else 0
+                matches.append((score + format_bonus, resource))
         if matches:
-            resource = sorted(matches, reverse=True, key=lambda x: x[0])[0][1]
-            selected[indicator] = {"name": str(resource.get("name", indicator)), "url": str(resource["url"])}
+            resource = sorted(matches, reverse=True, key=lambda item: item[0])[0][1]
+            selected[indicator] = {
+                "name": str(resource.get("name", indicator)),
+                "url": str(resource["url"]),
+            }
+            print(f"CADSUAS selected {indicator}: {selected[indicator]['name']}", flush=True)
     return selected
 
 
@@ -98,7 +137,12 @@ def municipal_series(frame: pd.DataFrame, indicator: str) -> pd.DataFrame:
             raise RuntimeError(f"No value column in {indicator}: {list(frame.columns)}")
         value = candidates[-1]
     local = frame[[code, value] + ([date_col] if date_col else [])].copy()
-    local["municipality_code"] = local[code].astype(str).str.replace(r"\.0$", "", regex=True).str.extract(r"(\d+)", expand=False)
+    local["municipality_code"] = (
+        local[code]
+        .astype(str)
+        .str.replace(r"\.0$", "", regex=True)
+        .str.extract(r"(\d+)", expand=False)
+    )
     local = local[local["municipality_code"].str.startswith("15", na=False)]
     local["municipality_code"] = local["municipality_code"].str[:6].str.zfill(6)
     local[indicator] = pd.to_numeric(local[value], errors="coerce")
@@ -110,12 +154,20 @@ def municipal_series(frame: pd.DataFrame, indicator: str) -> pd.DataFrame:
     return local[["municipality_code", indicator]]
 
 
-def collect_social_assistance_pa(output_directory: str | Path = "data/processed", timeout: float = 180.0) -> dict[str, Path]:
+def collect_social_assistance_pa(
+    output_directory: str | Path = "data/processed",
+    timeout: float = 180.0,
+) -> dict[str, Path]:
     output = Path(output_directory)
     output.mkdir(parents=True, exist_ok=True)
     resources = discover(timeout)
     missing = sorted({"cras", "creas"} - resources.keys())
     if missing:
+        diagnostic = output / "social_assistance_discovery_error.json"
+        diagnostic.write_text(
+            json.dumps({"missing": missing, "discovered": resources}, ensure_ascii=False, indent=2),
+            encoding="utf-8",
+        )
         raise RuntimeError(f"Required CADSUAS resources not found: {missing}")
 
     merged: pd.DataFrame | None = None
@@ -162,11 +214,18 @@ def collect_social_assistance_pa(output_directory: str | Path = "data/processed"
     indicators_path = output / "social_assistance_indicators_pa.csv"
     metadata_path = output / "social_assistance_indicators_pa.metadata.json"
     result.to_csv(indicators_path, index=False, encoding="utf-8")
-    metadata_path.write_text(json.dumps({
-        "source": "MDS CADSUAS / Brazilian Open Data Portal",
-        "state": "Pará",
-        "municipal_rows": int(len(result)),
-        "resources": provenance,
-        "selection": "Latest available competence by municipality when anomes exists",
-    }, ensure_ascii=False, indent=2), encoding="utf-8")
+    metadata_path.write_text(
+        json.dumps(
+            {
+                "source": "MDS CADSUAS / Brazilian Open Data Portal",
+                "state": "Pará",
+                "municipal_rows": int(len(result)),
+                "resources": provenance,
+                "selection": "Latest available competence by municipality when anomes exists",
+            },
+            ensure_ascii=False,
+            indent=2,
+        ),
+        encoding="utf-8",
+    )
     return {"social_indicators": indicators_path, "social_metadata": metadata_path}
