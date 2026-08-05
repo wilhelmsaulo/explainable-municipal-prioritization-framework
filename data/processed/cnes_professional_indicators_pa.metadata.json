@@ -1,0 +1,16 @@
+{
+  "source": "DATASUS CNES monthly complete database",
+  "archive": "BASE_DE_DADOS_CNES_202606.ZIP",
+  "workload_table": "tbCargaHorariaSus202606.csv",
+  "occupation_dictionary": "tbAtividadeProfissional202606.csv",
+  "municipalities": 144,
+  "professional_categories": [
+    "physicians",
+    "nurses",
+    "psychologists",
+    "social_workers"
+  ],
+  "counting_rule": "Unique professional per municipality and CBO category",
+  "hours_rule": "Sum of ambulatory, other and SUS hospital weekly workload",
+  "privacy": "Professional identifiers are removed from the stored analytical snapshot"
+}
