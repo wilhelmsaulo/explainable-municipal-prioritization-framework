@@ -1,0 +1,156 @@
+name: collect-cnes-professionals
+
+on:
+  push:
+    paths:
+      - ".github/workflows/collect-cnes-professionals.yml"
+      - "src/empriority/cnes_professionals.py"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: cnes-professionals-main
+  cancel-in-progress: false
+
+jobs:
+  collect:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+      - name: Install project
+        run: |
+          python -m pip install --upgrade pip
+          pip install -e . gdown
+      - name: Download official CNES archive
+        run: |
+          mkdir -p data/processed/cnes_bulk
+          gdown "1QrSnlZt-5tF_7uVvn1YSSsZ38NWrMWBb" \
+            -O data/processed/cnes_bulk/BASE_DE_DADOS_CNES_202606.ZIP
+          python - <<'PY'
+          from pathlib import Path
+          import zipfile
+
+          path = Path("data/processed/cnes_bulk/BASE_DE_DADOS_CNES_202606.ZIP")
+          if not path.exists() or path.stat().st_size < 100_000_000:
+              raise RuntimeError("CNES archive download is incomplete.")
+          if not zipfile.is_zipfile(path):
+              raise RuntimeError("CNES archive is not a valid ZIP.")
+          print(f"Validated archive: {path.stat().st_size / 1_048_576:.1f} MB")
+          PY
+      - name: Build and integrate professional indicators
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import pandas as pd
+
+          from empriority.cnes_professionals import build_cnes_professional_indicators
+
+          archive = Path("data/processed/cnes_bulk/BASE_DE_DADOS_CNES_202606.ZIP")
+          establishments = Path("data/processed/cnes_establishments_pa.csv")
+          matrix_path = Path("data/processed/integrated_municipal_matrix.csv")
+
+          outputs = build_cnes_professional_indicators(
+              archive,
+              establishments,
+              "data/processed",
+          )
+          professionals = pd.read_csv(
+              outputs["professional_indicators"],
+              dtype={"municipality_code": str},
+          )
+          matrix = pd.read_csv(matrix_path, dtype={"municipality_code": str})
+
+          matrix["_municipality_code_6"] = matrix["municipality_code"].str[:6]
+          professionals = professionals.rename(
+              columns={"municipality_code": "_municipality_code_6"}
+          )
+
+          old_columns = [
+              column for column in matrix.columns
+              if column.startswith("cnes_physicians")
+              or column.startswith("cnes_nurses")
+              or column.startswith("cnes_psychologists")
+              or column.startswith("cnes_social_workers")
+              or column == "cnes_multidisciplinary_staff_deficit"
+          ]
+          if old_columns:
+              matrix = matrix.drop(columns=old_columns)
+
+          matrix = matrix.merge(professionals, on="_municipality_code_6", how="left")
+          matrix = matrix.drop(columns="_municipality_code_6")
+
+          required = [
+              "cnes_physicians",
+              "cnes_nurses",
+              "cnes_psychologists",
+              "cnes_social_workers",
+              "cnes_multidisciplinary_staff_deficit",
+          ]
+          missing = [column for column in required if column not in matrix.columns]
+          if missing:
+              raise AssertionError(f"Missing professional columns: {missing}")
+          if matrix[required].isna().any().any():
+              failed = matrix.loc[
+                  matrix[required].isna().any(axis=1),
+                  ["municipality_code", "municipality"],
+              ]
+              failed.to_csv(
+                  "data/processed/cnes_professional_unmatched_municipalities.csv",
+                  index=False,
+              )
+              raise AssertionError("Professional indicators did not match all municipalities.")
+
+          population = pd.to_numeric(matrix["population_2023"], errors="coerce")
+          for column in [
+              "cnes_physicians",
+              "cnes_nurses",
+              "cnes_psychologists",
+              "cnes_social_workers",
+          ]:
+              matrix[f"{column}_per_100k_population"] = (
+                  pd.to_numeric(matrix[column], errors="coerce") / population * 100_000
+              )
+
+          assert len(matrix) == 144
+          assert matrix["municipality_code"].nunique() == 144
+          assert matrix[[
+              "cnes_physicians",
+              "cnes_nurses",
+              "cnes_psychologists",
+              "cnes_social_workers",
+          ]].sum().sum() > 0
+
+          matrix.to_csv(matrix_path, index=False, encoding="utf-8")
+          print(
+              "CNES professionals integrated: "
+              f"physicians={int(matrix['cnes_physicians'].sum())}, "
+              f"nurses={int(matrix['cnes_nurses'].sum())}, "
+              f"psychologists={int(matrix['cnes_psychologists'].sum())}, "
+              f"social_workers={int(matrix['cnes_social_workers'].sum())}."
+          )
+          PY
+      - name: Commit outputs
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -f data/processed/cnes_professional_records_pa.csv
+          git add -f data/processed/cnes_professional_indicators_pa.csv
+          git add -f data/processed/cnes_professional_indicators_pa.metadata.json
+          git add -f data/processed/integrated_municipal_matrix.csv
+          if [ -f data/processed/cnes_professional_unmatched_municipalities.csv ]; then
+            git add -f data/processed/cnes_professional_unmatched_municipalities.csv
+          fi
+          if ! git diff --cached --quiet; then
+            git commit -m "Store CNES professional indicators"
+            git pull --rebase origin main
+            git push origin HEAD:main
+          fi
