@@ -1,0 +1,51 @@
+name: build-justice-composite
+
+on:
+  push:
+    paths:
+      - "src/empriority/justice_composite.py"
+      - "data/processed/justice_*_indicators_pa.csv"
+      - "data/processed/integrated_municipal_matrix.csv"
+  workflow_dispatch:
+
+concurrency:
+  group: build-justice-composite
+  cancel-in-progress: true
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+      - name: Install project
+        run: |
+          python -m pip install --upgrade pip
+          pip install -e .
+      - name: Build consolidated justice indicators
+        run: |
+          python - <<'PY'
+          import json
+          from empriority.justice_composite import build_justice_composite
+
+          outputs = build_justice_composite()
+          print(json.dumps({key: str(value) for key, value in outputs.items()}, indent=2))
+          PY
+      - name: Commit outputs
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -f data/processed/integrated_municipal_matrix.csv
+          git add -f data/processed/justice_access_summary.json
+          git diff --cached --quiet || git commit -m "Store consolidated justice-access indicators"
+          git pull --rebase origin main
+          git push
