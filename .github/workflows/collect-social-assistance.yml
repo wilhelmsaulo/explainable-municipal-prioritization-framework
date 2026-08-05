@@ -4,7 +4,7 @@ on:
   push:
     paths:
       - ".github/workflows/collect-social-assistance.yml"
-      - "src/empriority/social_assistance_rma.py"
+      - "src/empriority/social_assistance_rma_v2.py"
   workflow_dispatch:
 
 concurrency:
@@ -36,45 +36,36 @@ jobs:
           python - <<'PY'
           from pathlib import Path
           import pandas as pd
-
-          from empriority.social_assistance_rma import collect_social_assistance_rma_pa
+          from empriority.social_assistance_rma_v2 import collect_social_assistance_rma_pa
 
           outputs = collect_social_assistance_rma_pa("data/processed")
           matrix_path = Path("data/processed/integrated_municipal_matrix.csv")
           matrix = pd.read_csv(matrix_path, dtype={"municipality_code": str})
           social = pd.read_csv(outputs["social_indicators"], dtype={"municipality_code": str})
-
           matrix["_municipality_code_6"] = matrix["municipality_code"].str[:6]
           social = social.rename(columns={"municipality_code": "_municipality_code_6"})
           old_columns = [column for column in matrix.columns if column.startswith("social_")]
           if old_columns:
               matrix = matrix.drop(columns=old_columns)
-          matrix = matrix.merge(social, on="_municipality_code_6", how="left")
-          matrix = matrix.drop(columns="_municipality_code_6")
+          matrix = matrix.merge(social, on="_municipality_code_6", how="left").drop(columns="_municipality_code_6")
 
-          observed_columns = ["social_cras", "social_creas", "social_centro_pop"]
-          for column in observed_columns:
-              matrix[column] = pd.to_numeric(matrix[column], errors="coerce").fillna(0)
-
-          unavailable_columns = [
-              "social_centro_dia",
-              "social_centros_convivencia",
-              "social_unidades_acolhimento",
-              "social_cras_professionals",
+          observed = ["social_cras", "social_creas", "social_centro_pop"]
+          unavailable = [
+              "social_centro_dia", "social_centros_convivencia",
+              "social_unidades_acolhimento", "social_cras_professionals",
               "social_creas_professionals",
           ]
-          for column in unavailable_columns:
+          for column in observed:
+              matrix[column] = pd.to_numeric(matrix[column], errors="coerce").fillna(0)
+          for column in unavailable:
               matrix[column] = pd.to_numeric(matrix[column], errors="coerce")
-
           if matrix["social_cras"].sum() <= 0 or matrix["social_creas"].sum() <= 0:
               raise AssertionError("CRAS/CREAS totals are zero; refusing invalid integration")
           assert len(matrix) == 144
           assert matrix["municipality_code"].nunique() == 144
-
           population = pd.to_numeric(matrix["population_2023"], errors="coerce")
-          for column in observed_columns + unavailable_columns:
+          for column in observed + unavailable:
               matrix[f"{column}_per_100k_population"] = matrix[column] / population * 100_000
-
           matrix.to_csv(matrix_path, index=False, encoding="utf-8")
           print(
               f"Social assistance integrated: {len(matrix)} municipalities, "
