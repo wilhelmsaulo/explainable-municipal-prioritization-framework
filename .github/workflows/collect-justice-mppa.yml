@@ -45,7 +45,11 @@ jobs:
           old = [c for c in matrix.columns if c.startswith("justice_mppa_")]
           if old:
               matrix = matrix.drop(columns=old)
-          matrix = matrix.merge(justice.drop(columns=["municipality"], errors="ignore"), on="municipality_code", how="left")
+          matrix = matrix.merge(
+              justice.drop(columns=["municipality"], errors="ignore"),
+              on="municipality_code",
+              how="left",
+          )
           for column in [c for c in matrix.columns if c.startswith("justice_mppa_")]:
               matrix[column] = pd.to_numeric(matrix[column], errors="coerce").fillna(0).astype(int)
           assert len(matrix) == 144
@@ -59,14 +63,19 @@ jobs:
               f"specialized={int(matrix['justice_mppa_specialized_women'].sum())}."
           )
           PY
-      - name: Commit outputs
+      - name: Commit outputs or diagnostic
+        if: always()
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add -f data/processed/justice_mppa_indicators_pa.csv
-          git add -f data/processed/justice_mppa_institutional_pages_pa.csv
-          git add -f data/processed/justice_mppa_indicators_pa.metadata.json
-          git add -f data/processed/integrated_municipal_matrix.csv
-          git diff --cached --quiet || git commit -m "Store MPPA justice-access indicators"
+          for file in \
+            data/processed/justice_mppa_indicators_pa.csv \
+            data/processed/justice_mppa_institutional_pages_pa.csv \
+            data/processed/justice_mppa_indicators_pa.metadata.json \
+            data/processed/justice_mppa_diagnostic.json \
+            data/processed/integrated_municipal_matrix.csv; do
+            if [ -f "$file" ]; then git add -f "$file"; fi
+          done
+          git diff --cached --quiet || git commit -m "Store MPPA justice-access outputs"
           git pull --rebase origin main
           git push
