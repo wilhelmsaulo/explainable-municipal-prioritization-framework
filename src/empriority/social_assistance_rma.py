@@ -1,25 +1,71 @@
 from __future__ import annotations
 
+import io
 import json
 from pathlib import Path
 
+import httpx
 import pandas as pd
+from lxml import etree, html
 
 RMA_URL = "https://aplicacoes.mds.gov.br/sagi/atendimento/adm/lista_preenchimento_mu.php?p_uf=PA"
+
+
+def _read_valid_tables(url: str, timeout: float = 120.0) -> list[pd.DataFrame]:
+    headers = {
+        "User-Agent": (
+            "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 "
+            "Chrome/126.0 Safari/537.36"
+        )
+    }
+    response = httpx.get(url, headers=headers, timeout=timeout, follow_redirects=True)
+    response.raise_for_status()
+
+    document = html.fromstring(response.content)
+    frames: list[pd.DataFrame] = []
+    rejected = 0
+
+    for element in document.xpath("//table"):
+        fragment = etree.tostring(element, encoding="unicode", method="html")
+        try:
+            parsed = pd.read_html(io.StringIO(fragment), flavor="lxml")
+        except (ValueError, IndexError):
+            rejected += 1
+            continue
+        for frame in parsed:
+            if not frame.empty and len(frame.columns) > 0:
+                frames.append(frame)
+
+    print(
+        f"RMA HTML tables parsed: valid={len(frames)}, rejected={rejected}",
+        flush=True,
+    )
+    if not frames:
+        raise RuntimeError("No valid tabular data found in the official RMA page")
+    return frames
 
 
 def _find_table(tables: list[pd.DataFrame], keyword: str) -> pd.DataFrame:
     keyword_upper = keyword.upper()
     for table in tables:
-        text = " ".join(map(str, table.columns)).upper() + " " + table.astype(str).head(10).to_string().upper()
+        columns_text = " ".join(map(str, table.columns)).upper()
+        values_text = table.astype(str).head(20).to_string().upper()
+        text = f"{columns_text} {values_text}"
         if keyword_upper in text and "IBGE" in text:
             return table
-    raise RuntimeError(f"Unable to locate {keyword} table in RMA page")
+    available = [" | ".join(map(str, table.columns)) for table in tables]
+    raise RuntimeError(
+        f"Unable to locate {keyword} table in RMA page. "
+        f"Available table headers: {available}"
+    )
 
 
 def _normalize_table(table: pd.DataFrame, indicator: str) -> pd.DataFrame:
     local = table.copy()
-    local.columns = [" ".join(map(str, column)) if isinstance(column, tuple) else str(column) for column in local.columns]
+    local.columns = [
+        " ".join(map(str, column)) if isinstance(column, tuple) else str(column)
+        for column in local.columns
+    ]
     ibge_col = next((column for column in local.columns if "IBGE" in column.upper()), None)
     cadsuas_col = next(
         (
@@ -52,10 +98,13 @@ def collect_social_assistance_rma_pa(
     output = Path(output_directory)
     output.mkdir(parents=True, exist_ok=True)
 
-    tables = pd.read_html(RMA_URL, flavor="lxml")
+    tables = _read_valid_tables(RMA_URL)
     cras = _normalize_table(_find_table(tables, "CRAS CADSUAS"), "social_cras")
     creas = _normalize_table(_find_table(tables, "CREAS CADSUAS"), "social_creas")
-    centro_pop = _normalize_table(_find_table(tables, "CENTROPOP CADSUAS"), "social_centro_pop")
+    centro_pop = _normalize_table(
+        _find_table(tables, "CENTROPOP CADSUAS"),
+        "social_centro_pop",
+    )
 
     result = cras.merge(creas, on="municipality_code", how="outer")
     result = result.merge(centro_pop, on="municipality_code", how="outer")
