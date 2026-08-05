@@ -18,8 +18,8 @@ def _norm(value: object) -> str:
     return re.sub(r"[^a-z0-9]+", " ", text.lower()).strip()
 
 
-def _heading_text(element: object) -> str:
-    return " ".join(str(part).strip() for part in element.itertext() if str(part).strip())
+def _text(element: object) -> str:
+    return " ".join(part.strip() for part in element.itertext() if part.strip())
 
 
 def collect_defensoria_access_pa(
@@ -34,7 +34,7 @@ def collect_defensoria_access_pa(
         ["municipality_code", "municipality"]
     ].drop_duplicates()
     reference["_key"] = reference["municipality"].map(_norm)
-    municipality_keys = set(reference["_key"])
+    valid_keys = set(reference["_key"])
 
     response = httpx.get(
         DPE_URL,
@@ -45,46 +45,52 @@ def collect_defensoria_access_pa(
     response.raise_for_status()
     document = html.fromstring(response.content)
 
-    headings = document.xpath("//h3|//h4|//h5|//h6")
     records: list[dict[str, object]] = []
-    current_key: str | None = None
-    current_label: str | None = None
-    current_text: list[str] = []
+    headings = document.xpath("//h4")
+    for heading in headings:
+        label = _text(heading)
+        key = _norm(label)
+        if key not in valid_keys:
+            candidates = [candidate for candidate in valid_keys if key.startswith(candidate + " ")]
+            key = max(candidates, key=len) if candidates else ""
+        if not key:
+            continue
 
-    def flush() -> None:
-        nonlocal current_key, current_label, current_text
-        if current_key is None or current_label is None:
-            return
-        details = " ".join(current_text)
-        details_norm = _norm(details)
+        details: list[str] = []
+        sibling = heading.getnext()
+        while sibling is not None and sibling.tag.lower() != "h4":
+            value = _text(sibling)
+            if value:
+                details.append(value)
+            sibling = sibling.getnext()
+        details_text = " ".join(details)
+        details_norm = _norm(details_text)
+
         records.append(
             {
-                "municipality_key": current_key,
-                "listed_municipality": current_label,
-                "details": details,
+                "municipality_key": key,
+                "listed_municipality": label,
+                "details": details_text,
                 "justice_dpe_covered": 1,
-                "justice_dpe_local_unit": int(current_key in details_norm),
+                "justice_dpe_local_unit": int(key in details_norm),
             }
         )
 
-    for element in headings:
-        text = _heading_text(element)
-        key = _norm(text)
-        matched = key if key in municipality_keys else None
-        if matched is None:
-            # Headings may add a judicial-term qualifier after the municipality name.
-            matches = [candidate for candidate in municipality_keys if key.startswith(candidate + " ")]
-            matched = max(matches, key=len) if matches else None
-        if matched:
-            flush()
-            current_key = matched
-            current_label = text
-            current_text = []
-        elif current_key is not None:
-            current_text.append(text)
-    flush()
-
     raw = pd.DataFrame(records)
+    diagnostic_path = output / "justice_defensoria_diagnostic.json"
+    diagnostic_path.write_text(
+        json.dumps(
+            {
+                "source_url": DPE_URL,
+                "h4_headings": len(headings),
+                "matched_entries": len(raw),
+                "sample_labels": raw.get("listed_municipality", pd.Series(dtype=str)).head(10).tolist(),
+            },
+            ensure_ascii=False,
+            indent=2,
+        ),
+        encoding="utf-8",
+    )
     if raw.empty:
         raise RuntimeError("No municipal Defensoria entries found on official DPE page")
 
@@ -102,8 +108,8 @@ def collect_defensoria_access_pa(
     result["justice_dpe_access_deficit"] = (result["justice_dpe_covered"] == 0).astype(int)
     result = result.drop(columns=["_key", "municipality_key"])
 
-    if len(result) != 144 or result["municipality_code"].nunique() != 144:
-        raise AssertionError("Defensoria output must cover the 144 Pará municipalities")
+    assert len(result) == 144
+    assert result["municipality_code"].nunique() == 144
     if result["justice_dpe_covered"].sum() <= 0:
         raise AssertionError("Defensoria coverage is zero; refusing invalid snapshot")
 
@@ -121,7 +127,7 @@ def collect_defensoria_access_pa(
                 "covered_municipalities": int(result["justice_dpe_covered"].sum()),
                 "municipalities_with_local_unit": int(result["justice_dpe_local_unit"].sum()),
                 "municipalities_served_by_referral": int(result["justice_dpe_referred_service"].sum()),
-                "method_note": "Coverage follows municipality entries listed by DPE-PA. Local presence requires the listed address text to reference the same municipality; otherwise service is classified as referral/term coverage.",
+                "method_note": "Each official h4 municipality entry is paired with subsequent address/telephone elements until the next h4. Local presence requires the address text to reference the same municipality.",
             },
             ensure_ascii=False,
             indent=2,
@@ -129,8 +135,7 @@ def collect_defensoria_access_pa(
         encoding="utf-8",
     )
     print(
-        "DPE indicators: "
-        f"covered={int(result['justice_dpe_covered'].sum())}, "
+        f"DPE indicators: covered={int(result['justice_dpe_covered'].sum())}, "
         f"local={int(result['justice_dpe_local_unit'].sum())}, "
         f"referred={int(result['justice_dpe_referred_service'].sum())}",
         flush=True,
@@ -139,4 +144,5 @@ def collect_defensoria_access_pa(
         "justice_indicators": indicators_path,
         "justice_raw": raw_path,
         "justice_metadata": metadata_path,
+        "justice_diagnostic": diagnostic_path,
     }
