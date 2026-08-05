@@ -1,0 +1,179 @@
+unit_name,city,unit_type,municipality_code,is_criminal,is_juizado,is_ceJusc,is_women_specialized
+1Âª VARA CÃVEL E EMPRESARIAL DE ABAETETUBA,Abaetetuba,Judicial 1Âº Grau Varas CÃ­veis e Empresariais,1500107,0,0,0,0
+1Âº CEJUSC DE ABAETETUBA ( FACULDADE FAM),Abaetetuba,Cejusc,1500107,0,0,1,0
+2Âª VARA CÃVEL E EMPRESARIAL DE ABAETETUBA,Abaetetuba,Judicial 1Âº Grau Varas CÃ­veis e Empresariais,1500107,0,0,0,0
+JUIZADO ESPECIAL CIVEL E CRIMINAL DE ABAETETUBA,Abaetetuba,Juizado Especial,1500107,1,1,0,0
+VARA CRIMINAL DE ABAETETUBA,Abaetetuba,Judicial 1Âº Grau Varas de CompetÃªncia Criminal,1500107,1,0,0,0
+VARA ÃNICA DE ACARÃ,AcarÃ¡,Judicial 1Âº Grau,1500206,0,0,0,0
+VARA ÃNICA DE AFUÃ,AfuÃ¡,Judicial 1Âº Grau,1500305,0,0,0,0
+VARA ÃNICA DE ALENQUER,Alenquer,Judicial 1Âº Grau,1500404,0,0,0,0
+VARA ÃNICA DE ALMEIRIM,Almeirim,Judicial 1Âº Grau,1500503,0,0,0,0
+1Âª VARA CÃVEL E EMPRESARIAL DE ALTAMIRA,Altamira,Judicial 1Âº Grau Varas CÃ­veis e Empresariais,1500602,0,0,0,0
+1Âª VARA CRIMINAL DE ALTAMIRA,Altamira,Judicial 1Âº Grau Varas de CompetÃªncia Criminal,1500602,1,0,0,0
+2Âª VARA CÃVEL E EMPRESARIAL DE ALTAMIRA,Altamira,Judicial 1Âº Grau Varas CÃ­veis e Empresariais,1500602,0,0,0,0
+2Âª VARA CRIMINAL DE ALTAMIRA,Altamira,Judicial 1Âº Grau Varas de CompetÃªncia Criminal,1500602,1,0,0,0
+3Âª VARA CÃVEL E EMPRESARIAL DE ALTAMIRA,Altamira,Judicial 1Âº Grau Varas CÃ­veis e Empresariais,1500602,0,0,0,0
+CEJUSC DO FÃRUM DA COMARCA DE ALTAMIRA,Altamira,Cejusc,1500602,0,0,1,0
+VARA AGRÃRIA DE ALTAMIRA,Altamira,Judicial 1Âº Grau,1500602,0,0,0,0
+VARA DO JUIZADO ESPECIAL CÃVEL E CRIMINAL DE ALTAMIRA,Altamira,Juizado Especial,1500602,1,1,0,0
+VARA ÃNICA DE ANAJÃS,AnajÃ¡s,Judicial 1Âº Grau,1500701,0,0,0,0
+1Âª VARA CÃVEL E EMPRESARIAL DE ANANINDEUA,Ananindeua,Judicial 1Âº Grau Varas CÃ­veis e Empresariais,1500800,0,0,0,0
+1Âª VARA CRIMINAL DE ANANINDEUA,Ananindeua,Judicial 1Âº Grau Varas de CompetÃªncia Criminal,1500800,1,0,0,0
+1Âª VARA DE FAMÃLIA DE ANANINDEUA,Ananindeua,Judicial 1Âº Grau,1500800,0,0,0,0
+1Âª VARA DO JUIZADO ESPECIAL CÃVEL DE ANANINDEUA,Ananindeua,Juizado Especial,1500800,0,1,0,0
+1Âº CEJUSC DE ANANINDEUA (ESMAC),Ananindeua,Cejusc,1500800,0,0,1,0
+2Âª VARA CÃVEL E EMPRESARIAL DE ANANINDEUA,Ananindeua,Judicial 1Âº Grau Varas CÃ­veis e Empresariais,1500800,0,0,0,0
+2Âª VARA CRIMINAL DE ANANINDEUA,Ananindeua,Judicial 1Âº Grau Varas de CompetÃªncia Criminal,1500800,1,0,0,0
+2Âª VARA DE FAMÃLIA DE ANANINDEUA,Ananindeua,Judicial 1Âº Grau,1500800,0,0,0,0
+2Âª VARA DO JUIZADO ESPECIAL CÃVEL DE ANANINDEUA,Ananindeua,Juizado Especial,1500800,0,1,0,0
+3Âª VARA CÃVEL E EMPRESARIAL DE ANANINDEUA,Ananindeua,Judicial 1Âº Grau Varas CÃ­veis e Empresariais,1500800,0,0,0,0
+3Âª VARA CRIMINAL DE ANANINDEUA,Ananindeua,Judicial 1Âº Grau Varas de CompetÃªncia Criminal,1500800,1,0,0,0
+3Âª VARA DO JUIZADO ESPECIAL CÃVEL DE ANANINDEUA,Ananindeua,Juizado Especial,1500800,0,1,0,0
+4Âª VARA CRIMINAL DE ANANINDEUA (ANTIGA 5Âª),Ananindeua,Judicial 1Âº Grau Varas de CompetÃªncia Criminal,1500800,1,0,0,0
+Vara de Crimes Contra a CrianÃ§a e o Adolescente da Comarca de Ananindeua,Ananindeua,Judicial 1Âº Grau,1500800,1,0,0,0
+VARA DE FAZENDA PÃBLICA DE ANANINDEUA,Ananindeua,Judicial 1Âº Grau Varas de Fazenda e ExecuÃ§Ã£o Fiscal,1500800,0,0,0,0
+VARA DE INFÃNCIA E JUVENTUDE DE ANANINDEUA,Ananindeua,Judicial 1Âº Grau Varas de InfÃ¢ncia,1500800,0,0,0,0
+VARA DE VIOLÃNCIA DOMÃSTICA E FAMILIAR CONTRA A MULHER DE ANANINDEUA,Ananindeua,Judicial 1Âº Grau,1500800,0,0,0,1
+VARA DO JUIZADO ESPECIAL CRIMINAL DE ANANINDEUA,Ananindeua,Juizado Especial,1500800,1,1,0,0
+VARA DO TRIBUNAL DO JÃRI DE ANANINDEUA,Ananindeua,Judicial 1Âº Grau,1500800,0,0,0,0
+VARA ÃNICA DE AURORA DO PARÃ,Aurora do ParÃ¡,Judicial 1Âº Grau,1500958,0,0,0,0
+TERMO JUDICIÃRIO DE AVEIRO,Aveiro,Judicial 1Âº Grau,1501006,0,0,0,0
+TERMO JUDICIÃRIO DE BAGRE,Bagre,Judicial 1Âº Grau,1501105,0,0,0,0
+VARA ÃNICA DE BAIÃO,BaiÃ£o,Judicial 1Âº Grau,1501204,0,0,0,0
+1Âª VARA CÃVEL E EMPRESARIAL DE BARCARENA,Barcarena,Judicial 1Âº Grau Varas CÃ­veis e Empresariais,1501303,0,0,0,0
+2Âª VARA CÃVEL E EMPRESARIAL DE BARCARENA,Barcarena,Judicial 1Âº Grau Varas CÃ­veis e Empresariais,1501303,0,0,0,0
+VARA CRIMINAL DE BARCARENA,Barcarena,Judicial 1Âº Grau Varas de CompetÃªncia Criminal,1501303,1,0,0,0
+1Âª VARA CÃVEL E EMPRESARIAL DE BENEVIDES,Benevides,Judicial 1Âº Grau Varas CÃ­veis e Empresariais,1501501,0,0,0,0
+2Âª VARA CÃVEL E EMPRESARIAL DE BENEVIDES,Benevides,Judicial 1Âº Grau Varas CÃ­veis e Empresariais,1501501,0,0,0,0
+3Âª VARA CÃVEL E EMPRESARIAL DE BENEVIDES,Benevides,Judicial 1Âº Grau Varas CÃ­veis e Empresariais,1501501,0,0,0,0
+VARA CRIMINAL DE BENEVIDES,Benevides,Judicial 1Âº Grau Varas de CompetÃªncia Criminal,1501501,1,0,0,0
+VARA ÃNICA DE BONITO,Bonito,Judicial 1Âº Grau,1501600,0,0,0,0
+VARA ÃNICA DE BRASIL NOVO,Brasil Novo,Judicial 1Âº Grau,1501725,0,0,0,0
+VARA ÃNICA DE BREU BRANCO,Breu Branco,Judicial 1Âº Grau,1501782,0,0,0,0
+1Âª VARA DE BREVES,Breves,Judicial 1Âº Grau,1501808,0,0,0,0
+2Âª VARA DE BREVES,Breves,Judicial 1Âº Grau,1501808,0,0,0,0
+JUIZADO ESPECIAL CIVEL E CRIMINAL DE BREVES,Breves,Juizado Especial,1501808,1,1,0,0
+VARA ÃNICA DE CACHOEIRA DO ARARI,Cachoeira do Arari,Judicial 1Âº Grau,1502004,0,0,0,0
+1Âª VARA DE CAMETÃ,CametÃ¡,Judicial 1Âº Grau,1502103,0,0,0,0
+2Âª VARA DE CAMETÃ,CametÃ¡,Judicial 1Âº Grau,1502103,0,0,0,0
+1Âª VARA CIVEL E EMPRESARIAL DE CANAÃ DOS CARAJÃS,CanaÃ£ dos CarajÃ¡s,Judicial 1Âº Grau,1502152,0,0,0,0
+2Âª Vara CÃ­vel e Empresarial de CanaÃ£ dos CarajÃ¡s,CanaÃ£ dos CarajÃ¡s,Judicial 1Âº Grau Varas CÃ­veis e Empresariais,1502152,0,0,0,0
+Vara Criminal de CanaÃ£ dos CarajÃ¡s,CanaÃ£ dos CarajÃ¡s,Judicial 1Âº Grau Varas de CompetÃªncia Criminal,1502152,1,0,0,0
+1Âª VARA CÃVEL E EMPRESARIAL DE CAPANEMA,Capanema,Judicial 1Âº Grau Varas CÃ­veis e Empresariais,1502202,0,0,0,0
+2Âª VARA DE CÃVEL E EMPRESARIAL DE CAPANEMA,Capanema,Judicial 1Âº Grau Varas CÃ­veis e Empresariais,1502202,0,0,0,0
+VARA CRIMINAL DE CAPANEMA,Capanema,Judicial 1Âº Grau Varas de CompetÃªncia Criminal,1502202,1,0,0,0
+1Âª VARA CÃVEL E EMPRESARIAL DE CASTANHAL,Castanhal,Judicial 1Âº Grau Varas CÃ­veis e Empresariais,1502400,0,0,0,0
+1Âª VARA CRIMINAL DE CASTANHAL,Castanhal,Judicial 1Âº Grau Varas de CompetÃªncia Criminal,1502400,1,0,0,0
+1Âº CEJUSC CASTANHAL - FACULDADE ESTÃCIO,Castanhal,Cejusc,1502400,0,0,1,0
+2Âª VARA CÃVEL E EMPRESARIAL DE CASTANHAL,Castanhal,Judicial 1Âº Grau Varas CÃ­veis e Empresariais,1502400,0,0,0,0
+2Âª VARA CRIMINAL DE CASTANHAL,Castanhal,Judicial 1Âº Grau Varas de CompetÃªncia Criminal,1502400,1,0,0,0
+3Âª VARA CÃVEL E EMPRESARIAL DE CASTANHAL,Castanhal,Judicial 1Âº Grau Varas CÃ­veis e Empresariais,1502400,0,0,0,0
+VARA AGRÃRIA DE CASTANHAL/JUIZADO ESPECIAL CRIMINAL AMBIENTAL DE CASTANHAL,Castanhal,Judicial 1Âº Grau,1502400,1,1,0,0
+VARA DE COMBATE Ã VIOLÃNCIA DOMÃSTICA E FAMILIAR CONTRA A MULHER DE CASTANHAL-PA,Castanhal,Judicial 1Âº Grau Varas de CompetÃªncia Criminal,1502400,1,0,0,1
+VARA DO JUIZADO ESPECIAL CIVEL E CRIMINAL DE CASTANHAL,Castanhal,Juizado Especial,1502400,1,1,0,0
+VARA ÃNICA DE CHAVES,Chaves,Judicial 1Âº Grau,1502509,0,0,0,0
+TERMO DE COLARES,Colares,Judicial 1Âº Grau,1502608,0,0,0,0
+VARA ÃNICA DE CURRALINHO,Curralinho,Judicial 1Âº Grau,1502806,0,0,0,0
+1Âº CEJUSC DE DOM ELISEU,Dom Eliseu,Cejusc,1502939,0,0,1,0
+VARA CÃVEL E EMPRESARIAL DE DOM ELISEU,Dom Eliseu,Judicial 1Âº Grau Varas CÃ­veis e Empresariais,1502939,0,0,0,0
+VARA CRIMINAL DE DOM ELISEU,Dom Eliseu,Judicial 1Âº Grau Varas de CompetÃªncia Criminal,1502939,1,0,0,0
+VARA ÃNICA DE FARO,Faro,Judicial 1Âº Grau,1503002,0,0,0,0
+VARA ÃNICA DE GARRAFÃO DO NORTE,GarrafÃ£o do Norte,Judicial 1Âº Grau,1503077,0,0,0,0
+VARA ÃNICA DE GURUPÃ,GurupÃ¡,Judicial 1Âº Grau,1503101,0,0,0,0
+VARA ÃNICA DE IPIXUNA DO PARÃ,Ipixuna do ParÃ¡,Judicial 1Âº Grau,1503457,0,0,0,0
+VARA ÃNICA DE IRITUIA,Irituia,Judicial 1Âº Grau,1503507,0,0,0,0
+1Âª VARA CÃVEL E EMPRESARIAL DE ITAITUBA,Itaituba,Judicial 1Âº Grau Varas CÃ­veis e Empresariais,1503606,0,0,0,0
+2Âª VARA CÃVEL E EMPRESARIAL DE ITAITUBA,Itaituba,Judicial 1Âº Grau Varas CÃ­veis e Empresariais,1503606,0,0,0,0
+2Âª VARA CRIMINAL DE ITAITUBA,Itaituba,Judicial 1Âº Grau Varas de CompetÃªncia Criminal,1503606,1,0,0,0
+JUIZADO ESPECIAL CIVEL E CRIMINAL DE ITAITUBA,Itaituba,Juizado Especial,1503606,1,1,0,0
+VARA CRIMINAL DE ITAITUBA,Itaituba,Judicial 1Âº Grau Varas de CompetÃªncia Criminal,1503606,1,0,0,0
+VARA ÃNICA DE ITUPIRANGA,Itupiranga,Judicial 1Âº Grau,1503705,0,0,0,0
+VARA ÃNICA DE JACAREACANGA,Jacareacanga,Judicial 1Âº Grau,1503754,0,0,0,0
+VARA ÃNICA DE JACUNDÃ,JacundÃ¡,Judicial 1Âº Grau,1503804,0,0,0,0
+VARA ÃNICA DE JURUTI,Juruti,Judicial 1Âº Grau,1503903,0,0,0,0
+TERMO JUDICIÃRIO DE MAGALHÃES BARATA,MagalhÃ£es Barata,Judicial 1Âº Grau,1504109,0,0,0,0
+1Âª VARA CÃVEL E EMPRESARIAL DE MARABÃ,MarabÃ¡,Judicial 1Âº Grau Varas CÃ­veis e Empresariais,1504208,0,0,0,0
+1Âª VARA CRIMINAL DE MARABÃ,MarabÃ¡,Judicial 1Âº Grau Varas de CompetÃªncia Criminal,1504208,1,0,0,0
+1Âª VARA DE JUIZADO ESPECIAL CÃVEL E CRIMINAL DE MARABÃ,MarabÃ¡,Juizado Especial,1504208,1,1,0,0
+1Âº CEJUSC DE MARABÃ,MarabÃ¡,Cejusc,1504208,0,0,1,0
+2Âª VARA CÃVEL E EMPRESARIAL DE MARABÃ,MarabÃ¡,Judicial 1Âº Grau Varas CÃ­veis e Empresariais,1504208,0,0,0,0
+2Âª VARA CRIMINAL DE MARABÃ,MarabÃ¡,Judicial 1Âº Grau Varas de CompetÃªncia Criminal,1504208,1,0,0,0
+2Âª VARA DE JUIZADO ESPECIAL CÃVEL E CRIMINAL DE MARABÃ,MarabÃ¡,Juizado Especial,1504208,1,1,0,0
+EQUIPE INTERDISCIPLINAR DA VARA DE EXECUÃÃO PENAL DE MARABÃ,MarabÃ¡,Apoio ao 1Âº Grau,1504208,0,0,0,0
+VARA AGRÃRIA DE MARABÃ//JUIZADO ESPECIAL CRIMINAL AMBIENTAL DE MARABÃ,MarabÃ¡,Judicial 1Âº Grau,1504208,1,1,0,0
+"VARA DA INFÃNCIA, JUVENTUDE, INTERDITOS E AUSENTES DA COMARCA DE MARABÃ",MarabÃ¡,Judicial 1Âº Grau Varas CÃ­veis e Empresariais,1504208,0,0,0,0
+VARA DE EXECUÃÃO PENAL DE MARABÃ,MarabÃ¡,Judicial 1Âº Grau,1504208,0,0,0,0
+"VARA DE FAMILIA, SUCESSOES E REGISTROS PUBLICOS DE MARABÃ",MarabÃ¡,Judicial 1Âº Grau,1504208,0,0,0,0
+"VARA DE FAZENDA PÃBLICA, EXECUÃÃO FISCAL E ACIDENTES DO TRABALHO DE MARABÃ",MarabÃ¡,Judicial 1Âº Grau Varas CÃ­veis e Empresariais,1504208,0,0,0,0
+VARA DE VIOLÃNCIA DOMESTICA E FAMILIA1R CONTRA A MULHER DE MARABÃ,MarabÃ¡,Judicial 1Âº Grau,1504208,0,0,0,1
+VARA ÃNICA DE MARACANÃ,MaracanÃ£,Judicial 1Âº Grau,1504307,0,0,0,0
+VARA ÃNICA DE MARAPANIM,Marapanim,Judicial 1Âº Grau,1504406,0,0,0,0
+1Âª VARA CÃVEL E EMPRESARIAL DE MARITUBA,Marituba,Judicial 1Âº Grau Varas CÃ­veis e Empresariais,1504422,0,0,0,0
+1Âº CEJUSC DE MARITUBA,Marituba,Cejusc,1504422,0,0,1,0
+2Âª VARA CÃVEL E EMPRESARIAL DE MARITUBA,Marituba,Judicial 1Âº Grau Varas CÃ­veis e Empresariais,1504422,0,0,0,0
+2Âª VARA CRIMINAL DE MARITUBA,Marituba,Judicial 1Âº Grau Varas de CompetÃªncia Criminal,1504422,1,0,0,0
+JUIZADO ESPECIAL CIVEL E CRIMINAL DE MARITUBA,Marituba,Juizado Especial,1504422,1,1,0,0
+VARA CRIMINAL DE MARITUBA,Marituba,Judicial 1Âº Grau Varas de CompetÃªncia Criminal,1504422,1,0,0,0
+VARA ÃNICA DE MÃE DO RIO,MÃ£e do Rio,Judicial 1Âº Grau,1504059,0,0,0,0
+VARA ÃNICA DE MEDICILÃNDIA,MedicilÃ¢ndia,Judicial 1Âº Grau,1504455,0,0,0,0
+VARA ÃNICA DE MOCAJUBA,Mocajuba,Judicial 1Âº Grau,1504604,0,0,0,0
+VARA ÃNICA DE MONTE ALEGRE,Monte Alegre,Judicial 1Âº Grau,1504802,0,0,0,0
+JUIZADO ESPECIAL CIVEL E CRIMINAL DE MUANA,MuanÃ¡,Juizado Especial,1504901,1,1,0,0
+VARA ÃNICA DE MUANÃ,MuanÃ¡,Judicial 1Âº Grau,1504901,0,0,0,0
+VARA ÃNICA DE NOVA TIMBOTEUA,Nova Timboteua,Judicial 1Âº Grau,1505007,0,0,0,0
+VARA CÃVEL E EMPRESARIAL DE NOVO PROGRESSO,Novo Progresso,Judicial 1Âº Grau Varas CÃ­veis e Empresariais,1505031,0,0,0,0
+VARA CRIMINAL DE NOVO PROGRESSO,Novo Progresso,Judicial 1Âº Grau Varas de CompetÃªncia Criminal,1505031,1,0,0,0
+VARA ÃNICA DE NOVO REPARTIMENTO,Novo Repartimento,Judicial 1Âº Grau,1505064,0,0,0,0
+VARA ÃNICA DE OEIRAS DO PARÃ,Oeiras do ParÃ¡,Judicial 1Âº Grau,1505205,0,0,0,0
+VARA ÃNICA DE ORIXIMINÃ,OriximinÃ¡,Judicial 1Âº Grau,1505304,0,0,0,0
+VARA ÃNICA DE OURILÃNDIA DO NORTE,OurilÃ¢ndia do Norte,Judicial 1Âº Grau,1505437,0,0,0,0
+VARA ÃNICA DE PACAJÃ,PacajÃ¡,Judicial 1Âº Grau,1505486,0,0,0,0
+1Âª VARA CÃVEL E EMPRESARIAL DE PARAGOMINAS,Paragominas,Judicial 1Âº Grau Varas CÃ­veis e Empresariais,1505502,0,0,0,0
+1Âª VARA CRIMINAL DA COMARCA DE PARAGOMINAS,Paragominas,Judicial 1Âº Grau Varas de CompetÃªncia Criminal,1505502,1,0,0,0
+1Âº CEJUSC DE PARAGOMINAS,Paragominas,Cejusc,1505502,0,0,1,0
+2Âª VARA CÃVEL E EMPRESARIAL DE PARAGOMINAS,Paragominas,Judicial 1Âº Grau Varas CÃ­veis e Empresariais,1505502,0,0,0,0
+2Âª VARA CRIMINAL DA COMARCA DE PARAGOMINAS,Paragominas,Judicial 1Âº Grau Varas de CompetÃªncia Criminal,1505502,1,0,0,0
+3Âª VARA CÃVEL E EMPRESARIAL DE PARAGOMINAS,Paragominas,Judicial 1Âº Grau Varas CÃ­veis e Empresariais,1505502,0,0,0,0
+VARA DO JUIZADO ESPECIAL CÃVEL E CRIMINAL DE PARAGOMINAS,Paragominas,Juizado Especial,1505502,1,1,0,0
+1Âº CEJUSC DE PARAUAPEBAS,Parauapebas,Cejusc,1505536,0,0,1,0
+UPJ CÃVEIS DA COMARCA DE PARAUAPEBAS,Parauapebas,Judicial 1Âº Grau UPJ,1505536,0,0,0,0
+UPJ CRIMINAL DA COMARCA DE PARAUAPEBAS,Parauapebas,Judicial 1Âº Grau UPJ,1505536,1,0,0,0
+VARA DO JUIZADO ESPECIAL CÃVEL E CRIMINAL DE PARAUAPEBAS,Parauapebas,Juizado Especial,1505536,1,1,0,0
+VARA ÃNICA DE PONTA DE PEDRAS,Ponta de Pedras,Judicial 1Âº Grau,1505700,0,0,0,0
+VARA ÃNICA DE PORTEL,Portel,Judicial 1Âº Grau,1505809,0,0,0,0
+VARA ÃNICA DE PORTO DE MOZ,Porto de Moz,Judicial 1Âº Grau,1505908,0,0,0,0
+VARA ÃNICA DE PRAINHA,Prainha,Judicial 1Âº Grau,1506005,0,0,0,0
+VARA ÃNICA DE PRIMAVERA,Primavera,Judicial 1Âº Grau,1506104,0,0,0,0
+VARA ÃNICA DE RIO MARIA,Rio Maria,Judicial 1Âº Grau,1506161,0,0,0,0
+1Âª VARA CÃVEL E EMPRESARIAL DE RONDON DO PARÃ,Rondon do ParÃ¡,Judicial 1Âº Grau Varas CÃ­veis e Empresariais,1506187,0,0,0,0
+1Âª VARA CRIMINAL DE RONDON DO PARÃ,Rondon do ParÃ¡,Judicial 1Âº Grau Varas de CompetÃªncia Criminal,1506187,1,0,0,0
+VARA ÃNICA DE SALVATERRA,Salvaterra,Judicial 1Âº Grau,1506302,0,0,0,0
+TERMO DE SANTA CRUZ DO ARARI,Santa Cruz do Arari,Judicial 1Âº Grau,1506401,0,0,0,0
+1Âª VARA CÃVEL E EMPRESARIAL DE SANTA IZABEL DO PARÃ,Santa Izabel do ParÃ¡,Judicial 1Âº Grau Varas CÃ­veis e Empresariais,1506500,0,0,0,0
+2Âª VARA CÃVEL E EMPRESARIAL DE SANTA IZABEL DO PARÃ,Santa Izabel do ParÃ¡,Judicial 1Âº Grau Varas CÃ­veis e Empresariais,1506500,0,0,0,0
+VARA CRIMINAL DE SANTA IZABEL DO PARÃ,Santa Izabel do ParÃ¡,Judicial 1Âº Grau Varas de CompetÃªncia Criminal,1506500,1,0,0,0
+VARA DO J.E. CIVEL E CRIMINAL DE SANTA IZABEL DO PARÃ,Santa Izabel do ParÃ¡,Juizado Especial,1506500,1,1,0,0
+VARA ÃNICA DE SANTA LUZIA DO PARÃ E TERMO JUDICIÃRIO DE CACHOEIRA DO PIRIÃ,Santa LUZIA DO ParÃ¡,Judicial 1Âº Grau,1506559,0,0,0,0
+VARA ÃNICA DE SANTA MARIA DO PARÃ,Santa Maria do ParÃ¡,Judicial 1Âº Grau,1506609,0,0,0,0
+VARA ÃNICA DE SANTANA DO ARAGUAIA,Santana do Araguaia,Judicial 1Âº Grau,1506708,0,0,0,0
+VARA ÃNICA DE SÃO CAETANO DE ODIVELAS,SÃ£o Caetano de Odivelas,Judicial 1Âº Grau,1507102,0,0,0,0
+VARA ÃNICA DE SÃO DOMINGOS DO ARAGUAIA,SÃ£o Domingos do Araguaia,Judicial 1Âº Grau,1507151,0,0,0,0
+VARA ÃNICA DE SÃO DOMINGOS DO CAPIM,SÃ£o Domingos do Capim,Judicial 1Âº Grau,1507201,0,0,0,0
+VARA ÃNICA DE SÃO FRANCISCO DO PARÃ,SÃ£o Francisco do ParÃ¡,Judicial 1Âº Grau,1507409,0,0,0,0
+VARA ÃNICA DE SÃO GERALDO DO ARAGUAIA,SÃ£o Geraldo do Araguaia,Judicial 1Âº Grau,1507458,0,0,0,0
+SECRETARIA DA VARA ÃNICA DE SÃO JOÃO DO ARAGUAIA,SÃ£o JoÃ£o do Araguaia,Judicial 1Âº Grau,1507508,0,0,0,0
+JUIZADO ESPECIAL CIVEL E CRIMINAL DE SÃO MIGUEL DO GUAMÃ,SÃ£o Miguel do GuamÃ¡,Juizado Especial,1507607,1,1,0,0
+VARA ÃNICA DE SÃO MIGUEL DO GUAMÃ,SÃ£o Miguel do GuamÃ¡,Judicial 1Âº Grau,1507607,0,0,0,0
+VARA ÃNICA DE SÃO SEBASTIÃO DA BOA VISTA,SÃ£o SebastiÃ£o da Boa Vista,Judicial 1Âº Grau,1507706,0,0,0,0
+VARA ÃNICA DE SOURE,Soure,Judicial 1Âº Grau,1507904,0,0,0,0
+1Âª VARA DE TAILÃNDIA,TailÃ¢ndia,Judicial 1Âº Grau,1507953,0,0,0,0
+2Âª VARA DE TAILÃNDIA,TailÃ¢ndia,Judicial 1Âº Grau,1507953,0,0,0,0
+VARA ÃNICA DE TERRA SANTA,Terra santa,Judicial 1Âº Grau,1507979,0,0,0,0
+VARA ÃNICA DE TUCUMÃ,TucumÃ£,Judicial 1Âº Grau,1508084,0,0,0,0
+VARA ÃNICA DE URUARÃ,UruarÃ¡,Judicial 1Âº Grau,1508159,0,0,0,0
+VARA ÃNICA DE VIGIA,Vigia,Judicial 1Âº Grau,1508209,0,0,0,0
+VARA ÃNICA DE VISEU,Viseu,Judicial 1Âº Grau,1508308,0,0,0,0
+1Âª VARA CÃVEL E EMPRESARIAL DE XINGUARA,Xinguara,Judicial 1Âº Grau Varas CÃ­veis e Empresariais,1508407,0,0,0,0
+1Âº CEJUSC DE XINGUARA,Xinguara,Cejusc,1508407,0,0,1,0
+2Âª VARA CÃVEL E EMPRESARIAL DE XINGUARA,Xinguara,Judicial 1Âº Grau Varas CÃ­veis e Empresariais,1508407,0,0,0,0
+VARA CRIMINAL DE XINGUARA,Xinguara,Judicial 1Âº Grau Varas de CompetÃªncia Criminal,1508407,1,0,0,0

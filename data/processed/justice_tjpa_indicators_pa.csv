@@ -1,0 +1,145 @@
+municipality_code,municipality,justice_tjpa_units,justice_tjpa_criminal_units,justice_tjpa_juizados,justice_tjpa_cejusc,justice_tjpa_women_specialized_units,justice_tjpa_local_access,justice_tjpa_access_deficit
+1500107,Abaetetuba,5,2,1,1,0,1,0
+1500131,Abel Figueiredo,0,0,0,0,0,0,1
+1500206,Acará,1,0,0,0,0,1,0
+1500305,Afuá,1,0,0,0,0,1,0
+1500347,Água Azul do Norte,0,0,0,0,0,0,1
+1500404,Alenquer,1,0,0,0,0,1,0
+1500503,Almeirim,1,0,0,0,0,1,0
+1500602,Altamira,8,3,1,1,0,1,0
+1500701,Anajás,1,0,0,0,0,1,0
+1500800,Ananindeua,19,6,4,1,1,1,0
+1500859,Anapu,0,0,0,0,0,0,1
+1500909,Augusto Corrêa,0,0,0,0,0,0,1
+1500958,Aurora do Pará,1,0,0,0,0,1,0
+1501006,Aveiro,1,0,0,0,0,1,0
+1501105,Bagre,1,0,0,0,0,1,0
+1501204,Baião,1,0,0,0,0,1,0
+1501253,Bannach,0,0,0,0,0,0,1
+1501303,Barcarena,3,1,0,0,0,1,0
+1501402,Belém,0,0,0,0,0,0,1
+1501451,Belterra,0,0,0,0,0,0,1
+1501501,Benevides,4,1,0,0,0,1,0
+1501576,Bom Jesus do Tocantins,0,0,0,0,0,0,1
+1501600,Bonito,1,0,0,0,0,1,0
+1501709,Bragança,0,0,0,0,0,0,1
+1501725,Brasil Novo,1,0,0,0,0,1,0
+1501758,Brejo Grande do Araguaia,0,0,0,0,0,0,1
+1501782,Breu Branco,1,0,0,0,0,1,0
+1501808,Breves,3,1,1,0,0,1,0
+1501907,Bujaru,0,0,0,0,0,0,1
+1501956,Cachoeira do Piriá,0,0,0,0,0,0,1
+1502004,Cachoeira do Arari,1,0,0,0,0,1,0
+1502103,Cametá,2,0,0,0,0,1,0
+1502152,Canaã dos Carajás,3,1,0,0,0,1,0
+1502202,Capanema,3,1,0,0,0,1,0
+1502301,Capitão Poço,0,0,0,0,0,0,1
+1502400,Castanhal,9,5,2,1,1,1,0
+1502509,Chaves,1,0,0,0,0,1,0
+1502608,Colares,1,0,0,0,0,1,0
+1502707,Conceição do Araguaia,0,0,0,0,0,0,1
+1502756,Concórdia do Pará,0,0,0,0,0,0,1
+1502764,Cumaru do Norte,0,0,0,0,0,0,1
+1502772,Curionópolis,0,0,0,0,0,0,1
+1502806,Curralinho,1,0,0,0,0,1,0
+1502855,Curuá,0,0,0,0,0,0,1
+1502905,Curuçá,0,0,0,0,0,0,1
+1502939,Dom Eliseu,3,1,0,1,0,1,0
+1502954,Eldorado do Carajás,0,0,0,0,0,0,1
+1503002,Faro,1,0,0,0,0,1,0
+1503044,Floresta do Araguaia,0,0,0,0,0,0,1
+1503077,Garrafão do Norte,1,0,0,0,0,1,0
+1503093,Goianésia do Pará,0,0,0,0,0,0,1
+1503101,Gurupá,1,0,0,0,0,1,0
+1503200,Igarapé-Açu,0,0,0,0,0,0,1
+1503309,Igarapé-Miri,0,0,0,0,0,0,1
+1503408,Inhangapi,0,0,0,0,0,0,1
+1503457,Ipixuna do Pará,1,0,0,0,0,1,0
+1503507,Irituia,1,0,0,0,0,1,0
+1503606,Itaituba,5,3,1,0,0,1,0
+1503705,Itupiranga,1,0,0,0,0,1,0
+1503754,Jacareacanga,1,0,0,0,0,1,0
+1503804,Jacundá,1,0,0,0,0,1,0
+1503903,Juruti,1,0,0,0,0,1,0
+1504000,Limoeiro do Ajuru,0,0,0,0,0,0,1
+1504059,Mãe do Rio,1,0,0,0,0,1,0
+1504109,Magalhães Barata,1,0,0,0,0,1,0
+1504208,Marabá,14,5,3,1,1,1,0
+1504307,Maracanã,1,0,0,0,0,1,0
+1504406,Marapanim,1,0,0,0,0,1,0
+1504422,Marituba,6,3,1,1,0,1,0
+1504455,Medicilândia,1,0,0,0,0,1,0
+1504505,Melgaço,0,0,0,0,0,0,1
+1504604,Mocajuba,1,0,0,0,0,1,0
+1504703,Moju,0,0,0,0,0,0,1
+1504752,Mojuí dos Campos,0,0,0,0,0,0,1
+1504802,Monte Alegre,1,0,0,0,0,1,0
+1504901,Muaná,2,1,1,0,0,1,0
+1504950,Nova Esperança do Piriá,0,0,0,0,0,0,1
+1504976,Nova Ipixuna,0,0,0,0,0,0,1
+1505007,Nova Timboteua,1,0,0,0,0,1,0
+1505031,Novo Progresso,2,1,0,0,0,1,0
+1505064,Novo Repartimento,1,0,0,0,0,1,0
+1505106,Óbidos,0,0,0,0,0,0,1
+1505205,Oeiras do Pará,1,0,0,0,0,1,0
+1505304,Oriximiná,1,0,0,0,0,1,0
+1505403,Ourém,0,0,0,0,0,0,1
+1505437,Ourilândia do Norte,1,0,0,0,0,1,0
+1505486,Pacajá,1,0,0,0,0,1,0
+1505494,Palestina do Pará,0,0,0,0,0,0,1
+1505502,Paragominas,7,3,1,1,0,1,0
+1505536,Parauapebas,4,2,1,1,0,1,0
+1505551,Pau DArco,0,0,0,0,0,0,1
+1505601,Peixe-Boi,0,0,0,0,0,0,1
+1505635,Piçarra,0,0,0,0,0,0,1
+1505650,Placas,0,0,0,0,0,0,1
+1505700,Ponta de Pedras,1,0,0,0,0,1,0
+1505809,Portel,1,0,0,0,0,1,0
+1505908,Porto de Moz,1,0,0,0,0,1,0
+1506005,Prainha,1,0,0,0,0,1,0
+1506104,Primavera,1,0,0,0,0,1,0
+1506112,Quatipuru,0,0,0,0,0,0,1
+1506138,Redenção,0,0,0,0,0,0,1
+1506161,Rio Maria,1,0,0,0,0,1,0
+1506187,Rondon do Pará,2,1,0,0,0,1,0
+1506195,Rurópolis,0,0,0,0,0,0,1
+1506203,Salinópolis,0,0,0,0,0,0,1
+1506302,Salvaterra,1,0,0,0,0,1,0
+1506351,Santa Bárbara do Pará,0,0,0,0,0,0,1
+1506401,Santa Cruz do Arari,1,0,0,0,0,1,0
+1506500,Santa Izabel do Pará,4,2,1,0,0,1,0
+1506559,Santa Luzia do Pará,1,0,0,0,0,1,0
+1506583,Santa Maria das Barreiras,0,0,0,0,0,0,1
+1506609,Santa Maria do Pará,1,0,0,0,0,1,0
+1506708,Santana do Araguaia,1,0,0,0,0,1,0
+1506807,Santarém,0,0,0,0,0,0,1
+1506906,Santarém Novo,0,0,0,0,0,0,1
+1507003,Santo Antônio do Tauá,0,0,0,0,0,0,1
+1507102,São Caetano de Odivelas,1,0,0,0,0,1,0
+1507151,São Domingos do Araguaia,1,0,0,0,0,1,0
+1507201,São Domingos do Capim,1,0,0,0,0,1,0
+1507300,São Félix do Xingu,0,0,0,0,0,0,1
+1507409,São Francisco do Pará,1,0,0,0,0,1,0
+1507458,São Geraldo do Araguaia,1,0,0,0,0,1,0
+1507466,São João da Ponta,0,0,0,0,0,0,1
+1507474,São João de Pirabas,0,0,0,0,0,0,1
+1507508,São João do Araguaia,1,0,0,0,0,1,0
+1507607,São Miguel do Guamá,2,1,1,0,0,1,0
+1507706,São Sebastião da Boa Vista,1,0,0,0,0,1,0
+1507755,Sapucaia,0,0,0,0,0,0,1
+1507805,Senador José Porfírio,0,0,0,0,0,0,1
+1507904,Soure,1,0,0,0,0,1,0
+1507953,Tailândia,2,0,0,0,0,1,0
+1507961,Terra Alta,0,0,0,0,0,0,1
+1507979,Terra Santa,1,0,0,0,0,1,0
+1508001,Tomé-Açu,0,0,0,0,0,0,1
+1508035,Tracuateua,0,0,0,0,0,0,1
+1508050,Trairão,0,0,0,0,0,0,1
+1508084,Tucumã,1,0,0,0,0,1,0
+1508100,Tucuruí,0,0,0,0,0,0,1
+1508126,Ulianópolis,0,0,0,0,0,0,1
+1508159,Uruará,1,0,0,0,0,1,0
+1508209,Vigia,1,0,0,0,0,1,0
+1508308,Viseu,1,0,0,0,0,1,0
+1508357,Vitória do Xingu,0,0,0,0,0,0,1
+1508407,Xinguara,4,1,0,1,0,1,0
