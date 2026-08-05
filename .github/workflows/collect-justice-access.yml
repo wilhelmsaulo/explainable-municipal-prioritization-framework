@@ -36,7 +36,6 @@ jobs:
           python - <<'PY'
           from pathlib import Path
           import pandas as pd
-
           from empriority.justice_access import collect_defensoria_access_pa
 
           outputs = collect_defensoria_access_pa()
@@ -68,14 +67,19 @@ jobs:
               f"referred={int(matrix['justice_dpe_referred_service'].sum())}."
           )
           PY
-      - name: Commit outputs
+      - name: Commit outputs or diagnostic
+        if: always()
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add -f data/processed/justice_defensoria_indicators_pa.csv
-          git add -f data/processed/justice_defensoria_directory_raw_pa.csv
-          git add -f data/processed/justice_defensoria_indicators_pa.metadata.json
-          git add -f data/processed/integrated_municipal_matrix.csv
-          git diff --cached --quiet || git commit -m "Store Defensoria access indicators"
+          for file in \
+            data/processed/justice_defensoria_indicators_pa.csv \
+            data/processed/justice_defensoria_directory_raw_pa.csv \
+            data/processed/justice_defensoria_indicators_pa.metadata.json \
+            data/processed/justice_defensoria_diagnostic.json \
+            data/processed/integrated_municipal_matrix.csv; do
+            if [ -f "$file" ]; then git add -f "$file"; fi
+          done
+          git diff --cached --quiet || git commit -m "Store Defensoria access outputs"
           git pull --rebase origin main
           git push
