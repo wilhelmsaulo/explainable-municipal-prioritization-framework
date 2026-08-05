@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import io
 import json
+import re
 from pathlib import Path
 
 import httpx
@@ -24,72 +25,61 @@ def _read_valid_tables(url: str, timeout: float = 120.0) -> list[pd.DataFrame]:
     document = html.fromstring(response.content)
     frames: list[pd.DataFrame] = []
     rejected = 0
-
     for element in document.xpath("//table"):
         fragment = etree.tostring(element, encoding="unicode", method="html")
         try:
-            parsed = pd.read_html(io.StringIO(fragment), flavor="lxml")
+            parsed = pd.read_html(io.StringIO(fragment), flavor="lxml", header=None)
         except (ValueError, IndexError):
             rejected += 1
             continue
         for frame in parsed:
-            if not frame.empty and len(frame.columns) > 0:
+            if not frame.empty and len(frame.columns) >= 3:
                 frames.append(frame)
 
-    print(
-        f"RMA HTML tables parsed: valid={len(frames)}, rejected={rejected}",
-        flush=True,
-    )
+    print(f"RMA HTML tables parsed: valid={len(frames)}, rejected={rejected}", flush=True)
     if not frames:
         raise RuntimeError("No valid tabular data found in the official RMA page")
     return frames
 
 
+def _table_text(table: pd.DataFrame) -> str:
+    return " ".join(table.fillna("").astype(str).values.flatten()).upper()
+
+
 def _find_table(tables: list[pd.DataFrame], keyword: str) -> pd.DataFrame:
-    keyword_upper = keyword.upper()
+    normalized_keyword = re.sub(r"\s+", "", keyword.upper())
     for table in tables:
-        columns_text = " ".join(map(str, table.columns)).upper()
-        values_text = table.astype(str).head(20).to_string().upper()
-        text = f"{columns_text} {values_text}"
-        if keyword_upper in text and "IBGE" in text:
+        normalized_text = re.sub(r"\s+", "", _table_text(table))
+        if normalized_keyword in normalized_text and "IBGE" in normalized_text:
             return table
-    available = [" | ".join(map(str, table.columns)) for table in tables]
+    previews = [_table_text(table)[:180] for table in tables]
     raise RuntimeError(
         f"Unable to locate {keyword} table in RMA page. "
-        f"Available table headers: {available}"
+        f"Available table previews: {previews}"
     )
 
 
 def _normalize_table(table: pd.DataFrame, indicator: str) -> pd.DataFrame:
-    local = table.copy()
-    local.columns = [
-        " ".join(map(str, column)) if isinstance(column, tuple) else str(column)
-        for column in local.columns
-    ]
-    ibge_col = next((column for column in local.columns if "IBGE" in column.upper()), None)
-    cadsuas_col = next(
-        (
-            column
-            for column in local.columns
-            if "CADSUAS" in column.upper() and "QUANTIDADE" in column.upper()
-        ),
-        None,
-    )
-    if ibge_col is None or cadsuas_col is None:
-        raise RuntimeError(f"Unexpected RMA columns for {indicator}: {list(local.columns)}")
+    rows: list[tuple[str, int]] = []
+    for _, row in table.iterrows():
+        values = [str(value).strip() for value in row.tolist()]
+        if len(values) < 3:
+            continue
+        code_match = re.search(r"\b(15\d{4})\b", values[0])
+        if not code_match:
+            continue
+        quantity_match = re.search(r"-?\d+", values[2].replace(".", ""))
+        if not quantity_match:
+            continue
+        rows.append((code_match.group(1), int(quantity_match.group(0))))
 
-    result = local[[ibge_col, cadsuas_col]].copy()
-    result["municipality_code"] = (
-        result[ibge_col]
-        .astype(str)
-        .str.extract(r"(\d{6,7})", expand=False)
-        .str[:6]
-    )
-    result[indicator] = pd.to_numeric(result[cadsuas_col], errors="coerce")
-    result = result.dropna(subset=["municipality_code", indicator])
-    result = result[result["municipality_code"].str.startswith("15")]
-    result[indicator] = result[indicator].round().astype(int)
-    return result[["municipality_code", indicator]].drop_duplicates("municipality_code")
+    if not rows:
+        raise RuntimeError(f"No municipal rows parsed for {indicator}")
+
+    result = pd.DataFrame(rows, columns=["municipality_code", indicator])
+    result = result.drop_duplicates("municipality_code", keep="last")
+    print(f"RMA parsed {indicator}: municipalities={len(result)}, total={int(result[indicator].sum())}", flush=True)
+    return result
 
 
 def collect_social_assistance_rma_pa(
@@ -111,8 +101,6 @@ def collect_social_assistance_rma_pa(
     for column in ["social_cras", "social_creas", "social_centro_pop"]:
         result[column] = pd.to_numeric(result[column], errors="coerce").fillna(0).astype(int)
 
-    # These services are not exposed by this official RMA table.
-    # Keep them as missing values rather than treating unavailable data as observed zeros.
     for column in [
         "social_centro_dia",
         "social_centros_convivencia",
