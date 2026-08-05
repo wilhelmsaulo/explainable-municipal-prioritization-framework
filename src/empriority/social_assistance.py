@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import html
 import io
 import json
 import re
@@ -17,6 +18,10 @@ BASE_ENDPOINTS = [
 PACKAGES = [
     "cadsuas---sistema-de-cadastro-do-sistema-unico-de-assistencia-social-suas",
     "unidades-de-atendimento-da-assistencia-social",
+]
+PUBLIC_DATASET_PAGES = [
+    "https://dados.gov.br/dados/conjuntos-dados/cadsuas---sistema-de-cadastro-do-sistema-unico-de-assistencia-social-suas",
+    "https://dados.gov.br/dados/conjuntos-dados/unidades-de-atendimento-da-assistencia-social",
 ]
 SEARCH_TERMS = ["CADSUAS", "Unidades de Atendimento da Assistência Social"]
 PATTERNS = {
@@ -57,6 +62,68 @@ def _package_resources(payload: dict[str, Any]) -> list[dict[str, Any]]:
     return resources
 
 
+def _walk_resources(value: Any) -> list[dict[str, Any]]:
+    resources: list[dict[str, Any]] = []
+    if isinstance(value, dict):
+        url = value.get("url") or value.get("downloadURL") or value.get("accessURL")
+        if isinstance(url, str) and url.startswith("http"):
+            resources.append(
+                {
+                    "url": url,
+                    "name": value.get("name") or value.get("title") or value.get("description") or "",
+                    "description": value.get("description") or value.get("name") or "",
+                    "format": value.get("format") or value.get("mediaType") or "",
+                }
+            )
+        for item in value.values():
+            resources.extend(_walk_resources(item))
+    elif isinstance(value, list):
+        for item in value:
+            resources.extend(_walk_resources(item))
+    return resources
+
+
+def _decode_embedded_text(text: str) -> str:
+    decoded = html.unescape(text).replace("\\/", "/")
+    return re.sub(
+        r"\\u([0-9a-fA-F]{4})",
+        lambda match: chr(int(match.group(1), 16)),
+        decoded,
+    )
+
+
+def _public_page_resources(client: httpx.Client, page_url: str) -> list[dict[str, Any]]:
+    response = client.get(page_url, headers={"User-Agent": "Mozilla/5.0"})
+    response.raise_for_status()
+    text = _decode_embedded_text(response.text)
+    resources: list[dict[str, Any]] = []
+
+    for script in re.findall(r"<script[^>]*>(.*?)</script>", text, flags=re.I | re.S):
+        candidate = script.strip()
+        if not candidate or candidate[0] not in "[{":
+            continue
+        try:
+            resources.extend(_walk_resources(json.loads(candidate)))
+        except Exception:
+            continue
+
+    url_pattern = re.compile(r"https?://[^\s\"'<>]+", flags=re.I)
+    for match in url_pattern.finditer(text):
+        url = match.group(0).rstrip("),.;]")
+        if not any(token in url.lower() for token in ("csv", "download", "recurso", "resource")):
+            continue
+        context = text[max(0, match.start() - 700) : min(len(text), match.end() + 250)]
+        resources.append(
+            {
+                "url": url,
+                "name": context,
+                "description": context,
+                "format": "CSV" if "csv" in url.lower() or "csv" in norm(context) else "",
+            }
+        )
+    return resources
+
+
 def discover(timeout: float = 90.0) -> dict[str, dict[str, str]]:
     resources: list[dict[str, Any]] = []
     attempts: list[str] = []
@@ -79,11 +146,22 @@ def discover(timeout: float = 90.0) -> dict[str, dict[str, str]]:
                 except Exception as exc:  # noqa: BLE001
                     attempts.append(f"package_search {base} {term}: {type(exc).__name__}")
 
+        if not resources:
+            for page_url in PUBLIC_DATASET_PAGES:
+                try:
+                    page_resources = _public_page_resources(client, page_url)
+                    attempts.append(f"public_page {page_url}: {len(page_resources)} resources")
+                    resources.extend(page_resources)
+                except Exception as exc:  # noqa: BLE001
+                    attempts.append(f"public_page {page_url}: {type(exc).__name__}")
+
     unique: dict[str, dict[str, Any]] = {}
     for resource in resources:
         url = str(resource.get("url", "")).strip()
         if url:
-            unique[url] = resource
+            existing = unique.get(url)
+            if existing is None or len(str(resource.get("name", ""))) > len(str(existing.get("name", ""))):
+                unique[url] = resource
     resources = list(unique.values())
     print(f"CADSUAS catalog resources discovered: {len(resources)}", flush=True)
     for attempt in attempts:
@@ -104,10 +182,10 @@ def discover(timeout: float = 90.0) -> dict[str, dict[str, str]]:
         if matches:
             resource = sorted(matches, reverse=True, key=lambda item: item[0])[0][1]
             selected[indicator] = {
-                "name": str(resource.get("name", indicator)),
+                "name": str(resource.get("name", indicator))[:500],
                 "url": str(resource["url"]),
             }
-            print(f"CADSUAS selected {indicator}: {selected[indicator]['name']}", flush=True)
+            print(f"CADSUAS selected {indicator}: {selected[indicator]['url']}", flush=True)
     return selected
 
 
@@ -125,7 +203,17 @@ def read_csv(content: bytes) -> pd.DataFrame:
 
 def municipal_series(frame: pd.DataFrame, indicator: str) -> pd.DataFrame:
     code = column(frame, "codigo_ibge", "cod_ibge", "ibge", "co_municipio")
-    value = column(frame, indicator, f"cadsuas_qtd_{indicator}_i", "valor", "quantidade", "qtd")
+    value_names = {
+        "cras": "cadsuas_qtd_cras_i",
+        "creas": "cadsuas_qtd_creas_i",
+        "centro_pop": "cadsuas_qtd_centro_pop_i",
+        "centro_dia": "cadsuas_qtd_centro_dia_similares_i",
+        "centro_convivencia": "cadsuas_qtd_centro_convivencia_i",
+        "unidade_acolhimento": "cadsuas_qtd_unidade_acolhimento_i",
+        "profissionais_cras": "cadsuas_qtd_profissionais_cras_i",
+        "profissionais_creas": "cadsuas_qtd_profissionais_creas_i",
+    }
+    value = column(frame, value_names.get(indicator, indicator), indicator, "valor", "quantidade", "qtd")
     date_col = column(frame, "anomes", "ano_mes", "competencia")
     if code is None:
         raise RuntimeError(f"No municipality code in {indicator}: {list(frame.columns)}")
@@ -175,7 +263,7 @@ def collect_social_assistance_pa(
     with httpx.Client(timeout=timeout, follow_redirects=True) as client:
         for indicator, resource in resources.items():
             print(f"Downloading {indicator}: {resource['url']}", flush=True)
-            response = client.get(resource["url"])
+            response = client.get(resource["url"], headers={"User-Agent": "Mozilla/5.0"})
             response.raise_for_status()
             source = read_csv(response.content)
             series = municipal_series(source, indicator)
