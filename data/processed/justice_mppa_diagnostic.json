@@ -1,0 +1,27 @@
+{
+  "source": "MPPA official institutional website",
+  "discovery_attempts": [
+    {
+      "url": "https://www2.mppa.mp.br/sitemap.xml",
+      "error": "ConnectTimeout"
+    },
+    {
+      "url": "https://www2.mppa.mp.br/sitemap_index.xml",
+      "error": "ConnectTimeout"
+    },
+    {
+      "url": "https://www.mppa.mp.br/sitemap.xml",
+      "error": "ConnectTimeout"
+    },
+    {
+      "url": "https://www2.mppa.mp.br",
+      "error": "ConnectTimeout"
+    }
+  ],
+  "discovered_urls": 0,
+  "candidate_pages": 0,
+  "inspected_pages": 0,
+  "html_pages": 0,
+  "promotoria_pages": 0,
+  "municipality_matches": 0
+}
