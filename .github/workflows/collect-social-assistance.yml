@@ -7,6 +7,10 @@ on:
       - "src/empriority/social_assistance.py"
   workflow_dispatch:
 
+concurrency:
+  group: collect-social-assistance
+  cancel-in-progress: false
+
 permissions:
   contents: write
 
@@ -76,13 +80,18 @@ jobs:
               f"CREAS={int(matrix['social_creas'].sum())}."
           )
           PY
-      - name: Commit outputs
+      - name: Commit outputs or diagnostics
+        if: always()
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add -f data/processed/social_assistance_indicators_pa.csv
-          git add -f data/processed/social_assistance_indicators_pa.metadata.json
-          git add -f data/processed/integrated_municipal_matrix.csv
-          git diff --cached --quiet || git commit -m "Store social-assistance indicators"
+          for file in \
+            data/processed/social_assistance_indicators_pa.csv \
+            data/processed/social_assistance_indicators_pa.metadata.json \
+            data/processed/social_assistance_discovery_error.json \
+            data/processed/integrated_municipal_matrix.csv; do
+            if [ -f "$file" ]; then git add -f "$file"; fi
+          done
+          git diff --cached --quiet || git commit -m "Store social-assistance outputs"
           git pull --rebase origin main
           git push
