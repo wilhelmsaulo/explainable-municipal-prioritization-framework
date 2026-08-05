@@ -1,0 +1,81 @@
+name: collect-justice-access
+
+on:
+  push:
+    paths:
+      - ".github/workflows/collect-justice-access.yml"
+      - "src/empriority/justice_access.py"
+  workflow_dispatch:
+
+concurrency:
+  group: collect-justice-access
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+
+jobs:
+  collect:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+      - name: Install project
+        run: |
+          python -m pip install --upgrade pip
+          pip install -e .
+          pip install lxml
+      - name: Collect and integrate justice-access indicators
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import pandas as pd
+
+          from empriority.justice_access import collect_defensoria_access_pa
+
+          outputs = collect_defensoria_access_pa()
+          matrix_path = Path("data/processed/integrated_municipal_matrix.csv")
+          matrix = pd.read_csv(matrix_path, dtype={"municipality_code": str})
+          justice = pd.read_csv(outputs["justice_indicators"], dtype={"municipality_code": str})
+
+          old_columns = [column for column in matrix.columns if column.startswith("justice_dpe_")]
+          if old_columns:
+              matrix = matrix.drop(columns=old_columns)
+          matrix = matrix.merge(
+              justice.drop(columns=["municipality"], errors="ignore"),
+              on="municipality_code",
+              how="left",
+          )
+          columns = [column for column in matrix.columns if column.startswith("justice_dpe_")]
+          for column in columns:
+              matrix[column] = pd.to_numeric(matrix[column], errors="coerce").fillna(0).astype(int)
+
+          assert len(matrix) == 144
+          assert matrix["municipality_code"].nunique() == 144
+          if matrix["justice_dpe_covered"].sum() <= 0:
+              raise AssertionError("DPE coverage is zero; refusing invalid integration")
+
+          matrix.to_csv(matrix_path, index=False, encoding="utf-8")
+          print(
+              f"Justice access integrated: covered={int(matrix['justice_dpe_covered'].sum())}, "
+              f"local={int(matrix['justice_dpe_local_unit'].sum())}, "
+              f"referred={int(matrix['justice_dpe_referred_service'].sum())}."
+          )
+          PY
+      - name: Commit outputs
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -f data/processed/justice_defensoria_indicators_pa.csv
+          git add -f data/processed/justice_defensoria_directory_raw_pa.csv
+          git add -f data/processed/justice_defensoria_indicators_pa.metadata.json
+          git add -f data/processed/integrated_municipal_matrix.csv
+          git diff --cached --quiet || git commit -m "Store Defensoria access indicators"
+          git pull --rebase origin main
+          git push
