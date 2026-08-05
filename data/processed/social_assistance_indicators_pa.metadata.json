@@ -1,0 +1,8 @@
+{
+  "source": "MDS/SNAS RMA",
+  "source_url": "https://aplicacoes.mds.gov.br/sagi/atendimento/adm/lista_preenchimento_mu.php?p_uf=PA",
+  "state": "Pará",
+  "municipal_rows": 144,
+  "table_assignment": "First three municipal tables in page order: CRAS, CREAS, Centro POP",
+  "unavailable_values_stored_as_missing": true
+}
