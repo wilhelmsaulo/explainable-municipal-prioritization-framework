@@ -108,3 +108,65 @@ def municipal_series(frame: pd.DataFrame, indicator: str) -> pd.DataFrame:
     else:
         local = local.groupby("municipality_code", as_index=False)[indicator].sum(min_count=1)
     return local[["municipality_code", indicator]]
+
+
+def collect_social_assistance_pa(output_directory: str | Path = "data/processed", timeout: float = 180.0) -> dict[str, Path]:
+    output = Path(output_directory)
+    output.mkdir(parents=True, exist_ok=True)
+    resources = discover(timeout)
+    missing = sorted({"cras", "creas"} - resources.keys())
+    if missing:
+        raise RuntimeError(f"Required CADSUAS resources not found: {missing}")
+
+    merged: pd.DataFrame | None = None
+    provenance: dict[str, Any] = {}
+    with httpx.Client(timeout=timeout, follow_redirects=True) as client:
+        for indicator, resource in resources.items():
+            print(f"Downloading {indicator}: {resource['url']}", flush=True)
+            response = client.get(resource["url"])
+            response.raise_for_status()
+            source = read_csv(response.content)
+            series = municipal_series(source, indicator)
+            merged = series if merged is None else merged.merge(series, on="municipality_code", how="outer")
+            provenance[indicator] = {
+                "resource_name": resource["name"],
+                "resource_url": resource["url"],
+                "source_rows": int(len(source)),
+                "para_rows": int(len(series)),
+            }
+
+    assert merged is not None
+    rename = {
+        "cras": "social_cras",
+        "creas": "social_creas",
+        "centro_pop": "social_centro_pop",
+        "centro_dia": "social_centro_dia",
+        "centro_convivencia": "social_centros_convivencia",
+        "unidade_acolhimento": "social_unidades_acolhimento",
+        "profissionais_cras": "social_cras_professionals",
+        "profissionais_creas": "social_creas_professionals",
+    }
+    result = merged.rename(columns=rename)
+    for final_name in rename.values():
+        if final_name not in result:
+            result[final_name] = 0
+        result[final_name] = pd.to_numeric(result[final_name], errors="coerce").fillna(0).round().astype(int)
+    result["social_basic_protection_deficit"] = result["social_cras"].eq(0).astype(int)
+    result["social_specialized_service_deficit"] = (
+        result["social_creas"].eq(0).astype(int)
+        + result["social_centro_dia"].eq(0).astype(int)
+        + result["social_unidades_acolhimento"].eq(0).astype(int)
+    )
+    result = result.sort_values("municipality_code")
+
+    indicators_path = output / "social_assistance_indicators_pa.csv"
+    metadata_path = output / "social_assistance_indicators_pa.metadata.json"
+    result.to_csv(indicators_path, index=False, encoding="utf-8")
+    metadata_path.write_text(json.dumps({
+        "source": "MDS CADSUAS / Brazilian Open Data Portal",
+        "state": "Pará",
+        "municipal_rows": int(len(result)),
+        "resources": provenance,
+        "selection": "Latest available competence by municipality when anomes exists",
+    }, ensure_ascii=False, indent=2), encoding="utf-8")
+    return {"social_indicators": indicators_path, "social_metadata": metadata_path}
