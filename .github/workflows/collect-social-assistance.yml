@@ -4,7 +4,7 @@ on:
   push:
     paths:
       - ".github/workflows/collect-social-assistance.yml"
-      - "src/empriority/social_assistance.py"
+      - "src/empriority/social_assistance_rma.py"
   workflow_dispatch:
 
 concurrency:
@@ -30,15 +30,16 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip install -e .
+          pip install lxml
       - name: Collect and integrate social-assistance indicators
         run: |
           python - <<'PY'
           from pathlib import Path
           import pandas as pd
 
-          from empriority.social_assistance import collect_social_assistance_pa
+          from empriority.social_assistance_rma import collect_social_assistance_rma_pa
 
-          outputs = collect_social_assistance_pa("data/processed")
+          outputs = collect_social_assistance_rma_pa("data/processed")
           matrix_path = Path("data/processed/integrated_municipal_matrix.csv")
           matrix = pd.read_csv(matrix_path, dtype={"municipality_code": str})
           social = pd.read_csv(outputs["social_indicators"], dtype={"municipality_code": str})
@@ -51,9 +52,19 @@ jobs:
           matrix = matrix.merge(social, on="_municipality_code_6", how="left")
           matrix = matrix.drop(columns="_municipality_code_6")
 
-          count_columns = [column for column in matrix.columns if column.startswith("social_")]
-          for column in count_columns:
+          observed_columns = ["social_cras", "social_creas", "social_centro_pop"]
+          for column in observed_columns:
               matrix[column] = pd.to_numeric(matrix[column], errors="coerce").fillna(0)
+
+          unavailable_columns = [
+              "social_centro_dia",
+              "social_centros_convivencia",
+              "social_unidades_acolhimento",
+              "social_cras_professionals",
+              "social_creas_professionals",
+          ]
+          for column in unavailable_columns:
+              matrix[column] = pd.to_numeric(matrix[column], errors="coerce")
 
           if matrix["social_cras"].sum() <= 0 or matrix["social_creas"].sum() <= 0:
               raise AssertionError("CRAS/CREAS totals are zero; refusing invalid integration")
@@ -61,37 +72,24 @@ jobs:
           assert matrix["municipality_code"].nunique() == 144
 
           population = pd.to_numeric(matrix["population_2023"], errors="coerce")
-          for column in [
-              "social_cras",
-              "social_creas",
-              "social_centro_pop",
-              "social_centro_dia",
-              "social_centros_convivencia",
-              "social_unidades_acolhimento",
-              "social_cras_professionals",
-              "social_creas_professionals",
-          ]:
+          for column in observed_columns + unavailable_columns:
               matrix[f"{column}_per_100k_population"] = matrix[column] / population * 100_000
 
           matrix.to_csv(matrix_path, index=False, encoding="utf-8")
           print(
               f"Social assistance integrated: {len(matrix)} municipalities, "
               f"CRAS={int(matrix['social_cras'].sum())}, "
-              f"CREAS={int(matrix['social_creas'].sum())}."
+              f"CREAS={int(matrix['social_creas'].sum())}, "
+              f"Centro POP={int(matrix['social_centro_pop'].sum())}."
           )
           PY
-      - name: Commit outputs or diagnostics
-        if: always()
+      - name: Commit outputs
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          for file in \
-            data/processed/social_assistance_indicators_pa.csv \
-            data/processed/social_assistance_indicators_pa.metadata.json \
-            data/processed/social_assistance_discovery_error.json \
-            data/processed/integrated_municipal_matrix.csv; do
-            if [ -f "$file" ]; then git add -f "$file"; fi
-          done
-          git diff --cached --quiet || git commit -m "Store social-assistance outputs"
+          git add -f data/processed/social_assistance_indicators_pa.csv
+          git add -f data/processed/social_assistance_indicators_pa.metadata.json
+          git add -f data/processed/integrated_municipal_matrix.csv
+          git diff --cached --quiet || git commit -m "Store social-assistance indicators from RMA"
           git pull --rebase origin main
           git push
