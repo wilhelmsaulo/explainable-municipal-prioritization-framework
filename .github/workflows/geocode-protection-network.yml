@@ -34,10 +34,33 @@ jobs:
       - name: Geocode public services and calculate accessibility
         run: |
           python - <<'PY'
-          from empriority.protection_network_geospatial import build_protection_network_geospatial
-          build_protection_network_geospatial()
+          import json
+          from datetime import datetime, timezone
+          from pathlib import Path
+
+          status_path = Path("data/processed/protection_network_geocoding_status.json")
+          status_path.parent.mkdir(parents=True, exist_ok=True)
+          status = {"executed_at_utc": datetime.now(timezone.utc).isoformat()}
+
+          try:
+              from empriority.protection_network_geospatial import build_protection_network_geospatial
+              outputs = build_protection_network_geospatial()
+              status.update({
+                  "status": "success",
+                  "outputs": {key: str(value) for key, value in outputs.items()},
+              })
+          except Exception as exc:
+              status.update({
+                  "status": "failed",
+                  "error_type": type(exc).__name__,
+                  "error": str(exc),
+              })
+              raise
+          finally:
+              status_path.write_text(json.dumps(status, ensure_ascii=False, indent=2), encoding="utf-8")
+              print(json.dumps(status, ensure_ascii=False, indent=2))
           PY
-      - name: Commit geospatial outputs
+      - name: Commit geospatial outputs and status
         if: always()
         run: |
           git config user.name "github-actions[bot]"
@@ -50,6 +73,7 @@ jobs:
             data/processed/protection_network_accessibility_pa.csv \
             data/processed/protection_network_services_pa.geojson \
             data/processed/protection_network_geospatial.metadata.json \
+            data/processed/protection_network_geocoding_status.json \
             data/processed/integrated_municipal_matrix.csv; do
             [ -e "$file" ] && git add -f "$file"
           done
