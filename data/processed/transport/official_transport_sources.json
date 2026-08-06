@@ -16,7 +16,7 @@
       "http_status": 200,
       "resolved_url": "https://www.gov.br/dnit/pt-br/dadosabertos",
       "content_type": "text/html;charset=utf-8",
-      "checked_at_utc": "2026-08-06T14:44:46.774970+00:00"
+      "checked_at_utc": "2026-08-06T14:55:05.564059+00:00"
     },
     {
       "source_id": "antaq_ports",
@@ -33,7 +33,7 @@
       "http_status": 200,
       "resolved_url": "https://www.gov.br/antaq/pt-br/central-de-conteudos/informacoes-geograficas",
       "content_type": "text/html;charset=utf-8",
-      "checked_at_utc": "2026-08-06T14:44:46.774970+00:00"
+      "checked_at_utc": "2026-08-06T14:55:05.564059+00:00"
     },
     {
       "source_id": "antaq_waterways",
@@ -49,7 +49,7 @@
       "http_status": 200,
       "resolved_url": "https://www.gov.br/antaq/pt-br/central-de-conteudos/informacoes-geograficas",
       "content_type": "text/html;charset=utf-8",
-      "checked_at_utc": "2026-08-06T14:44:46.774970+00:00"
+      "checked_at_utc": "2026-08-06T14:55:05.564059+00:00"
     },
     {
       "source_id": "anac_public_aerodromes",
@@ -66,7 +66,7 @@
       "http_status": 200,
       "resolved_url": "https://www.gov.br/anac/pt-br/acesso-a-informacao/dados-abertos/areas-de-atuacao/aerodromos/aerodromos-publicos",
       "content_type": "text/html;charset=utf-8",
-      "checked_at_utc": "2026-08-06T14:44:46.774970+00:00"
+      "checked_at_utc": "2026-08-06T14:55:05.564059+00:00"
     },
     {
       "source_id": "ibge_municipal_boundaries",
@@ -82,7 +82,7 @@
       "http_status": 403,
       "resolved_url": "https://www.ibge.gov.br/geociencias/organizacao-do-territorio/malhas-territoriais/15774-malhas.html",
       "content_type": "text/html; charset=UTF-8",
-      "checked_at_utc": "2026-08-06T14:44:46.774970+00:00"
+      "checked_at_utc": "2026-08-06T14:55:05.564059+00:00"
     }
   ]
 }
