@@ -1,0 +1,38 @@
+{
+  "generated_at_utc": "2026-08-06T14:44:46.774970+00:00",
+  "source_count": 5,
+  "available": 4,
+  "unavailable": 1,
+  "sources": {
+    "dnit_roads": {
+      "status": "available",
+      "http_status": 200,
+      "error": null
+    },
+    "antaq_ports": {
+      "status": "available",
+      "http_status": 200,
+      "error": null
+    },
+    "antaq_waterways": {
+      "status": "available",
+      "http_status": 200,
+      "error": null
+    },
+    "anac_public_aerodromes": {
+      "status": "available",
+      "http_status": 200,
+      "error": null
+    },
+    "ibge_municipal_boundaries": {
+      "status": "http_error",
+      "http_status": 403,
+      "error": null
+    }
+  },
+  "provenance": {
+    "reference_map": "Mapa Multimodal Pará - Ministério dos Transportes",
+    "reference_map_updated": "2023-09-22",
+    "note": "Catalog follows agencies cited in the official multimodal map: DNIT, ANTAQ, ANAC and IBGE."
+  }
+}
