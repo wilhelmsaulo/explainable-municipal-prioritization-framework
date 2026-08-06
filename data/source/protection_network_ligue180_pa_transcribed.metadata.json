@@ -1,0 +1,23 @@
+{
+  "source_name": "Painel da Rede de Atendimento à Mulher - Ligue 180",
+  "source_owner": "Ministério das Mulheres",
+  "state": "Pará",
+  "records": 111,
+  "localities_in_raw_transcription": 36,
+  "public_addresses": 101,
+  "public_phones": 101,
+  "confidential_addresses": 7,
+  "provenance": "Manual transcription from screenshots captured from the official Ligue 180 protection-network panel when tabular export was unavailable.",
+  "confidentiality": "Addresses and phone numbers marked SIGILOSO are preserved as confidential and must never be geocoded or exposed.",
+  "quality_policy": {
+    "validated_statuses": ["Completo", "Sigiloso", "Sem contato visível", "Sem endereço"],
+    "excluded_from_primary_indicators": ["Possível inconsistência", "Contato não individualizado", "Sem identificação no painel"],
+    "raw_records_are_preserved": true,
+    "missing_values_are_not_zero": true
+  },
+  "municipality_standardization": {
+    "Icoaraci": "Belém",
+    "note": "Icoaraci is treated as a district/locality of Belém for municipal integration."
+  },
+  "methodological_note": "The raw source is retained for audit. Primary municipal indicators are computed only from records meeting the validation policy; uncertain records remain available in separate quality counts."
+}
