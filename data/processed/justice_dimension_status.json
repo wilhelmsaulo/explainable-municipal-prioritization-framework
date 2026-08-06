@@ -1,5 +1,22 @@
 {
-  "dpe": "failed: ConnectTimeout: timed out",
-  "mppa": "failed: RuntimeError: No MPPA institutional promotoria pages matched Pará municipalities",
-  "composite": "success"
+  "generated_at_utc": "2026-08-06T03:08:02.532963+00:00",
+  "dimension_status": "partial",
+  "available_components": [
+    "tjpa"
+  ],
+  "newly_collected_sources": [],
+  "components": {
+    "dpe": {
+      "status": "unavailable_external_source",
+      "error": "ConnectTimeout: timed out"
+    },
+    "mppa": {
+      "status": "unavailable_external_source",
+      "error": "RuntimeError: No MPPA institutional promotoria pages matched Pará municipalities"
+    },
+    "composite": {
+      "status": "success"
+    }
+  },
+  "method_note": "The composite uses only components actually available in the matrix. Unavailable external sources are not converted to zero."
 }
