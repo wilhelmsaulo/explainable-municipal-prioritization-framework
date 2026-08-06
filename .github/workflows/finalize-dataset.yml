@@ -3,8 +3,7 @@ name: finalize-dataset
 on:
   push:
     paths:
-      - "src/empriority/finalize_dataset.py"
-      - "src/empriority/matrix_audit.py"
+      - "src/empriority/finalize_dataset_v2.py"
       - ".github/workflows/finalize-dataset.yml"
   workflow_dispatch:
 
@@ -30,8 +29,8 @@ jobs:
       - name: Clean and audit integrated dataset
         run: |
           python - <<'PY'
-          from empriority.finalize_dataset import finalize_dataset
-          outputs = finalize_dataset()
+          from empriority.finalize_dataset_v2 import finalize_dataset_v2
+          outputs = finalize_dataset_v2()
           print({name: str(path) for name, path in outputs.items()})
           PY
       - name: Commit finalized dataset and audit
