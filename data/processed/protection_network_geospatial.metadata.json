@@ -1,0 +1,20 @@
+{
+  "service_source": "Painel da Rede de Atendimento à Mulher - Ligue 180 / Ministério das Mulheres",
+  "geocoder": "OpenStreetMap Nominatim",
+  "distance_method": "Great-circle (Haversine) distance from municipal seat; not road/travel distance",
+  "public_services_submitted": 99,
+  "services_accepted_high_or_medium": 19,
+  "services_requiring_review": 80,
+  "confidential_addresses_geocoded": 0,
+  "municipalities": 144,
+  "distance_columns": [
+    "protection_network_nearest_any_public_km",
+    "protection_network_nearest_specialized_non_health_km",
+    "protection_network_nearest_specialized_police_km",
+    "protection_network_nearest_justice_km",
+    "protection_network_nearest_shelter_km",
+    "protection_network_nearest_reference_center_km",
+    "protection_network_nearest_health_km"
+  ],
+  "methodological_caution": "Coordinates with low confidence are excluded from distance calculations. Confidential shelter addresses are never submitted to the geocoder or written to GeoJSON."
+}

@@ -1,0 +1,385 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -48.8861676,
+          -1.7228158
+        ]
+      },
+      "properties": {
+        "service_id": "L180-PA-001",
+        "municipality_code": "1500107",
+        "municipality": "Abaetetuba",
+        "service_name": "Centro de Testagem e Aconselhamento",
+        "category": "Serviço de Saúde",
+        "address": "Av. 15 de Agosto, s/n, Centro",
+        "confidence": "high",
+        "source": "Painel Ligue 180 / OpenStreetMap Nominatim"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -52.2073745,
+          -3.184255
+        ]
+      },
+      "properties": {
+        "service_id": "L180-PA-004",
+        "municipality_code": "1500602",
+        "municipality": "Altamira",
+        "service_name": "Hospital Geral de Altamira São Rafael",
+        "category": "Serviço de Saúde",
+        "address": "Rua Seis, 2089, Mutirão",
+        "confidence": "high",
+        "source": "Painel Ligue 180 / OpenStreetMap Nominatim"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -48.3750773,
+          -1.3471704
+        ]
+      },
+      "properties": {
+        "service_id": "L180-PA-007",
+        "municipality_code": "1500800",
+        "municipality": "Ananindeua",
+        "service_name": "Casa da Mulher Brasileira - Ananindeua (PA)",
+        "category": "Casa da Mulher Brasileira",
+        "address": "Av. Claude Saunders, 28, Centro. Acesso pela Rua Quinta das Carmitas",
+        "confidence": "high",
+        "source": "Painel Ligue 180 / OpenStreetMap Nominatim"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -48.6228307,
+          -1.5050653
+        ]
+      },
+      "properties": {
+        "service_id": "L180-PA-020",
+        "municipality_code": "1501303",
+        "municipality": "Barcarena",
+        "service_name": "Hospital Municipal Wandick Gutierrez",
+        "category": "Serviço de Saúde",
+        "address": "Tv. Santo Antônio, entre João Pantoja e Tomé Serra, 356, Centro, em frente à praça",
+        "confidence": "high",
+        "source": "Painel Ligue 180 / OpenStreetMap Nominatim"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -48.4674998,
+          -1.4681222
+        ]
+      },
+      "properties": {
+        "service_id": "L180-PA-031",
+        "municipality_code": "1501402",
+        "municipality": "Belém",
+        "service_name": "HPSM Dr. Humberto Maradei Pereira",
+        "category": "Serviço de Saúde",
+        "address": "Passagem São Miguel, 100, Guamá",
+        "confidence": "high",
+        "source": "Painel Ligue 180 / OpenStreetMap Nominatim"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -48.4809648,
+          -1.4397698
+        ]
+      },
+      "properties": {
+        "service_id": "L180-PA-032",
+        "municipality_code": "1501402",
+        "municipality": "Belém",
+        "service_name": "Hospital Pronto Socorro Municipal Mário Pinotti",
+        "category": "Serviço de Saúde",
+        "address": "Tv. 14 de Março, 500, Umarizal",
+        "confidence": "high",
+        "source": "Painel Ligue 180 / OpenStreetMap Nominatim"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -48.4729235,
+          -1.4545846
+        ]
+      },
+      "properties": {
+        "service_id": "L180-PA-033",
+        "municipality_code": "1501402",
+        "municipality": "Belém",
+        "service_name": "Hospital Público da Mulher Senhora de Nazaré",
+        "category": "Serviço de Saúde",
+        "address": "Av. Gentil Bittencourt, 2175, São Brás, Belém/PA, 66063-018",
+        "confidence": "high",
+        "source": "Painel Ligue 180 / OpenStreetMap Nominatim"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -48.4571798,
+          -1.4254349
+        ]
+      },
+      "properties": {
+        "service_id": "L180-PA-034",
+        "municipality_code": "1501402",
+        "municipality": "Belém",
+        "service_name": "Hospital de Clínicas Gaspar Vianna",
+        "category": "Serviço de Saúde",
+        "address": "Alferes Costa, s/n, Marco",
+        "confidence": "high",
+        "source": "Painel Ligue 180 / OpenStreetMap Nominatim"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -48.4808266,
+          -1.440899
+        ]
+      },
+      "properties": {
+        "service_id": "L180-PA-037",
+        "municipality_code": "1501402",
+        "municipality": "Belém",
+        "service_name": "Santa Casa de Misericórdia do Pará",
+        "category": "Serviço de Saúde",
+        "address": "Rua Oliveira Belo, 395, Umarizal",
+        "confidence": "high",
+        "source": "Painel Ligue 180 / OpenStreetMap Nominatim"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -50.4815833,
+          -1.6739573
+        ]
+      },
+      "properties": {
+        "service_id": "L180-PA-046",
+        "municipality_code": "1501808",
+        "municipality": "Breves",
+        "service_name": "Centro de Atendimento Especializado de Meninas e Mulheres Marajoaras",
+        "category": "Centro de Referência",
+        "address": "Ângelo Fernandes Breves, s/n, Breves/PA",
+        "confidence": "high",
+        "source": "Painel Ligue 180 / OpenStreetMap Nominatim"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -55.9891259,
+          -4.2747294
+        ]
+      },
+      "properties": {
+        "service_id": "L180-PA-056",
+        "municipality_code": "1503606",
+        "municipality": "Itaituba",
+        "service_name": "Hospital Municipal de Itaituba",
+        "category": "Serviço de Saúde",
+        "address": "Av. José Ribeiro dos Anjos, s/n, Boa Esperança",
+        "confidence": "high",
+        "source": "Painel Ligue 180 / OpenStreetMap Nominatim"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -55.9897652,
+          -4.2645644
+        ]
+      },
+      "properties": {
+        "service_id": "L180-PA-057",
+        "municipality_code": "1503606",
+        "municipality": "Itaituba",
+        "service_name": "Unidade Básica de Saúde Bela Vista",
+        "category": "Serviço de Saúde",
+        "address": "Travessa Quinze de Agosto, s/n, Bela Vista",
+        "confidence": "high",
+        "source": "Painel Ligue 180 / OpenStreetMap Nominatim"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -55.9963342,
+          -4.2250806
+        ]
+      },
+      "properties": {
+        "service_id": "L180-PA-059",
+        "municipality_code": "1503606",
+        "municipality": "Itaituba",
+        "service_name": "Unidade Básica de Saúde Maria Madalena",
+        "category": "Serviço de Saúde",
+        "address": "Estrada do Jacarezinho, s/n, Maria Madalena",
+        "confidence": "high",
+        "source": "Painel Ligue 180 / OpenStreetMap Nominatim"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -55.9966074,
+          -4.2529813
+        ]
+      },
+      "properties": {
+        "service_id": "L180-PA-061",
+        "municipality_code": "1503606",
+        "municipality": "Itaituba",
+        "service_name": "Unidade de Saúde da Família Dr. Carlos Furtado",
+        "category": "Serviço de Saúde",
+        "address": "Rua Manoel Alexandre, 34ª, s/n, Santo Antônio",
+        "confidence": "high",
+        "source": "Painel Ligue 180 / OpenStreetMap Nominatim"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -55.992531,
+          -4.2773627
+        ]
+      },
+      "properties": {
+        "service_id": "L180-PA-062",
+        "municipality_code": "1503606",
+        "municipality": "Itaituba",
+        "service_name": "Unidade de Saúde da Família Edson Botelho",
+        "category": "Serviço de Saúde",
+        "address": "Av. Marechal Rondon, s/n, Boa Esperança",
+        "confidence": "high",
+        "source": "Painel Ligue 180 / OpenStreetMap Nominatim"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -56.0014153,
+          -4.2631256
+        ]
+      },
+      "properties": {
+        "service_id": "L180-PA-067",
+        "municipality_code": "1503606",
+        "municipality": "Itaituba",
+        "service_name": "Unidade de Saúde da Família da Floresta",
+        "category": "Serviço de Saúde",
+        "address": "Décima Rua, s/n, Floresta",
+        "confidence": "high",
+        "source": "Painel Ligue 180 / OpenStreetMap Nominatim"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -52.2404042,
+          -1.7512458
+        ]
+      },
+      "properties": {
+        "service_id": "L180-PA-083",
+        "municipality_code": "1505908",
+        "municipality": "Porto de Moz",
+        "service_name": "Hospital Municipal Ana Nery",
+        "category": "Serviço de Saúde",
+        "address": "Rua da República, 1780, Centro",
+        "confidence": "high",
+        "source": "Painel Ligue 180 / OpenStreetMap Nominatim"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -54.9094487,
+          -4.0990409
+        ]
+      },
+      "properties": {
+        "service_id": "L180-PA-087",
+        "municipality_code": "1506195",
+        "municipality": "Rurópolis",
+        "service_name": "Hospital Municipal de Rurópolis",
+        "category": "Serviço de Saúde",
+        "address": "Dr. Osvaldo Cruz, entre Pres. Médici e Av. Brasil, 80, Centro",
+        "confidence": "high",
+        "source": "Painel Ligue 180 / OpenStreetMap Nominatim"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -54.7221498,
+          -2.4247057
+        ]
+      },
+      "properties": {
+        "service_id": "L180-PA-091",
+        "municipality_code": "1506807",
+        "municipality": "Santarém",
+        "service_name": "Vara do Juizado de Violência Doméstica e Familiar contra a Mulher",
+        "category": "Juizado/Vara especializada",
+        "address": "Avenida Mendonça Furtado, s/n",
+        "confidence": "high",
+        "source": "Painel Ligue 180 / OpenStreetMap Nominatim"
+      }
+    }
+  ]
+}
