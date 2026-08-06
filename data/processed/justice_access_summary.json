@@ -8,7 +8,9 @@
   ],
   "mean_coverage_ratio": 0.5902777777777778,
   "municipalities_with_full_available_access": 85,
-  "specialized_columns": [],
-  "municipalities_with_specialized_women_access": null,
+  "specialized_columns": [
+    "justice_tjpa_women_specialized_units"
+  ],
+  "municipalities_with_specialized_women_access": 3,
   "method": "Scores use only components available for each municipality; missing components are not converted to zero."
 }
