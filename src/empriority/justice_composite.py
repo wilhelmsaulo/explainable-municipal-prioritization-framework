@@ -13,7 +13,7 @@ COMPONENT_COLUMNS = {
 }
 
 SPECIALIZED_COLUMNS = {
-    "tjpa": "justice_tjpa_specialized_women",
+    "tjpa": "justice_tjpa_women_specialized_units",
     "mppa": "justice_mppa_specialized_women",
 }
 
