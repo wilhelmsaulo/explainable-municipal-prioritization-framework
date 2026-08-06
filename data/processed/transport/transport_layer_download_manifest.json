@@ -1,0 +1,62 @@
+{
+  "generated_at_utc": "2026-08-06T14:55:37.572032+00:00",
+  "sources": {
+    "dnit_roads": {
+      "agency": "DNIT",
+      "official_page": "https://www.gov.br/dnit/pt-br/dadosabertos",
+      "discovered": [],
+      "downloads": [],
+      "errors": [
+        {
+          "stage": "page",
+          "type": "ConnectError",
+          "message": "[Errno 101] Network is unreachable"
+        }
+      ]
+    },
+    "antaq_ports": {
+      "agency": "ANTAQ",
+      "official_page": "https://www.gov.br/antaq/pt-br/central-de-conteudos/informacoes-geograficas",
+      "discovered": [],
+      "downloads": [],
+      "errors": [
+        {
+          "stage": "page",
+          "type": "ConnectError",
+          "message": "[Errno 101] Network is unreachable"
+        }
+      ]
+    },
+    "antaq_waterways": {
+      "agency": "ANTAQ",
+      "official_page": "https://www.gov.br/antaq/pt-br/central-de-conteudos/informacoes-geograficas",
+      "discovered": [],
+      "downloads": [],
+      "errors": [
+        {
+          "stage": "page",
+          "type": "ConnectError",
+          "message": "[Errno 101] Network is unreachable"
+        }
+      ]
+    },
+    "anac_public_aerodromes": {
+      "agency": "ANAC",
+      "official_page": "https://www.gov.br/anac/pt-br/acesso-a-informacao/dados-abertos/areas-de-atuacao/aerodromos/aerodromos-publicos",
+      "discovered": [],
+      "downloads": [],
+      "errors": [
+        {
+          "stage": "page",
+          "type": "ConnectError",
+          "message": "[Errno 101] Network is unreachable"
+        }
+      ]
+    }
+  },
+  "policy": {
+    "max_candidates_per_source": 8,
+    "max_bytes_per_file": 300000000,
+    "note": "Raw layers are workflow artifacts; manifests are committed for provenance."
+  }
+}
