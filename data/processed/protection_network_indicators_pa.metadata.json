@@ -1,0 +1,13 @@
+{
+  "source": "Painel da Rede de Atendimento à Mulher - Ligue 180 / Ministério das Mulheres",
+  "source_file": "data/source/protection_network_ligue180_pa_transcribed.csv",
+  "raw_records": 111,
+  "matched_records": 111,
+  "unmatched_records": 0,
+  "validated_records": 105,
+  "municipalities_with_validated_services": 35,
+  "public_addresses": 99,
+  "confidential_addresses": 7,
+  "method": "Manual official-panel transcription retained in full; primary indicators exclude explicitly uncertain, non-individualized or unidentified records. Icoaraci is standardized to Belém.",
+  "confidentiality": "SIGILOSO values are retained as labels and excluded from public-address/geocoding fields."
+}
