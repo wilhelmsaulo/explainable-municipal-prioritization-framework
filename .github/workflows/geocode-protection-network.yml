@@ -1,0 +1,58 @@
+name: geocode-protection-network
+
+on:
+  push:
+    paths:
+      - ".github/workflows/geocode-protection-network.yml"
+      - "src/empriority/protection_network_geospatial.py"
+      - "data/processed/protection_network_records_normalized_pa.csv"
+  workflow_dispatch:
+
+concurrency:
+  group: geocode-protection-network
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+
+jobs:
+  geocode:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+      - name: Install project
+        run: |
+          python -m pip install --upgrade pip
+          pip install -e .
+      - name: Geocode public services and calculate accessibility
+        run: |
+          python - <<'PY'
+          from empriority.protection_network_geospatial import build_protection_network_geospatial
+          build_protection_network_geospatial()
+          PY
+      - name: Commit geospatial outputs
+        if: always()
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          for file in \
+            data/cache/nominatim_protection_network.json \
+            data/processed/protection_network_services_geocoded_pa.csv \
+            data/processed/protection_network_geocoding_review_pa.csv \
+            data/processed/municipal_seats_geocoded_pa.csv \
+            data/processed/protection_network_accessibility_pa.csv \
+            data/processed/protection_network_services_pa.geojson \
+            data/processed/protection_network_geospatial.metadata.json \
+            data/processed/integrated_municipal_matrix.csv; do
+            [ -e "$file" ] && git add -f "$file"
+          done
+          git diff --cached --quiet || git commit -m "Store protection-network geospatial accessibility outputs"
+          git pull --rebase origin main
+          git push
