@@ -1,0 +1,60 @@
+name: download-transport-layers
+
+on:
+  push:
+    paths:
+      - ".github/workflows/download-transport-layers.yml"
+      - "src/empriority/transport_accessibility/download.py"
+      - "src/empriority/transport_accessibility/catalog.py"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: download-transport-layers
+  cancel-in-progress: false
+
+jobs:
+  download:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+      - name: Install project
+        run: |
+          python -m pip install --upgrade pip
+          pip install -e .
+      - name: Discover and download official transport layers
+        run: |
+          python - <<'PY'
+          from empriority.transport_accessibility.download import discover_and_download_transport_layers
+          discover_and_download_transport_layers()
+          PY
+      - name: Upload raw transport layers
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: official-transport-layers
+          path: data/raw/transport
+          if-no-files-found: warn
+          retention-days: 30
+      - name: Commit manifests and status
+        if: always()
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          for file in \
+            data/processed/transport/transport_layer_download_manifest.json \
+            data/processed/transport/transport_layer_download_status.json; do
+            [ -e "$file" ] && git add -f "$file"
+          done
+          git diff --cached --quiet || git commit -m "Store official transport layer download manifest"
+          git pull --rebase origin main
+          git push
