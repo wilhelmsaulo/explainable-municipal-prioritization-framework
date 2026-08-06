@@ -1,0 +1,77 @@
+name: integrate-protection-network
+
+on:
+  push:
+    paths:
+      - ".github/workflows/integrate-protection-network.yml"
+      - "src/empriority/protection_network.py"
+      - "data/source/protection_network_ligue180_pa_transcribed.csv"
+      - "data/source/protection_network_ligue180_pa_transcribed.metadata.json"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  integrate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+      - name: Install project
+        run: |
+          python -m pip install --upgrade pip
+          pip install -e .
+      - name: Build and integrate protection-network indicators
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import pandas as pd
+
+          from empriority.protection_network import build_protection_network_indicators
+
+          outputs = build_protection_network_indicators()
+          matrix_path = Path("data/processed/integrated_municipal_matrix.csv")
+          matrix = pd.read_csv(matrix_path, dtype={"municipality_code": str})
+          indicators = pd.read_csv(outputs["indicators"], dtype={"municipality_code": str})
+
+          old = [column for column in matrix.columns if column.startswith("protection_network_")]
+          if old:
+              matrix = matrix.drop(columns=old)
+          matrix = matrix.merge(
+              indicators.drop(columns=["municipality"], errors="ignore"),
+              on="municipality_code",
+              how="left",
+          )
+
+          assert len(matrix) == 144
+          assert matrix["municipality_code"].nunique() == 144
+          if matrix["protection_network_record_validated"].sum() <= 0:
+              raise AssertionError("Validated protection-network total is zero")
+
+          matrix.to_csv(matrix_path, index=False, encoding="utf-8")
+          print(
+              "Protection network integrated: "
+              f"raw={int(matrix['protection_network_record_transcribed'].sum())}, "
+              f"validated={int(matrix['protection_network_record_validated'].sum())}, "
+              f"covered municipalities={int(matrix['protection_network_covered'].sum())}, "
+              f"public addresses={int(matrix['protection_network_public_address'].sum())}, "
+              f"confidential addresses={int(matrix['protection_network_confidential_address'].sum())}."
+          )
+          PY
+      - name: Commit outputs
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -f data/processed/protection_network_*.csv
+          git add -f data/processed/protection_network_*.json
+          git add -f data/processed/integrated_municipal_matrix.csv
+          git diff --cached --quiet || git commit -m "Integrate Ligue 180 protection-network indicators"
+          git pull --rebase origin main
+          git push
