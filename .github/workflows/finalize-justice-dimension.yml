@@ -84,3 +84,5 @@ jobs:
           git diff --cached --quiet || git commit -m "Finalize justice dimension"
           git pull --rebase origin main
           git push
+
+# Retriggered after MPPA municipality matching and DPE retry fixes.
