@@ -32,6 +32,7 @@ jobs:
         run: |
           python - <<'PY'
           import json
+          from datetime import datetime, timezone
           from pathlib import Path
           import pandas as pd
           from empriority.justice_access import collect_defensoria_access_pa
@@ -39,7 +40,7 @@ jobs:
           from empriority.justice_composite import build_justice_composite
 
           matrix_path = Path('data/processed/integrated_municipal_matrix.csv')
-          status = {}
+          components = {}
 
           def integrate(outputs, prefix):
               matrix = pd.read_csv(matrix_path, dtype={'municipality_code': str})
@@ -47,27 +48,68 @@ jobs:
               old = [c for c in matrix.columns if c.startswith(prefix)]
               if old:
                   matrix = matrix.drop(columns=old)
-              matrix = matrix.merge(data.drop(columns=['municipality'], errors='ignore'), on='municipality_code', how='left')
+              matrix = matrix.merge(
+                  data.drop(columns=['municipality'], errors='ignore'),
+                  on='municipality_code',
+                  how='left',
+              )
+              assert len(matrix) == 144
+              assert matrix['municipality_code'].nunique() == 144
               matrix.to_csv(matrix_path, index=False, encoding='utf-8')
 
           try:
               integrate(collect_defensoria_access_pa(), 'justice_dpe_')
-              status['dpe'] = 'success'
+              components['dpe'] = {'status': 'success'}
           except Exception as exc:
-              status['dpe'] = f'failed: {type(exc).__name__}: {exc}'
+              components['dpe'] = {
+                  'status': 'unavailable_external_source',
+                  'error': f'{type(exc).__name__}: {exc}',
+              }
 
           try:
               integrate(collect_mppa_access_pa(), 'justice_mppa_')
-              status['mppa'] = 'success'
+              components['mppa'] = {'status': 'success'}
           except Exception as exc:
-              status['mppa'] = f'failed: {type(exc).__name__}: {exc}'
+              components['mppa'] = {
+                  'status': 'unavailable_external_source',
+                  'error': f'{type(exc).__name__}: {exc}',
+              }
 
           try:
-              build_justice_composite()
-              status['composite'] = 'success'
+              outputs = build_justice_composite()
+              summary = json.loads(Path(outputs['summary']).read_text(encoding='utf-8'))
+              components['composite'] = {'status': 'success'}
           except Exception as exc:
-              status['composite'] = f'failed: {type(exc).__name__}: {exc}'
+              summary = None
+              components['composite'] = {
+                  'status': 'failed',
+                  'error': f'{type(exc).__name__}: {exc}',
+              }
 
+          successful_sources = [
+              name for name in ('dpe', 'mppa')
+              if components.get(name, {}).get('status') == 'success'
+          ]
+          available_components = summary.get('available_components', []) if summary else []
+          dimension_status = (
+              'complete'
+              if set(('dpe', 'tjpa', 'mppa')).issubset(set(available_components))
+              else 'partial'
+              if components['composite']['status'] == 'success'
+              else 'failed'
+          )
+
+          status = {
+              'generated_at_utc': datetime.now(timezone.utc).isoformat(),
+              'dimension_status': dimension_status,
+              'available_components': available_components,
+              'newly_collected_sources': successful_sources,
+              'components': components,
+              'method_note': (
+                  'The composite uses only components actually available in the matrix. '
+                  'Unavailable external sources are not converted to zero.'
+              ),
+          }
           Path('data/processed/justice_dimension_status.json').write_text(
               json.dumps(status, ensure_ascii=False, indent=2), encoding='utf-8'
           )
@@ -81,8 +123,6 @@ jobs:
           for file in data/processed/justice_* data/processed/integrated_municipal_matrix.csv; do
             [ -e "$file" ] && git add -f "$file"
           done
-          git diff --cached --quiet || git commit -m "Finalize justice dimension"
+          git diff --cached --quiet || git commit -m "Finalize justice dimension with explicit status"
           git pull --rebase origin main
           git push
-
-# Retriggered after MPPA municipality matching and DPE retry fixes.
