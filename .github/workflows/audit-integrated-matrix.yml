@@ -1,0 +1,46 @@
+name: audit-integrated-matrix
+
+on:
+  push:
+    paths:
+      - "data/processed/integrated_municipal_matrix.csv"
+      - "src/empriority/matrix_audit.py"
+      - ".github/workflows/audit-integrated-matrix.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+      - name: Install project
+        run: |
+          python -m pip install --upgrade pip
+          pip install -e .
+      - name: Audit integrated matrix
+        run: |
+          python - <<'PY'
+          from empriority.matrix_audit import audit_integrated_matrix
+          audit_integrated_matrix()
+          PY
+      - name: Commit audit outputs
+        if: always()
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          for file in data/processed/integrated_matrix_audit.json data/processed/integrated_matrix_column_profile.csv; do
+            [ -e "$file" ] && git add -f "$file"
+          done
+          git diff --cached --quiet || git commit -m "Store integrated matrix audit"
+          git pull --rebase origin main
+          git push
