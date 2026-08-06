@@ -37,7 +37,20 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add -A data/processed
+
+          # Record changes and deletions to files already tracked.
+          git add -u data/processed
+
+          # These reproducibility products live in an ignored directory by design,
+          # so add only the finalized matrix and audit outputs explicitly.
+          git add -f \
+            data/processed/integrated_municipal_matrix.csv \
+            data/processed/integrated_matrix_audit.json \
+            data/processed/integrated_matrix_column_profile.csv \
+            data/processed/modeling_readiness_columns.csv \
+            data/processed/modeling_readiness_status.json \
+            data/processed/dataset_finalization_status.json
+
           git diff --cached --quiet || git commit -m "Finalize and audit integrated dataset"
           git pull --rebase origin main
           git push
