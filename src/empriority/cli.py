@@ -4,6 +4,7 @@ import typer
 
 from empriority.analysis import run_prioritization
 from empriority.capacity_diagnostics import build_capacity_diagnostics
+from empriority.capacity_input_audit import build_capacity_input_audit
 from empriority.catalog import load_indicator_catalog
 from empriority.config import load_settings
 from empriority.connectors.sidra import SidraQuery
@@ -260,6 +261,19 @@ def diagnose_capacity_framework(
 ) -> None:
     """Diagnose robustness and contributions without changing published rankings."""
     paths = build_capacity_diagnostics(config_path=config)
+    for name, path in paths.items():
+        typer.echo(f"OK {name}: {path}")
+
+
+@app.command("audit-capacity-inputs")
+def audit_capacity_inputs(
+    config: str = typer.Option(
+        "config/capacity_priority.yml",
+        help="Path to the declarative capacity-priority framework configuration.",
+    ),
+) -> None:
+    """Audit and isolate the inputs actually used by the capacity framework."""
+    paths = build_capacity_input_audit(config_path=config)
     for name, path in paths.items():
         typer.echo(f"OK {name}: {path}")
 
