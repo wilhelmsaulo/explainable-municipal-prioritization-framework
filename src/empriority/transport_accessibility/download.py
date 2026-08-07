@@ -30,7 +30,6 @@ _KEYWORDS = {
     "mapbiomas_federal_roads": ("rodovia", "federal", "shp", "zip"),
     "antaq_ports": ("porto", "instala", "travess", "geograf", "shp", "kml"),
     "antaq_waterways": ("hidrovia", "navega", "via interior", "geograf", "shp"),
-    "anac_public_aerodromes": ("aerodromo", "aeródromo", "csv", "json"),
     "decea_airports": ("airport", "aerodromo", "aeródromo", "wfs", "getfeature"),
 }
 
@@ -101,7 +100,7 @@ def _score(source_id: str, url: str) -> int:
         score += 8
     if "request=getfeature" in text:
         score += 4
-    if any(host in text for host in ("gov.br", "dnit.gov.br", "antaq.gov.br", "anac.gov.br")):
+    if any(host in text for host in ("gov.br", "dnit.gov.br", "antaq.gov.br")):
         score += 2
     return score
 
