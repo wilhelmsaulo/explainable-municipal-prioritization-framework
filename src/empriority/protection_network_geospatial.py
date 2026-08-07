@@ -302,9 +302,11 @@ def build_protection_network_geospatial(
                 item[service_column] = pd.NA
                 continue
             distances = subset.apply(
-                lambda service: _haversine(
-                    float(seat["seat_latitude"]),
-                    float(seat["seat_longitude"]),
+                lambda service,
+                seat_latitude=float(seat["seat_latitude"]),
+                seat_longitude=float(seat["seat_longitude"]): _haversine(
+                    seat_latitude,
+                    seat_longitude,
                     float(service["latitude"]),
                     float(service["longitude"]),
                 ),
