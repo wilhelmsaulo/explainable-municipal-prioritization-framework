@@ -8,7 +8,7 @@ import zipfile
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
-from urllib.parse import urljoin, urlparse
+from urllib.parse import parse_qs, urljoin, urlparse
 
 import httpx
 
@@ -29,7 +29,28 @@ _KEYWORDS = {
     "antaq_ports": ("porto", "instala", "travess", "geograf", "shp", "kml"),
     "antaq_waterways": ("hidrovia", "navega", "via interior", "geograf", "shp"),
     "anac_public_aerodromes": ("aerodromo", "aeródromo", "csv", "json"),
+    "decea_airports": ("airport", "aerodromo", "aeródromo", "wfs", "getfeature"),
 }
+
+
+def _query_output_extension(url: str) -> str | None:
+    query = {
+        key.lower(): values
+        for key, values in parse_qs(urlparse(url).query).items()
+    }
+    formats = query.get("outputformat", [])
+    if not formats:
+        return None
+    value = formats[0].lower()
+    if "shape-zip" in value or "shapefile" in value:
+        return ".zip"
+    if "json" in value:
+        return ".geojson"
+    if "csv" in value:
+        return ".csv"
+    if "kml" in value:
+        return ".kml"
+    return None
 
 
 def _is_download_candidate(url: str) -> bool:
@@ -37,7 +58,10 @@ def _is_download_candidate(url: str) -> bool:
     host = (parsed.hostname or "").lower()
     if parsed.fragment or host in _BLOCKED_HOSTS:
         return False
-    return parsed.path.lower().endswith(_ALLOWED_EXTENSIONS)
+    return (
+        parsed.path.lower().endswith(_ALLOWED_EXTENSIONS)
+        or _query_output_extension(url) is not None
+    )
 
 
 def _validate_download_response(response: httpx.Response) -> None:
@@ -45,12 +69,18 @@ def _validate_download_response(response: httpx.Response) -> None:
     path = urlparse(str(response.url)).path.lower()
     if "text/html" in content_type:
         raise RuntimeError("rejected HTML response; expected a transport data file")
-    if not path.endswith(_ALLOWED_EXTENSIONS):
+    if not (
+        path.endswith(_ALLOWED_EXTENSIONS)
+        or _query_output_extension(str(response.url)) is not None
+    ):
         raise RuntimeError("rejected response without an approved data-file extension")
 
 
 def _safe_name(url: str, fallback: str) -> str:
     name = Path(urlparse(url).path).name or fallback
+    extension = _query_output_extension(url)
+    if extension and not name.lower().endswith(_ALLOWED_EXTENSIONS):
+        name = f"{fallback}{extension}"
     name = re.sub(r"[^A-Za-z0-9._-]+", "_", name)
     return name[:180]
 
@@ -65,6 +95,10 @@ def _score(source_id: str, url: str) -> int:
     score = sum(3 for term in _KEYWORDS.get(source_id, ()) if term in text)
     if text.endswith(_ALLOWED_EXTENSIONS):
         score += 5
+    if _query_output_extension(url):
+        score += 8
+    if "request=getfeature" in text:
+        score += 4
     if any(host in text for host in ("gov.br", "dnit.gov.br", "antaq.gov.br", "anac.gov.br")):
         score += 2
     return score
@@ -148,12 +182,14 @@ def discover_and_download_transport_layers(
                 "errors": [],
             }
             manifest["sources"][source_id] = record
+            direct_urls = list(source.get("direct_urls", []))
             try:
                 page = _get_page_with_retry(client, source["official_page"])
                 links = _extract_links(page.text, str(page.url))
             except Exception as exc:
                 record["errors"].append({"stage": "page", "type": type(exc).__name__, "message": str(exc)})
-                continue
+                links = []
+            links = sorted(set(links) | set(direct_urls))
 
             ranked = sorted(
                 ((url, _score(source_id, url)) for url in links),
