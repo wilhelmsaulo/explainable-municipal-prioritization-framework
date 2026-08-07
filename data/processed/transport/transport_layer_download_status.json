@@ -1,12 +1,12 @@
 {
-  "generated_at_utc": "2026-08-07T04:24:28.492863+00:00",
-  "status": "complete",
+  "generated_at_utc": "2026-08-07T04:30:30.214405+00:00",
+  "status": "partial",
   "sources": {
     "dnit_roads": {
-      "discovered": 3,
-      "downloaded": 2,
-      "errors": 1,
-      "status": "success"
+      "discovered": 0,
+      "downloaded": 0,
+      "errors": 0,
+      "status": "failed"
     },
     "antaq_ports": {
       "discovered": 3,
@@ -21,10 +21,10 @@
       "status": "success"
     },
     "anac_public_aerodromes": {
-      "discovered": 3,
-      "downloaded": 2,
+      "discovered": 1,
+      "downloaded": 0,
       "errors": 1,
-      "status": "success"
+      "status": "failed"
     }
   }
 }

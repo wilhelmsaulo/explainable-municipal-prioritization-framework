@@ -1,42 +1,12 @@
 {
-  "generated_at_utc": "2026-08-07T04:24:28.492863+00:00",
+  "generated_at_utc": "2026-08-07T04:30:30.214405+00:00",
   "sources": {
     "dnit_roads": {
       "agency": "DNIT",
       "official_page": "https://www.gov.br/dnit/pt-br/assuntos/atlas-e-mapas/pnv-e-snv",
-      "discovered": [
-        "https://servicos.dnit.gov.br/vgeo/",
-        "https://www.gov.br/dnit/pt-br/assuntos/atlas-e-mapas/pnv-e-snv",
-        "https://www.gov.br/dnit/pt-br/assuntos/atlas-e-mapas/pnv-e-snv#govbr-busca-input"
-      ],
-      "downloads": [
-        {
-          "url": "https://www.gov.br/dnit/pt-br/assuntos/atlas-e-mapas/pnv-e-snv",
-          "resolved_url": "https://www.gov.br/dnit/pt-br/assuntos/atlas-e-mapas/pnv-e-snv",
-          "path": "data/raw/transport/dnit_roads/pnv-e-snv",
-          "bytes": 163017,
-          "sha256": "6d70a1272d1fcbba4967380b423ff95df8698e023a2f92b260f45fbab1872279",
-          "content_type": "text/html;charset=utf-8",
-          "zip_inventory": []
-        },
-        {
-          "url": "https://www.gov.br/dnit/pt-br/assuntos/atlas-e-mapas/pnv-e-snv#govbr-busca-input",
-          "resolved_url": "https://www.gov.br/dnit/pt-br/assuntos/atlas-e-mapas/pnv-e-snv#govbr-busca-input",
-          "path": "data/raw/transport/dnit_roads/pnv-e-snv",
-          "bytes": 163017,
-          "sha256": "6d70a1272d1fcbba4967380b423ff95df8698e023a2f92b260f45fbab1872279",
-          "content_type": "text/html;charset=utf-8",
-          "zip_inventory": []
-        }
-      ],
-      "errors": [
-        {
-          "stage": "download",
-          "url": "https://servicos.dnit.gov.br/vgeo/",
-          "type": "ConnectTimeout",
-          "message": "timed out"
-        }
-      ]
+      "discovered": [],
+      "downloads": [],
+      "errors": []
     },
     "antaq_ports": {
       "agency": "ANTAQ",
@@ -170,30 +140,9 @@
       "agency": "ANAC",
       "official_page": "https://www.gov.br/anac/pt-br/assuntos/regulados/aeroportos-e-aerodromos/cadastro-publico/cadastro-de-aerodromos-de-uso-publico",
       "discovered": [
-        "https://www.gov.br/anac/pt-br/assuntos/regulados/aeroportos-e-aerodromos/cadastro-de-aerodromos-privativo/aerodromos-cadastrados/cadastro-de-aerodromos-civis-publicos.csv",
-        "http://www.facebook.com/sharer.php?u=https://www.gov.br/anac/pt-br/assuntos/regulados/aeroportos-e-aerodromos/cadastro-publico/cadastro-de-aerodromos-de-uso-publico",
-        "https://api.whatsapp.com/send?text=https://www.gov.br/anac/pt-br/assuntos/regulados/aeroportos-e-aerodromos/cadastro-publico/cadastro-de-aerodromos-de-uso-publico"
+        "https://www.gov.br/anac/pt-br/assuntos/regulados/aeroportos-e-aerodromos/cadastro-de-aerodromos-privativo/aerodromos-cadastrados/cadastro-de-aerodromos-civis-publicos.csv"
       ],
-      "downloads": [
-        {
-          "url": "http://www.facebook.com/sharer.php?u=https://www.gov.br/anac/pt-br/assuntos/regulados/aeroportos-e-aerodromos/cadastro-publico/cadastro-de-aerodromos-de-uso-publico",
-          "resolved_url": "https://www.facebook.com/login/?next=https%3A%2F%2Fwww.facebook.com%2Fshare_channel%2F%3Ftype%3Dreshare%26link%3Dhttps%253A%252F%252Fwww.gov.br%252Fanac%252Fpt-br%252Fassuntos%252Fregulados%252Faeroportos-e-aerodromos%252Fcadastro-publico%252Fcadastro-de-aerodromos-de-uso-publico%26app_id%3D966242223397117%26source_surface%3Dexternal_reshare%26display%26hashtag",
-          "path": "data/raw/transport/anac_public_aerodromes/login",
-          "bytes": 424941,
-          "sha256": "407ce57f9889f35efae1f67ca267f53fecfeeaaf4be68260795e66d9c291334e",
-          "content_type": "text/html; charset=\"utf-8\"",
-          "zip_inventory": []
-        },
-        {
-          "url": "https://api.whatsapp.com/send?text=https://www.gov.br/anac/pt-br/assuntos/regulados/aeroportos-e-aerodromos/cadastro-publico/cadastro-de-aerodromos-de-uso-publico",
-          "resolved_url": "https://api.whatsapp.com/send?text=https://www.gov.br/anac/pt-br/assuntos/regulados/aeroportos-e-aerodromos/cadastro-publico/cadastro-de-aerodromos-de-uso-publico",
-          "path": "data/raw/transport/anac_public_aerodromes/send",
-          "bytes": 209391,
-          "sha256": "7c711bd510fe955d1a5469f0731608e76d9133e24153736261062528414fa5fb",
-          "content_type": "text/html; charset=\"utf-8\"",
-          "zip_inventory": []
-        }
-      ],
+      "downloads": [],
       "errors": [
         {
           "stage": "download",
