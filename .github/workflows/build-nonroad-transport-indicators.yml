@@ -7,6 +7,12 @@ on:
     paths:
       - ".github/workflows/build-nonroad-transport-indicators.yml"
       - "src/empriority/transport_accessibility/nonroad.py"
+  pull_request:
+    branches:
+      - main
+    paths:
+      - ".github/workflows/build-nonroad-transport-indicators.yml"
+      - "src/empriority/transport_accessibility/nonroad.py"
   workflow_dispatch:
 
 permissions:
