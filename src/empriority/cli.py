@@ -4,6 +4,7 @@ import typer
 
 from empriority.analysis import run_prioritization
 from empriority.catalog import load_indicator_catalog
+from empriority.capacity_diagnostics import build_capacity_diagnostics
 from empriority.config import load_settings
 from empriority.connectors.sidra import SidraQuery
 from empriority.integrated_priority import build_integrated_priority_profiles
@@ -246,6 +247,19 @@ def run_capacity_framework(
 ) -> None:
     """Run the configured hierarchical capacity-priority framework."""
     paths = build_integrated_priority_profiles(config_path=config)
+    for name, path in paths.items():
+        typer.echo(f"OK {name}: {path}")
+
+
+@app.command("diagnose-capacity-framework")
+def diagnose_capacity_framework(
+    config: str = typer.Option(
+        "config/capacity_priority.yml",
+        help="Path to the declarative capacity-priority framework configuration.",
+    ),
+) -> None:
+    """Diagnose robustness and contributions without changing published rankings."""
+    paths = build_capacity_diagnostics(config_path=config)
     for name, path in paths.items():
         typer.echo(f"OK {name}: {path}")
 
