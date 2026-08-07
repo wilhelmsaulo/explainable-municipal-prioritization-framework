@@ -3,8 +3,8 @@ from __future__ import annotations
 import typer
 
 from empriority.analysis import run_prioritization
-from empriority.catalog import load_indicator_catalog
 from empriority.capacity_diagnostics import build_capacity_diagnostics
+from empriority.catalog import load_indicator_catalog
 from empriority.config import load_settings
 from empriority.connectors.sidra import SidraQuery
 from empriority.integrated_priority import build_integrated_priority_profiles
