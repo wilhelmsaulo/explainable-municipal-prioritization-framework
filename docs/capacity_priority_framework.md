@@ -116,3 +116,14 @@ indicator schema. A new application must define its scope before observing
 results and must document any changed indicator, direction, weight, or
 threshold. Portability does not authorize transferring Pará-specific empirical
 conclusions to another territory.
+
+## Interactive scientific dashboard
+
+An experimental, read-only visualization of the audited outputs is available at:
+
+https://explainable-municipal-prioritization-framework-zyur6g28v6z5uba.streamlit.app/
+
+The dashboard reads the precomputed 48-scenario outputs and does not permit
+arbitrary weights, municipality-specific adjustments, or recalculation of the
+published framework. The URL currently tracks the development branch; the
+article version will be preserved in a tagged release before submission.
