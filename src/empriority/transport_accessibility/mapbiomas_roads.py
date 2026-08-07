@@ -166,7 +166,7 @@ def build_mapbiomas_road_indicators(
         + result["road_state_km"]
         + result["road_other_km"]
     )
-    result["road_structured_presence"] = result["road_total_km"].gt(0).astype(int)
+    result["road_mapped_presence"] = result["road_total_km"].gt(0).astype(int)
     result["road_federal_presence"] = result["road_federal_km"].gt(0).astype(int)
     result["road_state_presence"] = result["road_state_km"].gt(0).astype(int)
 
@@ -180,7 +180,7 @@ def build_mapbiomas_road_indicators(
     reference_points = municipal_projected.geometry.representative_point()
     distances = reference_points.distance(road_union) / 1000.0
     distance_by_code = dict(zip(municipal_projected["municipality_code"], distances))
-    result["distance_to_structured_road_km"] = result["municipality_code"].map(
+    result["distance_to_mapped_road_km"] = result["municipality_code"].map(
         distance_by_code
     )
 
@@ -195,7 +195,7 @@ def build_mapbiomas_road_indicators(
     result.to_csv(output_path, index=False, encoding="utf-8")
 
     zero_road = result.loc[
-        result["road_structured_presence"].eq(0),
+        result["road_mapped_presence"].eq(0),
         ["municipality_code", "municipality"],
     ].to_dict("records")
     audit = {
@@ -215,10 +215,10 @@ def build_mapbiomas_road_indicators(
         "road_features_para_bbox": int(len(roads)),
         "intersection_features": int(len(intersections)),
         "total_road_km": float(result["road_total_km"].sum()),
-        "municipalities_with_structured_roads": int(
-            result["road_structured_presence"].sum()
+        "municipalities_with_mapped_roads": int(
+            result["road_mapped_presence"].sum()
         ),
-        "municipalities_without_structured_roads": zero_road,
+        "municipalities_without_mapped_roads": zero_road,
         "checks": {
             "rows_144": len(result) == 144,
             "unique_codes_144": result["municipality_code"].nunique() == 144,
