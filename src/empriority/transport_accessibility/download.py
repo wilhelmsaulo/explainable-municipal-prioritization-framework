@@ -51,7 +51,7 @@ def _get_page_with_retry(
     url: str,
     attempts: int = 5,
 ) -> httpx.Response:
-    last_error: Exception | null = None
+    last_error: Exception | None = None
     for attempt in range(1, attempts + 1):
         try:
             response = client.get(url)
