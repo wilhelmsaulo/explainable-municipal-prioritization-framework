@@ -183,7 +183,9 @@ def build_cnes_professional_indicators(
     professionals = professionals.merge(cbo_dictionary, on="cbo", how="left")
     professionals["profession_group"] = [
         _classify_profession(description, cbo)
-        for description, cbo in zip(professionals["profession_description"], professionals["cbo"])
+        for description, cbo in zip(
+            professionals["profession_description"], professionals["cbo"], strict=False
+        )
     ]
     professionals = professionals.loc[professionals["profession_group"].notna()].copy()
     professionals["weekly_hours"] = (

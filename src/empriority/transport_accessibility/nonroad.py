@@ -99,7 +99,7 @@ def _point_metrics(
     union = projected_points.geometry.union_all()
     reference = municipalities.to_crs(projected_crs).geometry.representative_point()
     distances = reference.distance(union) / 1000
-    distance_by_code = dict(zip(municipalities["municipality_code"], distances))
+    distance_by_code = dict(zip(municipalities["municipality_code"], distances, strict=False))
     result[f"distance_to_{prefix}_km"] = result["municipality_code"].map(distance_by_code)
     return result
 
@@ -133,7 +133,7 @@ def _line_metrics(
     union = projected.geometry.union_all()
     reference = municipalities.to_crs(projected_crs).geometry.representative_point()
     distances = reference.distance(union) / 1000
-    distance_by_code = dict(zip(municipalities["municipality_code"], distances))
+    distance_by_code = dict(zip(municipalities["municipality_code"], distances, strict=False))
     result[f"distance_to_{prefix}_km"] = result["municipality_code"].map(distance_by_code)
     return result, int(len(intersections))
 

@@ -59,7 +59,8 @@ def collect_tjpa_access_pa(output_directory: str | Path = "data/processed") -> d
 
     base = _municipal_base()
     name_to_code = {
-        _norm(name): code for code, name in zip(base["municipality_code"], base["municipality"])
+        _norm(name): code
+        for code, name in zip(base["municipality_code"], base["municipality"], strict=False)
     }
     raw["municipality_code"] = raw["city"].map(lambda value: name_to_code.get(_norm(value)))
     raw = raw.dropna(subset=["municipality_code"]).copy()

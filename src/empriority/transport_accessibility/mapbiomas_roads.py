@@ -167,7 +167,7 @@ def build_mapbiomas_road_indicators(
     road_union = intersections.geometry.union_all()
     reference_points = municipal_projected.geometry.representative_point()
     distances = reference_points.distance(road_union) / 1000.0
-    distance_by_code = dict(zip(municipal_projected["municipality_code"], distances))
+    distance_by_code = dict(zip(municipal_projected["municipality_code"], distances, strict=False))
     result["distance_to_mapped_road_km"] = result["municipality_code"].map(distance_by_code)
 
     result = result.sort_values("municipality_code").reset_index(drop=True)

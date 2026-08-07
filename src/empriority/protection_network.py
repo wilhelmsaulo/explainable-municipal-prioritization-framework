@@ -69,8 +69,10 @@ def build_protection_network_indicators(
     matrix = pd.read_csv(matrix_path, dtype={"municipality_code": str})
     reference = matrix[["municipality_code", "municipality"]].drop_duplicates().copy()
     reference["municipality_key"] = reference["municipality"].map(_norm)
-    key_to_code = dict(zip(reference["municipality_key"], reference["municipality_code"]))
-    key_to_name = dict(zip(reference["municipality_key"], reference["municipality"]))
+    key_to_code = dict(
+        zip(reference["municipality_key"], reference["municipality_code"], strict=False)
+    )
+    key_to_name = dict(zip(reference["municipality_key"], reference["municipality"], strict=False))
 
     source["municipality_raw"] = source["Município"]
     source["municipality_key"] = source["Município"].map(_norm).replace(MUNICIPALITY_ALIASES)
@@ -169,6 +171,7 @@ def build_protection_network_indicators(
         zip(
             matrix[["municipality_code", "population_2023"]].drop_duplicates()["municipality_code"],
             population,
+            strict=False,
         )
     )
     result["_population"] = result["municipality_code"].map(population_map)
