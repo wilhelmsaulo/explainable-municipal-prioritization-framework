@@ -1,0 +1,50 @@
+{
+  "rows": 144,
+  "columns": 12,
+  "selected_variables": [
+    "road_density_km_per_1000_km2",
+    "distance_to_mapped_road_km",
+    "port_presence",
+    "distance_to_port_km",
+    "passenger_crossing_presence",
+    "distance_to_passenger_crossing_km",
+    "navigated_waterway_presence",
+    "distance_to_navigated_waterway_km",
+    "decea_airport_presence",
+    "distance_to_decea_airport_km"
+  ],
+  "excluded_variables": [
+    "road_federal_km",
+    "road_state_km",
+    "road_other_km",
+    "road_paved_km",
+    "road_unpaved_km",
+    "road_total_km",
+    "road_mapped_presence",
+    "road_federal_presence",
+    "road_state_presence",
+    "municipality_area_km2",
+    "port_count",
+    "decea_airport_count",
+    "passenger_crossing_km",
+    "navigated_waterway_km"
+  ],
+  "retained_high_correlation_pairs": [],
+  "checks": {
+    "rows_144": true,
+    "unique_codes_144": true,
+    "selected_variables_10": true,
+    "complete_partition_of_24": true,
+    "no_missing": true,
+    "nonnegative": true,
+    "five_components": true,
+    "availability_and_proximity_per_component": true,
+    "no_high_correlation_pair_retained": true
+  },
+  "limitations": [
+    "Selection is theory- and screening-informed, not an optimization result.",
+    "Facility presence does not represent service frequency, capacity, quality, or affordability.",
+    "Selected indicators retain different official reference years.",
+    "No normalization, weighting, aggregation, or final score is calculated at this stage."
+  ]
+}
