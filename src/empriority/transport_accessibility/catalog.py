@@ -12,9 +12,9 @@ SOURCES: list[dict[str, Any]] = [
         "source_id": "dnit_roads",
         "agency": "DNIT",
         "theme": "roads",
-        "official_page": "https://www.gov.br/dnit/pt-br/dadosabertos",
+        "official_page": "https://www.gov.br/dnit/pt-br/assuntos/atlas-e-mapas/pnv-e-snv",
         "expected_formats": ["shp", "geojson", "csv"],
-        "map_reference_year": 2023,
+        "map_reference_year": 2026,
         "purpose": "Federal road network and road-surface/status classes.",
     },
     {
@@ -23,7 +23,7 @@ SOURCES: list[dict[str, Any]] = [
         "theme": "ports",
         "official_page": "https://www.gov.br/antaq/pt-br/central-de-conteudos/informacoes-geograficas",
         "expected_formats": ["shp", "kml"],
-        "map_reference_year": 2022,
+        "map_reference_year": 2025,
         "purpose": "Port facilities and authorized passenger/ferry crossing lines.",
     },
     {
@@ -39,9 +39,9 @@ SOURCES: list[dict[str, Any]] = [
         "source_id": "anac_public_aerodromes",
         "agency": "ANAC",
         "theme": "airports",
-        "official_page": "https://www.gov.br/anac/pt-br/acesso-a-informacao/dados-abertos/areas-de-atuacao/aerodromos/aerodromos-publicos",
+        "official_page": "https://www.gov.br/anac/pt-br/assuntos/regulados/aeroportos-e-aerodromos/cadastro-publico/cadastro-de-aerodromos-de-uso-publico",
         "expected_formats": ["csv", "json"],
-        "map_reference_year": 2023,
+        "map_reference_year": 2026,
         "purpose": "Public aerodromes and their geographic coordinates.",
     },
     {
