@@ -1,8 +1,11 @@
 Traceback (most recent call last):
   File "<stdin>", line 13, in <module>
-  File "/home/runner/work/explainable-municipal-prioritization-framework/explainable-municipal-prioritization-framework/src/empriority/transport_accessibility/nonroad.py", line 259, in build_nonroad_transport_indicators
-    anac = _load_anac_points(inputs["anac_public"])
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/runner/work/explainable-municipal-prioritization-framework/explainable-municipal-prioritization-framework/src/empriority/transport_accessibility/nonroad.py", line 124, in _load_anac_points
-    raise ValueError(
-ValueError: Unable to parse the ANAC public-aerodrome CSV with the expected coordinate columns. Attempts: utf-8-sig/;: only 1 column | utf-8-sig/;: only 1 column | utf-8-sig/,: only 1 column | utf-8-sig/,: only 1 column | latin1/;: only 1 column | latin1/;: only 1 column | latin1/,: only 1 column | latin1/,: only 1 column
+  File "/home/runner/work/explainable-municipal-prioritization-framework/explainable-municipal-prioritization-framework/src/empriority/transport_accessibility/nonroad.py", line 244, in build_nonroad_transport_indicators
+    municipalities = _municipalities(inputs["municipalities"], cache / "municipalities")
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/explainable-municipal-prioritization-framework/explainable-municipal-prioritization-framework/src/empriority/transport_accessibility/nonroad.py", line 141, in _municipalities
+    shape_path = _extract_shapefile(archive_path, cache)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/explainable-municipal-prioritization-framework/explainable-municipal-prioritization-framework/src/empriority/transport_accessibility/nonroad.py", line 23, in _extract_shapefile
+    raise ValueError(f"Invalid ZIP archive: {archive_path}")
+ValueError: Invalid ZIP archive: data/raw/transport/anac/public_aerodromes_2026.csv
