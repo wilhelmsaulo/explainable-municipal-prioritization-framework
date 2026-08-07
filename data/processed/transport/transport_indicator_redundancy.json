@@ -1,0 +1,171 @@
+{
+  "method": {
+    "association": "Spearman rank correlation",
+    "high_absolute_correlation_threshold": 0.9,
+    "near_constant_binary_prevalence_threshold": 0.05,
+    "note": "Thresholds are screening rules, not automatic exclusion criteria."
+  },
+  "rows": 144,
+  "variables": 24,
+  "directional_variables": [
+    "road_mapped_presence",
+    "road_federal_presence",
+    "road_state_presence",
+    "road_density_km_per_1000_km2",
+    "distance_to_mapped_road_km",
+    "port_count",
+    "port_presence",
+    "distance_to_port_km",
+    "decea_airport_count",
+    "decea_airport_presence",
+    "distance_to_decea_airport_km",
+    "passenger_crossing_presence",
+    "distance_to_passenger_crossing_km",
+    "navigated_waterway_presence",
+    "distance_to_navigated_waterway_km"
+  ],
+  "context_variables": [
+    "road_federal_km",
+    "road_state_km",
+    "road_other_km",
+    "road_paved_km",
+    "road_unpaved_km",
+    "road_total_km",
+    "municipality_area_km2",
+    "passenger_crossing_km",
+    "navigated_waterway_km"
+  ],
+  "near_constant_variables": [],
+  "eligible_after_variance_screen": [
+    "road_mapped_presence",
+    "road_federal_presence",
+    "road_state_presence",
+    "road_density_km_per_1000_km2",
+    "distance_to_mapped_road_km",
+    "port_count",
+    "port_presence",
+    "distance_to_port_km",
+    "decea_airport_count",
+    "decea_airport_presence",
+    "distance_to_decea_airport_km",
+    "passenger_crossing_presence",
+    "distance_to_passenger_crossing_km",
+    "navigated_waterway_presence",
+    "distance_to_navigated_waterway_km"
+  ],
+  "high_correlation_pairs": [
+    {
+      "left": "passenger_crossing_km",
+      "right": "passenger_crossing_presence",
+      "spearman_rho": 0.998268,
+      "absolute_rho": 0.998268,
+      "same_mode": true,
+      "left_direction": "context",
+      "right_direction": "access_positive"
+    },
+    {
+      "left": "road_other_km",
+      "right": "road_total_km",
+      "spearman_rho": 0.98766,
+      "absolute_rho": 0.98766,
+      "same_mode": true,
+      "left_direction": "context",
+      "right_direction": "context"
+    },
+    {
+      "left": "navigated_waterway_km",
+      "right": "navigated_waterway_presence",
+      "spearman_rho": 0.949806,
+      "absolute_rho": 0.949806,
+      "same_mode": true,
+      "left_direction": "context",
+      "right_direction": "access_positive"
+    },
+    {
+      "left": "road_federal_km",
+      "right": "road_federal_presence",
+      "spearman_rho": 0.945549,
+      "absolute_rho": 0.945549,
+      "same_mode": true,
+      "left_direction": "context",
+      "right_direction": "access_positive"
+    },
+    {
+      "left": "port_count",
+      "right": "port_presence",
+      "spearman_rho": 0.941867,
+      "absolute_rho": 0.941867,
+      "same_mode": true,
+      "left_direction": "access_positive",
+      "right_direction": "access_positive"
+    },
+    {
+      "left": "decea_airport_count",
+      "right": "decea_airport_presence",
+      "spearman_rho": 0.93032,
+      "absolute_rho": 0.93032,
+      "same_mode": true,
+      "left_direction": "access_positive",
+      "right_direction": "access_positive"
+    }
+  ],
+  "exact_or_constructed_relationships": [
+    {
+      "variables": [
+        "road_total_km",
+        "road_federal_km",
+        "road_state_km",
+        "road_other_km"
+      ],
+      "relationship": "road_total_km is the arithmetic sum of the three network classes",
+      "recommendation": "Do not use total and all components simultaneously in one additive score."
+    },
+    {
+      "variables": [
+        "port_count",
+        "port_presence"
+      ],
+      "relationship": "presence is deterministically derived from count > 0",
+      "recommendation": "Choose count or presence according to the model interpretation."
+    },
+    {
+      "variables": [
+        "decea_airport_count",
+        "decea_airport_presence"
+      ],
+      "relationship": "presence is deterministically derived from count > 0",
+      "recommendation": "Choose count or presence according to the model interpretation."
+    },
+    {
+      "variables": [
+        "passenger_crossing_km",
+        "passenger_crossing_presence"
+      ],
+      "relationship": "presence is deterministically derived from length > 0",
+      "recommendation": "Choose length or presence according to the model interpretation."
+    },
+    {
+      "variables": [
+        "navigated_waterway_km",
+        "navigated_waterway_presence"
+      ],
+      "relationship": "presence is deterministically derived from length > 0",
+      "recommendation": "Choose length or presence according to the model interpretation."
+    }
+  ],
+  "recommendations": [
+    "Keep context variables outside any direct additive accessibility score.",
+    "Review each high-correlation pair using conceptual relevance before selection.",
+    "Do not combine a derived presence indicator with the count or length that defines it.",
+    "Prefer continuous distance or density information when a binary presence variable is near constant.",
+    "Apply transformations and normalization only after the retained indicator set is documented."
+  ],
+  "checks": {
+    "rows_144": true,
+    "variables_24": true,
+    "no_missing": true,
+    "finite_values": true,
+    "symmetric_correlation": true,
+    "correlation_diagonal_one": true
+  }
+}
