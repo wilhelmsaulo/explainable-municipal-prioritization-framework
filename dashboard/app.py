@@ -468,6 +468,7 @@ except (FileNotFoundError, KeyError, ValueError) as exc:
 
 st.title(tx["title"])
 st.caption(tx["caption"])
+# The two selectors map only to precomputed, audited scenario columns.
 reference_transport, reference_weight = split_scenario(REFERENCE_SCENARIO)
 transport_options = tuple(sorted({split_scenario(name)[0] for name in data.scenario_names}))
 selector_left, selector_right = st.columns(2)
