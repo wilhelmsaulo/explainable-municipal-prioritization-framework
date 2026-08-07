@@ -7,6 +7,7 @@ from empriority.catalog import load_indicator_catalog
 from empriority.config import load_settings
 from empriority.connectors.sidra import SidraQuery
 from empriority.integration import build_integrated_matrix
+from empriority.integrated_priority import build_integrated_priority_profiles
 from empriority.pipeline import (
     build_municipality_reference,
     collect_catalog_indicator,
@@ -236,6 +237,19 @@ def prioritize(
         sensitivity_iterations=iterations,
         seed=seed,
     )
+    for name, path in paths.items():
+        typer.echo(f"OK {name}: {path}")
+
+
+@app.command("run-capacity-framework")
+def run_capacity_framework(
+    config: str = typer.Option(
+        "config/capacity_priority.yml",
+        help="Path to the declarative capacity-priority framework configuration.",
+    ),
+) -> None:
+    """Run the configured hierarchical capacity-priority framework."""
+    paths = build_integrated_priority_profiles(config_path=config)
     for name, path in paths.items():
         typer.echo(f"OK {name}: {path}")
 
