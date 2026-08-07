@@ -1,5 +1,5 @@
 {
-  "generated_at_utc": "2026-08-07T04:30:30.214405+00:00",
+  "generated_at_utc": "2026-08-07T05:08:43.489721+00:00",
   "sources": {
     "dnit_roads": {
       "agency": "DNIT",
@@ -151,6 +151,13 @@
           "message": "Server disconnected without sending a response."
         }
       ]
+    },
+    "decea_airports": {
+      "agency": "DECEA/ICA",
+      "official_page": "https://geoaisweb.decea.gov.br/geoserver/ICA/ows?service=WFS&version=2.0.0&request=GetCapabilities",
+      "discovered": [],
+      "downloads": [],
+      "errors": []
     }
   },
   "policy": {
