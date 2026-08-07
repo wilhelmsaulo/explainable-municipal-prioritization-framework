@@ -5,79 +5,33 @@
   "unique_municipality_codes": 144,
   "state_road_sha256": "364a070e9394a812b8eab3956c6056203decfde66d7771c679854d28d8b4fe05",
   "federal_road_sha256": "f507e9c2bdca50c1ee6814c07cd220c88e686c0aae2b88ca8baef0280d01ba94",
+  "other_road_sha256": "7df6c217fe2ea6bbfd556863fe21a426003042ad774ac7c73bf38e41d58d1585",
   "municipality_boundary_sha256": "0996ffd1b26928dfbd518f67339baa36fd860f50693c1c156f9b4d86fb77c7ad",
   "road_features_national": {
     "state": 32910,
-    "federal": 14255
+    "federal": 14255,
+    "other": 81197
   },
-  "road_features_para_bbox": 3387,
-  "intersection_features": 2549,
-  "total_road_km": 9576.684138999999,
-  "municipalities_with_structured_roads": 116,
+  "road_features_para_bbox": 14115,
+  "intersection_features": 13506,
+  "total_road_km": 70382.387395,
+  "municipalities_with_structured_roads": 136,
   "municipalities_without_structured_roads": [
-    {
-      "municipality_code": "1500131",
-      "municipality": "Abel Figueiredo"
-    },
     {
       "municipality_code": "1500305",
       "municipality": "Afuá"
-    },
-    {
-      "municipality_code": "1500503",
-      "municipality": "Almeirim"
     },
     {
       "municipality_code": "1500701",
       "municipality": "Anajás"
     },
     {
-      "municipality_code": "1501006",
-      "municipality": "Aveiro"
-    },
-    {
-      "municipality_code": "1501253",
-      "municipality": "Bannach"
-    },
-    {
-      "municipality_code": "1501576",
-      "municipality": "Bom Jesus do Tocantins"
-    },
-    {
-      "municipality_code": "1501808",
-      "municipality": "Breves"
-    },
-    {
-      "municipality_code": "1502152",
-      "municipality": "Canaã dos Carajás"
-    },
-    {
       "municipality_code": "1502509",
       "municipality": "Chaves"
     },
     {
-      "municipality_code": "1502772",
-      "municipality": "Curionópolis"
-    },
-    {
-      "municipality_code": "1502806",
-      "municipality": "Curralinho"
-    },
-    {
-      "municipality_code": "1503002",
-      "municipality": "Faro"
-    },
-    {
-      "municipality_code": "1503044",
-      "municipality": "Floresta do Araguaia"
-    },
-    {
       "municipality_code": "1503101",
       "municipality": "Gurupá"
-    },
-    {
-      "municipality_code": "1503903",
-      "municipality": "Juruti"
     },
     {
       "municipality_code": "1504505",
@@ -88,44 +42,12 @@
       "municipality": "Muaná"
     },
     {
-      "municipality_code": "1504950",
-      "municipality": "Nova Esperança do Piriá"
-    },
-    {
-      "municipality_code": "1504976",
-      "municipality": "Nova Ipixuna"
-    },
-    {
-      "municipality_code": "1505494",
-      "municipality": "Palestina do Pará"
-    },
-    {
-      "municipality_code": "1505536",
-      "municipality": "Parauapebas"
-    },
-    {
-      "municipality_code": "1505700",
-      "municipality": "Ponta de Pedras"
-    },
-    {
-      "municipality_code": "1505908",
-      "municipality": "Porto de Moz"
-    },
-    {
-      "municipality_code": "1506187",
-      "municipality": "Rondon do Pará"
-    },
-    {
       "municipality_code": "1506401",
       "municipality": "Santa Cruz do Arari"
     },
     {
       "municipality_code": "1507706",
       "municipality": "São Sebastião da Boa Vista"
-    },
-    {
-      "municipality_code": "1507979",
-      "municipality": "Terra Santa"
     }
   ],
   "checks": {
@@ -136,7 +58,7 @@
     "nonnegative_lengths": true
   },
   "limitations": [
-    "Federal and state structured roads only.",
+    "MapBiomas federal, state, and other road segments.",
     "No claim of complete municipal, local, or rural branch-road coverage.",
     "Lengths result from clipping national road geometry to 2023 IBGE boundaries."
   ]
