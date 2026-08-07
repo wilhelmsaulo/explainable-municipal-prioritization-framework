@@ -139,3 +139,17 @@ input matrix, complete 48-scenario outputs, and reproducibility workflows.
 Generic police-import and TOPSIS components remain available as legacy,
 reusable repository capabilities but are not part of the active article
 application.
+
+## Interactive scientific dashboard
+
+A read-only Streamlit dashboard visualizes the 144 municipalities and all 48
+audited configurations without recalculating scores or permitting arbitrary
+parameter changes. It includes the statewide view, municipal profiles,
+municipality comparison, stability diagnostics, and CSV export.
+
+```bash
+python -m pip install -e ".[dashboard]"
+streamlit run dashboard/app.py
+```
+
+See `dashboard/README.md` for the dashboard-specific data contract.
