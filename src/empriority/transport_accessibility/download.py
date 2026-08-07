@@ -26,6 +26,8 @@ _BLOCKED_HOSTS = {
 }
 _KEYWORDS = {
     "dnit_roads": ("rodov", "shapefile", "shp", "snv", "geo"),
+    "mapbiomas_state_roads": ("rodovia", "estadual", "shp", "zip"),
+    "mapbiomas_federal_roads": ("rodovia", "federal", "shp", "zip"),
     "antaq_ports": ("porto", "instala", "travess", "geograf", "shp", "kml"),
     "antaq_waterways": ("hidrovia", "navega", "via interior", "geograf", "shp"),
     "anac_public_aerodromes": ("aerodromo", "aeródromo", "csv", "json"),
@@ -184,7 +186,10 @@ def discover_and_download_transport_layers(
     ) as client:
         for source in SOURCES:
             source_id = source["source_id"]
-            if source_id == "ibge_municipal_boundaries":
+            if (
+                source_id == "ibge_municipal_boundaries"
+                or not source.get("download_enabled", True)
+            ):
                 continue
             record: dict[str, Any] = {
                 "agency": source["agency"],
@@ -265,12 +270,18 @@ def discover_and_download_transport_layers(
                                         )
                                     handle.write(chunk)
                         _validate_downloaded_file(path)
+                        expected_sha256 = source.get("expected_sha256")
+                        actual_sha256 = _sha256(path)
+                        if expected_sha256 and actual_sha256 != expected_sha256:
+                            raise RuntimeError(
+                                "download SHA-256 differs from the registered manual file"
+                            )
                         entry = {
                             "url": url,
                             "resolved_url": str(response.url),
                             "path": str(path),
                             "bytes": path.stat().st_size,
-                            "sha256": _sha256(path),
+                            "sha256": actual_sha256,
                             "content_type": response.headers.get("content-type"),
                             "zip_inventory": _zip_inventory(path),
                             "attempt": attempt,

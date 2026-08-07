@@ -15,12 +15,39 @@ SOURCES: list[dict[str, Any]] = [
         "official_page": "https://www.gov.br/dnit/pt-br/assuntos/atlas-e-mapas/pnv-e-snv",
         "expected_formats": ["shp", "geojson", "csv"],
         "map_reference_year": 2021,
+        "download_enabled": False,
         "direct_urls": [
             "https://geoservicos.inde.gov.br/geoserver/DNIT/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=DNIT:cide_2021_&outputFormat=SHAPE-ZIP",
             "https://geoservicos.inde.gov.br/geoserver/DNIT/ows?service=WFS&version=2.0.0&request=GetFeature&typeNames=DNIT:cide_2021_&outputFormat=application/json",
             "https://geoservicos.inde.gov.br/geoserver/DNIT/ows?service=WFS&version=2.0.0&request=GetFeature&typeNames=DNIT:cide_2021_&outputFormat=SHAPE-ZIP",
         ],
         "purpose": "Official unified state and federal road-network geometry exposed by DNIT through INDE WFS.",
+    },
+    {
+        "source_id": "mapbiomas_state_roads",
+        "agency": "MapBiomas",
+        "theme": "state_roads",
+        "official_page": "https://brasil.mapbiomas.org/dados-de-infraestrutura/",
+        "expected_formats": ["shp"],
+        "map_reference_year": 2023,
+        "direct_urls": [
+            "https://brasil.mapbiomas.org/wp-content/uploads/sites/4/2023/08/rodovia-estadual.zip"
+        ],
+        "expected_sha256": "364a070e9394a812b8eab3956c6056203decfde66d7771c679854d28d8b4fe05",
+        "purpose": "State-road network compiled by MapBiomas from institutional sources.",
+    },
+    {
+        "source_id": "mapbiomas_federal_roads",
+        "agency": "MapBiomas",
+        "theme": "federal_roads",
+        "official_page": "https://brasil.mapbiomas.org/dados-de-infraestrutura/",
+        "expected_formats": ["shp"],
+        "map_reference_year": 2023,
+        "direct_urls": [
+            "https://brasil.mapbiomas.org/wp-content/uploads/sites/4/2023/08/rodovia-federal.zip"
+        ],
+        "expected_sha256": "f507e9c2bdca50c1ee6814c07cd220c88e686c0aae2b88ca8baef0280d01ba94",
+        "purpose": "Federal-road network compiled by MapBiomas from institutional sources.",
     },
     {
         "source_id": "antaq_ports",
