@@ -1,163 +1,86 @@
 {
-  "generated_at_utc": "2026-08-07T05:08:43.489721+00:00",
+  "generated_at_utc": "2026-08-07T05:09:59.160518+00:00",
   "sources": {
     "dnit_roads": {
       "agency": "DNIT",
       "official_page": "https://www.gov.br/dnit/pt-br/assuntos/atlas-e-mapas/pnv-e-snv",
-      "discovered": [],
-      "downloads": [],
-      "errors": []
-    },
-    "antaq_ports": {
-      "agency": "ANTAQ",
-      "official_page": "https://www.gov.br/antaq/pt-br/central-de-conteudos/informacoes-geograficas",
       "discovered": [
-        "https://www.gov.br/antaq/pt-br/central-de-conteudos/Instalacoes_Portuarias_20212.zip",
-        "https://www.gov.br/antaq/pt-br/central-de-conteudos/Instalaesporturias06052025.zip",
-        "https://www.gov.br/antaq/pt-br/central-de-conteudos/Linhasdetravessias06052025.zip"
-      ],
-      "downloads": [
-        {
-          "url": "https://www.gov.br/antaq/pt-br/central-de-conteudos/Instalacoes_Portuarias_20212.zip",
-          "resolved_url": "https://www.gov.br/antaq/pt-br/central-de-conteudos/Instalacoes_Portuarias_20212.zip",
-          "path": "data/raw/transport/antaq_ports/Instalacoes_Portuarias_20212.zip",
-          "bytes": 3028070,
-          "sha256": "0ac4c2ed8cada9348eb5057a43efe084336c1e66eeaca51bf43ac0d8d8547e2e",
-          "content_type": "application/zip",
-          "zip_inventory": [
-            "Metadados_InstalaçΣes Portuárias.pdf",
-            "SHP-Instalaçoes Portuárias 2021/",
-            "SHP-Instalaçoes Portuárias 2021/Instalacoes portuarias.cpg",
-            "SHP-Instalaçoes Portuárias 2021/Instalacoes portuarias.dbf",
-            "SHP-Instalaçoes Portuárias 2021/Instalacoes portuarias.prj",
-            "SHP-Instalaçoes Portuárias 2021/Instalacoes portuarias.shp",
-            "SHP-Instalaçoes Portuárias 2021/Instalacoes portuarias.shx",
-            "Mapa Instalaçoes Portuarias-2021.pdf"
-          ]
-        },
-        {
-          "url": "https://www.gov.br/antaq/pt-br/central-de-conteudos/Instalaesporturias06052025.zip",
-          "resolved_url": "https://www.gov.br/antaq/pt-br/central-de-conteudos/Instalaesporturias06052025.zip",
-          "path": "data/raw/transport/antaq_ports/Instalaesporturias06052025.zip",
-          "bytes": 518623,
-          "sha256": "79e28332bdd031388a6f2305e4f1e2e741c057a64a63724ea4278f78a040fb63",
-          "content_type": "application/zip",
-          "zip_inventory": [
-            "InstalaçΣes portuárias-06-05-2025/Portos.dbf",
-            "InstalaçΣes portuárias-06-05-2025/Portos.kml",
-            "InstalaçΣes portuárias-06-05-2025/Portos.prj",
-            "InstalaçΣes portuárias-06-05-2025/Portos.qmd",
-            "InstalaçΣes portuárias-06-05-2025/Portos.shp",
-            "InstalaçΣes portuárias-06-05-2025/Portos.shx",
-            "InstalaçΣes portuárias-06-05-2025/Portos.xlsx"
-          ]
-        },
-        {
-          "url": "https://www.gov.br/antaq/pt-br/central-de-conteudos/Linhasdetravessias06052025.zip",
-          "resolved_url": "https://www.gov.br/antaq/pt-br/central-de-conteudos/Linhasdetravessias06052025.zip",
-          "path": "data/raw/transport/antaq_ports/Linhasdetravessias06052025.zip",
-          "bytes": 47307,
-          "sha256": "13a72f45a311168f8d57c50d261a3aa4b39c3188ee069617e572a76cd502d215",
-          "content_type": "application/zip",
-          "zip_inventory": [
-            "Linhas de travessias - 06-05-2025/LinhasTravessia.dbf",
-            "Linhas de travessias - 06-05-2025/LinhasTravessia.kml",
-            "Linhas de travessias - 06-05-2025/LinhasTravessia.prj",
-            "Linhas de travessias - 06-05-2025/LinhasTravessia.qmd",
-            "Linhas de travessias - 06-05-2025/LinhasTravessia.shp",
-            "Linhas de travessias - 06-05-2025/LinhasTravessia.shx",
-            "Linhas de travessias - 06-05-2025/LinhasTravessia.xlsx"
-          ]
-        }
-      ],
-      "errors": []
-    },
-    "antaq_waterways": {
-      "agency": "ANTAQ",
-      "official_page": "https://www.gov.br/antaq/pt-br/central-de-conteudos/informacoes-geograficas",
-      "discovered": [
-        "https://www.gov.br/antaq/pt-br/central-de-conteudos/SHPTKU2023cabotagem.zip",
-        "https://www.gov.br/antaq/pt-br/central-de-conteudos/SHPTKUinterior2023.zip",
-        "https://www.gov.br/antaq/pt-br/central-de-conteudos/SHP_VEN2022completo.zip"
-      ],
-      "downloads": [
-        {
-          "url": "https://www.gov.br/antaq/pt-br/central-de-conteudos/SHPTKU2023cabotagem.zip",
-          "resolved_url": "https://www.gov.br/antaq/pt-br/central-de-conteudos/SHPTKU2023cabotagem.zip",
-          "path": "data/raw/transport/antaq_waterways/SHPTKU2023cabotagem.zip",
-          "bytes": 2415007,
-          "sha256": "95e5e338ec69fcb3bb7cafa18b58bc5638b56fb0f5174ed3c647d989531a2425",
-          "content_type": "application/zip",
-          "zip_inventory": [
-            "SHP-TKU-2023-cabotagem/mapa TKU-cabotagem-2023 v2.png",
-            "SHP-TKU-2023-cabotagem/TKU-2023-cabotagem.cpg",
-            "SHP-TKU-2023-cabotagem/TKU-2023-cabotagem.dbf",
-            "SHP-TKU-2023-cabotagem/TKU-2023-cabotagem.prj",
-            "SHP-TKU-2023-cabotagem/TKU-2023-cabotagem.qmd",
-            "SHP-TKU-2023-cabotagem/TKU-2023-cabotagem.shp",
-            "SHP-TKU-2023-cabotagem/TKU-2023-cabotagem.shx"
-          ]
-        },
-        {
-          "url": "https://www.gov.br/antaq/pt-br/central-de-conteudos/SHPTKUinterior2023.zip",
-          "resolved_url": "https://www.gov.br/antaq/pt-br/central-de-conteudos/SHPTKUinterior2023.zip",
-          "path": "data/raw/transport/antaq_waterways/SHPTKUinterior2023.zip",
-          "bytes": 3243886,
-          "sha256": "af92772b30616367b9e2b5798b9a87d4e81405014bd8cba4ff401f55a6dd65e5",
-          "content_type": "application/zip",
-          "zip_inventory": [
-            "SHP-TKU-interior-2023/Mapa - TKU-interior-2023 v2.png",
-            "SHP-TKU-interior-2023/TKU-interior-2023.cpg",
-            "SHP-TKU-interior-2023/TKU-interior-2023.dbf",
-            "SHP-TKU-interior-2023/TKU-interior-2023.prj",
-            "SHP-TKU-interior-2023/TKU-interior-2023.qmd",
-            "SHP-TKU-interior-2023/TKU-interior-2023.shp",
-            "SHP-TKU-interior-2023/TKU-interior-2023.shx"
-          ]
-        },
-        {
-          "url": "https://www.gov.br/antaq/pt-br/central-de-conteudos/SHP_VEN2022completo.zip",
-          "resolved_url": "https://www.gov.br/antaq/pt-br/central-de-conteudos/SHP_VEN2022completo.zip",
-          "path": "data/raw/transport/antaq_waterways/SHP_VEN2022completo.zip",
-          "bytes": 710326,
-          "sha256": "a324b2af08d9fdea9ee45fcd20116a95851f39223efca97d4fb9b5d9c8738a2b",
-          "content_type": "application/zip",
-          "zip_inventory": [
-            "SHP_VEN-2022-completo/VEN-2022-completo.cpg",
-            "SHP_VEN-2022-completo/VEN-2022-completo.dbf",
-            "SHP_VEN-2022-completo/VEN-2022-completo.kml",
-            "SHP_VEN-2022-completo/VEN-2022-completo.prj",
-            "SHP_VEN-2022-completo/VEN-2022-completo.qmd",
-            "SHP_VEN-2022-completo/VEN-2022-completo.shp",
-            "SHP_VEN-2022-completo/VEN-2022-completo.shx",
-            "SHP_VEN-2022-completo/VEN-2022-completo.xlsx"
-          ]
-        }
-      ],
-      "errors": []
-    },
-    "anac_public_aerodromes": {
-      "agency": "ANAC",
-      "official_page": "https://www.gov.br/anac/pt-br/assuntos/regulados/aeroportos-e-aerodromos/cadastro-publico/cadastro-de-aerodromos-de-uso-publico",
-      "discovered": [
-        "https://www.gov.br/anac/pt-br/assuntos/regulados/aeroportos-e-aerodromos/cadastro-de-aerodromos-privativo/aerodromos-cadastrados/cadastro-de-aerodromos-civis-publicos.csv"
+        "https://geoservicos.inde.gov.br/geoserver/DNIT/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=DNIT:cide_2021_&outputFormat=SHAPE-ZIP"
       ],
       "downloads": [],
       "errors": [
         {
+          "stage": "page",
+          "type": "ConnectError",
+          "message": "[Errno 101] Network is unreachable"
+        },
+        {
           "stage": "download",
-          "url": "https://www.gov.br/anac/pt-br/assuntos/regulados/aeroportos-e-aerodromos/cadastro-de-aerodromos-privativo/aerodromos-cadastrados/cadastro-de-aerodromos-civis-publicos.csv",
-          "type": "RemoteProtocolError",
-          "message": "Server disconnected without sending a response."
+          "url": "https://geoservicos.inde.gov.br/geoserver/DNIT/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=DNIT:cide_2021_&outputFormat=SHAPE-ZIP",
+          "type": "ConnectTimeout",
+          "message": "timed out"
+        }
+      ]
+    },
+    "antaq_ports": {
+      "agency": "ANTAQ",
+      "official_page": "https://www.gov.br/antaq/pt-br/central-de-conteudos/informacoes-geograficas",
+      "discovered": [],
+      "downloads": [],
+      "errors": [
+        {
+          "stage": "page",
+          "type": "ConnectError",
+          "message": "[Errno 101] Network is unreachable"
+        }
+      ]
+    },
+    "antaq_waterways": {
+      "agency": "ANTAQ",
+      "official_page": "https://www.gov.br/antaq/pt-br/central-de-conteudos/informacoes-geograficas",
+      "discovered": [],
+      "downloads": [],
+      "errors": [
+        {
+          "stage": "page",
+          "type": "ConnectError",
+          "message": "[Errno 101] Network is unreachable"
+        }
+      ]
+    },
+    "anac_public_aerodromes": {
+      "agency": "ANAC",
+      "official_page": "https://www.gov.br/anac/pt-br/assuntos/regulados/aeroportos-e-aerodromos/cadastro-publico/cadastro-de-aerodromos-de-uso-publico",
+      "discovered": [],
+      "downloads": [],
+      "errors": [
+        {
+          "stage": "page",
+          "type": "ConnectError",
+          "message": "[Errno 101] Network is unreachable"
         }
       ]
     },
     "decea_airports": {
       "agency": "DECEA/ICA",
       "official_page": "https://geoaisweb.decea.gov.br/geoserver/ICA/ows?service=WFS&version=2.0.0&request=GetCapabilities",
-      "discovered": [],
+      "discovered": [
+        "https://geoaisweb.decea.gov.br/geoserver/ICA/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=ICA:airport&outputFormat=SHAPE-ZIP"
+      ],
       "downloads": [],
-      "errors": []
+      "errors": [
+        {
+          "stage": "page",
+          "type": "RemoteProtocolError",
+          "message": "Server disconnected without sending a response."
+        },
+        {
+          "stage": "download",
+          "url": "https://geoaisweb.decea.gov.br/geoserver/ICA/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=ICA:airport&outputFormat=SHAPE-ZIP",
+          "type": "RemoteProtocolError",
+          "message": "Server disconnected without sending a response."
+        }
+      ]
     }
   },
   "policy": {
