@@ -88,6 +88,26 @@ The reference scenario is an interpretive baseline only. It does not receive
 extra weight in the municipal profiles, and the diagnostic outputs do not
 alter criteria, weights, scores, ranks, or stability classifications.
 
+## Input audit and article matrix
+
+```bash
+empriority audit-capacity-inputs \
+  --config config/capacity_priority.yml
+```
+
+The input audit isolates the seven non-transport indicators and the 12
+transport scenarios actually used by this application. It records missingness,
+ties, ranges, institutional-question coverage, and the explicit exclusion of
+police occurrence and rate columns. The resulting article matrix is a derived
+analytical view; it does not replace or modify the broader integrated municipal
+matrix.
+
+The field currently stored as `population_2023` represents the 2022
+Demographic Census released and processed in 2023. Population supports legacy
+rates and provenance checks but is not a criterion in the capacity-priority
+framework. Police data for 2022--2025 remain preserved in the broad integrated
+matrix but are excluded from this application by its declared research target.
+
 ## Portability
 
 Applying the framework to another territory requires a new versioned YAML
