@@ -1,0 +1,45 @@
+name: audit-capacity-inputs
+
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - "config/capacity_priority.yml"
+      - "src/empriority/capacity_input_audit.py"
+      - "src/empriority/cli.py"
+      - "data/processed/integrated_municipal_matrix.csv"
+      - "data/processed/transport/transport_multimodal_scenarios.csv"
+
+permissions:
+  contents: read
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - name: Install project
+        run: python -m pip install -e .
+      - name: Audit capacity-framework inputs
+        run: >-
+          empriority audit-capacity-inputs
+          --config config/capacity_priority.yml
+      - name: Verify audited inputs are reproducible
+        run: |
+          git diff --exit-code -- \
+            data/processed/capacity_framework_input_matrix.csv \
+            data/processed/capacity_framework_indicator_profile.csv \
+            data/processed/capacity_framework_input_audit.json
+      - name: Upload audited inputs
+        uses: actions/upload-artifact@v4
+        with:
+          name: capacity-framework-input-audit
+          path: |
+            data/processed/capacity_framework_input_matrix.csv
+            data/processed/capacity_framework_indicator_profile.csv
+            data/processed/capacity_framework_input_audit.json
