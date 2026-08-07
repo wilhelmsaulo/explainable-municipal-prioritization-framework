@@ -6,7 +6,9 @@ import pytest
 from dashboard.data import (
     EXPECTED_MUNICIPALITIES,
     EXPECTED_SCENARIOS,
+    MACRO_WEIGHT_ORDER,
     REFERENCE_SCENARIO,
+    compose_scenario,
     load_dashboard_data,
     scenario_label,
     selected_scenario,
@@ -35,6 +37,7 @@ def test_scenario_parser_and_label():
     transport, weight = split_scenario(REFERENCE_SCENARIO)
     assert transport == "equal_modes__equal_roles"
     assert weight == "equal_dimensions"
+    assert compose_scenario(transport, weight) == REFERENCE_SCENARIO
     assert "Equal modes" in scenario_label(REFERENCE_SCENARIO)
     assert "Modos iguais" in scenario_label(REFERENCE_SCENARIO, "pt")
 
@@ -43,3 +46,15 @@ def test_invalid_scenario_is_rejected():
     frame = pd.DataFrame({"municipality_code": ["1"], "municipality": ["A"]})
     with pytest.raises(KeyError):
         selected_scenario(frame, "not_a_scenario")
+
+
+def test_split_selectors_reconstruct_all_published_configurations():
+    data = load_dashboard_data(ROOT)
+    transports = {split_scenario(name)[0] for name in data.scenario_names}
+    reconstructed = {
+        compose_scenario(transport, weight)
+        for transport in transports
+        for weight in MACRO_WEIGHT_ORDER
+    }
+    assert len(transports) == 12
+    assert reconstructed == set(data.scenario_names)
