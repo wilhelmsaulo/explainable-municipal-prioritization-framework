@@ -66,6 +66,7 @@ jobs:
                   "0996ffd1b26928dfbd518f67339baa36fd860f50693c1c156f9b4d86fb77c7ad",
               ),
           }
+          download_errors = []
           for path_text, (url, expected) in inputs.items():
               path = Path(path_text)
               path.parent.mkdir(parents=True, exist_ok=True)
@@ -85,7 +86,16 @@ jobs:
                       if attempt < 3:
                           time.sleep(2 ** attempt)
               if last_error is not None:
-                  raise last_error
+                  download_errors.append(
+                      f"{path_text}: {type(last_error).__name__}: {last_error}"
+                  )
+          if download_errors:
+              diagnostic = Path(
+                  "data/processed/transport/nonroad_inputs_error.txt"
+              )
+              diagnostic.parent.mkdir(parents=True, exist_ok=True)
+              diagnostic.write_text("\n".join(download_errors), encoding="utf-8")
+              print(diagnostic.read_text(encoding="utf-8"))
           PY
       - name: Build and audit municipal non-road indicators
         run: |
@@ -129,6 +139,7 @@ jobs:
             data/processed/transport/nonroad_indicators_pa.csv
             data/processed/transport/nonroad_indicators_pa_audit.json
             data/processed/transport/nonroad_indicators_pa_error.txt
+            data/processed/transport/nonroad_inputs_error.txt
           if-no-files-found: warn
           retention-days: 30
       - name: Commit audited outputs
