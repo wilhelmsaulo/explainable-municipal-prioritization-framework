@@ -7,51 +7,39 @@ from typing import Any
 
 import numpy as np
 import pandas as pd
+import yaml
 
 
-SERVICE_INDICATORS: dict[str, list[tuple[str, str]]] = {
-    "health": [
-        ("cnes_health_service_deficit", "benefit"),
-        ("cnes_multidisciplinary_staff_deficit", "benefit"),
-    ],
-    "social_protection": [
-        ("social_specialized_service_deficit", "benefit"),
-    ],
-    "justice": [
-        ("justice_tjpa_access_deficit", "benefit"),
-    ],
-    "specialized_protection_network": [
-        ("protection_network_validated_category_diversity", "cost"),
-        ("protection_network_specialized_non_health_services", "cost"),
-    ],
-}
+def _load_framework_config(path: str | Path) -> dict[str, Any]:
+    config_path = Path(path)
+    document = yaml.safe_load(config_path.read_text(encoding="utf-8"))
+    if not isinstance(document, dict):
+        raise ValueError("Framework configuration must be a YAML mapping")
+    required = {
+        "schema_version",
+        "method_version",
+        "study_scope",
+        "inputs",
+        "outputs",
+        "dimensions",
+        "macro_weight_scenarios",
+        "robustness",
+    }
+    missing = sorted(required - set(document))
+    if missing:
+        raise ValueError(f"Framework configuration is missing: {', '.join(missing)}")
+    return document
 
-INSTITUTIONAL_INDICATORS: list[tuple[str, str]] = [
-    ("institutional_deficit_available_4", "benefit"),
-]
 
-MACRO_WEIGHTS: dict[str, dict[str, float]] = {
-    "equal_dimensions": {
-        "institutional_deficit": 1 / 3,
-        "service_network_deficit": 1 / 3,
-        "transport_barrier": 1 / 3,
-    },
-    "institutional_emphasis": {
-        "institutional_deficit": 0.50,
-        "service_network_deficit": 0.25,
-        "transport_barrier": 0.25,
-    },
-    "service_network_emphasis": {
-        "institutional_deficit": 0.25,
-        "service_network_deficit": 0.50,
-        "transport_barrier": 0.25,
-    },
-    "transport_emphasis": {
-        "institutional_deficit": 0.25,
-        "service_network_deficit": 0.25,
-        "transport_barrier": 0.50,
-    },
-}
+def _indicator_definitions(items: list[dict[str, str]]) -> list[tuple[str, str]]:
+    definitions: list[tuple[str, str]] = []
+    for item in items:
+        column = item.get("column")
+        direction = item.get("direction")
+        if not column or direction not in {"benefit", "cost"}:
+            raise ValueError(f"Invalid indicator definition: {item}")
+        definitions.append((column, direction))
+    return definitions
 
 
 def _percentile(values: pd.Series, direction: str) -> pd.Series:
@@ -79,13 +67,41 @@ def _component(
 
 
 def build_integrated_priority_profiles(
-    municipal_csv: str | Path,
-    transport_scenarios_csv: str | Path,
-    output_csv: str | Path = "data/results/integrated_capacity_priority_profiles.csv",
-    scenarios_csv: str | Path = "data/results/integrated_capacity_priority_scenarios.csv",
-    method_json: str | Path = "data/results/integrated_capacity_priority_method.json",
-    audit_json: str | Path = "data/results/integrated_capacity_priority_audit.json",
+    municipal_csv: str | Path | None = None,
+    transport_scenarios_csv: str | Path | None = None,
+    output_csv: str | Path | None = None,
+    scenarios_csv: str | Path | None = None,
+    method_json: str | Path | None = None,
+    audit_json: str | Path | None = None,
+    config_path: str | Path = "config/capacity_priority.yml",
 ) -> dict[str, Path]:
+    config = _load_framework_config(config_path)
+    inputs = config["inputs"]
+    outputs = config["outputs"]
+    municipal_csv = municipal_csv or inputs["municipal_matrix"]
+    transport_scenarios_csv = (
+        transport_scenarios_csv or inputs["transport_scenarios"]
+    )
+    output_csv = output_csv or outputs["profiles"]
+    scenarios_csv = scenarios_csv or outputs["scenarios"]
+    method_json = method_json or outputs["method"]
+    audit_json = audit_json or outputs["audit"]
+    institutional_indicators = _indicator_definitions(
+        config["dimensions"]["institutional_deficit"]["indicators"]
+    )
+    service_indicators = {
+        name: _indicator_definitions(component["indicators"])
+        for name, component in config["dimensions"]["service_network"][
+            "components"
+        ].items()
+    }
+    macro_weights = config["macro_weight_scenarios"]
+    expected_municipalities = int(config["study_scope"]["expected_municipalities"])
+    expected_transport_scenarios = int(
+        config["study_scope"]["expected_transport_scenarios"]
+    )
+    top_k = int(config["robustness"]["top_k"])
+
     municipal = pd.read_csv(municipal_csv, dtype={"municipality_code": str})
     transport = pd.read_csv(
         transport_scenarios_csv, dtype={"municipality_code": str}
@@ -105,9 +121,12 @@ def build_integrated_priority_profiles(
         suffixes=("", "_transport"),
         validate="one_to_one",
     )
+
     def canonical_name(value: str) -> str:
         decomposed = unicodedata.normalize("NFKD", str(value))
-        return "".join(character for character in decomposed if character.isalnum()).casefold()
+        return "".join(
+            character for character in decomposed if character.isalnum()
+        ).casefold()
 
     names_agree = merged.apply(
         lambda row: canonical_name(row["municipality"])
@@ -116,13 +135,12 @@ def build_integrated_priority_profiles(
     )
     if not names_agree.all():
         raise ValueError("Municipality names disagree after code-based integration")
-
     dimensions = merged[["municipality_code", "municipality"]].copy()
     dimensions["institutional_deficit"] = _component(
-        merged, INSTITUTIONAL_INDICATORS
+        merged, institutional_indicators
     )
     service_components: dict[str, pd.Series] = {}
-    for name, definitions in SERVICE_INDICATORS.items():
+    for name, definitions in service_indicators.items():
         service_components[name] = _component(merged, definitions)
         dimensions[f"service_component_{name}_deficit"] = service_components[name]
     dimensions["service_network_deficit"] = pd.concat(
@@ -136,7 +154,7 @@ def build_integrated_priority_profiles(
     for transport_column in transport_score_columns:
         transport_name = transport_column.removesuffix("__score")
         transport_barrier = 1 - merged[transport_column]
-        for weight_name, weights in MACRO_WEIGHTS.items():
+        for weight_name, weights in macro_weights.items():
             scenario = f"{transport_name}___{weight_name}"
             score_column = f"{scenario}__score"
             rank_column = f"{scenario}__rank"
@@ -158,7 +176,10 @@ def build_integrated_priority_profiles(
             }
 
     n = len(scenario_output)
-    top_quartile_cutoff = int(np.ceil(n * 0.25))
+    quartile_fraction = float(config["robustness"]["quartile_fraction"])
+    robust_frequency = float(config["robustness"]["robust_frequency"])
+    sensitive_frequency = float(config["robustness"]["sensitive_frequency"])
+    top_quartile_cutoff = int(np.ceil(n * quartile_fraction))
     bottom_quartile_start = n - top_quartile_cutoff + 1
     scenario_output["mean_priority_score"] = scenario_output[score_columns].mean(axis=1)
     scenario_output["mean_priority_rank"] = scenario_output[rank_columns].mean(axis=1)
@@ -169,7 +190,7 @@ def build_integrated_priority_profiles(
         - scenario_output["best_priority_rank"]
     )
     scenario_output["top_10_frequency"] = (
-        scenario_output[rank_columns].le(10).mean(axis=1)
+        scenario_output[rank_columns].le(top_k).mean(axis=1)
     )
     scenario_output["top_quartile_frequency"] = (
         scenario_output[rank_columns].le(top_quartile_cutoff).mean(axis=1)
@@ -179,11 +200,11 @@ def build_integrated_priority_profiles(
     )
 
     def stability_label(row: pd.Series) -> str:
-        if row["top_quartile_frequency"] >= 0.75:
+        if row["top_quartile_frequency"] >= robust_frequency:
             return "robust_higher_capacity_strengthening_priority"
-        if row["top_quartile_frequency"] >= 0.25:
+        if row["top_quartile_frequency"] >= sensitive_frequency:
             return "scenario_sensitive_higher_priority"
-        if row["bottom_quartile_frequency"] >= 0.75:
+        if row["bottom_quartile_frequency"] >= robust_frequency:
             return "robust_lower_relative_priority"
         return "intermediate_or_scenario_sensitive"
 
@@ -212,15 +233,20 @@ def build_integrated_priority_profiles(
     numeric_profiles = profiles.select_dtypes(include="number")
     numeric_scenarios = scenario_output.select_dtypes(include="number")
     checks = {
-        "municipal_rows_144": len(municipal) == 144,
-        "transport_rows_144": len(transport) == 144,
-        "integrated_rows_144": len(merged) == 144,
-        "unique_municipality_codes_144": merged["municipality_code"].nunique() == 144,
-        "transport_scenarios_12": len(transport_score_columns) == 12,
-        "macro_weight_scenarios_4": len(MACRO_WEIGHTS) == 4,
-        "integrated_scenarios_48": len(score_columns) == 48,
+        "municipal_rows_expected": len(municipal) == expected_municipalities,
+        "transport_rows_expected": len(transport) == expected_municipalities,
+        "integrated_rows_expected": len(merged) == expected_municipalities,
+        "unique_municipality_codes_expected": (
+            merged["municipality_code"].nunique() == expected_municipalities
+        ),
+        "transport_scenarios_expected": (
+            len(transport_score_columns) == expected_transport_scenarios
+        ),
+        "integrated_scenarios_expected": (
+            len(score_columns) == expected_transport_scenarios * len(macro_weights)
+        ),
         "macro_weights_sum_one": all(
-            np.isclose(sum(weights.values()), 1) for weights in MACRO_WEIGHTS.values()
+            np.isclose(sum(weights.values()), 1) for weights in macro_weights.values()
         ),
         "no_missing_outputs": bool(
             numeric_profiles.notna().all().all()
@@ -249,21 +275,19 @@ def build_integrated_priority_profiles(
     profiles.to_csv(paths["profiles"], index=False, encoding="utf-8")
     scenario_output.to_csv(paths["scenarios"], index=False, encoding="utf-8")
     method = {
-        "schema_version": "1.0",
-        "research_target": "relative priority for strengthening municipal service capacity under multimodal access constraints",
-        "excluded_outcomes": [
-            "police occurrence counts",
-            "police occurrence rates",
-            "inferred or estimated hidden violence incidence",
-        ],
+        "schema_version": config["schema_version"],
+        "method_version": config["method_version"],
+        "configuration": str(config_path),
+        "research_target": config["research_target"],
+        "excluded_outcomes": config["exclusions"]["outcomes"],
         "normalization": {
             "method": "within-sample percentile rank scaled to [0,1]",
             "ties": "average rank",
             "interpretation": "higher values always mean greater strengthening priority",
         },
         "hierarchy": {
-            "institutional_deficit": INSTITUTIONAL_INDICATORS,
-            "service_components": SERVICE_INDICATORS,
+            "institutional_deficit": institutional_indicators,
+            "service_components": service_indicators,
             "service_network_aggregation": "equal mean across health, social protection, justice, and specialized protection network components",
             "macro_dimensions": [
                 "institutional_deficit",
@@ -271,20 +295,16 @@ def build_integrated_priority_profiles(
                 "transport_barrier",
             ],
         },
-        "macro_weight_scenarios": MACRO_WEIGHTS,
+        "macro_weight_scenarios": macro_weights,
         "transport_scenarios": transport_score_columns,
         "integrated_scenario_count": len(scenario_metadata),
         "classification": {
             "top_quartile_cutoff": top_quartile_cutoff,
-            "robust_threshold": "municipality remains in the relevant quartile in at least 75% of scenarios",
-            "scenario_sensitive_higher_threshold": "municipality is in the top quartile in 25% to less than 75% of scenarios",
+            "quartile_fraction": quartile_fraction,
+            "robust_frequency": robust_frequency,
+            "scenario_sensitive_frequency": sensitive_frequency,
         },
-        "warnings": [
-            "The scores are relative decision-support constructs, not ground truth.",
-            "The model prioritizes capacity strengthening and does not estimate violence incidence or underreporting.",
-            "Facility presence and mapped proximity do not measure service quality, capacity, frequency, affordability, travel time, or seasonality.",
-            "Profile labels are exploratory robustness summaries and not automatic funding decisions.",
-        ],
+        "warnings": config.get("warnings", []),
     }
     paths["method"].write_text(
         json.dumps(
@@ -300,7 +320,7 @@ def build_integrated_priority_profiles(
     audit = {
         "checks": checks,
         "profile_counts": profiles["priority_stability_profile"].value_counts().to_dict(),
-        "top_10_by_mean_rank": profiles[
+        "top_by_mean_rank": profiles[
             [
                 "municipality_code",
                 "municipality",
@@ -310,7 +330,7 @@ def build_integrated_priority_profiles(
                 "top_10_frequency",
                 "priority_stability_profile",
             ]
-        ].head(10).to_dict("records"),
+        ].head(top_k).to_dict("records"),
     }
     paths["audit"].write_text(
         json.dumps(
