@@ -77,6 +77,14 @@ TRANSPORT_LABELS = {"en": TRANSPORT_LABELS_EN, "pt": TRANSPORT_LABELS_PT}
 WEIGHT_LABELS = {"en": WEIGHT_LABELS_EN, "pt": WEIGHT_LABELS_PT}
 PROFILE_LABELS = {"en": PROFILE_LABELS_EN, "pt": PROFILE_LABELS_PT}
 
+MACRO_WEIGHTS = {
+    "equal_dimensions": (1 / 3, 1 / 3, 1 / 3),
+    "institutional_emphasis": (0.50, 0.25, 0.25),
+    "service_network_emphasis": (0.25, 0.50, 0.25),
+    "transport_emphasis": (0.25, 0.25, 0.50),
+}
+MACRO_WEIGHT_ORDER = tuple(MACRO_WEIGHTS)
+
 
 @dataclass(frozen=True)
 class DashboardData:
@@ -110,6 +118,20 @@ def scenario_label(name: str, language: str = "en") -> str:
     transport_labels = TRANSPORT_LABELS.get(language, TRANSPORT_LABELS_EN)
     weight_labels = WEIGHT_LABELS.get(language, WEIGHT_LABELS_EN)
     return f"{transport_labels.get(transport, transport)} | {weight_labels.get(weight, weight)}"
+
+
+def transport_label(name: str, language: str = "en") -> str:
+    labels = TRANSPORT_LABELS.get(language, TRANSPORT_LABELS_EN)
+    return labels.get(name, name)
+
+
+def weight_label(name: str, language: str = "en") -> str:
+    labels = WEIGHT_LABELS.get(language, WEIGHT_LABELS_EN)
+    return labels.get(name, name)
+
+
+def compose_scenario(transport: str, weight: str) -> str:
+    return f"{transport}___{weight}"
 
 
 def selected_scenario(frame: pd.DataFrame, name: str) -> pd.DataFrame:
