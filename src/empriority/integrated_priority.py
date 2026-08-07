@@ -288,7 +288,10 @@ def build_integrated_priority_profiles(
         "hierarchy": {
             "institutional_deficit": institutional_indicators,
             "service_components": service_indicators,
-            "service_network_aggregation": "equal mean across health, social protection, justice, and specialized protection network components",
+            "service_network_aggregation": (
+                "equal mean across health, social protection, justice, and "
+                "specialized protection network components"
+            ),
             "macro_dimensions": [
                 "institutional_deficit",
                 "service_network_deficit",
