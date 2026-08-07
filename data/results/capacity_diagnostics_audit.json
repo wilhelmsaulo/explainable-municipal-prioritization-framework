@@ -1,0 +1,32 @@
+{
+  "schema_version": "1.0",
+  "method_version": "1.0.0",
+  "configuration": "config/capacity_priority.yml",
+  "diagnostic_scope": {
+    "municipalities": 144,
+    "transport_scenarios": 12,
+    "macro_weight_scenarios": 4,
+    "integrated_scenarios": 48,
+    "reference_scenario": "equal_modes__equal_roles___equal_dimensions"
+  },
+  "checks": {
+    "municipalities_expected": true,
+    "transport_scenarios_expected": true,
+    "integrated_scenarios_expected": true,
+    "explanations_cover_all_municipalities": true,
+    "unique_explanation_municipalities": true,
+    "published_scores_reconstructed": true,
+    "all_diagnostics_complete": true,
+    "all_diagnostics_finite": true,
+    "reference_scenario_included": true
+  },
+  "maximum_score_reconstruction_error": 1.1102230246251565e-16,
+  "scenario_agreement_summary": {
+    "minimum_rank_correlation": 0.8660678402057714,
+    "median_rank_correlation": 0.9661810840923466,
+    "maximum_rank_correlation": 1.0,
+    "minimum_top_k_overlap_fraction": 0.6,
+    "maximum_top_k_overlap_fraction": 1.0
+  },
+  "interpretation": "Diagnostics describe agreement and contribution patterns in the already published scenarios; they do not alter criteria, weights, scores, or ranks."
+}
