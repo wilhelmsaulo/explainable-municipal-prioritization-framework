@@ -5,6 +5,7 @@ on:
     paths:
       - ".github/workflows/build-integrated-capacity-priority.yml"
       - "src/empriority/integrated_priority.py"
+      - "config/capacity_priority.yml"
       - "data/processed/integrated_municipal_matrix.csv"
       - "data/processed/transport/transport_multimodal_scenarios.csv"
   pull_request:
@@ -13,6 +14,7 @@ on:
     paths:
       - ".github/workflows/build-integrated-capacity-priority.yml"
       - "src/empriority/integrated_priority.py"
+      - "config/capacity_priority.yml"
       - "data/processed/integrated_municipal_matrix.csv"
       - "data/processed/transport/transport_multimodal_scenarios.csv"
   workflow_dispatch:
@@ -43,14 +45,50 @@ jobs:
       - name: Calculate and audit integrated priority profiles
         run: |
           python - <<'PY'
+          from pathlib import Path
+
+          import numpy as np
+          import pandas as pd
+
           from empriority.integrated_priority import (
               build_integrated_priority_profiles,
           )
 
-          outputs = build_integrated_priority_profiles(
-              "data/processed/integrated_municipal_matrix.csv",
-              "data/processed/transport/transport_multimodal_scenarios.csv",
+          profile_path = Path(
+              "data/results/integrated_capacity_priority_profiles.csv"
           )
+          reference = pd.read_csv(profile_path) if profile_path.exists() else None
+          outputs = build_integrated_priority_profiles(
+              config_path="config/capacity_priority.yml"
+          )
+          if reference is not None:
+              observed = pd.read_csv(profile_path)
+              identity = ["municipality_code", "municipality"]
+              numeric = [
+                  "institutional_deficit",
+                  "service_network_deficit",
+                  "mean_priority_score",
+                  "mean_priority_rank",
+                  "best_priority_rank",
+                  "worst_priority_rank",
+                  "priority_rank_range",
+                  "top_10_frequency",
+                  "top_quartile_frequency",
+                  "bottom_quartile_frequency",
+              ]
+              reference = reference.sort_values("municipality_code").reset_index(drop=True)
+              observed = observed.sort_values("municipality_code").reset_index(drop=True)
+              if not reference[identity].equals(observed[identity]):
+                  raise SystemExit("Configuration migration changed municipality identity")
+              if not np.allclose(
+                  reference[numeric], observed[numeric], rtol=0, atol=1e-12
+              ):
+                  raise SystemExit("Configuration migration changed published scores")
+              if not reference["priority_stability_profile"].equals(
+                  observed["priority_stability_profile"]
+              ):
+                  raise SystemExit("Configuration migration changed profile labels")
+              print("Regression equivalence: PASS")
           print(outputs)
           PY
       - name: Upload integrated outputs
