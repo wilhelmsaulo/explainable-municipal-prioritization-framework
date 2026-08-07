@@ -50,6 +50,18 @@ SOURCES: list[dict[str, Any]] = [
         "purpose": "Federal-road network compiled by MapBiomas from institutional sources.",
     },
     {
+        "source_id": "mapbiomas_other_roads",
+        "agency": "MapBiomas",
+        "theme": "other_road_segments",
+        "official_page": "https://brasil.mapbiomas.org/dados-de-infraestrutura/",
+        "expected_formats": ["shp"],
+        "map_reference_year": 2023,
+        "direct_urls": [
+            "https://brasil.mapbiomas.org/wp-content/uploads/sites/4/2023/08/outros-trechos.zip"
+        ],
+        "purpose": "Other road segments compiled by MapBiomas from institutional sources.",
+    },
+    {
         "source_id": "antaq_ports",
         "agency": "ANTAQ",
         "theme": "ports",

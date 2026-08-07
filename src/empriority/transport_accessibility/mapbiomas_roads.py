@@ -40,6 +40,7 @@ def _column(frame: Any, *candidates: str) -> str:
 def build_mapbiomas_road_indicators(
     state_roads_zip: str | Path,
     federal_roads_zip: str | Path,
+    other_roads_zip: str | Path,
     municipalities_zip: str | Path,
     output_csv: str | Path = "data/processed/transport/road_indicators_pa_2023.csv",
     audit_json: str | Path = "data/processed/transport/road_indicators_pa_2023_audit.json",
@@ -50,15 +51,18 @@ def build_mapbiomas_road_indicators(
 
     state_archive = Path(state_roads_zip)
     federal_archive = Path(federal_roads_zip)
+    other_archive = Path(other_roads_zip)
     municipal_archive = Path(municipalities_zip)
     cache = Path(work_dir)
 
     state_path = _extract_shapefile(state_archive, cache / "state")
     federal_path = _extract_shapefile(federal_archive, cache / "federal")
+    other_path = _extract_shapefile(other_archive, cache / "other")
     municipal_path = _extract_shapefile(municipal_archive, cache / "municipalities")
 
     state = gpd.read_file(state_path)
     federal = gpd.read_file(federal_path)
+    other = gpd.read_file(other_path)
     municipalities = gpd.read_file(municipal_path)
 
     code_col = _column(municipalities, "CD_MUN", "CD_GEOCMU", "municipality_code")
@@ -83,7 +87,11 @@ def build_mapbiomas_road_indicators(
         raise ValueError("Municipality boundary CRS is missing")
 
     road_frames = []
-    for network_class, frame in (("state", state), ("federal", federal)):
+    for network_class, frame in (
+        ("state", state),
+        ("federal", federal),
+        ("other", other),
+    ):
         if frame.crs is None:
             raise ValueError(f"{network_class} road CRS is missing")
         local = frame.to_crs(target_crs).copy()
@@ -141,17 +149,23 @@ def build_mapbiomas_road_indicators(
 
     add_length("road_federal_km", grouped["network_class"].eq("federal"))
     add_length("road_state_km", grouped["network_class"].eq("state"))
+    add_length("road_other_km", grouped["network_class"].eq("other"))
     add_length("road_paved_km", grouped["surface_class"].eq("paved"))
     add_length("road_unpaved_km", grouped["surface_class"].eq("unpaved"))
 
     length_columns = [
         "road_federal_km",
         "road_state_km",
+        "road_other_km",
         "road_paved_km",
         "road_unpaved_km",
     ]
     result[length_columns] = result[length_columns].fillna(0.0)
-    result["road_total_km"] = result["road_federal_km"] + result["road_state_km"]
+    result["road_total_km"] = (
+        result["road_federal_km"]
+        + result["road_state_km"]
+        + result["road_other_km"]
+    )
     result["road_structured_presence"] = result["road_total_km"].gt(0).astype(int)
     result["road_federal_presence"] = result["road_federal_km"].gt(0).astype(int)
     result["road_state_presence"] = result["road_state_km"].gt(0).astype(int)
@@ -191,10 +205,12 @@ def build_mapbiomas_road_indicators(
         "unique_municipality_codes": int(result["municipality_code"].nunique()),
         "state_road_sha256": _sha256(state_archive),
         "federal_road_sha256": _sha256(federal_archive),
+        "other_road_sha256": _sha256(other_archive),
         "municipality_boundary_sha256": _sha256(municipal_archive),
         "road_features_national": {
             "state": int(len(state)),
             "federal": int(len(federal)),
+            "other": int(len(other)),
         },
         "road_features_para_bbox": int(len(roads)),
         "intersection_features": int(len(intersections)),
@@ -213,7 +229,7 @@ def build_mapbiomas_road_indicators(
             "nonnegative_lengths": bool(result[length_columns].ge(0).all().all()),
         },
         "limitations": [
-            "Federal and state structured roads only.",
+            "MapBiomas federal, state, and other road segments.",
             "No claim of complete municipal, local, or rural branch-road coverage.",
             "Lengths result from clipping national road geometry to 2023 IBGE boundaries.",
         ],
