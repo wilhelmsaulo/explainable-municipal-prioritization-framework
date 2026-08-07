@@ -90,19 +90,31 @@ jobs:
       - name: Build and audit municipal non-road indicators
         run: |
           python - <<'PY'
-          from empriority.transport_accessibility.nonroad import (
-              build_nonroad_transport_indicators,
-          )
+          import traceback
+          from pathlib import Path
 
-          outputs = build_nonroad_transport_indicators(
-              "data/raw/transport/antaq/ports_2025.zip",
-              "data/raw/transport/antaq/crossings_2025.zip",
-              "data/raw/transport/antaq/waterways_2022.zip",
-              "data/raw/transport/decea/airports_2026.zip",
-              "data/raw/transport/anac/public_aerodromes_2026.csv",
-              "data/raw/transport/ibge/PA_Municipios_2023.zip",
+          error_path = Path(
+              "data/processed/transport/nonroad_indicators_pa_error.txt"
           )
-          print(outputs)
+          error_path.unlink(missing_ok=True)
+          try:
+              from empriority.transport_accessibility.nonroad import (
+                  build_nonroad_transport_indicators,
+              )
+
+              outputs = build_nonroad_transport_indicators(
+                  "data/raw/transport/antaq/ports_2025.zip",
+                  "data/raw/transport/antaq/crossings_2025.zip",
+                  "data/raw/transport/antaq/waterways_2022.zip",
+                  "data/raw/transport/decea/airports_2026.zip",
+                  "data/raw/transport/anac/public_aerodromes_2026.csv",
+                  "data/raw/transport/ibge/PA_Municipios_2023.zip",
+              )
+              print(outputs)
+          except Exception:
+              error_path.parent.mkdir(parents=True, exist_ok=True)
+              error_path.write_text(traceback.format_exc(), encoding="utf-8")
+              print(error_path.read_text(encoding="utf-8"))
           PY
       - name: Upload raw inputs and audited outputs
         if: always()
@@ -116,6 +128,7 @@ jobs:
             data/raw/transport/ibge
             data/processed/transport/nonroad_indicators_pa.csv
             data/processed/transport/nonroad_indicators_pa_audit.json
+            data/processed/transport/nonroad_indicators_pa_error.txt
           if-no-files-found: warn
           retention-days: 30
       - name: Commit audited outputs
