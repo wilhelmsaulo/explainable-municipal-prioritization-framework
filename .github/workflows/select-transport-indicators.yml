@@ -1,0 +1,79 @@
+name: select-transport-indicators
+
+on:
+  push:
+    paths:
+      - ".github/workflows/select-transport-indicators.yml"
+      - "src/empriority/transport_accessibility/select.py"
+      - "src/empriority/transport_accessibility/integrate.py"
+      - "data/processed/transport/transport_indicators_pa_integrated.csv"
+      - "data/processed/transport/transport_indicator_redundancy.json"
+  pull_request:
+    branches:
+      - main
+    paths:
+      - ".github/workflows/select-transport-indicators.yml"
+      - "src/empriority/transport_accessibility/select.py"
+      - "src/empriority/transport_accessibility/integrate.py"
+      - "data/processed/transport/transport_indicators_pa_integrated.csv"
+      - "data/processed/transport/transport_indicator_redundancy.json"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: select-transport-indicators-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  select:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+      - name: Install project
+        run: |
+          python -m pip install --upgrade pip
+          pip install -e .
+      - name: Build and audit selected indicator matrix
+        run: |
+          python - <<'PY'
+          from empriority.transport_accessibility.select import (
+              select_transport_indicators,
+          )
+
+          outputs = select_transport_indicators(
+              "data/processed/transport/transport_indicators_pa_integrated.csv",
+              "data/processed/transport/transport_indicator_redundancy.json",
+          )
+          print(outputs)
+          PY
+      - name: Upload selected indicators
+        uses: actions/upload-artifact@v4
+        with:
+          name: selected-transport-indicators-pa
+          path: |
+            data/processed/transport/transport_indicators_pa_selected.csv
+            data/processed/transport/transport_indicator_selection.json
+            data/processed/transport/transport_indicator_selection_audit.json
+          if-no-files-found: error
+          retention-days: 30
+      - name: Commit selected indicators
+        if: github.event_name != 'pull_request'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -f \
+            data/processed/transport/transport_indicators_pa_selected.csv \
+            data/processed/transport/transport_indicator_selection.json \
+            data/processed/transport/transport_indicator_selection_audit.json
+          git diff --cached --quiet || git commit -m "Store selected transport indicators"
+          git pull --rebase origin "${GITHUB_REF_NAME}"
+          git push origin "HEAD:${GITHUB_REF_NAME}"
