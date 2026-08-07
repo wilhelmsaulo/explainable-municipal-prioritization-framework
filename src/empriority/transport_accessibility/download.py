@@ -3,6 +3,7 @@ from __future__ import annotations
 import hashlib
 import json
 import re
+import time
 import zipfile
 from datetime import datetime, timezone
 from pathlib import Path
@@ -45,6 +46,26 @@ def _score(source_id: str, url: str) -> int:
     return score
 
 
+def _get_page_with_retry(
+    client: httpx.Client,
+    url: str,
+    attempts: int = 5,
+) -> httpx.Response:
+    last_error: Exception | null = None
+    for attempt in range(1, attempts + 1):
+        try:
+            response = client.get(url)
+            response.raise_for_status()
+            return response
+        except Exception as exc:
+            last_error = exc
+            if attempt == attempts:
+                break
+            time.sleep(min(2 ** (attempt - 1), 16))
+    assert last_error is not None
+    raise last_error
+
+
 def _sha256(path: Path) -> str:
     digest = hashlib.sha256()
     with path.open("rb") as handle:
@@ -83,7 +104,13 @@ def discover_and_download_transport_layers(
     }
 
     headers = {"User-Agent": "empriority-research/0.1 (public-data reproducibility)"}
-    with httpx.Client(timeout=90.0, follow_redirects=True, headers=headers) as client:
+    transport = httpx.HTTPTransport(retries=5)
+    with httpx.Client(
+        timeout=90.0,
+        follow_redirects=True,
+        headers=headers,
+        transport=transport,
+    ) as client:
         for source in SOURCES:
             source_id = source["source_id"]
             if source_id == "ibge_municipal_boundaries":
@@ -97,8 +124,7 @@ def discover_and_download_transport_layers(
             }
             manifest["sources"][source_id] = record
             try:
-                page = client.get(source["official_page"])
-                page.raise_for_status()
+                page = _get_page_with_retry(client, source["official_page"])
                 links = _extract_links(page.text, str(page.url))
             except Exception as exc:
                 record["errors"].append({"stage": "page", "type": type(exc).__name__, "message": str(exc)})
