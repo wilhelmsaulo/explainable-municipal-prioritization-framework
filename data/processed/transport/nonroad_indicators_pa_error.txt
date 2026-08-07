@@ -1,36 +1,8 @@
 Traceback (most recent call last):
-  File "/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/pandas/io/parsers/python_parser.py", line 805, in _next_iter_line
-    line = next(self.data)
-           ^^^^^^^^^^^^^^^
-_csv.Error: ' ' expected after '"'
-
-During handling of the above exception, another exception occurred:
-
-Traceback (most recent call last):
   File "<stdin>", line 13, in <module>
-  File "/home/runner/work/explainable-municipal-prioritization-framework/explainable-municipal-prioritization-framework/src/empriority/transport_accessibility/nonroad.py", line 223, in build_nonroad_transport_indicators
+  File "/home/runner/work/explainable-municipal-prioritization-framework/explainable-municipal-prioritization-framework/src/empriority/transport_accessibility/nonroad.py", line 259, in build_nonroad_transport_indicators
     anac = _load_anac_points(inputs["anac_public"])
            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/runner/work/explainable-municipal-prioritization-framework/explainable-municipal-prioritization-framework/src/empriority/transport_accessibility/nonroad.py", line 86, in _load_anac_points
-    frame = pd.read_csv(csv_path, sep=None, engine="python", encoding=encoding)
-            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/pandas/io/parsers/readers.py", line 1026, in read_csv
-    return _read(filepath_or_buffer, kwds)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/pandas/io/parsers/readers.py", line 626, in _read
-    return parser.read(nrows)
-           ^^^^^^^^^^^^^^^^^^
-  File "/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/pandas/io/parsers/readers.py", line 1923, in read
-    ) = self._engine.read(  # type: ignore[attr-defined]
-        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/pandas/io/parsers/python_parser.py", line 252, in read
-    content = self._get_lines(rows)
-              ^^^^^^^^^^^^^^^^^^^^^
-  File "/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/pandas/io/parsers/python_parser.py", line 1140, in _get_lines
-    next_row = self._next_iter_line(row_num=self.pos + rows + 1)
-               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/pandas/io/parsers/python_parser.py", line 834, in _next_iter_line
-    self._alert_malformed(msg, row_num)
-  File "/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/pandas/io/parsers/python_parser.py", line 781, in _alert_malformed
-    raise ParserError(msg)
-pandas.errors.ParserError: ' ' expected after '"'
+  File "/home/runner/work/explainable-municipal-prioritization-framework/explainable-municipal-prioritization-framework/src/empriority/transport_accessibility/nonroad.py", line 124, in _load_anac_points
+    raise ValueError(
+ValueError: Unable to parse the ANAC public-aerodrome CSV with the expected coordinate columns. Attempts: utf-8-sig/;: only 1 column | utf-8-sig/;: only 1 column | utf-8-sig/,: only 1 column | utf-8-sig/,: only 1 column | latin1/;: only 1 column | latin1/;: only 1 column | latin1/,: only 1 column | latin1/,: only 1 column
