@@ -8,7 +8,6 @@ import pandas as pd
 
 from empriority.transport_accessibility.integrate import VARIABLES
 
-
 SELECTION: dict[str, dict[str, str]] = {
     "road_density_km_per_1000_km2": {
         "component": "road",
@@ -127,11 +126,7 @@ def select_transport_indicators(
         "nonnegative": bool(selected[selected_variables].ge(0).all().all()),
         "five_components": len({item["component"] for item in SELECTION.values()}) == 5,
         "availability_and_proximity_per_component": all(
-            {
-                item["role"]
-                for item in SELECTION.values()
-                if item["component"] == component
-            }
+            {item["role"] for item in SELECTION.values() if item["component"] == component}
             == {"availability", "proximity"}
             for component in {item["component"] for item in SELECTION.values()}
         ),

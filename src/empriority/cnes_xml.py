@@ -5,12 +5,13 @@ import unicodedata
 import xml.etree.ElementTree as ET
 import zipfile
 from pathlib import Path
-from typing import Any
 
 import httpx
 import pandas as pd
 
-CNES_XML_URL = "https://s3.sa-east-1.amazonaws.com/ckan.saude.gov.br/CNES/cnes_estabelecimentos_xml.zip"
+CNES_XML_URL = (
+    "https://s3.sa-east-1.amazonaws.com/ckan.saude.gov.br/CNES/cnes_estabelecimentos_xml.zip"
+)
 
 
 def _norm(value: object) -> str:
@@ -82,9 +83,15 @@ def extract_para_xml(archive_path: str | Path, output_path: str | Path) -> pd.Da
                     "codigo_ibge",
                 )
                 state = _first(record, "CO_ESTADO_GESTOR", "CO_UF", "UF", "codigo_uf")
-                municipality_digits = "".join(character for character in str(municipality or "") if character.isdigit())
+                municipality_digits = "".join(
+                    character for character in str(municipality or "") if character.isdigit()
+                )
                 state_text = _norm(state or "")
-                if municipality_digits.zfill(6).startswith("15") or state_text in {"15", "pa", "para"}:
+                if municipality_digits.zfill(6).startswith("15") or state_text in {
+                    "15",
+                    "pa",
+                    "para",
+                }:
                     rows.append(record)
                 element.clear()
     if not rows:
@@ -107,7 +114,9 @@ def _column(frame: pd.DataFrame, *names: str) -> str | None:
 
 def build_indicators(establishments: pd.DataFrame) -> pd.DataFrame:
     local = establishments.copy()
-    municipality = _column(local, "CO_MUNICIPIO_GESTOR", "CO_MUNICIPIO", "CODUFMUN", "IBGE", "codigo_municipio")
+    municipality = _column(
+        local, "CO_MUNICIPIO_GESTOR", "CO_MUNICIPIO", "CODUFMUN", "IBGE", "codigo_municipio"
+    )
     municipality_name = _column(local, "NO_MUNICIPIO", "MUNICIPIO", "nome_municipio")
     cnes = _column(local, "CO_CNES", "CNES", "codigo_cnes")
     type_name = _column(local, "DS_TIPO_UNIDADE", "descricao_tipo_unidade", "tipo_unidade")
@@ -117,23 +126,33 @@ def build_indicators(establishments: pd.DataFrame) -> pd.DataFrame:
     if active is not None:
         values = local[active].astype(str).str.upper().str.strip()
         local = local.loc[values.isin(["1", "1.0", "S", "SIM", "ATIVO"])]
-    local["municipality_code"] = local[municipality].astype(str).str.replace(r"\.0$", "", regex=True).str.zfill(6)
+    local["municipality_code"] = (
+        local[municipality].astype(str).str.replace(r"\.0$", "", regex=True).str.zfill(6)
+    )
     local["_type"] = local[type_name].map(_norm) if type_name else ""
-    local["_is_ubs"] = local["_type"].str.contains("posto de saude|centro de saude|unidade basica|saude da familia", regex=True)
+    local["_is_ubs"] = local["_type"].str.contains(
+        "posto de saude|centro de saude|unidade basica|saude da familia", regex=True
+    )
     local["_is_hospital"] = local["_type"].str.contains("hospital", regex=False)
     local["_is_caps"] = local["_type"].str.contains("atencao psicossocial|caps", regex=True)
-    local["_is_emergency"] = local["_type"].str.contains("pronto atendimento|pronto socorro|upa", regex=True)
+    local["_is_emergency"] = local["_type"].str.contains(
+        "pronto atendimento|pronto socorro|upa", regex=True
+    )
     keys = ["municipality_code"]
     if municipality_name:
         local["municipality"] = local[municipality_name].astype(str)
         keys.append("municipality")
-    result = local.groupby(keys, dropna=False).agg(
-        cnes_active_establishments=(cnes or municipality, "nunique"),
-        cnes_ubs=("_is_ubs", "sum"),
-        cnes_hospitals=("_is_hospital", "sum"),
-        cnes_caps=("_is_caps", "sum"),
-        cnes_emergency_units=("_is_emergency", "sum"),
-    ).reset_index()
+    result = (
+        local.groupby(keys, dropna=False)
+        .agg(
+            cnes_active_establishments=(cnes or municipality, "nunique"),
+            cnes_ubs=("_is_ubs", "sum"),
+            cnes_hospitals=("_is_hospital", "sum"),
+            cnes_caps=("_is_caps", "sum"),
+            cnes_emergency_units=("_is_emergency", "sum"),
+        )
+        .reset_index()
+    )
     result["cnes_obstetric_centers"] = 0
     for column in [name for name in result.columns if name.startswith("cnes_")]:
         result[column] = pd.to_numeric(result[column], errors="coerce").fillna(0).astype(int)
@@ -162,15 +181,27 @@ def collect_cnes_pa(output_directory: str | Path = "data/processed") -> dict[str
     indicators = build_indicators(establishments)
     indicators.to_csv(indicators_path, index=False, encoding="utf-8")
     if not types_path.exists():
-        pd.DataFrame(columns=["codigo_tipo_unidade", "descricao_tipo_unidade"]).to_csv(types_path, index=False)
-    metadata_path.write_text(json.dumps({
-        "source": "OpenDataSUS CNES official daily XML snapshot",
-        "source_url": CNES_XML_URL,
-        "establishments": int(len(establishments)),
-        "municipal_rows": int(len(indicators)),
-        "snapshot_reused": snapshot_reused,
-        "limitations": ["Professional indicators require a separate CNES human-resources extraction.", "Obstetric-center count remains unavailable in this extraction."],
-    }, ensure_ascii=False, indent=2), encoding="utf-8")
+        pd.DataFrame(columns=["codigo_tipo_unidade", "descricao_tipo_unidade"]).to_csv(
+            types_path, index=False
+        )
+    metadata_path.write_text(
+        json.dumps(
+            {
+                "source": "OpenDataSUS CNES official daily XML snapshot",
+                "source_url": CNES_XML_URL,
+                "establishments": int(len(establishments)),
+                "municipal_rows": int(len(indicators)),
+                "snapshot_reused": snapshot_reused,
+                "limitations": [
+                    "Professional indicators require a separate CNES human-resources extraction.",
+                    "Obstetric-center count remains unavailable in this extraction.",
+                ],
+            },
+            ensure_ascii=False,
+            indent=2,
+        ),
+        encoding="utf-8",
+    )
     return {
         "cnes_establishments": raw_path,
         "cnes_unit_types": types_path,

@@ -2,8 +2,8 @@ from __future__ import annotations
 
 import re
 import unicodedata
+from collections.abc import Iterable
 from pathlib import Path
-from typing import Iterable
 
 import pandas as pd
 
@@ -71,9 +71,7 @@ def aggregate_police(frame: pd.DataFrame) -> pd.DataFrame:
             .sum()
             .rename("police_positive_rows")
         )
-        return totals.merge(years.reset_index(), on=keys).merge(
-            positive.reset_index(), on=keys
-        )
+        return totals.merge(years.reset_index(), on=keys).merge(positive.reset_index(), on=keys)
 
     required = {"municipality", "year"}
     missing = required.difference(frame.columns)
@@ -175,9 +173,7 @@ def _merge_indicator(matrix: pd.DataFrame, reshaped: pd.DataFrame) -> pd.DataFra
     base = matrix.copy()
     base["_municipality_key"] = base["municipality"].map(_municipality_key)
     local = local.drop(columns="municipality")
-    return base.merge(local, on="_municipality_key", how="left").drop(
-        columns="_municipality_key"
-    )
+    return base.merge(local, on="_municipality_key", how="left").drop(columns="_municipality_key")
 
 
 def build_integrated_matrix(
@@ -213,9 +209,7 @@ def build_integrated_matrix(
                 suffixes=("", "_police"),
             )
         else:
-            aggregated["_municipality_key"] = aggregated["municipality"].map(
-                _municipality_key
-            )
+            aggregated["_municipality_key"] = aggregated["municipality"].map(_municipality_key)
             matrix["_municipality_key"] = matrix["municipality"].map(_municipality_key)
             aggregated = aggregated.drop(columns="municipality")
             matrix = matrix.merge(aggregated, on="_municipality_key", how="left").drop(

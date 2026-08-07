@@ -65,7 +65,9 @@ def _save_cache(path: Path, cache: dict[str, Any]) -> None:
     path.write_text(json.dumps(cache, ensure_ascii=False, indent=2), encoding="utf-8")
 
 
-def _geocode(client: httpx.Client, query: str, cache: dict[str, Any], delay: float = 1.1) -> dict[str, Any] | None:
+def _geocode(
+    client: httpx.Client, query: str, cache: dict[str, Any], delay: float = 1.1
+) -> dict[str, Any] | None:
     key = _query_key(query)
     if key in cache:
         return cache[key]
@@ -119,8 +121,7 @@ def _confidence(result: dict[str, Any] | None, municipality: str) -> tuple[str, 
     address = result.get("address") or {}
     state = _norm(address.get("state"))
     city_values = " ".join(
-        _norm(address.get(field))
-        for field in ("city", "town", "municipality", "county", "village")
+        _norm(address.get(field)) for field in ("city", "town", "municipality", "county", "village")
     )
     municipality_key = _norm(municipality)
     para_match = state in {"para", "estado do para"} or " para " in f" {display} "
@@ -169,9 +170,16 @@ def build_protection_network_geospatial(
 
     address_column = "Endereço do Serviço"
     name_column = "Nome do Serviço"
-    records["_address"] = records.get(address_column, pd.Series(index=records.index, dtype=object)).fillna("").astype(str).str.strip()
+    records["_address"] = (
+        records.get(address_column, pd.Series(index=records.index, dtype=object))
+        .fillna("")
+        .astype(str)
+        .str.strip()
+    )
     records["_public"] = (
-        pd.to_numeric(records.get("protection_network_public_address"), errors="coerce").fillna(0).eq(1)
+        pd.to_numeric(records.get("protection_network_public_address"), errors="coerce")
+        .fillna(0)
+        .eq(1)
         & records["_address"].ne("")
         & records["_address"].str.upper().ne("SIGILOSO")
     )

@@ -1,9 +1,9 @@
 from __future__ import annotations
 
 import json
+from collections.abc import Iterable
 from dataclasses import asdict
 from pathlib import Path
-from typing import Iterable
 
 import pandas as pd
 
@@ -59,8 +59,7 @@ def collect_munic(
         "source": "IBGE MUNIC",
         "year": year,
         "official_url": (
-            f"https://ftp.ibge.gov.br/Perfil_Municipios/{year}/"
-            f"Base_de_Dados/Base_MUNIC_{year}.xlsx"
+            f"https://ftp.ibge.gov.br/Perfil_Municipios/{year}/Base_de_Dados/Base_MUNIC_{year}.xlsx"
         ),
         "worksheet_count": len(inventory),
     }

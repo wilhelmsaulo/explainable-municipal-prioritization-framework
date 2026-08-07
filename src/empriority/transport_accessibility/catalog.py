@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 import json
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from pathlib import Path
 from typing import Any
 
@@ -128,7 +128,7 @@ def build_transport_source_catalog(
     output = Path(output_dir)
     output.mkdir(parents=True, exist_ok=True)
 
-    checked_at = datetime.now(timezone.utc).isoformat()
+    checked_at = datetime.now(UTC).isoformat()
     rows: list[dict[str, Any]] = []
     with httpx.Client(timeout=45.0, headers={"User-Agent": "empriority-research/0.1"}) as client:
         for source in SOURCES:

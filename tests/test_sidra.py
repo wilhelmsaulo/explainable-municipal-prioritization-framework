@@ -18,8 +18,7 @@ def test_build_url_orders_classifications() -> None:
     )
 
     assert connector.build_url(query) == (
-        "https://apisidra.ibge.gov.br/values/t/4709/n6/all/in/n3/15/"
-        "v/93/p/2022/c2/4,5/c58/1140"
+        "https://apisidra.ibge.gov.br/values/t/4709/n6/all/in/n3/15/v/93/p/2022/c2/4,5/c58/1140"
     )
 
 

@@ -4,7 +4,6 @@ from pathlib import Path
 
 import pandas as pd
 
-
 YES_VALUES = {"sim", "1", "1.0", "true", "yes"}
 NO_VALUES = {"nao", "não", "0", "0.0", "false", "no"}
 
@@ -62,8 +61,8 @@ def extract_munic_2023_institutional_indicators(
             "MPPM01": "women_policy_body_exists_raw",
         }
     )
-    base["municipality_code"] = base["municipality_code"].astype(str).str.replace(
-        r"\.0$", "", regex=True
+    base["municipality_code"] = (
+        base["municipality_code"].astype(str).str.replace(r"\.0$", "", regex=True)
     )
     base["women_policy_body_exists"] = _binary(base["women_policy_body_exists_raw"])
 
@@ -74,8 +73,8 @@ def extract_munic_2023_institutional_indicators(
             "MSEG168": "specialized_women_police_station_raw",
         }
     )
-    security_local["municipality_code"] = security_local["municipality_code"].astype(str).str.replace(
-        r"\.0$", "", regex=True
+    security_local["municipality_code"] = (
+        security_local["municipality_code"].astype(str).str.replace(r"\.0$", "", regex=True)
     )
     security_local["specialized_women_police_station"] = _binary(
         security_local["specialized_women_police_station_raw"]
@@ -89,8 +88,8 @@ def extract_munic_2023_institutional_indicators(
             "MDHU571": "human_rights_protection_women_raw",
         }
     )
-    rights_local["municipality_code"] = rights_local["municipality_code"].astype(str).str.replace(
-        r"\.0$", "", regex=True
+    rights_local["municipality_code"] = (
+        rights_local["municipality_code"].astype(str).str.replace(r"\.0$", "", regex=True)
     )
     rights_local["programs_actions_for_women"] = _binary(
         rights_local["programs_actions_for_women_raw"]

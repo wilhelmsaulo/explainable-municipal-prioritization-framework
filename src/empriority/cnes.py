@@ -3,9 +3,10 @@ from __future__ import annotations
 import json
 import unicodedata
 import zipfile
+from collections.abc import Iterator
 from datetime import date
 from pathlib import Path
-from typing import Any, Iterator
+from typing import Any
 
 import httpx
 import pandas as pd
@@ -243,7 +244,12 @@ def build_cnes_municipal_indicators(
         active_values = local[active].astype(str).str.upper().str.strip()
         local = local.loc[active_values.isin(["1", "1.0", "S", "SIM", "ATIVO"])]
 
-    if type_name is None and type_code is not None and unit_types is not None and not unit_types.empty:
+    if (
+        type_name is None
+        and type_code is not None
+        and unit_types is not None
+        and not unit_types.empty
+    ):
         types = unit_types.copy()
         types_code = _column(types, "codigo_tipo_unidade", "codigo")
         types_name = _column(types, "descricao_tipo_unidade", "descricao", "nome")

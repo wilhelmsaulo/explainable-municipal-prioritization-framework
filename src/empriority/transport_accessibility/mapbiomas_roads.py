@@ -73,9 +73,7 @@ def build_mapbiomas_road_indicators(
     municipalities["municipality_code"] = (
         municipalities["municipality_code"].astype(str).str.replace(r"\.0$", "", regex=True)
     )
-    municipalities = municipalities[
-        municipalities["municipality_code"].str.startswith("15")
-    ].copy()
+    municipalities = municipalities[municipalities["municipality_code"].str.startswith("15")].copy()
 
     if len(municipalities) != 144:
         raise ValueError(f"Expected 144 Para municipalities, found {len(municipalities)}")
@@ -128,22 +126,14 @@ def build_mapbiomas_road_indicators(
     intersections = intersections.to_crs(projected_crs)
     intersections["length_km"] = intersections.geometry.length / 1000.0
 
-    grouped = (
-        intersections.groupby(
-            ["municipality_code", "network_class", "surface_class"],
-            as_index=False,
-        )["length_km"]
-        .sum()
-    )
+    grouped = intersections.groupby(
+        ["municipality_code", "network_class", "surface_class"],
+        as_index=False,
+    )["length_km"].sum()
     result = municipalities[["municipality_code", "municipality"]].copy()
 
     def add_length(name: str, mask: Any) -> None:
-        values = (
-            grouped.loc[mask]
-            .groupby("municipality_code")["length_km"]
-            .sum()
-            .rename(name)
-        )
+        values = grouped.loc[mask].groupby("municipality_code")["length_km"].sum().rename(name)
         nonlocal result
         result = result.merge(values, on="municipality_code", how="left")
 
@@ -162,9 +152,7 @@ def build_mapbiomas_road_indicators(
     ]
     result[length_columns] = result[length_columns].fillna(0.0)
     result["road_total_km"] = (
-        result["road_federal_km"]
-        + result["road_state_km"]
-        + result["road_other_km"]
+        result["road_federal_km"] + result["road_state_km"] + result["road_other_km"]
     )
     result["road_mapped_presence"] = result["road_total_km"].gt(0).astype(int)
     result["road_federal_presence"] = result["road_federal_km"].gt(0).astype(int)
@@ -180,9 +168,7 @@ def build_mapbiomas_road_indicators(
     reference_points = municipal_projected.geometry.representative_point()
     distances = reference_points.distance(road_union) / 1000.0
     distance_by_code = dict(zip(municipal_projected["municipality_code"], distances))
-    result["distance_to_mapped_road_km"] = result["municipality_code"].map(
-        distance_by_code
-    )
+    result["distance_to_mapped_road_km"] = result["municipality_code"].map(distance_by_code)
 
     result = result.sort_values("municipality_code").reset_index(drop=True)
     numeric_columns = result.select_dtypes(include="number").columns
@@ -215,16 +201,12 @@ def build_mapbiomas_road_indicators(
         "road_features_para_bbox": int(len(roads)),
         "intersection_features": int(len(intersections)),
         "total_road_km": float(result["road_total_km"].sum()),
-        "municipalities_with_mapped_roads": int(
-            result["road_mapped_presence"].sum()
-        ),
+        "municipalities_with_mapped_roads": int(result["road_mapped_presence"].sum()),
         "municipalities_without_mapped_roads": zero_road,
         "checks": {
             "rows_144": len(result) == 144,
             "unique_codes_144": result["municipality_code"].nunique() == 144,
-            "all_codes_para": bool(
-                result["municipality_code"].str.startswith("15").all()
-            ),
+            "all_codes_para": bool(result["municipality_code"].str.startswith("15").all()),
             "no_missing_numeric": bool(result[numeric_columns].notna().all().all()),
             "nonnegative_lengths": bool(result[length_columns].ge(0).all().all()),
         },

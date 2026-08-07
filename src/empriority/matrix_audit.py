@@ -5,7 +5,6 @@ from pathlib import Path
 
 import pandas as pd
 
-
 DIMENSION_PREFIXES = {
     "municipal_policy": (
         "women_",
@@ -202,9 +201,7 @@ def audit_integrated_matrix(
         )
 
     readiness = pd.DataFrame(readiness_rows)
-    candidate_columns = readiness.loc[
-        readiness["eligible_for_screening"], "column"
-    ].tolist()
+    candidate_columns = readiness.loc[readiness["eligible_for_screening"], "column"].tolist()
 
     column_profile = pd.DataFrame(
         {
@@ -215,7 +212,9 @@ def audit_integrated_matrix(
             "missing_fraction": [float(df[column].isna().mean()) for column in df.columns],
             "unique_non_missing": [int(df[column].nunique(dropna=True)) for column in df.columns],
             "entirely_missing": [bool(df[column].isna().all()) for column in df.columns],
-            "constant_or_empty": [bool(df[column].nunique(dropna=True) <= 1) for column in df.columns],
+            "constant_or_empty": [
+                bool(df[column].nunique(dropna=True) <= 1) for column in df.columns
+            ],
         }
     )
 

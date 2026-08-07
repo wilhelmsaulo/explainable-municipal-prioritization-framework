@@ -24,9 +24,7 @@ def _extract_shapefile(archive_path: Path, output_dir: Path) -> Path:
         archive.extractall(output_dir)
     shapefiles = sorted(output_dir.rglob("*.shp"))
     if len(shapefiles) != 1:
-        raise ValueError(
-            f"Expected one shapefile in {archive_path}, found {len(shapefiles)}"
-        )
+        raise ValueError(f"Expected one shapefile in {archive_path}, found {len(shapefiles)}")
     return shapefiles[0]
 
 
@@ -164,15 +162,9 @@ def build_nonroad_transport_indicators(
     projected_crs = "EPSG:5880"
 
     ports = gpd.read_file(_extract_shapefile(inputs["ports"], cache / "ports"))
-    crossings = gpd.read_file(
-        _extract_shapefile(inputs["crossings"], cache / "crossings")
-    )
-    waterways = gpd.read_file(
-        _extract_shapefile(inputs["waterways"], cache / "waterways")
-    )
-    decea = gpd.read_file(
-        _extract_shapefile(inputs["decea_airports"], cache / "decea")
-    )
+    crossings = gpd.read_file(_extract_shapefile(inputs["crossings"], cache / "crossings"))
+    waterways = gpd.read_file(_extract_shapefile(inputs["waterways"], cache / "waterways"))
+    decea = gpd.read_file(_extract_shapefile(inputs["decea_airports"], cache / "decea"))
 
     result = municipalities[["municipality_code", "municipality"]].copy()
     result = _point_metrics(result, ports, municipalities, "port", projected_crs)
@@ -218,8 +210,7 @@ def build_nonroad_transport_indicators(
     }
     audit = {
         "sources": {
-            name: {"path": str(path), "sha256": _sha256(path)}
-            for name, path in inputs.items()
+            name: {"path": str(path), "sha256": _sha256(path)} for name, path in inputs.items()
         },
         "reference_years": {
             "ports_and_crossings": 2025,

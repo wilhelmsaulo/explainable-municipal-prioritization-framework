@@ -82,9 +82,7 @@ def sidra(
         periods=periods,
         classifications=classifications,
     )
-    frame, data_path, metadata_path = collect_sidra_table(
-        settings, query, output, refresh=refresh
-    )
+    frame, data_path, metadata_path = collect_sidra_table(settings, query, output, refresh=refresh)
     typer.echo(
         f"Collected {len(frame)} SIDRA records. Data: {data_path}. Metadata: {metadata_path}"
     )
@@ -153,9 +151,7 @@ def collect_all_indicators(
             continue
 
         completed += 1
-        typer.echo(
-            f"OK {name}: {len(frame)} records. Data: {data_path}. Metadata: {metadata_path}"
-        )
+        typer.echo(f"OK {name}: {len(frame)} records. Data: {data_path}. Metadata: {metadata_path}")
 
     typer.echo(f"Completed {completed} of {len(loaded.names())} indicators.")
     if failures:

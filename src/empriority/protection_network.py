@@ -49,7 +49,9 @@ def _category_flags(category: object) -> dict[str, int]:
         ),
         "protection_network_health_service": int("servico de saude" in value),
         "protection_network_maria_da_penha_patrol": int("patrulha maria da penha" in value),
-        "protection_network_women_policy_body": int("politica para mulheres" in value or "coordenadoria" in value),
+        "protection_network_women_policy_body": int(
+            "politica para mulheres" in value or "coordenadoria" in value
+        ),
     }
 
 
@@ -75,10 +77,14 @@ def build_protection_network_indicators(
     source["municipality_code"] = source["municipality_key"].map(key_to_code)
     source["municipality"] = source["municipality_key"].map(key_to_name)
     source["transcription_status_key"] = source["Situação da Transcrição"].map(_norm)
-    source["protection_network_record_validated"] = source["transcription_status_key"].isin(VALID_STATUSES).astype(int)
+    source["protection_network_record_validated"] = (
+        source["transcription_status_key"].isin(VALID_STATUSES).astype(int)
+    )
     source["protection_network_public_address"] = source["Endereço do Serviço"].map(_present_public)
     source["protection_network_public_phone"] = source["Telefone"].map(_present_public)
-    source["protection_network_confidential_address"] = source["Endereço do Serviço"].map(_is_confidential)
+    source["protection_network_confidential_address"] = source["Endereço do Serviço"].map(
+        _is_confidential
+    )
     source["category_key"] = source["Categoria Padronizada"].map(_norm)
 
     flags = source["Categoria Padronizada"].map(_category_flags).apply(pd.Series)
@@ -122,10 +128,15 @@ def build_protection_network_indicators(
         ),
     )
     summary["protection_network_uncertain_records"] = (
-        summary["protection_network_record_transcribed"] - summary["protection_network_record_validated"]
+        summary["protection_network_record_transcribed"]
+        - summary["protection_network_record_validated"]
     )
-    summary["protection_network_covered"] = summary["protection_network_record_validated"].gt(0).astype(int)
-    summary["protection_network_access_deficit"] = summary["protection_network_covered"].eq(0).astype(int)
+    summary["protection_network_covered"] = (
+        summary["protection_network_record_validated"].gt(0).astype(int)
+    )
+    summary["protection_network_access_deficit"] = (
+        summary["protection_network_covered"].eq(0).astype(int)
+    )
     summary["protection_network_specialized_non_health_services"] = summary[
         [
             "protection_network_specialized_police",
@@ -144,7 +155,9 @@ def build_protection_network_indicators(
         on=["municipality_code", "municipality"],
         how="left",
     )
-    indicator_columns = [column for column in result.columns if column.startswith("protection_network_")]
+    indicator_columns = [
+        column for column in result.columns if column.startswith("protection_network_")
+    ]
     for column in indicator_columns:
         result[column] = pd.to_numeric(result[column], errors="coerce").fillna(0)
 
@@ -191,9 +204,13 @@ def build_protection_network_indicators(
                 "matched_records": int(len(matched)),
                 "unmatched_records": int(len(unmatched)),
                 "validated_records": int(matched["protection_network_record_validated"].sum()),
-                "municipalities_with_validated_services": int(result["protection_network_covered"].sum()),
+                "municipalities_with_validated_services": int(
+                    result["protection_network_covered"].sum()
+                ),
                 "public_addresses": int(matched["protection_network_public_address"].sum()),
-                "confidential_addresses": int(matched["protection_network_confidential_address"].sum()),
+                "confidential_addresses": int(
+                    matched["protection_network_confidential_address"].sum()
+                ),
                 "method": "Manual official-panel transcription retained in full; primary indicators exclude explicitly uncertain, non-individualized or unidentified records. Icoaraci is standardized to Belém.",
                 "confidentiality": "SIGILOSO values are retained as labels and excluded from public-address/geocoding fields.",
             },

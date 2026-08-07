@@ -7,34 +7,177 @@ from typing import Any
 
 import pandas as pd
 
-
 IDENTIFIERS = ["municipality_code", "municipality"]
 
 VARIABLES: dict[str, dict[str, Any]] = {
-    "road_federal_km": {"mode": "road", "year": 2023, "unit": "km", "direction": "context", "description": "Mapped federal-road length inside the municipality."},
-    "road_state_km": {"mode": "road", "year": 2023, "unit": "km", "direction": "context", "description": "Mapped state-road length inside the municipality."},
-    "road_other_km": {"mode": "road", "year": 2023, "unit": "km", "direction": "context", "description": "Other mapped road-segment length inside the municipality."},
-    "road_paved_km": {"mode": "road", "year": 2023, "unit": "km", "direction": "context", "description": "Mapped paved-road length inside the municipality."},
-    "road_unpaved_km": {"mode": "road", "year": 2023, "unit": "km", "direction": "context", "description": "Mapped unpaved-road length inside the municipality."},
-    "road_total_km": {"mode": "road", "year": 2023, "unit": "km", "direction": "context", "description": "Total mapped road length inside the municipality."},
-    "road_mapped_presence": {"mode": "road", "year": 2023, "unit": "binary", "direction": "access_positive", "description": "Presence of any mapped road segment."},
-    "road_federal_presence": {"mode": "road", "year": 2023, "unit": "binary", "direction": "access_positive", "description": "Presence of a mapped federal-road segment."},
-    "road_state_presence": {"mode": "road", "year": 2023, "unit": "binary", "direction": "access_positive", "description": "Presence of a mapped state-road segment."},
-    "municipality_area_km2": {"mode": "territorial_context", "year": 2023, "unit": "km2", "direction": "context", "description": "Municipal polygon area used for density calculation."},
-    "road_density_km_per_1000_km2": {"mode": "road", "year": 2023, "unit": "km_per_1000_km2", "direction": "access_positive", "description": "Mapped road density per 1,000 square kilometres."},
-    "distance_to_mapped_road_km": {"mode": "road", "year": 2023, "unit": "km", "direction": "barrier_positive", "description": "Distance from the municipal representative point to the mapped road network."},
-    "port_count": {"mode": "water", "year": 2025, "unit": "count", "direction": "access_positive", "description": "ANTAQ port facilities intersecting the municipality."},
-    "port_presence": {"mode": "water", "year": 2025, "unit": "binary", "direction": "access_positive", "description": "Presence of at least one ANTAQ port facility."},
-    "distance_to_port_km": {"mode": "water", "year": 2025, "unit": "km", "direction": "barrier_positive", "description": "Distance from the municipal representative point to the nearest ANTAQ port facility."},
-    "decea_airport_count": {"mode": "air", "year": 2026, "unit": "count", "direction": "access_positive", "description": "DECEA/ICA airport features intersecting the municipality."},
-    "decea_airport_presence": {"mode": "air", "year": 2026, "unit": "binary", "direction": "access_positive", "description": "Presence of at least one DECEA/ICA airport feature."},
-    "distance_to_decea_airport_km": {"mode": "air", "year": 2026, "unit": "km", "direction": "barrier_positive", "description": "Distance from the municipal representative point to the nearest DECEA/ICA airport feature."},
-    "passenger_crossing_km": {"mode": "water", "year": 2025, "unit": "km", "direction": "context", "description": "ANTAQ passenger-crossing line length inside the municipality."},
-    "passenger_crossing_presence": {"mode": "water", "year": 2025, "unit": "binary", "direction": "access_positive", "description": "Presence of an ANTAQ passenger-crossing line."},
-    "distance_to_passenger_crossing_km": {"mode": "water", "year": 2025, "unit": "km", "direction": "barrier_positive", "description": "Distance from the municipal representative point to the nearest passenger-crossing line."},
-    "navigated_waterway_km": {"mode": "water", "year": 2022, "unit": "km", "direction": "context", "description": "ANTAQ navigated-waterway length inside the municipality."},
-    "navigated_waterway_presence": {"mode": "water", "year": 2022, "unit": "binary", "direction": "access_positive", "description": "Presence of a published navigated-waterway segment."},
-    "distance_to_navigated_waterway_km": {"mode": "water", "year": 2022, "unit": "km", "direction": "barrier_positive", "description": "Distance from the municipal representative point to the nearest published navigated waterway."},
+    "road_federal_km": {
+        "mode": "road",
+        "year": 2023,
+        "unit": "km",
+        "direction": "context",
+        "description": "Mapped federal-road length inside the municipality.",
+    },
+    "road_state_km": {
+        "mode": "road",
+        "year": 2023,
+        "unit": "km",
+        "direction": "context",
+        "description": "Mapped state-road length inside the municipality.",
+    },
+    "road_other_km": {
+        "mode": "road",
+        "year": 2023,
+        "unit": "km",
+        "direction": "context",
+        "description": "Other mapped road-segment length inside the municipality.",
+    },
+    "road_paved_km": {
+        "mode": "road",
+        "year": 2023,
+        "unit": "km",
+        "direction": "context",
+        "description": "Mapped paved-road length inside the municipality.",
+    },
+    "road_unpaved_km": {
+        "mode": "road",
+        "year": 2023,
+        "unit": "km",
+        "direction": "context",
+        "description": "Mapped unpaved-road length inside the municipality.",
+    },
+    "road_total_km": {
+        "mode": "road",
+        "year": 2023,
+        "unit": "km",
+        "direction": "context",
+        "description": "Total mapped road length inside the municipality.",
+    },
+    "road_mapped_presence": {
+        "mode": "road",
+        "year": 2023,
+        "unit": "binary",
+        "direction": "access_positive",
+        "description": "Presence of any mapped road segment.",
+    },
+    "road_federal_presence": {
+        "mode": "road",
+        "year": 2023,
+        "unit": "binary",
+        "direction": "access_positive",
+        "description": "Presence of a mapped federal-road segment.",
+    },
+    "road_state_presence": {
+        "mode": "road",
+        "year": 2023,
+        "unit": "binary",
+        "direction": "access_positive",
+        "description": "Presence of a mapped state-road segment.",
+    },
+    "municipality_area_km2": {
+        "mode": "territorial_context",
+        "year": 2023,
+        "unit": "km2",
+        "direction": "context",
+        "description": "Municipal polygon area used for density calculation.",
+    },
+    "road_density_km_per_1000_km2": {
+        "mode": "road",
+        "year": 2023,
+        "unit": "km_per_1000_km2",
+        "direction": "access_positive",
+        "description": "Mapped road density per 1,000 square kilometres.",
+    },
+    "distance_to_mapped_road_km": {
+        "mode": "road",
+        "year": 2023,
+        "unit": "km",
+        "direction": "barrier_positive",
+        "description": "Distance from the municipal representative point to the mapped road network.",
+    },
+    "port_count": {
+        "mode": "water",
+        "year": 2025,
+        "unit": "count",
+        "direction": "access_positive",
+        "description": "ANTAQ port facilities intersecting the municipality.",
+    },
+    "port_presence": {
+        "mode": "water",
+        "year": 2025,
+        "unit": "binary",
+        "direction": "access_positive",
+        "description": "Presence of at least one ANTAQ port facility.",
+    },
+    "distance_to_port_km": {
+        "mode": "water",
+        "year": 2025,
+        "unit": "km",
+        "direction": "barrier_positive",
+        "description": "Distance from the municipal representative point to the nearest ANTAQ port facility.",
+    },
+    "decea_airport_count": {
+        "mode": "air",
+        "year": 2026,
+        "unit": "count",
+        "direction": "access_positive",
+        "description": "DECEA/ICA airport features intersecting the municipality.",
+    },
+    "decea_airport_presence": {
+        "mode": "air",
+        "year": 2026,
+        "unit": "binary",
+        "direction": "access_positive",
+        "description": "Presence of at least one DECEA/ICA airport feature.",
+    },
+    "distance_to_decea_airport_km": {
+        "mode": "air",
+        "year": 2026,
+        "unit": "km",
+        "direction": "barrier_positive",
+        "description": "Distance from the municipal representative point to the nearest DECEA/ICA airport feature.",
+    },
+    "passenger_crossing_km": {
+        "mode": "water",
+        "year": 2025,
+        "unit": "km",
+        "direction": "context",
+        "description": "ANTAQ passenger-crossing line length inside the municipality.",
+    },
+    "passenger_crossing_presence": {
+        "mode": "water",
+        "year": 2025,
+        "unit": "binary",
+        "direction": "access_positive",
+        "description": "Presence of an ANTAQ passenger-crossing line.",
+    },
+    "distance_to_passenger_crossing_km": {
+        "mode": "water",
+        "year": 2025,
+        "unit": "km",
+        "direction": "barrier_positive",
+        "description": "Distance from the municipal representative point to the nearest passenger-crossing line.",
+    },
+    "navigated_waterway_km": {
+        "mode": "water",
+        "year": 2022,
+        "unit": "km",
+        "direction": "context",
+        "description": "ANTAQ navigated-waterway length inside the municipality.",
+    },
+    "navigated_waterway_presence": {
+        "mode": "water",
+        "year": 2022,
+        "unit": "binary",
+        "direction": "access_positive",
+        "description": "Presence of a published navigated-waterway segment.",
+    },
+    "distance_to_navigated_waterway_km": {
+        "mode": "water",
+        "year": 2022,
+        "unit": "km",
+        "direction": "barrier_positive",
+        "description": "Distance from the municipal representative point to the nearest published navigated waterway.",
+    },
 }
 
 
@@ -50,7 +193,8 @@ def build_integrated_transport_matrix(
     road_csv: str | Path,
     nonroad_csv: str | Path,
     output_csv: str | Path = "data/processed/transport/transport_indicators_pa_integrated.csv",
-    audit_json: str | Path = "data/processed/transport/transport_indicators_pa_integrated_audit.json",
+    audit_json: str
+    | Path = "data/processed/transport/transport_indicators_pa_integrated_audit.json",
     dictionary_json: str | Path = "data/processed/transport/transport_indicator_dictionary.json",
 ) -> dict[str, Path]:
     road_path = Path(road_csv)
@@ -66,9 +210,7 @@ def build_integrated_transport_matrix(
         how="inner",
         suffixes=("_road", "_nonroad"),
     )
-    names_match = bool(
-        name_check["municipality_road"].eq(name_check["municipality_nonroad"]).all()
-    )
+    names_match = bool(name_check["municipality_road"].eq(name_check["municipality_nonroad"]).all())
 
     integrated = road.merge(
         nonroad.drop(columns=["municipality"]),
@@ -78,9 +220,9 @@ def build_integrated_transport_matrix(
         indicator=True,
     )
     merge_complete = bool(integrated["_merge"].eq("both").all())
-    integrated = integrated.drop(columns=["_merge"]).sort_values(
-        "municipality_code"
-    ).reset_index(drop=True)
+    integrated = (
+        integrated.drop(columns=["_merge"]).sort_values("municipality_code").reset_index(drop=True)
+    )
 
     expected_columns = IDENTIFIERS + list(VARIABLES)
     numeric = list(VARIABLES)

@@ -8,7 +8,6 @@ from typing import Any
 import numpy as np
 import pandas as pd
 
-
 ROLE_WEIGHTS = {
     "equal_roles": {"availability": 0.5, "proximity": 0.5},
     "availability_emphasis": {"availability": 2 / 3, "proximity": 1 / 3},
@@ -64,9 +63,7 @@ def build_multimodal_transport_construct(
             score = pd.Series(0.0, index=frame.index)
             for variable in variables:
                 role = definitions[variable]["role"]
-                score += (
-                    normalized[f"{variable}__access"] * role_weights[role]
-                )
+                score += normalized[f"{variable}__access"] * role_weights[role]
             scores[component] = score
         return scores
 
@@ -87,14 +84,9 @@ def build_multimodal_transport_construct(
             / 3,
             "air": component["air"],
         }
-        score = sum(
-            modes[mode] * weight
-            for mode, weight in MODE_WEIGHTS[mode_name].items()
-        )
+        score = sum(modes[mode] * weight for mode, weight in MODE_WEIGHTS[mode_name].items())
         scenario_frame[f"{scenario}__score"] = score
-        scenario_frame[f"{scenario}__rank"] = score.rank(
-            ascending=False, method="min"
-        ).astype(int)
+        scenario_frame[f"{scenario}__rank"] = score.rank(ascending=False, method="min").astype(int)
         scenario_details[scenario] = {
             "mode_weights": MODE_WEIGHTS[mode_name],
             "role_weights": ROLE_WEIGHTS[role_name],
@@ -106,17 +98,13 @@ def build_multimodal_transport_construct(
             for mode, values in modes.items():
                 normalized[f"mode_{mode}"] = values
             normalized["multimodal_access_baseline"] = score
-            normalized["multimodal_access_rank"] = scenario_frame[
-                f"{scenario}__rank"
-            ]
+            normalized["multimodal_access_rank"] = scenario_frame[f"{scenario}__rank"]
 
     if baseline_components is None:
         raise ValueError("Baseline scenario was not generated")
 
     baseline_rank = scenario_frame[f"{BASELINE}__rank"]
-    baseline_top = set(
-        scenario_frame.nsmallest(10, f"{BASELINE}__rank")["municipality_code"]
-    )
+    baseline_top = set(scenario_frame.nsmallest(10, f"{BASELINE}__rank")["municipality_code"])
     sensitivity: dict[str, Any] = {}
     rank_columns = []
     score_columns = []
@@ -129,9 +117,7 @@ def build_multimodal_transport_construct(
         top = set(scenario_frame.nsmallest(10, rank_column)["municipality_code"])
         shifts = (ranks - baseline_rank).abs()
         sensitivity[scenario] = {
-            "spearman_rank_vs_baseline": float(
-                ranks.corr(baseline_rank, method="pearson")
-            ),
+            "spearman_rank_vs_baseline": float(ranks.corr(baseline_rank, method="pearson")),
             "top_10_overlap_with_baseline": len(top & baseline_top),
             "median_absolute_rank_shift": float(shifts.median()),
             "maximum_absolute_rank_shift": int(shifts.max()),
@@ -140,14 +126,11 @@ def build_multimodal_transport_construct(
     scenario_frame["mean_rank"] = scenario_frame[rank_columns].mean(axis=1)
     scenario_frame["minimum_rank"] = scenario_frame[rank_columns].min(axis=1)
     scenario_frame["maximum_rank"] = scenario_frame[rank_columns].max(axis=1)
-    scenario_frame["rank_range"] = (
-        scenario_frame["maximum_rank"] - scenario_frame["minimum_rank"]
-    )
+    scenario_frame["rank_range"] = scenario_frame["maximum_rank"] - scenario_frame["minimum_rank"]
     scenario_frame["mean_score"] = scenario_frame[score_columns].mean(axis=1)
-    scenario_frame["score_range"] = (
-        scenario_frame[score_columns].max(axis=1)
-        - scenario_frame[score_columns].min(axis=1)
-    )
+    scenario_frame["score_range"] = scenario_frame[score_columns].max(axis=1) - scenario_frame[
+        score_columns
+    ].min(axis=1)
 
     normalized_values = normalized.select_dtypes(include="number")
     scenario_values = scenario_frame.select_dtypes(include="number")
@@ -158,12 +141,14 @@ def build_multimodal_transport_construct(
         "no_missing_normalized": bool(normalized_values.notna().all().all()),
         "no_missing_scenarios": bool(scenario_values.notna().all().all()),
         "normalized_within_zero_one": bool(
-            normalized_values.drop(
-                columns=["multimodal_access_rank"], errors="ignore"
-            ).ge(0).all().all()
-            and normalized_values.drop(
-                columns=["multimodal_access_rank"], errors="ignore"
-            ).le(1).all().all()
+            normalized_values.drop(columns=["multimodal_access_rank"], errors="ignore")
+            .ge(0)
+            .all()
+            .all()
+            and normalized_values.drop(columns=["multimodal_access_rank"], errors="ignore")
+            .le(1)
+            .all()
+            .all()
         ),
         "scenario_scores_within_zero_one": bool(
             scenario_frame[score_columns].ge(0).all().all()
@@ -174,12 +159,10 @@ def build_multimodal_transport_construct(
             and np.isfinite(scenario_values.to_numpy()).all()
         ),
         "mode_weights_sum_one": all(
-            np.isclose(sum(weights.values()), 1)
-            for weights in MODE_WEIGHTS.values()
+            np.isclose(sum(weights.values()), 1) for weights in MODE_WEIGHTS.values()
         ),
         "role_weights_sum_one": all(
-            np.isclose(sum(weights.values()), 1)
-            for weights in ROLE_WEIGHTS.values()
+            np.isclose(sum(weights.values()), 1) for weights in ROLE_WEIGHTS.values()
         ),
     }
     if not all(checks.values()):
@@ -217,9 +200,7 @@ def build_multimodal_transport_construct(
         "scenarios": scenario_details,
         "warning": "The baseline score is a transparent reference scenario, not a validated ground truth.",
     }
-    paths["method"].write_text(
-        json.dumps(method, ensure_ascii=False, indent=2), encoding="utf-8"
-    )
+    paths["method"].write_text(json.dumps(method, ensure_ascii=False, indent=2), encoding="utf-8")
     paths["audit"].write_text(
         json.dumps({"checks": checks}, ensure_ascii=False, indent=2),
         encoding="utf-8",

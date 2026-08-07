@@ -40,9 +40,9 @@ def test_build_integrated_matrix(tmp_path: Path) -> None:
     municipalities = tmp_path / "municipalities.csv"
     indicator = tmp_path / "indicator.csv"
     output = tmp_path / "matrix.csv"
-    pd.DataFrame(
-        {"municipality_code": ["1500107"], "municipality": ["Abaetetuba"]}
-    ).to_csv(municipalities, index=False)
+    pd.DataFrame({"municipality_code": ["1500107"], "municipality": ["Abaetetuba"]}).to_csv(
+        municipalities, index=False
+    )
     pd.DataFrame(
         {
             "D1C": ["1500107"],

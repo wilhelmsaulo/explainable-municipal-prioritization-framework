@@ -111,12 +111,12 @@ def run_hybrid_topsis(
 
     ranking = frame.loc[:, id_columns].copy()
     ranking["priority_score"] = scores
-    ranking["priority_rank"] = ranking["priority_score"].rank(
-        ascending=False, method="min"
-    ).astype(int)
-    ranking = ranking.sort_values(
-        ["priority_rank", *id_columns], kind="stable"
-    ).reset_index(drop=True)
+    ranking["priority_rank"] = (
+        ranking["priority_score"].rank(ascending=False, method="min").astype(int)
+    )
+    ranking = ranking.sort_values(["priority_rank", *id_columns], kind="stable").reset_index(
+        drop=True
+    )
 
     contributions = normalized.mul(weights, axis=1)
     contributions.columns = [f"contribution_{column}" for column in contributions.columns]

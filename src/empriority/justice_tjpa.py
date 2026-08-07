@@ -58,7 +58,9 @@ def collect_tjpa_access_pa(output_directory: str | Path = "data/processed") -> d
         raise RuntimeError("No TJPA units parsed from official Balcao Virtual directory")
 
     base = _municipal_base()
-    name_to_code = {_norm(name): code for code, name in zip(base["municipality_code"], base["municipality"])}
+    name_to_code = {
+        _norm(name): code for code, name in zip(base["municipality_code"], base["municipality"])
+    }
     raw["municipality_code"] = raw["city"].map(lambda value: name_to_code.get(_norm(value)))
     raw = raw.dropna(subset=["municipality_code"]).copy()
     if raw.empty:
@@ -66,12 +68,20 @@ def collect_tjpa_access_pa(output_directory: str | Path = "data/processed") -> d
 
     raw["_unit"] = raw["unit_name"].map(_norm)
     raw["_type"] = raw["unit_type"].map(_norm)
-    raw["is_criminal"] = (raw["_unit"].str.contains("CRIM") | raw["_type"].str.contains("CRIM")).astype(int)
-    raw["is_juizado"] = (raw["_unit"].str.contains("JUIZADO") | raw["_type"].str.contains("JUIZADO")).astype(int)
-    raw["is_ceJusc"] = (raw["_unit"].str.contains("CEJUSC") | raw["_type"].str.contains("CEJUSC")).astype(int)
-    raw["is_women_specialized"] = raw["_unit"].str.contains(
-        r"MULHER|VIOLENCIA DOMESTICA|MARIA DA PENHA", regex=True
+    raw["is_criminal"] = (
+        raw["_unit"].str.contains("CRIM") | raw["_type"].str.contains("CRIM")
     ).astype(int)
+    raw["is_juizado"] = (
+        raw["_unit"].str.contains("JUIZADO") | raw["_type"].str.contains("JUIZADO")
+    ).astype(int)
+    raw["is_ceJusc"] = (
+        raw["_unit"].str.contains("CEJUSC") | raw["_type"].str.contains("CEJUSC")
+    ).astype(int)
+    raw["is_women_specialized"] = (
+        raw["_unit"]
+        .str.contains(r"MULHER|VIOLENCIA DOMESTICA|MARIA DA PENHA", regex=True)
+        .astype(int)
+    )
 
     grouped = raw.groupby("municipality_code", as_index=False).agg(
         justice_tjpa_units=("unit_name", "nunique"),
@@ -91,7 +101,9 @@ def collect_tjpa_access_pa(output_directory: str | Path = "data/processed") -> d
     raw_path = output / "justice_tjpa_directory_raw_pa.csv"
     metadata = output / "justice_tjpa_indicators_pa.metadata.json"
     result.to_csv(indicators, index=False, encoding="utf-8")
-    raw.drop(columns=["_unit", "_type"], errors="ignore").to_csv(raw_path, index=False, encoding="utf-8")
+    raw.drop(columns=["_unit", "_type"], errors="ignore").to_csv(
+        raw_path, index=False, encoding="utf-8"
+    )
     metadata.write_text(
         json.dumps(
             {

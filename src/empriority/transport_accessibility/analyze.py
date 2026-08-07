@@ -9,7 +9,6 @@ import pandas as pd
 
 from empriority.transport_accessibility.integrate import VARIABLES
 
-
 HIGH_CORRELATION_THRESHOLD = 0.90
 NEAR_CONSTANT_PREVALENCE = 0.05
 
@@ -56,10 +55,7 @@ def analyze_transport_indicators(
             near_constant.append(variable)
         elif metadata["unit"] == "binary":
             prevalence = float(series.mean())
-            if (
-                prevalence <= NEAR_CONSTANT_PREVALENCE
-                or prevalence >= 1 - NEAR_CONSTANT_PREVALENCE
-            ):
+            if prevalence <= NEAR_CONSTANT_PREVALENCE or prevalence >= 1 - NEAR_CONSTANT_PREVALENCE:
                 near_constant.append(variable)
 
     descriptive = pd.DataFrame(rows)
@@ -112,14 +108,10 @@ def analyze_transport_indicators(
     ]
 
     directional = [
-        variable
-        for variable, metadata in VARIABLES.items()
-        if metadata["direction"] != "context"
+        variable for variable, metadata in VARIABLES.items() if metadata["direction"] != "context"
     ]
     context = [
-        variable
-        for variable, metadata in VARIABLES.items()
-        if metadata["direction"] == "context"
+        variable for variable, metadata in VARIABLES.items() if metadata["direction"] == "context"
     ]
     eligible_after_variance_screen = [
         variable for variable in directional if variable not in near_constant

@@ -5,7 +5,7 @@ import json
 import re
 import time
 import zipfile
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from pathlib import Path
 from typing import Any
 from urllib.parse import parse_qs, urljoin, urlparse
@@ -14,9 +14,7 @@ import httpx
 
 from .catalog import SOURCES
 
-_ALLOWED_EXTENSIONS = (
-    ".zip", ".csv", ".json", ".geojson", ".kml", ".kmz", ".gpkg", ".shp"
-)
+_ALLOWED_EXTENSIONS = (".zip", ".csv", ".json", ".geojson", ".kml", ".kmz", ".gpkg", ".shp")
 _BLOCKED_HOSTS = {
     "facebook.com",
     "www.facebook.com",
@@ -35,10 +33,7 @@ _KEYWORDS = {
 
 
 def _query_output_extension(url: str) -> str | None:
-    query = {
-        key.lower(): values
-        for key, values in parse_qs(urlparse(url).query).items()
-    }
+    query = {key.lower(): values for key, values in parse_qs(urlparse(url).query).items()}
     formats = query.get("outputformat", [])
     if not formats:
         return None
@@ -71,8 +66,7 @@ def _validate_download_response(response: httpx.Response) -> None:
     if "text/html" in content_type:
         raise RuntimeError("rejected HTML response; expected a transport data file")
     if not (
-        path.endswith(_ALLOWED_EXTENSIONS)
-        or _query_output_extension(str(response.url)) is not None
+        path.endswith(_ALLOWED_EXTENSIONS) or _query_output_extension(str(response.url)) is not None
     ):
         raise RuntimeError("rejected response without an approved data-file extension")
 
@@ -162,7 +156,7 @@ def discover_and_download_transport_layers(
     raw_root.mkdir(parents=True, exist_ok=True)
     output.mkdir(parents=True, exist_ok=True)
 
-    generated_at = datetime.now(timezone.utc).isoformat()
+    generated_at = datetime.now(UTC).isoformat()
     manifest: dict[str, Any] = {
         "generated_at_utc": generated_at,
         "sources": {},
@@ -185,10 +179,7 @@ def discover_and_download_transport_layers(
     ) as client:
         for source in SOURCES:
             source_id = source["source_id"]
-            if (
-                source_id == "ibge_municipal_boundaries"
-                or not source.get("download_enabled", True)
-            ):
+            if source_id == "ibge_municipal_boundaries" or not source.get("download_enabled", True):
                 continue
             record: dict[str, Any] = {
                 "agency": source["agency"],
@@ -204,7 +195,9 @@ def discover_and_download_transport_layers(
                 page = _get_page_with_retry(client, source["official_page"])
                 links = _extract_links(page.text, str(page.url))
             except Exception as exc:
-                record["errors"].append({"stage": "page", "type": type(exc).__name__, "message": str(exc)})
+                record["errors"].append(
+                    {"stage": "page", "type": type(exc).__name__, "message": str(exc)}
+                )
                 links = []
             links = sorted(set(links) | set(direct_urls))
 
@@ -213,17 +206,13 @@ def discover_and_download_transport_layers(
                 key=lambda item: (-item[1], item[0]),
             )
             candidates = [
-                url for url, score in ranked
-                if score >= 5 and _is_download_candidate(url)
+                url for url, score in ranked if score >= 5 and _is_download_candidate(url)
             ][:max_candidates_per_source]
             record["discovered"] = candidates
             target_dir = raw_root / source_id
             target_dir.mkdir(parents=True, exist_ok=True)
             for existing in sorted(target_dir.iterdir()):
-                if not (
-                    existing.is_file()
-                    and existing.suffix.lower() in _ALLOWED_EXTENSIONS
-                ):
+                if not (existing.is_file() and existing.suffix.lower() in _ALLOWED_EXTENSIONS):
                     continue
                 try:
                     _validate_downloaded_file(existing)
@@ -294,7 +283,7 @@ def discover_and_download_transport_layers(
                         if path is not None and path.exists():
                             path.unlink()
                         if attempt < download_attempts:
-                            time.sleep(min(2 ** attempt, 8))
+                            time.sleep(min(2**attempt, 8))
                 if last_error is not None:
                     record["errors"].append(
                         {
@@ -323,7 +312,9 @@ def discover_and_download_transport_layers(
         }
     status = {
         "generated_at_utc": generated_at,
-        "status": "complete" if all(v["available"] > 0 for v in source_status.values()) else "partial",
+        "status": "complete"
+        if all(v["available"] > 0 for v in source_status.values())
+        else "partial",
         "sources": source_status,
     }
     status_path.write_text(json.dumps(status, ensure_ascii=False, indent=2), encoding="utf-8")
