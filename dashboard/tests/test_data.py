@@ -35,7 +35,8 @@ def test_scenario_parser_and_label():
     transport, weight = split_scenario(REFERENCE_SCENARIO)
     assert transport == "equal_modes__equal_roles"
     assert weight == "equal_dimensions"
-    assert "Modos iguais" in scenario_label(REFERENCE_SCENARIO)
+    assert "Equal modes" in scenario_label(REFERENCE_SCENARIO)
+    assert "Modos iguais" in scenario_label(REFERENCE_SCENARIO, "pt")
 
 
 def test_invalid_scenario_is_rejected():
