@@ -1,30 +1,30 @@
 {
-  "generated_at_utc": "2026-08-06T14:55:37.572032+00:00",
-  "status": "partial",
+  "generated_at_utc": "2026-08-07T04:24:28.492863+00:00",
+  "status": "complete",
   "sources": {
     "dnit_roads": {
-      "discovered": 0,
-      "downloaded": 0,
+      "discovered": 3,
+      "downloaded": 2,
       "errors": 1,
-      "status": "failed"
+      "status": "success"
     },
     "antaq_ports": {
-      "discovered": 0,
-      "downloaded": 0,
-      "errors": 1,
-      "status": "failed"
+      "discovered": 3,
+      "downloaded": 3,
+      "errors": 0,
+      "status": "success"
     },
     "antaq_waterways": {
-      "discovered": 0,
-      "downloaded": 0,
-      "errors": 1,
-      "status": "failed"
+      "discovered": 3,
+      "downloaded": 3,
+      "errors": 0,
+      "status": "success"
     },
     "anac_public_aerodromes": {
-      "discovered": 0,
-      "downloaded": 0,
+      "discovered": 3,
+      "downloaded": 2,
       "errors": 1,
-      "status": "failed"
+      "status": "success"
     }
   }
 }
