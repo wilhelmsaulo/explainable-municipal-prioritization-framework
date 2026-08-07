@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import csv
 import hashlib
 import json
 import re
@@ -81,14 +82,49 @@ def _load_anac_points(csv_path: Path) -> Any:
     import pandas as pd
 
     frame = None
+    errors: list[str] = []
+    parse_attempts = (
+        {"sep": ";", "engine": "python", "on_bad_lines": "skip"},
+        {
+            "sep": ";",
+            "engine": "python",
+            "quoting": csv.QUOTE_NONE,
+            "on_bad_lines": "skip",
+        },
+        {"sep": ",", "engine": "python", "on_bad_lines": "skip"},
+        {
+            "sep": ",",
+            "engine": "python",
+            "quoting": csv.QUOTE_NONE,
+            "on_bad_lines": "skip",
+        },
+    )
     for encoding in ("utf-8-sig", "latin1"):
-        try:
-            frame = pd.read_csv(csv_path, sep=None, engine="python", encoding=encoding)
+        for options in parse_attempts:
+            try:
+                candidate = pd.read_csv(csv_path, encoding=encoding, **options)
+                if len(candidate.columns) < 2:
+                    errors.append(
+                        f"{encoding}/{options['sep']}: only {len(candidate.columns)} column"
+                    )
+                    continue
+                _column(candidate, "Latitude", "LATGEOPOINT", "LATITUDE_DECIMAL")
+                _column(candidate, "Longitude", "LONGEOPOINT", "LONGITUDE_DECIMAL")
+                frame = candidate
+                break
+            except (UnicodeDecodeError, pd.errors.ParserError, ValueError) as error:
+                errors.append(
+                    f"{encoding}/{options['sep']}/quoting={options.get('quoting')}: "
+                    f"{type(error).__name__}: {error}"
+                )
+        if frame is not None:
             break
-        except UnicodeDecodeError:
-            continue
     if frame is None:
-        raise ValueError("Unable to decode the ANAC public-aerodrome CSV")
+        details = " | ".join(errors)
+        raise ValueError(
+            "Unable to parse the ANAC public-aerodrome CSV with the expected "
+            f"coordinate columns. Attempts: {details}"
+        )
 
     latitude = _column(frame, "Latitude", "LATGEOPOINT", "LATITUDE_DECIMAL")
     longitude = _column(frame, "Longitude", "LONGEOPOINT", "LONGITUDE_DECIMAL")
