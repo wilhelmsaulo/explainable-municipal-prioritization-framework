@@ -144,6 +144,7 @@ def discover_and_download_transport_layers(
     output_dir: str | Path = "data/processed/transport",
     max_candidates_per_source: int = 3,
     max_bytes_per_file: int = 80_000_000,
+    download_attempts: int = 3,
 ) -> dict[str, Path]:
     raw_root = Path(raw_dir)
     output = Path(output_dir)
@@ -157,13 +158,14 @@ def discover_and_download_transport_layers(
         "policy": {
             "max_candidates_per_source": max_candidates_per_source,
             "max_bytes_per_file": max_bytes_per_file,
-            "note": "Raw layers are workflow artifacts; manifests are committed for provenance.",
+            "download_attempts": download_attempts,
+            "note": "Raw layers are cached artifacts; manifests are committed for provenance.",
         },
     }
 
     headers = {"User-Agent": "empriority-research/0.1 (public-data reproducibility)"}
     transport = httpx.HTTPTransport(retries=2)
-    timeout = httpx.Timeout(30.0, connect=15.0, read=30.0, write=30.0, pool=15.0)
+    timeout = httpx.Timeout(90.0, connect=60.0, read=90.0, write=30.0, pool=30.0)
     with httpx.Client(
         timeout=timeout,
         follow_redirects=True,
@@ -179,6 +181,7 @@ def discover_and_download_transport_layers(
                 "official_page": source["official_page"],
                 "discovered": [],
                 "downloads": [],
+                "preserved": [],
                 "errors": [],
             }
             manifest["sources"][source_id] = record
@@ -202,38 +205,69 @@ def discover_and_download_transport_layers(
             record["discovered"] = candidates
             target_dir = raw_root / source_id
             target_dir.mkdir(parents=True, exist_ok=True)
+            for existing in sorted(target_dir.iterdir()):
+                if existing.is_file() and existing.suffix.lower() in _ALLOWED_EXTENSIONS:
+                    record["preserved"].append(
+                        {
+                            "path": str(existing),
+                            "bytes": existing.stat().st_size,
+                            "sha256": _sha256(existing),
+                            "zip_inventory": _zip_inventory(existing),
+                        }
+                    )
 
             for index, url in enumerate(candidates, start=1):
-                try:
-                    with client.stream("GET", url) as response:
-                        response.raise_for_status()
-                        _validate_download_response(response)
-                        length = int(response.headers.get("content-length") or 0)
-                        if length and length > max_bytes_per_file:
-                            record["errors"].append({"stage": "download", "url": url, "message": f"skipped size {length}"})
-                            continue
-                        filename = _safe_name(str(response.url), f"candidate_{index}")
-                        path = target_dir / filename
-                        total = 0
-                        with path.open("wb") as handle:
-                            for chunk in response.iter_bytes(1024 * 1024):
-                                total += len(chunk)
-                                if total > max_bytes_per_file:
-                                    raise RuntimeError(f"download exceeded {max_bytes_per_file} bytes")
-                                handle.write(chunk)
-                    entry = {
-                        "url": url,
-                        "resolved_url": str(response.url),
-                        "path": str(path),
-                        "bytes": path.stat().st_size,
-                        "sha256": _sha256(path),
-                        "content_type": response.headers.get("content-type"),
-                        "zip_inventory": _zip_inventory(path),
-                    }
-                    record["downloads"].append(entry)
-                    print(source_id, path.name, entry["bytes"])
-                except Exception as exc:
-                    record["errors"].append({"stage": "download", "url": url, "type": type(exc).__name__, "message": str(exc)})
+                last_error: Exception | None = None
+                for attempt in range(1, download_attempts + 1):
+                    path: Path | None = None
+                    try:
+                        with client.stream("GET", url) as response:
+                            response.raise_for_status()
+                            _validate_download_response(response)
+                            length = int(response.headers.get("content-length") or 0)
+                            if length and length > max_bytes_per_file:
+                                raise RuntimeError(f"download size {length} exceeds limit")
+                            filename = _safe_name(str(response.url), f"candidate_{index}")
+                            path = target_dir / filename
+                            total = 0
+                            with path.open("wb") as handle:
+                                for chunk in response.iter_bytes(1024 * 1024):
+                                    total += len(chunk)
+                                    if total > max_bytes_per_file:
+                                        raise RuntimeError(
+                                            f"download exceeded {max_bytes_per_file} bytes"
+                                        )
+                                    handle.write(chunk)
+                        entry = {
+                            "url": url,
+                            "resolved_url": str(response.url),
+                            "path": str(path),
+                            "bytes": path.stat().st_size,
+                            "sha256": _sha256(path),
+                            "content_type": response.headers.get("content-type"),
+                            "zip_inventory": _zip_inventory(path),
+                            "attempt": attempt,
+                        }
+                        record["downloads"].append(entry)
+                        print(source_id, path.name, entry["bytes"])
+                        last_error = None
+                        break
+                    except Exception as exc:
+                        last_error = exc
+                        if path is not None and path.exists():
+                            path.unlink()
+                        if attempt < download_attempts:
+                            time.sleep(min(2 ** attempt, 8))
+                if last_error is not None:
+                    record["errors"].append(
+                        {
+                            "stage": "download",
+                            "url": url,
+                            "type": type(last_error).__name__,
+                            "message": str(last_error),
+                            "attempts": download_attempts,
+                        }
+                    )
 
     manifest_path = output / "transport_layer_download_manifest.json"
     status_path = output / "transport_layer_download_status.json"
@@ -241,15 +275,18 @@ def discover_and_download_transport_layers(
 
     source_status = {}
     for source_id, record in manifest["sources"].items():
+        available = len(record["downloads"]) + len(record["preserved"])
         source_status[source_id] = {
             "discovered": len(record["discovered"]),
             "downloaded": len(record["downloads"]),
+            "preserved": len(record["preserved"]),
+            "available": available,
             "errors": len(record["errors"]),
-            "status": "success" if record["downloads"] else "failed",
+            "status": "success" if available else "failed",
         }
     status = {
         "generated_at_utc": generated_at,
-        "status": "complete" if all(v["downloaded"] > 0 for v in source_status.values()) else "partial",
+        "status": "complete" if all(v["available"] > 0 for v in source_status.values()) else "partial",
         "sources": source_status,
     }
     status_path.write_text(json.dumps(status, ensure_ascii=False, indent=2), encoding="utf-8")

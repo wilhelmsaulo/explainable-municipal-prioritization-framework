@@ -16,7 +16,9 @@ SOURCES: list[dict[str, Any]] = [
         "expected_formats": ["shp", "geojson", "csv"],
         "map_reference_year": 2021,
         "direct_urls": [
-            "https://geoservicos.inde.gov.br/geoserver/DNIT/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=DNIT:cide_2021_&outputFormat=SHAPE-ZIP"
+            "https://geoservicos.inde.gov.br/geoserver/DNIT/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=DNIT:cide_2021_&outputFormat=SHAPE-ZIP",
+            "https://geoservicos.inde.gov.br/geoserver/DNIT/ows?service=WFS&version=2.0.0&request=GetFeature&typeNames=DNIT:cide_2021_&outputFormat=application/json",
+            "https://geoservicos.inde.gov.br/geoserver/DNIT/ows?service=WFS&version=2.0.0&request=GetFeature&typeNames=DNIT:cide_2021_&outputFormat=SHAPE-ZIP",
         ],
         "purpose": "Official unified state and federal road-network geometry exposed by DNIT through INDE WFS.",
     },
@@ -55,7 +57,9 @@ SOURCES: list[dict[str, Any]] = [
         "expected_formats": ["shp", "geojson", "csv"],
         "map_reference_year": 2026,
         "direct_urls": [
-            "https://geoaisweb.decea.gov.br/geoserver/ICA/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=ICA:airport&outputFormat=SHAPE-ZIP"
+            "https://geoaisweb.decea.gov.br/geoserver/ICA/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=ICA:airport&outputFormat=SHAPE-ZIP",
+            "https://geoaisweb.decea.gov.br/geoserver/ICA/ows?service=WFS&version=2.0.0&request=GetFeature&typeNames=ICA:airport&outputFormat=application/json",
+            "https://geoaisweb.decea.gov.br/geoserver/ICA/ows?service=WFS&version=2.0.0&request=GetFeature&typeNames=ICA:airport&outputFormat=SHAPE-ZIP",
         ],
         "purpose": "Operational aerodrome geometry from the official AIRAC-updated GeoAISWEB service.",
     },
