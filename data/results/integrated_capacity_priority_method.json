@@ -1,0 +1,110 @@
+{
+  "schema_version": "1.0",
+  "research_target": "relative priority for strengthening municipal service capacity under multimodal access constraints",
+  "excluded_outcomes": [
+    "police occurrence counts",
+    "police occurrence rates",
+    "inferred or estimated hidden violence incidence"
+  ],
+  "normalization": {
+    "method": "within-sample percentile rank scaled to [0,1]",
+    "ties": "average rank",
+    "interpretation": "higher values always mean greater strengthening priority"
+  },
+  "hierarchy": {
+    "institutional_deficit": [
+      [
+        "institutional_deficit_available_4",
+        "benefit"
+      ]
+    ],
+    "service_components": {
+      "health": [
+        [
+          "cnes_health_service_deficit",
+          "benefit"
+        ],
+        [
+          "cnes_multidisciplinary_staff_deficit",
+          "benefit"
+        ]
+      ],
+      "social_protection": [
+        [
+          "social_specialized_service_deficit",
+          "benefit"
+        ]
+      ],
+      "justice": [
+        [
+          "justice_tjpa_access_deficit",
+          "benefit"
+        ]
+      ],
+      "specialized_protection_network": [
+        [
+          "protection_network_validated_category_diversity",
+          "cost"
+        ],
+        [
+          "protection_network_specialized_non_health_services",
+          "cost"
+        ]
+      ]
+    },
+    "service_network_aggregation": "equal mean across health, social protection, justice, and specialized protection network components",
+    "macro_dimensions": [
+      "institutional_deficit",
+      "service_network_deficit",
+      "transport_barrier"
+    ]
+  },
+  "macro_weight_scenarios": {
+    "equal_dimensions": {
+      "institutional_deficit": 0.3333333333333333,
+      "service_network_deficit": 0.3333333333333333,
+      "transport_barrier": 0.3333333333333333
+    },
+    "institutional_emphasis": {
+      "institutional_deficit": 0.5,
+      "service_network_deficit": 0.25,
+      "transport_barrier": 0.25
+    },
+    "service_network_emphasis": {
+      "institutional_deficit": 0.25,
+      "service_network_deficit": 0.5,
+      "transport_barrier": 0.25
+    },
+    "transport_emphasis": {
+      "institutional_deficit": 0.25,
+      "service_network_deficit": 0.25,
+      "transport_barrier": 0.5
+    }
+  },
+  "transport_scenarios": [
+    "equal_modes__equal_roles__score",
+    "equal_modes__availability_emphasis__score",
+    "equal_modes__proximity_emphasis__score",
+    "road_emphasis__equal_roles__score",
+    "road_emphasis__availability_emphasis__score",
+    "road_emphasis__proximity_emphasis__score",
+    "water_emphasis__equal_roles__score",
+    "water_emphasis__availability_emphasis__score",
+    "water_emphasis__proximity_emphasis__score",
+    "air_emphasis__equal_roles__score",
+    "air_emphasis__availability_emphasis__score",
+    "air_emphasis__proximity_emphasis__score"
+  ],
+  "integrated_scenario_count": 48,
+  "classification": {
+    "top_quartile_cutoff": 36,
+    "robust_threshold": "municipality remains in the relevant quartile in at least 75% of scenarios",
+    "scenario_sensitive_higher_threshold": "municipality is in the top quartile in 25% to less than 75% of scenarios"
+  },
+  "warnings": [
+    "The scores are relative decision-support constructs, not ground truth.",
+    "The model prioritizes capacity strengthening and does not estimate violence incidence or underreporting.",
+    "Facility presence and mapped proximity do not measure service quality, capacity, frequency, affordability, travel time, or seasonality.",
+    "Profile labels are exploratory robustness summaries and not automatic funding decisions."
+  ]
+}
