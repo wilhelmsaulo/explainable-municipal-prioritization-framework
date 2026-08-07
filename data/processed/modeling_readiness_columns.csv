@@ -1,0 +1,128 @@
+column,dimension,role,eligible_for_screening,reason,missing_fraction,unique_non_missing,numeric_non_missing
+municipality_code,other,identifier,False,municipal identifier,0.0,144,144
+municipality,other,identifier,False,municipal identifier,0.0,144,0
+women_policy_body_exists_raw,municipal_policy,categorical_support,False,requires explicit encoding,0.0,2,0
+women_policy_body_exists,municipal_policy,candidate_numeric,True,observed and varying numeric indicator,0.0,2,144
+specialized_women_police_station_raw,municipal_policy,categorical_support,False,requires explicit encoding,0.0,3,0
+specialized_women_police_station,municipal_policy,candidate_numeric,True,observed and varying numeric indicator,0.020833333333333332,2,141
+programs_actions_for_women_raw,municipal_policy,categorical_support,False,requires explicit encoding,0.0,4,0
+human_rights_protection_women_raw,municipal_policy,categorical_support,False,requires explicit encoding,0.0,3,0
+programs_actions_for_women,municipal_policy,incomplete_numeric,False,more than 20% missing,0.6597222222222222,2,49
+human_rights_protection_women,municipal_policy,candidate_numeric,True,observed and varying numeric indicator,0.006944444444444444,2,143
+campaigns_against_violence_women,municipal_policy,unavailable,False,entirely missing,1.0,0,0
+campaigns_indicator_status,municipal_policy,audit_or_support,False,"location, provenance or identifier field",0.0,1,0
+institutional_score_available_4,municipal_policy,candidate_numeric,True,observed and varying numeric indicator,0.0,5,144
+institutional_coverage,municipal_policy,candidate_numeric,True,observed and varying numeric indicator,0.0,3,144
+population_2023,demography,candidate_numeric,True,observed and varying numeric indicator,0.0,144,144
+police_all_female_records,violence,candidate_numeric,True,observed and varying numeric indicator,0.0,137,144
+police_violencia_domestica_lesao,violence,candidate_numeric,True,observed and varying numeric indicator,0.0,117,144
+police_lesao_corporal,violence,candidate_numeric,True,observed and varying numeric indicator,0.0,121,144
+police_violencia_sexual,violence,candidate_numeric,True,observed and varying numeric indicator,0.0,112,144
+police_estupro,violence,candidate_numeric,True,observed and varying numeric indicator,0.0,46,144
+police_estupro_vulneravel,violence,candidate_numeric,True,observed and varying numeric indicator,0.0,106,144
+police_homicidio_mulher,violence,candidate_numeric,True,observed and varying numeric indicator,0.0,22,144
+police_feminicidio,violence,candidate_numeric,True,observed and varying numeric indicator,0.0,10,144
+police_tentativa_feminicidio,violence,candidate_numeric,True,observed and varying numeric indicator,0.0,2,144
+police_feminicidio_any,violence,candidate_numeric,True,observed and varying numeric indicator,0.0,9,144
+police_police_years_observed,violence,constant,False,no municipal discrimination,0.0,1,144
+rate_all_female_records_per_100k_population_2022_2025,violence,candidate_numeric,True,observed and varying numeric indicator,0.0,144,144
+rate_violencia_domestica_lesao_per_100k_population_2022_2025,violence,candidate_numeric,True,observed and varying numeric indicator,0.0,144,144
+rate_lesao_corporal_per_100k_population_2022_2025,violence,candidate_numeric,True,observed and varying numeric indicator,0.0,144,144
+rate_violencia_sexual_per_100k_population_2022_2025,violence,candidate_numeric,True,observed and varying numeric indicator,0.0,144,144
+rate_estupro_per_100k_population_2022_2025,violence,candidate_numeric,True,observed and varying numeric indicator,0.0,143,144
+rate_estupro_vulneravel_per_100k_population_2022_2025,violence,candidate_numeric,True,observed and varying numeric indicator,0.0,144,144
+rate_homicidio_mulher_per_100k_population_2022_2025,violence,candidate_numeric,True,observed and varying numeric indicator,0.0,122,144
+rate_feminicidio_any_per_100k_population_2022_2025,violence,candidate_numeric,True,observed and varying numeric indicator,0.0,75,144
+institutional_deficit_available_4,municipal_policy,candidate_numeric,True,observed and varying numeric indicator,0.0,5,144
+cnes_active_establishments,health,candidate_numeric,True,observed and varying numeric indicator,0.0,73,144
+cnes_ubs,health,candidate_numeric,True,observed and varying numeric indicator,0.0,42,144
+cnes_hospitals,health,candidate_numeric,True,observed and varying numeric indicator,0.0,18,144
+cnes_caps,health,candidate_numeric,True,observed and varying numeric indicator,0.0,5,144
+cnes_emergency_units,health,candidate_numeric,True,observed and varying numeric indicator,0.0,7,144
+cnes_obstetric_centers,health,constant,False,no municipal discrimination,0.0,1,144
+cnes_health_service_deficit,health,candidate_numeric,True,observed and varying numeric indicator,0.0,4,144
+cnes_active_establishments_per_100k_population,health,candidate_numeric,True,observed and varying numeric indicator,0.0,144,144
+cnes_ubs_per_100k_population,health,candidate_numeric,True,observed and varying numeric indicator,0.0,144,144
+cnes_hospitals_per_100k_population,health,candidate_numeric,True,observed and varying numeric indicator,0.0,134,144
+cnes_caps_per_100k_population,health,candidate_numeric,True,observed and varying numeric indicator,0.0,109,144
+cnes_emergency_units_per_100k_population,health,candidate_numeric,True,observed and varying numeric indicator,0.0,42,144
+cnes_obstetric_centers_per_100k_population,health,constant,False,no municipal discrimination,0.0,1,144
+cnes_physicians,health,candidate_numeric,True,observed and varying numeric indicator,0.0,78,144
+cnes_physicians_weekly_hours,health,candidate_numeric,True,observed and varying numeric indicator,0.0,138,144
+cnes_nurses,health,candidate_numeric,True,observed and varying numeric indicator,0.0,72,144
+cnes_nurses_weekly_hours,health,candidate_numeric,True,observed and varying numeric indicator,0.0,137,144
+cnes_psychologists,health,candidate_numeric,True,observed and varying numeric indicator,0.0,30,144
+cnes_psychologists_weekly_hours,health,candidate_numeric,True,observed and varying numeric indicator,0.0,72,144
+cnes_social_workers,health,candidate_numeric,True,observed and varying numeric indicator,0.0,29,144
+cnes_social_workers_weekly_hours,health,candidate_numeric,True,observed and varying numeric indicator,0.0,80,144
+cnes_multidisciplinary_staff_deficit,health,candidate_numeric,True,observed and varying numeric indicator,0.0,3,144
+cnes_physicians_per_100k_population,health,candidate_numeric,True,observed and varying numeric indicator,0.0,144,144
+cnes_nurses_per_100k_population,health,candidate_numeric,True,observed and varying numeric indicator,0.0,144,144
+cnes_psychologists_per_100k_population,health,candidate_numeric,True,observed and varying numeric indicator,0.0,142,144
+cnes_social_workers_per_100k_population,health,candidate_numeric,True,observed and varying numeric indicator,0.0,140,144
+social_cras,social_assistance,candidate_numeric,True,observed and varying numeric indicator,0.0,11,144
+social_creas,social_assistance,candidate_numeric,True,observed and varying numeric indicator,0.0,4,144
+social_centro_pop,social_assistance,candidate_numeric,True,observed and varying numeric indicator,0.0,3,144
+social_centro_dia,social_assistance,unavailable,False,entirely missing,1.0,0,0
+social_centros_convivencia,social_assistance,unavailable,False,entirely missing,1.0,0,0
+social_unidades_acolhimento,social_assistance,unavailable,False,entirely missing,1.0,0,0
+social_cras_professionals,social_assistance,unavailable,False,entirely missing,1.0,0,0
+social_creas_professionals,social_assistance,unavailable,False,entirely missing,1.0,0,0
+social_basic_protection_deficit,social_assistance,constant,False,no municipal discrimination,0.0,1,144
+social_specialized_service_deficit,social_assistance,candidate_numeric,True,observed and varying numeric indicator,0.0,2,144
+social_cras_per_100k_population,social_assistance,candidate_numeric,True,observed and varying numeric indicator,0.0,144,144
+social_creas_per_100k_population,social_assistance,candidate_numeric,True,observed and varying numeric indicator,0.0,132,144
+social_centro_pop_per_100k_population,social_assistance,candidate_numeric,True,observed and varying numeric indicator,0.0,5,144
+social_centro_dia_per_100k_population,social_assistance,unavailable,False,entirely missing,1.0,0,0
+social_centros_convivencia_per_100k_population,social_assistance,unavailable,False,entirely missing,1.0,0,0
+social_unidades_acolhimento_per_100k_population,social_assistance,unavailable,False,entirely missing,1.0,0,0
+social_cras_professionals_per_100k_population,social_assistance,unavailable,False,entirely missing,1.0,0,0
+social_creas_professionals_per_100k_population,social_assistance,unavailable,False,entirely missing,1.0,0,0
+justice_tjpa_units,state_judiciary,candidate_numeric,True,observed and varying numeric indicator,0.0,12,144
+justice_tjpa_criminal_units,state_judiciary,candidate_numeric,True,observed and varying numeric indicator,0.0,6,144
+justice_tjpa_juizados,state_judiciary,candidate_numeric,True,observed and varying numeric indicator,0.0,5,144
+justice_tjpa_cejusc,state_judiciary,candidate_numeric,True,observed and varying numeric indicator,0.0,2,144
+justice_tjpa_women_specialized_units,state_judiciary,candidate_numeric,True,observed and varying numeric indicator,0.0,2,144
+justice_tjpa_local_access,state_judiciary,candidate_numeric,True,observed and varying numeric indicator,0.0,2,144
+justice_tjpa_access_deficit,state_judiciary,candidate_numeric,True,observed and varying numeric indicator,0.0,2,144
+protection_network_record_transcribed,protection_network,candidate_numeric,True,observed and varying numeric indicator,0.0,9,144
+protection_network_record_validated,protection_network,candidate_numeric,True,observed and varying numeric indicator,0.0,9,144
+protection_network_public_address,protection_network,candidate_numeric,True,observed and varying numeric indicator,0.0,8,144
+protection_network_public_phone,protection_network,candidate_numeric,True,observed and varying numeric indicator,0.0,7,144
+protection_network_confidential_address,protection_network,candidate_numeric,True,observed and varying numeric indicator,0.0,3,144
+protection_network_specialized_police,protection_network,candidate_numeric,True,observed and varying numeric indicator,0.0,3,144
+protection_network_specialized_judiciary,protection_network,candidate_numeric,True,observed and varying numeric indicator,0.0,3,144
+protection_network_specialized_prosecution,protection_network,candidate_numeric,True,observed and varying numeric indicator,0.0,2,144
+protection_network_specialized_defense,protection_network,constant,False,no municipal discrimination,0.0,1,144
+protection_network_shelter,protection_network,candidate_numeric,True,observed and varying numeric indicator,0.0,3,144
+protection_network_reference_center,protection_network,candidate_numeric,True,observed and varying numeric indicator,0.0,3,144
+protection_network_health_service,protection_network,candidate_numeric,True,observed and varying numeric indicator,0.0,6,144
+protection_network_maria_da_penha_patrol,protection_network,candidate_numeric,True,observed and varying numeric indicator,0.0,2,144
+protection_network_women_policy_body,protection_network,candidate_numeric,True,observed and varying numeric indicator,0.0,2,144
+protection_network_validated_category_diversity,protection_network,candidate_numeric,True,observed and varying numeric indicator,0.0,6,144
+protection_network_uncertain_records,protection_network,candidate_numeric,True,observed and varying numeric indicator,0.0,3,144
+protection_network_covered,protection_network,candidate_numeric,True,observed and varying numeric indicator,0.0,2,144
+protection_network_access_deficit,protection_network,constant,False,no municipal discrimination,0.0,1,144
+protection_network_specialized_non_health_services,protection_network,candidate_numeric,True,observed and varying numeric indicator,0.0,6,144
+protection_network_record_validated_per_100k_population,protection_network,candidate_numeric,True,observed and varying numeric indicator,0.0,36,144
+protection_network_specialized_non_health_services_per_100k_population,protection_network,candidate_numeric,True,observed and varying numeric indicator,0.0,23,144
+protection_network_specialized_police_per_100k_population,protection_network,candidate_numeric,True,observed and varying numeric indicator,0.0,20,144
+protection_network_shelter_per_100k_population,protection_network,candidate_numeric,True,observed and varying numeric indicator,0.0,7,144
+protection_network_reference_center_per_100k_population,protection_network,candidate_numeric,True,observed and varying numeric indicator,0.0,10,144
+protection_network_seat_latitude,protection_network,audit_or_support,False,"location, provenance or identifier field",0.0,144,144
+protection_network_seat_longitude,protection_network,audit_or_support,False,"location, provenance or identifier field",0.0,144,144
+protection_network_seat_geocoding_confidence,protection_network,audit_or_support,False,"location, provenance or identifier field",0.0,2,0
+protection_network_nearest_any_public_km,protection_network,candidate_numeric,True,observed and varying numeric indicator,0.0,144,144
+protection_network_nearest_any_public_service_id,protection_network,audit_or_support,False,"location, provenance or identifier field",0.0,12,0
+protection_network_nearest_specialized_non_health_km,protection_network,candidate_numeric,True,observed and varying numeric indicator,0.0,144,144
+protection_network_nearest_specialized_non_health_service_id,protection_network,audit_or_support,False,"location, provenance or identifier field",0.0,3,0
+protection_network_nearest_specialized_police_km,protection_network,unavailable,False,entirely missing,1.0,0,0
+protection_network_nearest_specialized_police_service_id,protection_network,audit_or_support,False,"location, provenance or identifier field",1.0,0,0
+protection_network_nearest_justice_km,protection_network,candidate_numeric,True,observed and varying numeric indicator,0.0,144,144
+protection_network_nearest_justice_service_id,protection_network,audit_or_support,False,"location, provenance or identifier field",0.0,1,0
+protection_network_nearest_shelter_km,protection_network,unavailable,False,entirely missing,1.0,0,0
+protection_network_nearest_shelter_service_id,protection_network,audit_or_support,False,"location, provenance or identifier field",1.0,0,0
+protection_network_nearest_reference_center_km,protection_network,candidate_numeric,True,observed and varying numeric indicator,0.0,144,144
+protection_network_nearest_reference_center_service_id,protection_network,audit_or_support,False,"location, provenance or identifier field",0.0,2,0
+protection_network_nearest_health_km,protection_network,candidate_numeric,True,observed and varying numeric indicator,0.0,144,144
+protection_network_nearest_health_service_id,protection_network,audit_or_support,False,"location, provenance or identifier field",0.0,11,0

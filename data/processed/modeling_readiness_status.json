@@ -1,0 +1,8 @@
+{
+  "status": "ready_for_criterion_screening",
+  "matrix_rows": 144,
+  "matrix_columns": 127,
+  "candidate_numeric_columns": 90,
+  "transport_indicators_pending": true,
+  "next_step": "Conceptual and statistical screening of candidate criteria"
+}

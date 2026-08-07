@@ -1,0 +1,30 @@
+{
+  "generated_at_utc": "2026-08-07T03:09:49.615862+00:00",
+  "status": "ready_for_criterion_screening",
+  "audit_status": "warning",
+  "rows": 144,
+  "columns_before_cleanup": 134,
+  "columns_after_cleanup": 127,
+  "removed_columns": [
+    "justice_components_available",
+    "justice_access_score_available",
+    "justice_access_coverage_ratio",
+    "justice_access_deficit_ratio",
+    "justice_full_access_available",
+    "justice_specialized_women_services",
+    "justice_specialized_women_access"
+  ],
+  "removed_deprecated_outputs": [
+    "justice_mppa_diagnostic.json",
+    "justice_dimension_status.json",
+    "justice_access_summary.json"
+  ],
+  "retained_scope": {
+    "state_judiciary": "TJPA only",
+    "dpe": "excluded",
+    "mppa": "excluded",
+    "protection_network": "retained with geospatial accessibility",
+    "transport": "official source layer prepared; municipal indicators pending"
+  },
+  "next_step": "Conceptual and statistical screening of candidate criteria"
+}
