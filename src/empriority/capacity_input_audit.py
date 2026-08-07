@@ -93,6 +93,36 @@ def build_capacity_input_audit(
         )
     profile = pd.DataFrame(profiles)
 
+    institutional_deficit = pd.to_numeric(
+        article["institutional_deficit_available_4"], errors="raise"
+    )
+    institutional_coverage = pd.to_numeric(
+        article["institutional_coverage"], errors="raise"
+    )
+    institutional_ratio = institutional_deficit / institutional_coverage
+    published_rank = institutional_deficit.rank(method="average", pct=True)
+    coverage_adjusted_rank = institutional_ratio.rank(method="average", pct=True)
+    rank_shift = (published_rank - coverage_adjusted_rank).abs()
+    coverage_summary = (
+        pd.DataFrame(
+            {
+                "coverage": institutional_coverage,
+                "deficit": institutional_deficit,
+                "deficit_ratio": institutional_ratio,
+            }
+        )
+        .groupby("coverage")
+        .agg(
+            municipalities=("deficit", "size"),
+            mean_deficit=("deficit", "mean"),
+            median_deficit=("deficit", "median"),
+            mean_deficit_ratio=("deficit_ratio", "mean"),
+            median_deficit_ratio=("deficit_ratio", "median"),
+        )
+        .reset_index()
+        .to_dict("records")
+    )
+
     police_columns = [
         column
         for column in municipal
@@ -147,6 +177,27 @@ def build_capacity_input_audit(
             "comparability_caution": (
                 "Municipalities have two to four observed institutional items; "
                 "coverage sensitivity must be reported without silently changing scores."
+            ),
+            "diagnostic_only_sensitivity": {
+                "alternative": "observed deficit divided by observed coverage",
+                "spearman_rank_correlation": float(
+                    published_rank.corr(coverage_adjusted_rank)
+                ),
+                "mean_absolute_percentile_rank_shift": float(rank_shift.mean()),
+                "median_absolute_percentile_rank_shift": float(rank_shift.median()),
+                "maximum_absolute_percentile_rank_shift": float(rank_shift.max()),
+                "coverage_group_summary": coverage_summary,
+                "published_framework_changed": False,
+            },
+        },
+        "indicator_ties": {
+            "high_tie_threshold": 0.75,
+            "indicators_above_threshold": profile.loc[
+                profile["largest_tie_fraction"].ge(0.75), "column"
+            ].tolist(),
+            "interpretation": (
+                "Large tie groups reduce discrimination but do not invalidate a "
+                "criterion; their influence is evaluated through the declared scenarios."
             ),
         },
         "population_provenance_note": (
