@@ -56,10 +56,6 @@ jobs:
                   "https://geoaisweb.decea.gov.br/geoserver/ICA/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=ICA:airport&outputFormat=SHAPE-ZIP",
                   None,
               ),
-              "data/raw/transport/anac/public_aerodromes_2026.csv": (
-                  "https://www.gov.br/anac/pt-br/assuntos/regulados/aeroportos-e-aerodromos/cadastro-de-aerodromos-privativo/aerodromos-cadastrados/cadastro-de-aerodromos-civis-publicos.csv",
-                  None,
-              ),
               "data/raw/transport/ibge/PA_Municipios_2023.zip": (
                   "https://geoftp.ibge.gov.br/organizacao_do_territorio/malhas_territoriais/"
                   "malhas_municipais/municipio_2023/UFs/PA/PA_Municipios_2023.zip",
@@ -117,7 +113,6 @@ jobs:
                   "data/raw/transport/antaq/crossings_2025.zip",
                   "data/raw/transport/antaq/waterways_2022.zip",
                   "data/raw/transport/decea/airports_2026.zip",
-                  "data/raw/transport/anac/public_aerodromes_2026.csv",
                   "data/raw/transport/ibge/PA_Municipios_2023.zip",
               )
               print(outputs)
@@ -134,7 +129,6 @@ jobs:
           path: |
             data/raw/transport/antaq
             data/raw/transport/decea
-            data/raw/transport/anac
             data/raw/transport/ibge
             data/processed/transport/nonroad_indicators_pa.csv
             data/processed/transport/nonroad_indicators_pa_audit.json
