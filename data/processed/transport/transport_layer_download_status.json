@@ -1,21 +1,29 @@
 {
-  "generated_at_utc": "2026-08-07T13:43:01.233736+00:00",
+  "generated_at_utc": "2026-08-07T17:32:21.035971+00:00",
   "status": "complete",
   "sources": {
     "mapbiomas_state_roads": {
       "discovered": 3,
       "downloaded": 1,
-      "preserved": 0,
-      "available": 1,
+      "preserved": 1,
+      "available": 2,
       "errors": 2,
       "status": "success"
     },
     "mapbiomas_federal_roads": {
       "discovered": 3,
       "downloaded": 1,
-      "preserved": 0,
-      "available": 1,
+      "preserved": 1,
+      "available": 2,
       "errors": 2,
+      "status": "success"
+    },
+    "mapbiomas_other_roads": {
+      "discovered": 3,
+      "downloaded": 3,
+      "preserved": 3,
+      "available": 6,
+      "errors": 0,
       "status": "success"
     },
     "antaq_ports": {
