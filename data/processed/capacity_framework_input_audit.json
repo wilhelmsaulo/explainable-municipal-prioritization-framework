@@ -48,7 +48,51 @@
     },
     "deficit_rule": "available observed items minus positive observed items",
     "missing_responses_are_not_converted_to_deficit": true,
-    "comparability_caution": "Municipalities have two to four observed institutional items; coverage sensitivity must be reported without silently changing scores."
+    "comparability_caution": "Municipalities have two to four observed institutional items; coverage sensitivity must be reported without silently changing scores.",
+    "diagnostic_only_sensitivity": {
+      "alternative": "observed deficit divided by observed coverage",
+      "spearman_rank_correlation": 0.9539725254812806,
+      "mean_absolute_percentile_rank_shift": 0.0646219135802469,
+      "median_absolute_percentile_rank_shift": 0.04513888888888884,
+      "maximum_absolute_percentile_rank_shift": 0.38541666666666663,
+      "coverage_group_summary": [
+        {
+          "coverage": 2,
+          "municipalities": 3,
+          "mean_deficit": 1.3333333333333333,
+          "median_deficit": 2.0,
+          "mean_deficit_ratio": 0.6666666666666666,
+          "median_deficit_ratio": 1.0
+        },
+        {
+          "coverage": 3,
+          "municipalities": 93,
+          "mean_deficit": 1.989247311827957,
+          "median_deficit": 2.0,
+          "mean_deficit_ratio": 0.6630824372759856,
+          "median_deficit_ratio": 0.6666666666666666
+        },
+        {
+          "coverage": 4,
+          "municipalities": 48,
+          "mean_deficit": 1.9166666666666667,
+          "median_deficit": 2.0,
+          "mean_deficit_ratio": 0.4791666666666667,
+          "median_deficit_ratio": 0.5
+        }
+      ],
+      "published_framework_changed": false
+    }
+  },
+  "indicator_ties": {
+    "high_tie_threshold": 0.75,
+    "indicators_above_threshold": [
+      "cnes_multidisciplinary_staff_deficit",
+      "social_specialized_service_deficit",
+      "protection_network_validated_category_diversity",
+      "protection_network_specialized_non_health_services"
+    ],
+    "interpretation": "Large tie groups reduce discrimination but do not invalidate a criterion; their influence is evaluated through the declared scenarios."
   },
   "population_provenance_note": "The population field stored as population_2023 represents the 2022 Demographic Census released/processed in 2023; it is not a framework criterion.",
   "police_data": {
