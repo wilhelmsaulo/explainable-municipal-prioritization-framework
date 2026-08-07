@@ -63,6 +63,31 @@ same command and rejects missing municipalities, invalid weights, missing or
 infinite outputs, out-of-range scores, or regression differences introduced
 during the initial migration from code constants to configuration.
 
+## Diagnostics and explainability
+
+```bash
+empriority diagnose-capacity-framework \
+  --config config/capacity_priority.yml
+```
+
+This command reads the already published profiles and scenario matrix; it does
+not recalculate or replace them. It produces:
+
+- pairwise Spearman correlations among the two capacity-deficit dimensions and
+  the transport barrier in the declared reference transport scenario;
+- agreement metrics for all 48 scenarios against the declared reference,
+  including rank correlation, top-10 overlap, top-quartile overlap, and rank
+  shifts;
+- a municipality-complete explanation table with mean weighted contributions
+  and dominant-dimension frequencies across all scenarios;
+- a machine-readable audit that reconstructs every published score and fails
+  if any criterion, weight, score, rank, municipality, or scenario is missing or
+  inconsistent.
+
+The reference scenario is an interpretive baseline only. It does not receive
+extra weight in the municipal profiles, and the diagnostic outputs do not
+alter criteria, weights, scores, ranks, or stability classifications.
+
 ## Portability
 
 Applying the framework to another territory requires a new versioned YAML
