@@ -80,15 +80,6 @@ SOURCES: list[dict[str, Any]] = [
         "purpose": "Economically navigated inland waterways and navigation corridors.",
     },
     {
-        "source_id": "anac_public_aerodromes",
-        "agency": "ANAC",
-        "theme": "airports",
-        "official_page": "https://www.gov.br/anac/pt-br/assuntos/regulados/aeroportos-e-aerodromos/cadastro-publico/cadastro-de-aerodromos-de-uso-publico",
-        "expected_formats": ["csv", "json"],
-        "map_reference_year": 2026,
-        "purpose": "Public aerodromes and their geographic coordinates.",
-    },
-    {
         "source_id": "decea_airports",
         "agency": "DECEA/ICA",
         "theme": "airports",
@@ -171,7 +162,7 @@ def build_transport_source_catalog(
                 "provenance": {
                     "reference_map": "Mapa Multimodal Pará - Ministério dos Transportes",
                     "reference_map_updated": "2023-09-22",
-                    "note": "Catalog follows agencies cited in the official multimodal map: DNIT, ANTAQ, ANAC and IBGE.",
+                    "note": "Catalog retains the official sources used by the reproducible pipeline: DNIT/MapBiomas, ANTAQ, DECEA/ICA and IBGE.",
                 },
             },
             ensure_ascii=False,
