@@ -14,8 +14,11 @@ SOURCES: list[dict[str, Any]] = [
         "theme": "roads",
         "official_page": "https://www.gov.br/dnit/pt-br/assuntos/atlas-e-mapas/pnv-e-snv",
         "expected_formats": ["shp", "geojson", "csv"],
-        "map_reference_year": 2026,
-        "purpose": "Federal road network and road-surface/status classes.",
+        "map_reference_year": 2021,
+        "direct_urls": [
+            "https://geoservicos.inde.gov.br/geoserver/DNIT/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=DNIT:cide_2021_&outputFormat=SHAPE-ZIP"
+        ],
+        "purpose": "Official unified state and federal road-network geometry exposed by DNIT through INDE WFS.",
     },
     {
         "source_id": "antaq_ports",
@@ -43,6 +46,18 @@ SOURCES: list[dict[str, Any]] = [
         "expected_formats": ["csv", "json"],
         "map_reference_year": 2026,
         "purpose": "Public aerodromes and their geographic coordinates.",
+    },
+    {
+        "source_id": "decea_airports",
+        "agency": "DECEA/ICA",
+        "theme": "airports",
+        "official_page": "https://geoaisweb.decea.gov.br/geoserver/ICA/ows?service=WFS&version=2.0.0&request=GetCapabilities",
+        "expected_formats": ["shp", "geojson", "csv"],
+        "map_reference_year": 2026,
+        "direct_urls": [
+            "https://geoaisweb.decea.gov.br/geoserver/ICA/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=ICA:airport&outputFormat=SHAPE-ZIP"
+        ],
+        "purpose": "Operational aerodrome geometry from the official AIRAC-updated GeoAISWEB service.",
     },
     {
         "source_id": "ibge_municipal_boundaries",
