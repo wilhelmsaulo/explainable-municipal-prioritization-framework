@@ -32,18 +32,14 @@ def build_capacity_diagnostics(
     diagnostic_outputs = diagnostic_config["outputs"]
     municipality_key = config["study_scope"]["municipality_key"]
     expected_municipalities = int(config["study_scope"]["expected_municipalities"])
-    expected_transport_scenarios = int(
-        config["study_scope"]["expected_transport_scenarios"]
-    )
+    expected_transport_scenarios = int(config["study_scope"]["expected_transport_scenarios"])
     macro_weights = config["macro_weight_scenarios"]
     expected_integrated_scenarios = expected_transport_scenarios * len(macro_weights)
     top_k = int(config["robustness"]["top_k"])
 
     profiles = pd.read_csv(outputs["profiles"], dtype={municipality_key: str})
     scenarios = pd.read_csv(outputs["scenarios"], dtype={municipality_key: str})
-    transport = pd.read_csv(
-        config["inputs"]["transport_scenarios"], dtype={municipality_key: str}
-    )
+    transport = pd.read_csv(config["inputs"]["transport_scenarios"], dtype={municipality_key: str})
     for name, frame in {
         "profiles": profiles,
         "scenarios": scenarios,
@@ -90,9 +86,7 @@ def build_capacity_diagnostics(
                 {
                     "dimension_1": left,
                     "dimension_2": right,
-                    "spearman_correlation": _rank_correlation(
-                        dimensions[left], dimensions[right]
-                    ),
+                    "spearman_correlation": _rank_correlation(dimensions[left], dimensions[right]),
                     "reference_transport_scenario": reference_transport,
                     "municipalities": len(dimensions),
                 }
@@ -102,9 +96,7 @@ def build_capacity_diagnostics(
     reference_ranks = joined[reference_rank_column]
     reference_top_k = set(joined.loc[reference_ranks.le(top_k), municipality_key])
     quartile_cutoff = int(np.ceil(len(joined) * float(config["robustness"]["quartile_fraction"])))
-    reference_quartile = set(
-        joined.loc[reference_ranks.le(quartile_cutoff), municipality_key]
-    )
+    reference_quartile = set(joined.loc[reference_ranks.le(quartile_cutoff), municipality_key])
     agreement_rows: list[dict[str, Any]] = []
     reconstruction_errors: list[float] = []
     contribution_frames: list[pd.DataFrame] = []
@@ -122,14 +114,10 @@ def build_capacity_diagnostics(
             institutional = joined["institutional_deficit"] * float(
                 weights["institutional_deficit"]
             )
-            service = joined["service_network_deficit"] * float(
-                weights["service_network_deficit"]
-            )
+            service = joined["service_network_deficit"] * float(weights["service_network_deficit"])
             transport_contribution = barrier * float(weights["transport_barrier"])
             reconstructed = institutional + service + transport_contribution
-            reconstruction_errors.extend(
-                np.abs(reconstructed - joined[score_column]).tolist()
-            )
+            reconstruction_errors.extend(np.abs(reconstructed - joined[score_column]).tolist())
             contribution_frames.append(
                 pd.DataFrame(
                     {
@@ -145,9 +133,7 @@ def build_capacity_diagnostics(
             ranks = joined[rank_column]
             absolute_shift = np.abs(ranks - reference_ranks)
             scenario_top_k = set(joined.loc[ranks.le(top_k), municipality_key])
-            scenario_quartile = set(
-                joined.loc[ranks.le(quartile_cutoff), municipality_key]
-            )
+            scenario_quartile = set(joined.loc[ranks.le(quartile_cutoff), municipality_key])
             agreement_rows.append(
                 {
                     "scenario": scenario_name,
@@ -157,15 +143,10 @@ def build_capacity_diagnostics(
                     "rank_correlation": float(ranks.corr(reference_ranks)),
                     "top_k": top_k,
                     "top_k_overlap_count": len(scenario_top_k & reference_top_k),
-                    "top_k_overlap_fraction": len(scenario_top_k & reference_top_k)
-                    / top_k,
+                    "top_k_overlap_fraction": len(scenario_top_k & reference_top_k) / top_k,
                     "top_quartile_cutoff": quartile_cutoff,
-                    "top_quartile_overlap_count": len(
-                        scenario_quartile & reference_quartile
-                    ),
-                    "top_quartile_overlap_fraction": len(
-                        scenario_quartile & reference_quartile
-                    )
+                    "top_quartile_overlap_count": len(scenario_quartile & reference_quartile),
+                    "top_quartile_overlap_fraction": len(scenario_quartile & reference_quartile)
                     / quartile_cutoff,
                     "mean_absolute_rank_shift": float(absolute_shift.mean()),
                     "median_absolute_rank_shift": float(absolute_shift.median()),
@@ -181,13 +162,9 @@ def build_capacity_diagnostics(
         "transport_barrier_contribution",
     ]
     contribution_long["dominant_dimension"] = (
-        contribution_long[contribution_columns]
-        .idxmax(axis=1)
-        .str.removesuffix("_contribution")
+        contribution_long[contribution_columns].idxmax(axis=1).str.removesuffix("_contribution")
     )
-    contribution_means = contribution_long.groupby(municipality_key)[
-        contribution_columns
-    ].mean()
+    contribution_means = contribution_long.groupby(municipality_key)[contribution_columns].mean()
     contribution_means.columns = [f"mean_{column}" for column in contribution_columns]
     dominant_frequencies = (
         pd.crosstab(
@@ -225,8 +202,7 @@ def build_capacity_diagnostics(
     )
     frequency_columns = [column for column in explanation if column.startswith("dominant_")]
     frequency_labels = [
-        column.removeprefix("dominant_").removesuffix("_frequency")
-        for column in frequency_columns
+        column.removeprefix("dominant_").removesuffix("_frequency") for column in frequency_columns
     ]
     frequency_values = explanation[frequency_columns].to_numpy()
     maxima = frequency_values.max(axis=1, keepdims=True)
@@ -245,19 +221,14 @@ def build_capacity_diagnostics(
     numeric_outputs = [correlations, agreement, explanation]
     checks = {
         "municipalities_expected": len(joined) == expected_municipalities,
-        "transport_scenarios_expected": len(transport_columns)
-        == expected_transport_scenarios,
-        "integrated_scenarios_expected": len(agreement)
-        == expected_integrated_scenarios,
-        "explanations_cover_all_municipalities": len(explanation)
-        == expected_municipalities,
+        "transport_scenarios_expected": len(transport_columns) == expected_transport_scenarios,
+        "integrated_scenarios_expected": len(agreement) == expected_integrated_scenarios,
+        "explanations_cover_all_municipalities": len(explanation) == expected_municipalities,
         "unique_explanation_municipalities": explanation[municipality_key].nunique()
         == expected_municipalities,
-        "published_scores_reconstructed": max(reconstruction_errors, default=np.inf)
-        <= 1e-12,
+        "published_scores_reconstructed": max(reconstruction_errors, default=np.inf) <= 1e-12,
         "all_diagnostics_complete": all(
-            frame.select_dtypes(include="number").notna().all().all()
-            for frame in numeric_outputs
+            frame.select_dtypes(include="number").notna().all().all() for frame in numeric_outputs
         ),
         "all_diagnostics_finite": all(
             np.isfinite(frame.select_dtypes(include="number").to_numpy()).all()
@@ -291,19 +262,13 @@ def build_capacity_diagnostics(
             "minimum_rank_correlation": float(agreement["rank_correlation"].min()),
             "median_rank_correlation": float(agreement["rank_correlation"].median()),
             "maximum_rank_correlation": float(agreement["rank_correlation"].max()),
-            "minimum_top_k_overlap_fraction": float(
-                agreement["top_k_overlap_fraction"].min()
-            ),
-            "maximum_top_k_overlap_fraction": float(
-                agreement["top_k_overlap_fraction"].max()
-            ),
+            "minimum_top_k_overlap_fraction": float(agreement["top_k_overlap_fraction"].min()),
+            "maximum_top_k_overlap_fraction": float(agreement["top_k_overlap_fraction"].max()),
         },
         "interpretation": (
             "Diagnostics describe agreement and contribution patterns in the already "
             "published scenarios; they do not alter criteria, weights, scores, or ranks."
         ),
     }
-    paths["audit"].write_text(
-        json.dumps(audit, ensure_ascii=False, indent=2), encoding="utf-8"
-    )
+    paths["audit"].write_text(json.dumps(audit, ensure_ascii=False, indent=2), encoding="utf-8")
     return paths

@@ -14,8 +14,8 @@ if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
 from dashboard.data import (  # noqa: E402
-    MACRO_WEIGHTS,
     MACRO_WEIGHT_ORDER,
+    MACRO_WEIGHTS,
     PROFILE_LABELS,
     REFERENCE_SCENARIO,
     WEIGHT_LABELS,
@@ -197,9 +197,7 @@ def scenario_table(data, scenario: str, language: str) -> pd.DataFrame:
     current = selected_scenario(data.scenarios, scenario)
     result = current.merge(data.profiles, on=["municipality_code", "municipality"])
     result = result.merge(data.municipalities, on=["municipality_code", "municipality"])
-    result["profile_label"] = result["priority_stability_profile"].map(
-        PROFILE_LABELS[language]
-    )
+    result["profile_label"] = result["priority_stability_profile"].map(PROFILE_LABELS[language])
     return result.sort_values(["selected_rank", "municipality"], kind="stable")
 
 
@@ -272,14 +270,20 @@ def municipal_profile_tab(data, scenario: str, language: str, tx: dict[str, str]
     c1, c2, c3, c4 = st.columns(4)
     c1.metric(tx["selected_rank"], int(row["selected_rank"]))
     c2.metric(tx["selected_score"], fmt(row["selected_score"], language))
-    c3.metric(tx["best_worst"], f"{int(row['best_priority_rank'])}–{int(row['worst_priority_rank'])}")
+    c3.metric(
+        tx["best_worst"], f"{int(row['best_priority_rank'])}–{int(row['worst_priority_rank'])}"
+    )
     c4.metric(tx["top_quartile"], f"{100 * row['top_quartile_frequency']:.1f}%")
 
     left, right = st.columns(2)
     with left:
         contributions = pd.DataFrame(
             {
-                tx["dimension"]: [tx["institutional"], tx["service_network"], tx["transport_barrier"]],
+                tx["dimension"]: [
+                    tx["institutional"],
+                    tx["service_network"],
+                    tx["transport_barrier"],
+                ],
                 tx["mean_contribution"]: [
                     explanation["mean_institutional_contribution"],
                     explanation["mean_service_network_contribution"],
@@ -373,7 +377,9 @@ def comparison_tab(data, scenario: str, language: str, tx: dict[str, str]) -> No
         "top_quartile_frequency": tx["top_quartile"],
         "profile_label": tx["stability"],
     }
-    st.dataframe(compare[list(columns)].rename(columns=columns), hide_index=True, use_container_width=True)
+    st.dataframe(
+        compare[list(columns)].rename(columns=columns), hide_index=True, use_container_width=True
+    )
 
 
 def methodology_tab(data, language: str, tx: dict[str, str]) -> None:
