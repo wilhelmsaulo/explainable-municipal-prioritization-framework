@@ -12,14 +12,16 @@
       ],
       "map_reference_year": 2021,
       "direct_urls": [
-        "https://geoservicos.inde.gov.br/geoserver/DNIT/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=DNIT:cide_2021_&outputFormat=SHAPE-ZIP"
+        "https://geoservicos.inde.gov.br/geoserver/DNIT/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=DNIT:cide_2021_&outputFormat=SHAPE-ZIP",
+        "https://geoservicos.inde.gov.br/geoserver/DNIT/ows?service=WFS&version=2.0.0&request=GetFeature&typeNames=DNIT:cide_2021_&outputFormat=application/json",
+        "https://geoservicos.inde.gov.br/geoserver/DNIT/ows?service=WFS&version=2.0.0&request=GetFeature&typeNames=DNIT:cide_2021_&outputFormat=SHAPE-ZIP"
       ],
       "purpose": "Official unified state and federal road-network geometry exposed by DNIT through INDE WFS.",
       "status": "available",
       "http_status": 200,
       "resolved_url": "https://www.gov.br/dnit/pt-br/assuntos/atlas-e-mapas/pnv-e-snv",
       "content_type": "text/html;charset=utf-8",
-      "checked_at_utc": "2026-08-07T05:09:47.718788+00:00"
+      "checked_at_utc": "2026-08-07T05:30:55.177592+00:00"
     },
     {
       "source_id": "antaq_ports",
@@ -36,7 +38,7 @@
       "http_status": 200,
       "resolved_url": "https://www.gov.br/antaq/pt-br/central-de-conteudos/informacoes-geograficas",
       "content_type": "text/html;charset=utf-8",
-      "checked_at_utc": "2026-08-07T05:09:47.718788+00:00"
+      "checked_at_utc": "2026-08-07T05:30:55.177592+00:00"
     },
     {
       "source_id": "antaq_waterways",
@@ -52,7 +54,7 @@
       "http_status": 200,
       "resolved_url": "https://www.gov.br/antaq/pt-br/central-de-conteudos/informacoes-geograficas",
       "content_type": "text/html;charset=utf-8",
-      "checked_at_utc": "2026-08-07T05:09:47.718788+00:00"
+      "checked_at_utc": "2026-08-07T05:30:55.177592+00:00"
     },
     {
       "source_id": "anac_public_aerodromes",
@@ -69,7 +71,7 @@
       "http_status": 200,
       "resolved_url": "https://www.gov.br/anac/pt-br/assuntos/regulados/aeroportos-e-aerodromos/cadastro-publico/cadastro-de-aerodromos-de-uso-publico",
       "content_type": "text/html;charset=utf-8",
-      "checked_at_utc": "2026-08-07T05:09:47.718788+00:00"
+      "checked_at_utc": "2026-08-07T05:30:55.177592+00:00"
     },
     {
       "source_id": "decea_airports",
@@ -83,14 +85,16 @@
       ],
       "map_reference_year": 2026,
       "direct_urls": [
-        "https://geoaisweb.decea.gov.br/geoserver/ICA/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=ICA:airport&outputFormat=SHAPE-ZIP"
+        "https://geoaisweb.decea.gov.br/geoserver/ICA/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=ICA:airport&outputFormat=SHAPE-ZIP",
+        "https://geoaisweb.decea.gov.br/geoserver/ICA/ows?service=WFS&version=2.0.0&request=GetFeature&typeNames=ICA:airport&outputFormat=application/json",
+        "https://geoaisweb.decea.gov.br/geoserver/ICA/ows?service=WFS&version=2.0.0&request=GetFeature&typeNames=ICA:airport&outputFormat=SHAPE-ZIP"
       ],
       "purpose": "Operational aerodrome geometry from the official AIRAC-updated GeoAISWEB service.",
       "status": "available",
       "http_status": 200,
       "resolved_url": "https://geoaisweb.decea.gov.br/geoserver/ICA/ows?service=WFS&version=2.0.0&request=GetCapabilities",
       "content_type": "application/xml",
-      "checked_at_utc": "2026-08-07T05:09:47.718788+00:00"
+      "checked_at_utc": "2026-08-07T05:30:55.177592+00:00"
     },
     {
       "source_id": "ibge_municipal_boundaries",
@@ -106,7 +110,7 @@
       "http_status": 403,
       "resolved_url": "https://www.ibge.gov.br/geociencias/organizacao-do-territorio/malhas-territoriais/15774-malhas.html",
       "content_type": "text/html; charset=UTF-8",
-      "checked_at_utc": "2026-08-07T05:09:47.718788+00:00"
+      "checked_at_utc": "2026-08-07T05:30:55.177592+00:00"
     }
   ]
 }
