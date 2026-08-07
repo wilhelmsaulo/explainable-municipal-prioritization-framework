@@ -130,7 +130,7 @@ def build_multimodal_transport_construct(
         shifts = (ranks - baseline_rank).abs()
         sensitivity[scenario] = {
             "spearman_rank_vs_baseline": float(
-                ranks.corr(baseline_rank, method="spearman")
+                ranks.corr(baseline_rank, method="pearson")
             ),
             "top_10_overlap_with_baseline": len(top & baseline_top),
             "median_absolute_rank_shift": float(shifts.median()),
