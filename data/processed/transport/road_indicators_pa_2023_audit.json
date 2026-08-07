@@ -15,8 +15,8 @@
   "road_features_para_bbox": 14115,
   "intersection_features": 13506,
   "total_road_km": 70382.387395,
-  "municipalities_with_structured_roads": 136,
-  "municipalities_without_structured_roads": [
+  "municipalities_with_mapped_roads": 136,
+  "municipalities_without_mapped_roads": [
     {
       "municipality_code": "1500305",
       "municipality": "Afuá"

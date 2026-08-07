@@ -1,4 +1,4 @@
-municipality_code,municipality,road_federal_km,road_state_km,road_other_km,road_paved_km,road_unpaved_km,road_total_km,road_structured_presence,road_federal_presence,road_state_presence,municipality_area_km2,road_density_km_per_1000_km2,distance_to_structured_road_km
+municipality_code,municipality,road_federal_km,road_state_km,road_other_km,road_paved_km,road_unpaved_km,road_total_km,road_mapped_presence,road_federal_presence,road_state_presence,municipality_area_km2,road_density_km_per_1000_km2,distance_to_mapped_road_km
 1500107,Abaetetuba,0.0,107.382144,94.423141,134.321961,52.780641,201.805285,1,0,1,1617.102026,124.794405,0.2632
 1500131,Abel Figueiredo,0.0,0.0,67.81744,20.283743,7.649702,67.81744,1,0,0,617.024459,109.910457,1.011025
 1500206,Acará,0.0,125.61705,442.602271,269.778479,167.604835,568.219321,1,0,1,4365.188509,130.170626,2.529937
