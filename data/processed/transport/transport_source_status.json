@@ -1,8 +1,8 @@
 {
-  "generated_at_utc": "2026-08-07T14:00:05.723255+00:00",
+  "generated_at_utc": "2026-08-07T14:04:50.064676+00:00",
   "source_count": 9,
-  "available": 7,
-  "unavailable": 2,
+  "available": 8,
+  "unavailable": 1,
   "sources": {
     "dnit_roads": {
       "status": "available",
@@ -35,9 +35,9 @@
       "error": null
     },
     "anac_public_aerodromes": {
-      "status": "unreachable",
-      "http_status": null,
-      "error": "Server disconnected without sending a response."
+      "status": "available",
+      "http_status": 200,
+      "error": null
     },
     "decea_airports": {
       "status": "available",
