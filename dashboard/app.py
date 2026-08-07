@@ -14,13 +14,18 @@ if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
 from dashboard.data import (  # noqa: E402
+    MACRO_WEIGHTS,
+    MACRO_WEIGHT_ORDER,
     PROFILE_LABELS,
     REFERENCE_SCENARIO,
     WEIGHT_LABELS,
+    compose_scenario,
     load_dashboard_data,
     scenario_label,
     selected_scenario,
     split_scenario,
+    transport_label,
+    weight_label,
 )
 
 TEXT = {
@@ -30,6 +35,21 @@ TEXT = {
         "caption": "Pará · 144 municipalities · 48 audited configurations · read-only visualization",
         "language": "Language",
         "configuration": "Official configuration",
+        "transport_scenario": "Multimodal transport scenario",
+        "macro_weights_selector": "Macro-dimension weights",
+        "selected_configuration": "Selected audited configuration",
+        "transport_interpretation": "Transport interpretation",
+        "macro_weights_detail": "Macro weights",
+        "institutional_weight": "institutional",
+        "service_weight": "service network",
+        "transport_weight": "transport barrier",
+        "mode_equal": "transport modes receive equal emphasis",
+        "mode_road": "the road mode is emphasized",
+        "mode_water": "the waterway mode is emphasized",
+        "mode_air": "the air mode is emphasized",
+        "role_equal": "availability and proximity receive equal emphasis",
+        "role_availability": "availability is emphasized",
+        "role_proximity": "proximity is emphasized",
         "state_tab": "Statewide overview",
         "profile_tab": "Municipal profile",
         "compare_tab": "Comparison",
@@ -87,6 +107,21 @@ TEXT = {
         "caption": "Pará · 144 municípios · 48 configurações auditadas · visualização somente leitura",
         "language": "Idioma",
         "configuration": "Configuração oficial",
+        "transport_scenario": "Cenário de transporte multimodal",
+        "macro_weights_selector": "Pesos das macrodimensões",
+        "selected_configuration": "Configuração auditada selecionada",
+        "transport_interpretation": "Interpretação do transporte",
+        "macro_weights_detail": "Pesos macro",
+        "institutional_weight": "institucional",
+        "service_weight": "rede de serviços",
+        "transport_weight": "barreira de transporte",
+        "mode_equal": "os modos de transporte recebem igual ênfase",
+        "mode_road": "o modo rodoviário recebe maior ênfase",
+        "mode_water": "o modo hidroviário recebe maior ênfase",
+        "mode_air": "o modo aéreo recebe maior ênfase",
+        "role_equal": "disponibilidade e proximidade recebem igual ênfase",
+        "role_availability": "a disponibilidade recebe maior ênfase",
+        "role_proximity": "a proximidade recebe maior ênfase",
         "state_tab": "Visão estadual",
         "profile_tab": "Perfil municipal",
         "compare_tab": "Comparação",
@@ -150,6 +185,11 @@ def get_data():
 
 def fmt(value: float, language: str, decimals: int = 3) -> str:
     rendered = f"{value:.{decimals}f}"
+    return rendered.replace(".", ",") if language == "pt" else rendered
+
+
+def pct(value: float, language: str) -> str:
+    rendered = f"{value:.1%}"
     return rendered.replace(".", ",") if language == "pt" else rendered
 
 
@@ -389,6 +429,22 @@ def methodology_tab(data, language: str, tx: dict[str, str]) -> None:
     st.dataframe(view, hide_index=True, use_container_width=True)
 
 
+def explain_transport(transport: str, tx: dict[str, str]) -> str:
+    mode, role = transport.split("__")
+    mode_key = {
+        "equal_modes": "mode_equal",
+        "road_emphasis": "mode_road",
+        "water_emphasis": "mode_water",
+        "air_emphasis": "mode_air",
+    }[mode]
+    role_key = {
+        "equal_roles": "role_equal",
+        "availability_emphasis": "role_availability",
+        "proximity_emphasis": "role_proximity",
+    }[role]
+    return f"{tx[mode_key]}; {tx[role_key]}."
+
+
 language_name = st.radio(
     "Language / Idioma",
     ["English", "Português"],
@@ -406,11 +462,35 @@ except (FileNotFoundError, KeyError, ValueError) as exc:
 
 st.title(tx["title"])
 st.caption(tx["caption"])
-scenario = st.selectbox(
-    tx["configuration"],
-    data.scenario_names,
-    index=data.scenario_names.index(REFERENCE_SCENARIO),
-    format_func=lambda name: scenario_label(name, language),
+reference_transport, reference_weight = split_scenario(REFERENCE_SCENARIO)
+transport_options = tuple(sorted({split_scenario(name)[0] for name in data.scenario_names}))
+selector_left, selector_right = st.columns(2)
+with selector_left:
+    transport = st.selectbox(
+        tx["transport_scenario"],
+        transport_options,
+        index=transport_options.index(reference_transport),
+        format_func=lambda name: transport_label(name, language),
+    )
+with selector_right:
+    macro_weight = st.selectbox(
+        tx["macro_weights_selector"],
+        MACRO_WEIGHT_ORDER,
+        index=MACRO_WEIGHT_ORDER.index(reference_weight),
+        format_func=lambda name: weight_label(name, language),
+    )
+scenario = compose_scenario(transport, macro_weight)
+if scenario not in data.scenario_names:
+    st.error(f"{tx['validation_error']}: {scenario}")
+    st.stop()
+institutional_weight, service_weight, transport_weight = MACRO_WEIGHTS[macro_weight]
+st.info(
+    f"**{tx['selected_configuration']}:** {scenario_label(scenario, language)}  \n"
+    f"**{tx['transport_interpretation']}:** {explain_transport(transport, tx)}  \n"
+    f"**{tx['macro_weights_detail']}:** {tx['institutional_weight']} "
+    f"{pct(institutional_weight, language)} · {tx['service_weight']} "
+    f"{pct(service_weight, language)} · {tx['transport_weight']} "
+    f"{pct(transport_weight, language)}"
 )
 
 tab_state, tab_profile, tab_compare, tab_method = st.tabs(
