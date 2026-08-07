@@ -311,34 +311,6 @@
       ],
       "errors": []
     },
-    "anac_public_aerodromes": {
-      "agency": "ANAC",
-      "official_page": "https://www.gov.br/anac/pt-br/assuntos/regulados/aeroportos-e-aerodromos/cadastro-publico/cadastro-de-aerodromos-de-uso-publico",
-      "discovered": [
-        "https://www.gov.br/anac/pt-br/assuntos/regulados/aeroportos-e-aerodromos/cadastro-de-aerodromos-privativo/aerodromos-cadastrados/cadastro-de-aerodromos-civis-publicos.csv"
-      ],
-      "downloads": [
-        {
-          "url": "https://www.gov.br/anac/pt-br/assuntos/regulados/aeroportos-e-aerodromos/cadastro-de-aerodromos-privativo/aerodromos-cadastrados/cadastro-de-aerodromos-civis-publicos.csv",
-          "resolved_url": "https://www.gov.br/anac/pt-br/assuntos/regulados/aeroportos-e-aerodromos/cadastro-de-aerodromos-privativo/aerodromos-cadastrados/cadastro-de-aerodromos-civis-publicos.csv",
-          "path": "data/raw/transport/anac_public_aerodromes/cadastro-de-aerodromos-civis-publicos.csv",
-          "bytes": 151717,
-          "sha256": "d8faa824dcd9a47581c95d985bdc514601ccf5db4a953cc399acad1a35f533e3",
-          "content_type": "text/csv",
-          "zip_inventory": [],
-          "attempt": 2
-        }
-      ],
-      "preserved": [
-        {
-          "path": "data/raw/transport/anac_public_aerodromes/cadastro-de-aerodromos-civis-publicos.csv",
-          "bytes": 151717,
-          "sha256": "d8faa824dcd9a47581c95d985bdc514601ccf5db4a953cc399acad1a35f533e3",
-          "zip_inventory": []
-        }
-      ],
-      "errors": []
-    },
     "decea_airports": {
       "agency": "DECEA/ICA",
       "official_page": "https://geoaisweb.decea.gov.br/geoserver/ICA/ows?service=WFS&version=2.0.0&request=GetCapabilities",
