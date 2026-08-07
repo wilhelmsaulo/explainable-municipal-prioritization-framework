@@ -1,0 +1,63 @@
+{
+  "schema_version": "1.0",
+  "method_version": "1.0.0",
+  "configuration": "config/capacity_priority.yml",
+  "checks": {
+    "municipal_rows_expected": true,
+    "transport_rows_expected": true,
+    "article_rows_expected": true,
+    "unique_municipalities_expected": true,
+    "seven_nontransport_indicators": true,
+    "twelve_transport_scenarios": true,
+    "all_framework_indicators_complete": true,
+    "all_article_numeric_values_finite": true,
+    "police_columns_excluded": true,
+    "published_input_matrix_unchanged": true
+  },
+  "scope": {
+    "municipalities": 144,
+    "nontransport_indicators": [
+      "institutional_deficit_available_4",
+      "cnes_health_service_deficit",
+      "cnes_multidisciplinary_staff_deficit",
+      "social_specialized_service_deficit",
+      "justice_tjpa_access_deficit",
+      "protection_network_validated_category_diversity",
+      "protection_network_specialized_non_health_services"
+    ],
+    "transport_scenarios": [
+      "equal_modes__equal_roles__score",
+      "equal_modes__availability_emphasis__score",
+      "equal_modes__proximity_emphasis__score",
+      "road_emphasis__equal_roles__score",
+      "road_emphasis__availability_emphasis__score",
+      "road_emphasis__proximity_emphasis__score",
+      "water_emphasis__equal_roles__score",
+      "water_emphasis__availability_emphasis__score",
+      "water_emphasis__proximity_emphasis__score",
+      "air_emphasis__equal_roles__score",
+      "air_emphasis__availability_emphasis__score",
+      "air_emphasis__proximity_emphasis__score"
+    ]
+  },
+  "institutional_coverage": {
+    "available_item_counts": {
+      "2": 3,
+      "3": 93,
+      "4": 48
+    },
+    "deficit_rule": "available observed items minus positive observed items",
+    "missing_responses_are_not_converted_to_deficit": true,
+    "comparability_caution": "Municipalities have two to four observed institutional items; coverage sensitivity must be reported without silently changing scores."
+  },
+  "population_provenance_note": "The population field stored as population_2023 represents the 2022 Demographic Census released/processed in 2023; it is not a framework criterion.",
+  "police_data": {
+    "available_in_integrated_matrix": true,
+    "column_count": 19,
+    "reference_period": "2022-2025",
+    "included_in_article_matrix": false,
+    "included_in_capacity_framework": false,
+    "reason": "The research target is capacity strengthening under multimodal access constraints, not violence incidence or underreporting."
+  },
+  "interpretation": "This audit selects and documents existing inputs only. It does not change source data, normalization, weights, scores, ranks, or profiles."
+}
