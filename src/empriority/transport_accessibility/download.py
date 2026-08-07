@@ -17,12 +17,36 @@ from .catalog import SOURCES
 _ALLOWED_EXTENSIONS = (
     ".zip", ".csv", ".json", ".geojson", ".kml", ".kmz", ".gpkg", ".shp"
 )
+_BLOCKED_HOSTS = {
+    "facebook.com",
+    "www.facebook.com",
+    "api.whatsapp.com",
+    "twitter.com",
+    "x.com",
+}
 _KEYWORDS = {
     "dnit_roads": ("rodov", "shapefile", "shp", "snv", "geo"),
     "antaq_ports": ("porto", "instala", "travess", "geograf", "shp", "kml"),
     "antaq_waterways": ("hidrovia", "navega", "via interior", "geograf", "shp"),
     "anac_public_aerodromes": ("aerodromo", "aeródromo", "csv", "json"),
 }
+
+
+def _is_download_candidate(url: str) -> bool:
+    parsed = urlparse(url)
+    host = (parsed.hostname or "").lower()
+    if parsed.fragment or host in _BLOCKED_HOSTS:
+        return False
+    return parsed.path.lower().endswith(_ALLOWED_EXTENSIONS)
+
+
+def _validate_download_response(response: httpx.Response) -> None:
+    content_type = (response.headers.get("content-type") or "").lower()
+    path = urlparse(str(response.url)).path.lower()
+    if "text/html" in content_type:
+        raise RuntimeError("rejected HTML response; expected a transport data file")
+    if not path.endswith(_ALLOWED_EXTENSIONS):
+        raise RuntimeError("rejected response without an approved data-file extension")
 
 
 def _safe_name(url: str, fallback: str) -> str:
@@ -135,7 +159,10 @@ def discover_and_download_transport_layers(
                 ((url, _score(source_id, url)) for url in links),
                 key=lambda item: (-item[1], item[0]),
             )
-            candidates = [url for url, score in ranked if score >= 5][:max_candidates_per_source]
+            candidates = [
+                url for url, score in ranked
+                if score >= 5 and _is_download_candidate(url)
+            ][:max_candidates_per_source]
             record["discovered"] = candidates
             target_dir = raw_root / source_id
             target_dir.mkdir(parents=True, exist_ok=True)
@@ -144,6 +171,7 @@ def discover_and_download_transport_layers(
                 try:
                     with client.stream("GET", url) as response:
                         response.raise_for_status()
+                        _validate_download_response(response)
                         length = int(response.headers.get("content-length") or 0)
                         if length and length > max_bytes_per_file:
                             record["errors"].append({"stage": "download", "url": url, "message": f"skipped size {length}"})
