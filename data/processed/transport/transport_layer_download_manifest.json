@@ -1,42 +1,88 @@
 {
-  "generated_at_utc": "2026-08-07T05:33:28.250167+00:00",
+  "generated_at_utc": "2026-08-07T13:43:01.233736+00:00",
   "sources": {
-    "dnit_roads": {
-      "agency": "DNIT",
-      "official_page": "https://www.gov.br/dnit/pt-br/assuntos/atlas-e-mapas/pnv-e-snv",
+    "mapbiomas_state_roads": {
+      "agency": "MapBiomas",
+      "official_page": "https://brasil.mapbiomas.org/dados-de-infraestrutura/",
       "discovered": [
-        "https://geoservicos.inde.gov.br/geoserver/DNIT/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=DNIT:cide_2021_&outputFormat=SHAPE-ZIP",
-        "https://geoservicos.inde.gov.br/geoserver/DNIT/ows?service=WFS&version=2.0.0&request=GetFeature&typeNames=DNIT:cide_2021_&outputFormat=SHAPE-ZIP",
-        "https://geoservicos.inde.gov.br/geoserver/DNIT/ows?service=WFS&version=2.0.0&request=GetFeature&typeNames=DNIT:cide_2021_&outputFormat=application/json"
+        "https://brasil.mapbiomas.org/wp-content/uploads/sites/4/2023/08/rodovia-estadual.zip",
+        "https://brasil.mapbiomas.org/wp-content/uploads/sites/4/2023/08/rodovia-federal.zip",
+        "https://brasil.mapbiomas.org/wp-content/uploads/sites/4/2023/08/Aerodromos_Privados.zip"
       ],
-      "downloads": [],
+      "downloads": [
+        {
+          "url": "https://brasil.mapbiomas.org/wp-content/uploads/sites/4/2023/08/rodovia-estadual.zip",
+          "resolved_url": "https://brasil.mapbiomas.org/wp-content/uploads/sites/4/2023/08/rodovia-estadual.zip",
+          "path": "data/raw/transport/mapbiomas_state_roads/rodovia-estadual.zip",
+          "bytes": 11870908,
+          "sha256": "364a070e9394a812b8eab3956c6056203decfde66d7771c679854d28d8b4fe05",
+          "content_type": "application/zip",
+          "zip_inventory": [
+            "rodovia-estadual.dbf",
+            "rodovia-estadual.prj",
+            "rodovia-estadual.shp",
+            "rodovia-estadual.shx"
+          ],
+          "attempt": 1
+        }
+      ],
       "preserved": [],
       "errors": [
         {
-          "stage": "cache_validation",
-          "path": "data/raw/transport/dnit_roads/candidate_1.zip",
-          "type": "RuntimeError",
-          "message": "response was named .zip but is not a valid ZIP archive"
-        },
-        {
           "stage": "download",
-          "url": "https://geoservicos.inde.gov.br/geoserver/DNIT/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=DNIT:cide_2021_&outputFormat=SHAPE-ZIP",
+          "url": "https://brasil.mapbiomas.org/wp-content/uploads/sites/4/2023/08/rodovia-federal.zip",
           "type": "RuntimeError",
-          "message": "response was named .zip but is not a valid ZIP archive",
+          "message": "download SHA-256 differs from the registered manual file",
           "attempts": 3
         },
         {
           "stage": "download",
-          "url": "https://geoservicos.inde.gov.br/geoserver/DNIT/ows?service=WFS&version=2.0.0&request=GetFeature&typeNames=DNIT:cide_2021_&outputFormat=SHAPE-ZIP",
-          "type": "HTTPStatusError",
-          "message": "Client error '400 ' for url 'https://geoservicos.inde.gov.br/geoserver/DNIT/ows?service=WFS&version=2.0.0&request=GetFeature&typeNames=DNIT:cide_2021_&outputFormat=SHAPE-ZIP'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/400",
+          "url": "https://brasil.mapbiomas.org/wp-content/uploads/sites/4/2023/08/Aerodromos_Privados.zip",
+          "type": "RuntimeError",
+          "message": "download SHA-256 differs from the registered manual file",
+          "attempts": 3
+        }
+      ]
+    },
+    "mapbiomas_federal_roads": {
+      "agency": "MapBiomas",
+      "official_page": "https://brasil.mapbiomas.org/dados-de-infraestrutura/",
+      "discovered": [
+        "https://brasil.mapbiomas.org/wp-content/uploads/sites/4/2023/08/rodovia-federal.zip",
+        "https://brasil.mapbiomas.org/wp-content/uploads/sites/4/2023/08/rodovia-estadual.zip",
+        "https://brasil.mapbiomas.org/wp-content/uploads/sites/4/2023/08/Aerodromos_Privados.zip"
+      ],
+      "downloads": [
+        {
+          "url": "https://brasil.mapbiomas.org/wp-content/uploads/sites/4/2023/08/rodovia-federal.zip",
+          "resolved_url": "https://brasil.mapbiomas.org/wp-content/uploads/sites/4/2023/08/rodovia-federal.zip",
+          "path": "data/raw/transport/mapbiomas_federal_roads/rodovia-federal.zip",
+          "bytes": 4256367,
+          "sha256": "f507e9c2bdca50c1ee6814c07cd220c88e686c0aae2b88ca8baef0280d01ba94",
+          "content_type": "application/zip",
+          "zip_inventory": [
+            "rodovia-federal.dbf",
+            "rodovia-federal.prj",
+            "rodovia-federal.shp",
+            "rodovia-federal.shx"
+          ],
+          "attempt": 1
+        }
+      ],
+      "preserved": [],
+      "errors": [
+        {
+          "stage": "download",
+          "url": "https://brasil.mapbiomas.org/wp-content/uploads/sites/4/2023/08/rodovia-estadual.zip",
+          "type": "RuntimeError",
+          "message": "download SHA-256 differs from the registered manual file",
           "attempts": 3
         },
         {
           "stage": "download",
-          "url": "https://geoservicos.inde.gov.br/geoserver/DNIT/ows?service=WFS&version=2.0.0&request=GetFeature&typeNames=DNIT:cide_2021_&outputFormat=application/json",
-          "type": "HTTPStatusError",
-          "message": "Client error '400 ' for url 'https://geoservicos.inde.gov.br/geoserver/DNIT/ows?service=WFS&version=2.0.0&request=GetFeature&typeNames=DNIT:cide_2021_&outputFormat=application/json'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/400",
+          "url": "https://brasil.mapbiomas.org/wp-content/uploads/sites/4/2023/08/Aerodromos_Privados.zip",
+          "type": "RuntimeError",
+          "message": "download SHA-256 differs from the registered manual file",
           "attempts": 3
         }
       ]
@@ -307,7 +353,7 @@
           "resolved_url": "https://geoaisweb.decea.gov.br/geoserver/ICA/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=ICA:airport&outputFormat=SHAPE-ZIP",
           "path": "data/raw/transport/decea_airports/candidate_1.zip",
           "bytes": 728362,
-          "sha256": "ca920a3e7436437a610ccc6793e2ea0484ed19dde0236c63634d015abeb2dfbc",
+          "sha256": "bbe8d5a8414aee7360810e4033e5bf171b7590f8a70c359807383b7b873ef31c",
           "content_type": "application/zip",
           "zip_inventory": [
             "airport.dbf",
@@ -323,7 +369,7 @@
           "resolved_url": "https://geoaisweb.decea.gov.br/geoserver/ICA/ows?service=WFS&version=2.0.0&request=GetFeature&typeNames=ICA:airport&outputFormat=SHAPE-ZIP",
           "path": "data/raw/transport/decea_airports/candidate_2.zip",
           "bytes": 728823,
-          "sha256": "c270369dd61960528ce9113766adf8e167716009f54d6a791d66cded099a3b2f",
+          "sha256": "5b48d09d9ffb70ab3b26c998e027fc81c41bfabae3114e7eb5c01849ef7fa68c",
           "content_type": "application/zip",
           "zip_inventory": [
             "airport.dbf",
@@ -339,7 +385,7 @@
           "resolved_url": "https://geoaisweb.decea.gov.br/geoserver/ICA/ows?service=WFS&version=2.0.0&request=GetFeature&typeNames=ICA:airport&outputFormat=application/json",
           "path": "data/raw/transport/decea_airports/candidate_3.geojson",
           "bytes": 3115559,
-          "sha256": "6cb5de23be022c29473b8bda89b21e4c80f2076c9360acc32a808f41a1fadde1",
+          "sha256": "3c46d333ab9f3ce6b0a7f8f236a5e1d9ab71999349446f664f7b29a6309dc66c",
           "content_type": "application/json;charset=UTF-8",
           "zip_inventory": [],
           "attempt": 1
@@ -349,7 +395,7 @@
         {
           "path": "data/raw/transport/decea_airports/candidate_1.zip",
           "bytes": 728362,
-          "sha256": "3e28d37ded7b9b93660b89fff686549bd22131f6af6b7366becd643a7308e081",
+          "sha256": "ca920a3e7436437a610ccc6793e2ea0484ed19dde0236c63634d015abeb2dfbc",
           "zip_inventory": [
             "airport.dbf",
             "airport.shx",
@@ -361,7 +407,7 @@
         {
           "path": "data/raw/transport/decea_airports/candidate_2.zip",
           "bytes": 728823,
-          "sha256": "2ef7e7f6bea22cfcda887c9dfc46cd965f1494bc5cc8d77f7ae1f86a455ecc1f",
+          "sha256": "c270369dd61960528ce9113766adf8e167716009f54d6a791d66cded099a3b2f",
           "zip_inventory": [
             "airport.dbf",
             "airport.shx",
@@ -373,7 +419,7 @@
         {
           "path": "data/raw/transport/decea_airports/candidate_3.geojson",
           "bytes": 3115559,
-          "sha256": "af373f1647d0724c5768bc53dbfe143f231398d670d8fe3890475839a5c95d18",
+          "sha256": "6cb5de23be022c29473b8bda89b21e4c80f2076c9360acc32a808f41a1fadde1",
           "zip_inventory": []
         }
       ],
