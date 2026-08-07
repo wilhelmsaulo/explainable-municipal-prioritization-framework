@@ -94,6 +94,12 @@ diagnostics:
     municipality_explanations: data/results/capacity_municipality_explanations.csv
     audit: data/results/capacity_diagnostics_audit.json
 
+input_audit:
+  outputs:
+    matrix: data/processed/capacity_framework_input_matrix.csv
+    profile: data/processed/capacity_framework_indicator_profile.csv
+    audit: data/processed/capacity_framework_input_audit.json
+
 exclusions:
   outcomes:
     - police occurrence counts
