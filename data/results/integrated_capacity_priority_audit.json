@@ -1,12 +1,11 @@
 {
   "checks": {
-    "municipal_rows_144": true,
-    "transport_rows_144": true,
-    "integrated_rows_144": true,
-    "unique_municipality_codes_144": true,
-    "transport_scenarios_12": true,
-    "macro_weight_scenarios_4": true,
-    "integrated_scenarios_48": true,
+    "municipal_rows_expected": true,
+    "transport_rows_expected": true,
+    "integrated_rows_expected": true,
+    "unique_municipality_codes_expected": true,
+    "transport_scenarios_expected": true,
+    "integrated_scenarios_expected": true,
     "macro_weights_sum_one": true,
     "no_missing_outputs": true,
     "finite_outputs": true,
@@ -19,7 +18,7 @@
     "robust_higher_capacity_strengthening_priority": 26,
     "scenario_sensitive_higher_priority": 23
   },
-  "top_10_by_mean_rank": [
+  "top_by_mean_rank": [
     {
       "municipality_code": "1506401",
       "municipality": "Santa Cruz do Arari",

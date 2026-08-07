@@ -1,6 +1,8 @@
 {
   "schema_version": "1.0",
-  "research_target": "relative priority for strengthening municipal service capacity under multimodal access constraints",
+  "method_version": "1.0.0",
+  "configuration": "config/capacity_priority.yml",
+  "research_target": "Relative priority for strengthening municipal service capacity under multimodal access constraints.",
   "excluded_outcomes": [
     "police occurrence counts",
     "police occurrence rates",
@@ -98,8 +100,9 @@
   "integrated_scenario_count": 48,
   "classification": {
     "top_quartile_cutoff": 36,
-    "robust_threshold": "municipality remains in the relevant quartile in at least 75% of scenarios",
-    "scenario_sensitive_higher_threshold": "municipality is in the top quartile in 25% to less than 75% of scenarios"
+    "quartile_fraction": 0.25,
+    "robust_frequency": 0.75,
+    "scenario_sensitive_frequency": 0.25
   },
   "warnings": [
     "The scores are relative decision-support constructs, not ground truth.",
