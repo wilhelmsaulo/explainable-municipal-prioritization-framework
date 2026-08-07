@@ -49,8 +49,7 @@
   "limitations": [
     "Distances use a representative point inside each municipal polygon.",
     "ANTAQ navigated-waterway geometry represents the published 2022 layer.",
-    "The ANAC CSV endpoint returned an anti-automation HTML challenge in the reproducible runner and is not used.",
-    "The aviation indicators therefore use the official DECEA airport WFS layer only.",
+    "Aviation indicators use the official DECEA airport WFS layer.",
     "No multimodal composite is calculated before indicator-level audit."
   ]
 }
