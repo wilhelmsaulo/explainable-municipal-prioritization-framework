@@ -15,7 +15,7 @@ EXPECTED_MUNICIPALITIES = 144
 EXPECTED_SCENARIOS = 48
 REFERENCE_SCENARIO = "equal_modes__equal_roles___equal_dimensions"
 
-TRANSPORT_LABELS = {
+TRANSPORT_LABELS_PT = {
     "equal_modes__equal_roles": "Modos iguais · papéis iguais",
     "equal_modes__availability_emphasis": "Modos iguais · ênfase em disponibilidade",
     "equal_modes__proximity_emphasis": "Modos iguais · ênfase em proximidade",
@@ -30,19 +30,52 @@ TRANSPORT_LABELS = {
     "air_emphasis__proximity_emphasis": "Ênfase aérea · proximidade",
 }
 
-WEIGHT_LABELS = {
+TRANSPORT_LABELS_EN = {
+    "equal_modes__equal_roles": "Equal modes · equal roles",
+    "equal_modes__availability_emphasis": "Equal modes · availability emphasis",
+    "equal_modes__proximity_emphasis": "Equal modes · proximity emphasis",
+    "road_emphasis__equal_roles": "Road emphasis · equal roles",
+    "road_emphasis__availability_emphasis": "Road emphasis · availability",
+    "road_emphasis__proximity_emphasis": "Road emphasis · proximity",
+    "water_emphasis__equal_roles": "Waterway emphasis · equal roles",
+    "water_emphasis__availability_emphasis": "Waterway emphasis · availability",
+    "water_emphasis__proximity_emphasis": "Waterway emphasis · proximity",
+    "air_emphasis__equal_roles": "Air emphasis · equal roles",
+    "air_emphasis__availability_emphasis": "Air emphasis · availability",
+    "air_emphasis__proximity_emphasis": "Air emphasis · proximity",
+}
+
+WEIGHT_LABELS_PT = {
     "equal_dimensions": "Dimensões com pesos iguais",
     "institutional_emphasis": "Ênfase institucional",
     "service_network_emphasis": "Ênfase na rede de serviços",
     "transport_emphasis": "Ênfase no transporte",
 }
 
-PROFILE_LABELS = {
+WEIGHT_LABELS_EN = {
+    "equal_dimensions": "Equal dimension weights",
+    "institutional_emphasis": "Institutional emphasis",
+    "service_network_emphasis": "Service-network emphasis",
+    "transport_emphasis": "Transport emphasis",
+}
+
+PROFILE_LABELS_PT = {
     "robust_higher_capacity_strengthening_priority": "Prioridade superior robusta",
     "scenario_sensitive_higher_priority": "Prioridade superior sensível ao cenário",
     "intermediate_or_scenario_sensitive": "Intermediária ou sensível ao cenário",
     "robust_lower_relative_priority": "Prioridade relativa inferior robusta",
 }
+
+PROFILE_LABELS_EN = {
+    "robust_higher_capacity_strengthening_priority": "Robust higher priority",
+    "scenario_sensitive_higher_priority": "Scenario-sensitive higher priority",
+    "intermediate_or_scenario_sensitive": "Intermediate or scenario-sensitive",
+    "robust_lower_relative_priority": "Robust lower relative priority",
+}
+
+TRANSPORT_LABELS = {"en": TRANSPORT_LABELS_EN, "pt": TRANSPORT_LABELS_PT}
+WEIGHT_LABELS = {"en": WEIGHT_LABELS_EN, "pt": WEIGHT_LABELS_PT}
+PROFILE_LABELS = {"en": PROFILE_LABELS_EN, "pt": PROFILE_LABELS_PT}
 
 
 @dataclass(frozen=True)
@@ -72,9 +105,11 @@ def split_scenario(name: str) -> tuple[str, str]:
     return parts[0], parts[1]
 
 
-def scenario_label(name: str) -> str:
+def scenario_label(name: str, language: str = "en") -> str:
     transport, weight = split_scenario(name)
-    return f"{TRANSPORT_LABELS.get(transport, transport)} | {WEIGHT_LABELS.get(weight, weight)}"
+    transport_labels = TRANSPORT_LABELS.get(language, TRANSPORT_LABELS_EN)
+    weight_labels = WEIGHT_LABELS.get(language, WEIGHT_LABELS_EN)
+    return f"{transport_labels.get(transport, transport)} | {weight_labels.get(weight, weight)}"
 
 
 def selected_scenario(frame: pd.DataFrame, name: str) -> pd.DataFrame:
