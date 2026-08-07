@@ -149,7 +149,12 @@ def load_police_file(path: str | Path) -> pd.DataFrame:
 
     frame["year"] = pd.to_numeric(frame["year"], errors="raise").astype("int64")
     frame["records"] = pd.to_numeric(frame["records"], errors="raise")
-    frame["municipality"] = _normalize_municipality(frame["municipality"])
+    municipality_display = frame["municipality"].fillna("").astype(str).str.strip()
+    municipality_key = _normalize_text(municipality_display)
+    frame["municipality"] = municipality_display.where(
+        ~municipality_key.isin(MUNICIPALITY_ALIASES),
+        municipality_key.map(MUNICIPALITY_ALIASES),
+    )
     frame["occurrence_type"] = frame["occurrence_type"].astype(str).str.strip()
     if "municipality_code" in frame:
         frame["municipality_code"] = (
