@@ -1,0 +1,4 @@
+data/raw/transport/antaq/ports_2025.zip: URLError: <urlopen error [Errno 101] Network is unreachable>
+data/raw/transport/antaq/crossings_2025.zip: URLError: <urlopen error [Errno 101] Network is unreachable>
+data/raw/transport/antaq/waterways_2022.zip: URLError: <urlopen error [Errno 101] Network is unreachable>
+data/raw/transport/decea/airports_2026.zip: RemoteDisconnected: Remote end closed connection without response

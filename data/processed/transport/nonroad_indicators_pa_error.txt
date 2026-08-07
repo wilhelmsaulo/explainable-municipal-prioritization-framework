@@ -1,0 +1,8 @@
+Traceback (most recent call last):
+  File "<stdin>", line 13, in <module>
+  File "/home/runner/work/explainable-municipal-prioritization-framework/explainable-municipal-prioritization-framework/src/empriority/transport_accessibility/nonroad.py", line 166, in build_nonroad_transport_indicators
+    ports = gpd.read_file(_extract_shapefile(inputs["ports"], cache / "ports"))
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/explainable-municipal-prioritization-framework/explainable-municipal-prioritization-framework/src/empriority/transport_accessibility/nonroad.py", line 21, in _extract_shapefile
+    raise ValueError(f"Invalid ZIP archive: {archive_path}")
+ValueError: Invalid ZIP archive: data/raw/transport/antaq/ports_2025.zip
