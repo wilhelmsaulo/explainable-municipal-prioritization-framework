@@ -85,6 +85,15 @@ robustness:
   sensitive_frequency: 0.25
   top_k: 10
 
+diagnostics:
+  reference_transport_scenario: equal_modes__equal_roles
+  reference_macro_weight_scenario: equal_dimensions
+  outputs:
+    correlations: data/results/capacity_dimension_correlations.csv
+    scenario_agreement: data/results/capacity_scenario_agreement.csv
+    municipality_explanations: data/results/capacity_municipality_explanations.csv
+    audit: data/results/capacity_diagnostics_audit.json
+
 exclusions:
   outcomes:
     - police occurrence counts
