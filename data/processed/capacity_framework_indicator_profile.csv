@@ -1,0 +1,8 @@
+dimension,component,column,direction,municipalities,missing_values,observed_values,unique_values,minimum,median,maximum,zero_values,largest_tie_count,largest_tie_fraction
+institutional_deficit,institutional_deficit,institutional_deficit_available_4,benefit,144,0,144,5,0.0,2.0,4.0,13,58,0.4027777777777778
+service_network_deficit,health,cnes_health_service_deficit,benefit,144,0,144,4,0.0,1.0,3.0,38,70,0.4861111111111111
+service_network_deficit,health,cnes_multidisciplinary_staff_deficit,benefit,144,0,144,3,0.0,0.0,2.0,137,137,0.9513888888888888
+service_network_deficit,social_protection,social_specialized_service_deficit,benefit,144,0,144,2,0.0,0.0,1.0,131,131,0.9097222222222222
+service_network_deficit,justice,justice_tjpa_access_deficit,benefit,144,0,144,2,0.0,0.0,1.0,85,85,0.5902777777777778
+service_network_deficit,specialized_protection_network,protection_network_validated_category_diversity,cost,144,0,144,6,0.0,0.0,8.0,109,109,0.7569444444444444
+service_network_deficit,specialized_protection_network,protection_network_specialized_non_health_services,cost,144,0,144,6,0.0,0.0,15.0,122,122,0.8472222222222222
