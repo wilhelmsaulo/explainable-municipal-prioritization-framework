@@ -226,7 +226,6 @@ def build_nonroad_transport_indicators(
     crossings_zip: str | Path,
     waterways_zip: str | Path,
     decea_airports_zip: str | Path,
-    anac_public_csv: str | Path,
     municipalities_zip: str | Path,
     output_csv: str | Path = "data/processed/transport/nonroad_indicators_pa.csv",
     audit_json: str | Path = "data/processed/transport/nonroad_indicators_pa_audit.json",
@@ -239,7 +238,6 @@ def build_nonroad_transport_indicators(
         "crossings": Path(crossings_zip),
         "waterways": Path(waterways_zip),
         "decea_airports": Path(decea_airports_zip),
-        "anac_public": Path(anac_public_csv),
         "municipalities": Path(municipalities_zip),
     }
     cache = Path(work_dir)
@@ -256,17 +254,9 @@ def build_nonroad_transport_indicators(
     decea = gpd.read_file(
         _extract_shapefile(inputs["decea_airports"], cache / "decea")
     )
-    anac = _load_anac_points(inputs["anac_public"])
 
     result = municipalities[["municipality_code", "municipality"]].copy()
     result = _point_metrics(result, ports, municipalities, "port", projected_crs)
-    result = _point_metrics(
-        result,
-        anac,
-        municipalities,
-        "public_aerodrome",
-        projected_crs,
-    )
     result = _point_metrics(
         result,
         decea,
@@ -305,7 +295,6 @@ def build_nonroad_transport_indicators(
         "no_missing_numeric": bool(result[numeric].notna().all().all()),
         "nonnegative_metrics": bool(result[numeric].ge(0).all().all()),
         "ports_present": int(result["port_count"].sum()) > 0,
-        "public_aerodromes_present": int(result["public_aerodrome_count"].sum()) > 0,
         "waterways_present": float(result["navigated_waterway_km"].sum()) > 0,
     }
     audit = {
@@ -316,7 +305,6 @@ def build_nonroad_transport_indicators(
         "reference_years": {
             "ports_and_crossings": 2025,
             "navigated_waterways": 2022,
-            "anac_public_aerodromes": 2026,
             "decea_airports": 2026,
             "municipal_boundaries": 2023,
         },
@@ -324,7 +312,6 @@ def build_nonroad_transport_indicators(
         "unique_municipality_codes": int(result["municipality_code"].nunique()),
         "totals": {
             "ports": int(result["port_count"].sum()),
-            "public_aerodromes": int(result["public_aerodrome_count"].sum()),
             "decea_airports": int(result["decea_airport_count"].sum()),
             "passenger_crossing_km": float(result["passenger_crossing_km"].sum()),
             "navigated_waterway_km": float(result["navigated_waterway_km"].sum()),
@@ -335,7 +322,8 @@ def build_nonroad_transport_indicators(
         "limitations": [
             "Distances use a representative point inside each municipal polygon.",
             "ANTAQ navigated-waterway geometry represents the published 2022 layer.",
-            "ANAC public aerodromes and DECEA operational airports remain separate.",
+            "The ANAC CSV endpoint returned an anti-automation HTML challenge in the reproducible runner and is not used.",
+            "The aviation indicators therefore use the official DECEA airport WFS layer only.",
             "No multimodal composite is calculated before indicator-level audit.",
         ],
     }
