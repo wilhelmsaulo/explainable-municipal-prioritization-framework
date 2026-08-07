@@ -1,0 +1,81 @@
+name: build-hierarchical-transport-construct
+
+on:
+  push:
+    paths:
+      - ".github/workflows/build-hierarchical-transport-construct.yml"
+      - "src/empriority/transport_accessibility/normalize.py"
+      - "data/processed/transport/transport_indicators_pa_selected.csv"
+      - "data/processed/transport/transport_indicator_selection.json"
+  pull_request:
+    branches:
+      - main
+    paths:
+      - ".github/workflows/build-hierarchical-transport-construct.yml"
+      - "src/empriority/transport_accessibility/normalize.py"
+      - "data/processed/transport/transport_indicators_pa_selected.csv"
+      - "data/processed/transport/transport_indicator_selection.json"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: build-hierarchical-transport-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+      - name: Install project
+        run: |
+          python -m pip install --upgrade pip
+          pip install -e .
+      - name: Normalize and test hierarchical construct
+        run: |
+          python - <<'PY'
+          from empriority.transport_accessibility.normalize import (
+              build_multimodal_transport_construct,
+          )
+
+          outputs = build_multimodal_transport_construct(
+              "data/processed/transport/transport_indicators_pa_selected.csv",
+              "data/processed/transport/transport_indicator_selection.json",
+          )
+          print(outputs)
+          PY
+      - name: Upload hierarchical outputs
+        uses: actions/upload-artifact@v4
+        with:
+          name: hierarchical-transport-construct-pa
+          path: |
+            data/processed/transport/transport_indicators_pa_normalized.csv
+            data/processed/transport/transport_multimodal_scenarios.csv
+            data/processed/transport/transport_normalization_hierarchy.json
+            data/processed/transport/transport_normalization_audit.json
+            data/processed/transport/transport_multimodal_sensitivity.json
+          if-no-files-found: error
+          retention-days: 30
+      - name: Commit hierarchical outputs
+        if: github.event_name != 'pull_request'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -f \
+            data/processed/transport/transport_indicators_pa_normalized.csv \
+            data/processed/transport/transport_multimodal_scenarios.csv \
+            data/processed/transport/transport_normalization_hierarchy.json \
+            data/processed/transport/transport_normalization_audit.json \
+            data/processed/transport/transport_multimodal_sensitivity.json
+          git diff --cached --quiet || git commit -m "Store hierarchical transport construct"
+          git pull --rebase origin "${GITHUB_REF_NAME}"
+          git push origin "HEAD:${GITHUB_REF_NAME}"
