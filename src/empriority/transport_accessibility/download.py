@@ -49,7 +49,7 @@ def _score(source_id: str, url: str) -> int:
 def _get_page_with_retry(
     client: httpx.Client,
     url: str,
-    attempts: int = 5,
+    attempts: int = 3,
 ) -> httpx.Response:
     last_error: Exception | None = None
     for attempt in range(1, attempts + 1):
@@ -84,8 +84,8 @@ def _zip_inventory(path: Path) -> list[str]:
 def discover_and_download_transport_layers(
     raw_dir: str | Path = "data/raw/transport",
     output_dir: str | Path = "data/processed/transport",
-    max_candidates_per_source: int = 8,
-    max_bytes_per_file: int = 300_000_000,
+    max_candidates_per_source: int = 3,
+    max_bytes_per_file: int = 80_000_000,
 ) -> dict[str, Path]:
     raw_root = Path(raw_dir)
     output = Path(output_dir)
@@ -104,9 +104,10 @@ def discover_and_download_transport_layers(
     }
 
     headers = {"User-Agent": "empriority-research/0.1 (public-data reproducibility)"}
-    transport = httpx.HTTPTransport(retries=5)
+    transport = httpx.HTTPTransport(retries=2)
+    timeout = httpx.Timeout(30.0, connect=15.0, read=30.0, write=30.0, pool=15.0)
     with httpx.Client(
-        timeout=90.0,
+        timeout=timeout,
         follow_redirects=True,
         headers=headers,
         transport=transport,
