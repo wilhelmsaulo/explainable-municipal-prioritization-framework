@@ -139,6 +139,16 @@ def _zip_inventory(path: Path) -> list[str]:
         return archive.namelist()[:5000]
 
 
+def _validate_downloaded_file(path: Path) -> None:
+    if not path.exists() or path.stat().st_size == 0:
+        raise RuntimeError("downloaded file is empty")
+    suffix = path.suffix.lower()
+    if suffix == ".zip" and not zipfile.is_zipfile(path):
+        raise RuntimeError("response was named .zip but is not a valid ZIP archive")
+    if suffix in {".json", ".geojson"}:
+        json.loads(path.read_text(encoding="utf-8-sig"))
+
+
 def discover_and_download_transport_layers(
     raw_dir: str | Path = "data/raw/transport",
     output_dir: str | Path = "data/processed/transport",
@@ -206,15 +216,31 @@ def discover_and_download_transport_layers(
             target_dir = raw_root / source_id
             target_dir.mkdir(parents=True, exist_ok=True)
             for existing in sorted(target_dir.iterdir()):
-                if existing.is_file() and existing.suffix.lower() in _ALLOWED_EXTENSIONS:
-                    record["preserved"].append(
+                if not (
+                    existing.is_file()
+                    and existing.suffix.lower() in _ALLOWED_EXTENSIONS
+                ):
+                    continue
+                try:
+                    _validate_downloaded_file(existing)
+                except Exception as exc:
+                    record["errors"].append(
                         {
+                            "stage": "cache_validation",
                             "path": str(existing),
-                            "bytes": existing.stat().st_size,
-                            "sha256": _sha256(existing),
-                            "zip_inventory": _zip_inventory(existing),
+                            "type": type(exc).__name__,
+                            "message": str(exc),
                         }
                     )
+                    continue
+                record["preserved"].append(
+                    {
+                        "path": str(existing),
+                        "bytes": existing.stat().st_size,
+                        "sha256": _sha256(existing),
+                        "zip_inventory": _zip_inventory(existing),
+                    }
+                )
 
             for index, url in enumerate(candidates, start=1):
                 last_error: Exception | None = None
@@ -238,6 +264,7 @@ def discover_and_download_transport_layers(
                                             f"download exceeded {max_bytes_per_file} bytes"
                                         )
                                     handle.write(chunk)
+                        _validate_downloaded_file(path)
                         entry = {
                             "url": url,
                             "resolved_url": str(response.url),
