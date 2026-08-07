@@ -48,5 +48,5 @@ jobs:
           git add src tests
           git diff --cached --quiet || git commit -m "Apply safe repository lint repairs"
           TARGET_BRANCH="${GITHUB_HEAD_REF:-$GITHUB_REF_NAME}"
-          git pull --rebase origin "${TARGET_BRANCH}"
+          git pull --rebase --autostash origin "${TARGET_BRANCH}"
           git push origin "HEAD:${TARGET_BRANCH}"
