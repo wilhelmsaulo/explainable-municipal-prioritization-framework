@@ -1,5 +1,7 @@
 name: build-nonroad-transport-indicators
 
+# Reproducible sources only: ANTAQ, DECEA, and IBGE.
+
 on:
   push:
     paths:
