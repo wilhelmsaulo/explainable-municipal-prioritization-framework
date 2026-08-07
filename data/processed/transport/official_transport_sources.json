@@ -4,19 +4,19 @@
       "source_id": "dnit_roads",
       "agency": "DNIT",
       "theme": "roads",
-      "official_page": "https://www.gov.br/dnit/pt-br/dadosabertos",
+      "official_page": "https://www.gov.br/dnit/pt-br/assuntos/atlas-e-mapas/pnv-e-snv",
       "expected_formats": [
         "shp",
         "geojson",
         "csv"
       ],
-      "map_reference_year": 2023,
+      "map_reference_year": 2026,
       "purpose": "Federal road network and road-surface/status classes.",
       "status": "available",
       "http_status": 200,
-      "resolved_url": "https://www.gov.br/dnit/pt-br/dadosabertos",
+      "resolved_url": "https://www.gov.br/dnit/pt-br/assuntos/atlas-e-mapas/pnv-e-snv",
       "content_type": "text/html;charset=utf-8",
-      "checked_at_utc": "2026-08-06T14:55:05.564059+00:00"
+      "checked_at_utc": "2026-08-07T03:31:52.877199+00:00"
     },
     {
       "source_id": "antaq_ports",
@@ -27,13 +27,13 @@
         "shp",
         "kml"
       ],
-      "map_reference_year": 2022,
+      "map_reference_year": 2025,
       "purpose": "Port facilities and authorized passenger/ferry crossing lines.",
       "status": "available",
       "http_status": 200,
       "resolved_url": "https://www.gov.br/antaq/pt-br/central-de-conteudos/informacoes-geograficas",
       "content_type": "text/html;charset=utf-8",
-      "checked_at_utc": "2026-08-06T14:55:05.564059+00:00"
+      "checked_at_utc": "2026-08-07T03:31:52.877199+00:00"
     },
     {
       "source_id": "antaq_waterways",
@@ -49,24 +49,24 @@
       "http_status": 200,
       "resolved_url": "https://www.gov.br/antaq/pt-br/central-de-conteudos/informacoes-geograficas",
       "content_type": "text/html;charset=utf-8",
-      "checked_at_utc": "2026-08-06T14:55:05.564059+00:00"
+      "checked_at_utc": "2026-08-07T03:31:52.877199+00:00"
     },
     {
       "source_id": "anac_public_aerodromes",
       "agency": "ANAC",
       "theme": "airports",
-      "official_page": "https://www.gov.br/anac/pt-br/acesso-a-informacao/dados-abertos/areas-de-atuacao/aerodromos/aerodromos-publicos",
+      "official_page": "https://www.gov.br/anac/pt-br/assuntos/regulados/aeroportos-e-aerodromos/cadastro-publico/cadastro-de-aerodromos-de-uso-publico",
       "expected_formats": [
         "csv",
         "json"
       ],
-      "map_reference_year": 2023,
+      "map_reference_year": 2026,
       "purpose": "Public aerodromes and their geographic coordinates.",
       "status": "available",
       "http_status": 200,
-      "resolved_url": "https://www.gov.br/anac/pt-br/acesso-a-informacao/dados-abertos/areas-de-atuacao/aerodromos/aerodromos-publicos",
+      "resolved_url": "https://www.gov.br/anac/pt-br/assuntos/regulados/aeroportos-e-aerodromos/cadastro-publico/cadastro-de-aerodromos-de-uso-publico",
       "content_type": "text/html;charset=utf-8",
-      "checked_at_utc": "2026-08-06T14:55:05.564059+00:00"
+      "checked_at_utc": "2026-08-07T03:31:52.877199+00:00"
     },
     {
       "source_id": "ibge_municipal_boundaries",
@@ -82,7 +82,7 @@
       "http_status": 403,
       "resolved_url": "https://www.ibge.gov.br/geociencias/organizacao-do-territorio/malhas-territoriais/15774-malhas.html",
       "content_type": "text/html; charset=UTF-8",
-      "checked_at_utc": "2026-08-06T14:55:05.564059+00:00"
+      "checked_at_utc": "2026-08-07T03:31:52.877199+00:00"
     }
   ]
 }
