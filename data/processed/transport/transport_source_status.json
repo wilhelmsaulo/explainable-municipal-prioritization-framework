@@ -1,7 +1,7 @@
 {
-  "generated_at_utc": "2026-08-07T03:31:52.877199+00:00",
-  "source_count": 5,
-  "available": 4,
+  "generated_at_utc": "2026-08-07T05:08:32.228952+00:00",
+  "source_count": 6,
+  "available": 5,
   "unavailable": 1,
   "sources": {
     "dnit_roads": {
@@ -20,6 +20,11 @@
       "error": null
     },
     "anac_public_aerodromes": {
+      "status": "available",
+      "http_status": 200,
+      "error": null
+    },
+    "decea_airports": {
       "status": "available",
       "http_status": 200,
       "error": null
