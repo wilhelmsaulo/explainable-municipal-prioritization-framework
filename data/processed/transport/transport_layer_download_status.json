@@ -34,14 +34,6 @@
       "errors": 0,
       "status": "success"
     },
-    "anac_public_aerodromes": {
-      "discovered": 1,
-      "downloaded": 1,
-      "preserved": 1,
-      "available": 2,
-      "errors": 0,
-      "status": "success"
-    },
     "decea_airports": {
       "discovered": 3,
       "downloaded": 3,
