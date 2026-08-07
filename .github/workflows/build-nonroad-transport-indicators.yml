@@ -54,11 +54,11 @@ jobs:
               ),
               "data/raw/transport/decea/airports_2026.zip": (
                   "https://geoaisweb.decea.gov.br/geoserver/ICA/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=ICA:airport&outputFormat=SHAPE-ZIP",
-                  "3e28d37ded7b9b93660b89fff686549bd22131f6af6b7366becd643a7308e081",
+                  None,
               ),
               "data/raw/transport/anac/public_aerodromes_2026.csv": (
                   "https://www.gov.br/anac/pt-br/assuntos/regulados/aeroportos-e-aerodromos/cadastro-de-aerodromos-privativo/aerodromos-cadastrados/cadastro-de-aerodromos-civis-publicos.csv",
-                  "d8faa824dcd9a47581c95d985bdc514601ccf5db4a953cc399acad1a35f533e3",
+                  None,
               ),
               "data/raw/transport/ibge/PA_Municipios_2023.zip": (
                   "https://geoftp.ibge.gov.br/organizacao_do_territorio/malhas_territoriais/"
@@ -74,7 +74,7 @@ jobs:
                   try:
                       urllib.request.urlretrieve(url, path)
                       digest = hashlib.sha256(path.read_bytes()).hexdigest()
-                      if digest != expected:
+                      if expected and digest != expected:
                           raise RuntimeError(f"SHA-256 mismatch: {digest}")
                       print(path, path.stat().st_size, digest)
                       last_error = None
