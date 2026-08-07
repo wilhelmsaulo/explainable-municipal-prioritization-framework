@@ -1,0 +1,77 @@
+name: build-integrated-transport-matrix
+
+on:
+  push:
+    paths:
+      - ".github/workflows/build-integrated-transport-matrix.yml"
+      - "src/empriority/transport_accessibility/integrate.py"
+      - "data/processed/transport/road_indicators_pa_2023.csv"
+      - "data/processed/transport/nonroad_indicators_pa.csv"
+  pull_request:
+    branches:
+      - main
+    paths:
+      - ".github/workflows/build-integrated-transport-matrix.yml"
+      - "src/empriority/transport_accessibility/integrate.py"
+      - "data/processed/transport/road_indicators_pa_2023.csv"
+      - "data/processed/transport/nonroad_indicators_pa.csv"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: build-integrated-transport-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+      - name: Install project
+        run: |
+          python -m pip install --upgrade pip
+          pip install -e .
+      - name: Build and audit integrated transport matrix
+        run: |
+          python - <<'PY'
+          from empriority.transport_accessibility.integrate import (
+              build_integrated_transport_matrix,
+          )
+
+          outputs = build_integrated_transport_matrix(
+              "data/processed/transport/road_indicators_pa_2023.csv",
+              "data/processed/transport/nonroad_indicators_pa.csv",
+          )
+          print(outputs)
+          PY
+      - name: Upload integrated matrix
+        uses: actions/upload-artifact@v4
+        with:
+          name: integrated-transport-matrix-pa
+          path: |
+            data/processed/transport/transport_indicators_pa_integrated.csv
+            data/processed/transport/transport_indicators_pa_integrated_audit.json
+            data/processed/transport/transport_indicator_dictionary.json
+          if-no-files-found: error
+          retention-days: 30
+      - name: Commit audited integrated matrix
+        if: github.event_name != 'pull_request'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -f \
+            data/processed/transport/transport_indicators_pa_integrated.csv \
+            data/processed/transport/transport_indicators_pa_integrated_audit.json \
+            data/processed/transport/transport_indicator_dictionary.json
+          git diff --cached --quiet || git commit -m "Store integrated municipal transport matrix"
+          git pull --rebase origin "${GITHUB_REF_NAME}"
+          git push origin "HEAD:${GITHUB_REF_NAME}"
