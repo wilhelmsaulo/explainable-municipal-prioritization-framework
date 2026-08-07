@@ -1,0 +1,165 @@
+{
+  "schema_version": "1.0",
+  "normalization": {
+    "method": "within-sample percentile rank",
+    "range": [
+      0,
+      1
+    ],
+    "ties": "average rank",
+    "binary_indicators": "retained as 0/1",
+    "cost_indicators": "inverted after normalization",
+    "interpretation": "All normalized values increase with transport access."
+  },
+  "hierarchy": {
+    "indicator_to_component": "weighted mean of availability and proximity",
+    "water_components": [
+      "port",
+      "passenger_crossing",
+      "navigated_waterway"
+    ],
+    "component_to_water_mode": "equal mean of the three water components",
+    "modes": [
+      "road",
+      "water",
+      "air"
+    ],
+    "mode_to_multimodal": "weighted mean across the three modes"
+  },
+  "baseline": "equal_modes__equal_roles",
+  "scenarios": {
+    "equal_modes__equal_roles": {
+      "mode_weights": {
+        "road": 0.3333333333333333,
+        "water": 0.3333333333333333,
+        "air": 0.3333333333333333
+      },
+      "role_weights": {
+        "availability": 0.5,
+        "proximity": 0.5
+      }
+    },
+    "equal_modes__availability_emphasis": {
+      "mode_weights": {
+        "road": 0.3333333333333333,
+        "water": 0.3333333333333333,
+        "air": 0.3333333333333333
+      },
+      "role_weights": {
+        "availability": 0.6666666666666666,
+        "proximity": 0.3333333333333333
+      }
+    },
+    "equal_modes__proximity_emphasis": {
+      "mode_weights": {
+        "road": 0.3333333333333333,
+        "water": 0.3333333333333333,
+        "air": 0.3333333333333333
+      },
+      "role_weights": {
+        "availability": 0.3333333333333333,
+        "proximity": 0.6666666666666666
+      }
+    },
+    "road_emphasis__equal_roles": {
+      "mode_weights": {
+        "road": 0.5,
+        "water": 0.25,
+        "air": 0.25
+      },
+      "role_weights": {
+        "availability": 0.5,
+        "proximity": 0.5
+      }
+    },
+    "road_emphasis__availability_emphasis": {
+      "mode_weights": {
+        "road": 0.5,
+        "water": 0.25,
+        "air": 0.25
+      },
+      "role_weights": {
+        "availability": 0.6666666666666666,
+        "proximity": 0.3333333333333333
+      }
+    },
+    "road_emphasis__proximity_emphasis": {
+      "mode_weights": {
+        "road": 0.5,
+        "water": 0.25,
+        "air": 0.25
+      },
+      "role_weights": {
+        "availability": 0.3333333333333333,
+        "proximity": 0.6666666666666666
+      }
+    },
+    "water_emphasis__equal_roles": {
+      "mode_weights": {
+        "road": 0.25,
+        "water": 0.5,
+        "air": 0.25
+      },
+      "role_weights": {
+        "availability": 0.5,
+        "proximity": 0.5
+      }
+    },
+    "water_emphasis__availability_emphasis": {
+      "mode_weights": {
+        "road": 0.25,
+        "water": 0.5,
+        "air": 0.25
+      },
+      "role_weights": {
+        "availability": 0.6666666666666666,
+        "proximity": 0.3333333333333333
+      }
+    },
+    "water_emphasis__proximity_emphasis": {
+      "mode_weights": {
+        "road": 0.25,
+        "water": 0.5,
+        "air": 0.25
+      },
+      "role_weights": {
+        "availability": 0.3333333333333333,
+        "proximity": 0.6666666666666666
+      }
+    },
+    "air_emphasis__equal_roles": {
+      "mode_weights": {
+        "road": 0.25,
+        "water": 0.25,
+        "air": 0.5
+      },
+      "role_weights": {
+        "availability": 0.5,
+        "proximity": 0.5
+      }
+    },
+    "air_emphasis__availability_emphasis": {
+      "mode_weights": {
+        "road": 0.25,
+        "water": 0.25,
+        "air": 0.5
+      },
+      "role_weights": {
+        "availability": 0.6666666666666666,
+        "proximity": 0.3333333333333333
+      }
+    },
+    "air_emphasis__proximity_emphasis": {
+      "mode_weights": {
+        "road": 0.25,
+        "water": 0.25,
+        "air": 0.5
+      },
+      "role_weights": {
+        "availability": 0.3333333333333333,
+        "proximity": 0.6666666666666666
+      }
+    }
+  },
+  "warning": "The baseline score is a transparent reference scenario, not a validated ground truth."
+}

@@ -1,0 +1,14 @@
+{
+  "checks": {
+    "rows_144": true,
+    "selected_indicators_10": true,
+    "scenarios_12": true,
+    "no_missing_normalized": true,
+    "no_missing_scenarios": true,
+    "normalized_within_zero_one": true,
+    "scenario_scores_within_zero_one": true,
+    "finite_outputs": true,
+    "mode_weights_sum_one": true,
+    "role_weights_sum_one": true
+  }
+}
