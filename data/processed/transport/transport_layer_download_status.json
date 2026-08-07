@@ -1,44 +1,44 @@
 {
-  "generated_at_utc": "2026-08-07T05:30:54.326548+00:00",
-  "status": "complete",
+  "generated_at_utc": "2026-08-07T05:33:28.250167+00:00",
+  "status": "partial",
   "sources": {
     "dnit_roads": {
       "discovered": 3,
-      "downloaded": 1,
+      "downloaded": 0,
       "preserved": 0,
-      "available": 1,
-      "errors": 2,
-      "status": "success"
+      "available": 0,
+      "errors": 4,
+      "status": "failed"
     },
     "antaq_ports": {
       "discovered": 3,
       "downloaded": 3,
-      "preserved": 0,
-      "available": 3,
+      "preserved": 3,
+      "available": 6,
       "errors": 0,
       "status": "success"
     },
     "antaq_waterways": {
       "discovered": 3,
       "downloaded": 3,
-      "preserved": 0,
-      "available": 3,
+      "preserved": 3,
+      "available": 6,
       "errors": 0,
       "status": "success"
     },
     "anac_public_aerodromes": {
       "discovered": 1,
       "downloaded": 1,
-      "preserved": 0,
-      "available": 1,
+      "preserved": 1,
+      "available": 2,
       "errors": 0,
       "status": "success"
     },
     "decea_airports": {
       "discovered": 3,
       "downloaded": 3,
-      "preserved": 0,
-      "available": 3,
+      "preserved": 3,
+      "available": 6,
       "errors": 0,
       "status": "success"
     }

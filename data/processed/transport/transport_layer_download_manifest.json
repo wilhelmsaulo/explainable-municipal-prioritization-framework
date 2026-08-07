@@ -1,5 +1,5 @@
 {
-  "generated_at_utc": "2026-08-07T05:30:54.326548+00:00",
+  "generated_at_utc": "2026-08-07T05:33:28.250167+00:00",
   "sources": {
     "dnit_roads": {
       "agency": "DNIT",
@@ -9,20 +9,22 @@
         "https://geoservicos.inde.gov.br/geoserver/DNIT/ows?service=WFS&version=2.0.0&request=GetFeature&typeNames=DNIT:cide_2021_&outputFormat=SHAPE-ZIP",
         "https://geoservicos.inde.gov.br/geoserver/DNIT/ows?service=WFS&version=2.0.0&request=GetFeature&typeNames=DNIT:cide_2021_&outputFormat=application/json"
       ],
-      "downloads": [
-        {
-          "url": "https://geoservicos.inde.gov.br/geoserver/DNIT/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=DNIT:cide_2021_&outputFormat=SHAPE-ZIP",
-          "resolved_url": "https://geoservicos.inde.gov.br/geoserver/DNIT/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=DNIT:cide_2021_&outputFormat=SHAPE-ZIP",
-          "path": "data/raw/transport/dnit_roads/candidate_1.zip",
-          "bytes": 425,
-          "sha256": "cb744a4fcf5a08884c6cd335fe1878c44b2bd10d4961e66885139b194e0b7c4b",
-          "content_type": "text/xml;charset=UTF-8",
-          "zip_inventory": [],
-          "attempt": 1
-        }
-      ],
+      "downloads": [],
       "preserved": [],
       "errors": [
+        {
+          "stage": "cache_validation",
+          "path": "data/raw/transport/dnit_roads/candidate_1.zip",
+          "type": "RuntimeError",
+          "message": "response was named .zip but is not a valid ZIP archive"
+        },
+        {
+          "stage": "download",
+          "url": "https://geoservicos.inde.gov.br/geoserver/DNIT/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=DNIT:cide_2021_&outputFormat=SHAPE-ZIP",
+          "type": "RuntimeError",
+          "message": "response was named .zip but is not a valid ZIP archive",
+          "attempts": 3
+        },
         {
           "stage": "download",
           "url": "https://geoservicos.inde.gov.br/geoserver/DNIT/ows?service=WFS&version=2.0.0&request=GetFeature&typeNames=DNIT:cide_2021_&outputFormat=SHAPE-ZIP",
@@ -104,7 +106,51 @@
           "attempt": 1
         }
       ],
-      "preserved": [],
+      "preserved": [
+        {
+          "path": "data/raw/transport/antaq_ports/Instalacoes_Portuarias_20212.zip",
+          "bytes": 3028070,
+          "sha256": "0ac4c2ed8cada9348eb5057a43efe084336c1e66eeaca51bf43ac0d8d8547e2e",
+          "zip_inventory": [
+            "Metadados_InstalaçΣes Portuárias.pdf",
+            "SHP-Instalaçoes Portuárias 2021/",
+            "SHP-Instalaçoes Portuárias 2021/Instalacoes portuarias.cpg",
+            "SHP-Instalaçoes Portuárias 2021/Instalacoes portuarias.dbf",
+            "SHP-Instalaçoes Portuárias 2021/Instalacoes portuarias.prj",
+            "SHP-Instalaçoes Portuárias 2021/Instalacoes portuarias.shp",
+            "SHP-Instalaçoes Portuárias 2021/Instalacoes portuarias.shx",
+            "Mapa Instalaçoes Portuarias-2021.pdf"
+          ]
+        },
+        {
+          "path": "data/raw/transport/antaq_ports/Instalaesporturias06052025.zip",
+          "bytes": 518623,
+          "sha256": "79e28332bdd031388a6f2305e4f1e2e741c057a64a63724ea4278f78a040fb63",
+          "zip_inventory": [
+            "InstalaçΣes portuárias-06-05-2025/Portos.dbf",
+            "InstalaçΣes portuárias-06-05-2025/Portos.kml",
+            "InstalaçΣes portuárias-06-05-2025/Portos.prj",
+            "InstalaçΣes portuárias-06-05-2025/Portos.qmd",
+            "InstalaçΣes portuárias-06-05-2025/Portos.shp",
+            "InstalaçΣes portuárias-06-05-2025/Portos.shx",
+            "InstalaçΣes portuárias-06-05-2025/Portos.xlsx"
+          ]
+        },
+        {
+          "path": "data/raw/transport/antaq_ports/Linhasdetravessias06052025.zip",
+          "bytes": 47307,
+          "sha256": "13a72f45a311168f8d57c50d261a3aa4b39c3188ee069617e572a76cd502d215",
+          "zip_inventory": [
+            "Linhas de travessias - 06-05-2025/LinhasTravessia.dbf",
+            "Linhas de travessias - 06-05-2025/LinhasTravessia.kml",
+            "Linhas de travessias - 06-05-2025/LinhasTravessia.prj",
+            "Linhas de travessias - 06-05-2025/LinhasTravessia.qmd",
+            "Linhas de travessias - 06-05-2025/LinhasTravessia.shp",
+            "Linhas de travessias - 06-05-2025/LinhasTravessia.shx",
+            "Linhas de travessias - 06-05-2025/LinhasTravessia.xlsx"
+          ]
+        }
+      ],
       "errors": []
     },
     "antaq_waterways": {
@@ -172,7 +218,51 @@
           "attempt": 1
         }
       ],
-      "preserved": [],
+      "preserved": [
+        {
+          "path": "data/raw/transport/antaq_waterways/SHPTKU2023cabotagem.zip",
+          "bytes": 2415007,
+          "sha256": "95e5e338ec69fcb3bb7cafa18b58bc5638b56fb0f5174ed3c647d989531a2425",
+          "zip_inventory": [
+            "SHP-TKU-2023-cabotagem/mapa TKU-cabotagem-2023 v2.png",
+            "SHP-TKU-2023-cabotagem/TKU-2023-cabotagem.cpg",
+            "SHP-TKU-2023-cabotagem/TKU-2023-cabotagem.dbf",
+            "SHP-TKU-2023-cabotagem/TKU-2023-cabotagem.prj",
+            "SHP-TKU-2023-cabotagem/TKU-2023-cabotagem.qmd",
+            "SHP-TKU-2023-cabotagem/TKU-2023-cabotagem.shp",
+            "SHP-TKU-2023-cabotagem/TKU-2023-cabotagem.shx"
+          ]
+        },
+        {
+          "path": "data/raw/transport/antaq_waterways/SHPTKUinterior2023.zip",
+          "bytes": 3243886,
+          "sha256": "af92772b30616367b9e2b5798b9a87d4e81405014bd8cba4ff401f55a6dd65e5",
+          "zip_inventory": [
+            "SHP-TKU-interior-2023/Mapa - TKU-interior-2023 v2.png",
+            "SHP-TKU-interior-2023/TKU-interior-2023.cpg",
+            "SHP-TKU-interior-2023/TKU-interior-2023.dbf",
+            "SHP-TKU-interior-2023/TKU-interior-2023.prj",
+            "SHP-TKU-interior-2023/TKU-interior-2023.qmd",
+            "SHP-TKU-interior-2023/TKU-interior-2023.shp",
+            "SHP-TKU-interior-2023/TKU-interior-2023.shx"
+          ]
+        },
+        {
+          "path": "data/raw/transport/antaq_waterways/SHP_VEN2022completo.zip",
+          "bytes": 710326,
+          "sha256": "a324b2af08d9fdea9ee45fcd20116a95851f39223efca97d4fb9b5d9c8738a2b",
+          "zip_inventory": [
+            "SHP_VEN-2022-completo/VEN-2022-completo.cpg",
+            "SHP_VEN-2022-completo/VEN-2022-completo.dbf",
+            "SHP_VEN-2022-completo/VEN-2022-completo.kml",
+            "SHP_VEN-2022-completo/VEN-2022-completo.prj",
+            "SHP_VEN-2022-completo/VEN-2022-completo.qmd",
+            "SHP_VEN-2022-completo/VEN-2022-completo.shp",
+            "SHP_VEN-2022-completo/VEN-2022-completo.shx",
+            "SHP_VEN-2022-completo/VEN-2022-completo.xlsx"
+          ]
+        }
+      ],
       "errors": []
     },
     "anac_public_aerodromes": {
@@ -193,7 +283,14 @@
           "attempt": 2
         }
       ],
-      "preserved": [],
+      "preserved": [
+        {
+          "path": "data/raw/transport/anac_public_aerodromes/cadastro-de-aerodromos-civis-publicos.csv",
+          "bytes": 151717,
+          "sha256": "d8faa824dcd9a47581c95d985bdc514601ccf5db4a953cc399acad1a35f533e3",
+          "zip_inventory": []
+        }
+      ],
       "errors": []
     },
     "decea_airports": {
@@ -210,7 +307,7 @@
           "resolved_url": "https://geoaisweb.decea.gov.br/geoserver/ICA/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=ICA:airport&outputFormat=SHAPE-ZIP",
           "path": "data/raw/transport/decea_airports/candidate_1.zip",
           "bytes": 728362,
-          "sha256": "3e28d37ded7b9b93660b89fff686549bd22131f6af6b7366becd643a7308e081",
+          "sha256": "ca920a3e7436437a610ccc6793e2ea0484ed19dde0236c63634d015abeb2dfbc",
           "content_type": "application/zip",
           "zip_inventory": [
             "airport.dbf",
@@ -226,7 +323,7 @@
           "resolved_url": "https://geoaisweb.decea.gov.br/geoserver/ICA/ows?service=WFS&version=2.0.0&request=GetFeature&typeNames=ICA:airport&outputFormat=SHAPE-ZIP",
           "path": "data/raw/transport/decea_airports/candidate_2.zip",
           "bytes": 728823,
-          "sha256": "2ef7e7f6bea22cfcda887c9dfc46cd965f1494bc5cc8d77f7ae1f86a455ecc1f",
+          "sha256": "c270369dd61960528ce9113766adf8e167716009f54d6a791d66cded099a3b2f",
           "content_type": "application/zip",
           "zip_inventory": [
             "airport.dbf",
@@ -242,13 +339,44 @@
           "resolved_url": "https://geoaisweb.decea.gov.br/geoserver/ICA/ows?service=WFS&version=2.0.0&request=GetFeature&typeNames=ICA:airport&outputFormat=application/json",
           "path": "data/raw/transport/decea_airports/candidate_3.geojson",
           "bytes": 3115559,
-          "sha256": "af373f1647d0724c5768bc53dbfe143f231398d670d8fe3890475839a5c95d18",
+          "sha256": "6cb5de23be022c29473b8bda89b21e4c80f2076c9360acc32a808f41a1fadde1",
           "content_type": "application/json;charset=UTF-8",
           "zip_inventory": [],
           "attempt": 1
         }
       ],
-      "preserved": [],
+      "preserved": [
+        {
+          "path": "data/raw/transport/decea_airports/candidate_1.zip",
+          "bytes": 728362,
+          "sha256": "3e28d37ded7b9b93660b89fff686549bd22131f6af6b7366becd643a7308e081",
+          "zip_inventory": [
+            "airport.dbf",
+            "airport.shx",
+            "airport.prj",
+            "airport.shp",
+            "airport.cst"
+          ]
+        },
+        {
+          "path": "data/raw/transport/decea_airports/candidate_2.zip",
+          "bytes": 728823,
+          "sha256": "2ef7e7f6bea22cfcda887c9dfc46cd965f1494bc5cc8d77f7ae1f86a455ecc1f",
+          "zip_inventory": [
+            "airport.dbf",
+            "airport.shx",
+            "airport.prj",
+            "airport.shp",
+            "airport.cst"
+          ]
+        },
+        {
+          "path": "data/raw/transport/decea_airports/candidate_3.geojson",
+          "bytes": 3115559,
+          "sha256": "af373f1647d0724c5768bc53dbfe143f231398d670d8fe3890475839a5c95d18",
+          "zip_inventory": []
+        }
+      ],
       "errors": []
     }
   },
