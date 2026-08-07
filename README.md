@@ -142,6 +142,9 @@ application.
 
 ## Interactive scientific dashboard
 
+**Live experimental dashboard:** https://explainable-municipal-prioritization-framework-zyur6g28v6z5uba.streamlit.app/
+
+
 A read-only Streamlit dashboard visualizes the 144 municipalities and all 48
 audited configurations without recalculating scores or permitting arbitrary
 parameter changes. It includes the statewide view, municipal profiles,
