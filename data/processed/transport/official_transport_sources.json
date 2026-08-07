@@ -22,7 +22,7 @@
       "http_status": 200,
       "resolved_url": "https://www.gov.br/dnit/pt-br/assuntos/atlas-e-mapas/pnv-e-snv",
       "content_type": "text/html;charset=utf-8",
-      "checked_at_utc": "2026-08-07T13:42:56.703701+00:00"
+      "checked_at_utc": "2026-08-07T13:58:38.166623+00:00"
     },
     {
       "source_id": "mapbiomas_state_roads",
@@ -42,7 +42,7 @@
       "http_status": 200,
       "resolved_url": "https://brasil.mapbiomas.org/dados-de-infraestrutura/",
       "content_type": "text/html; charset=UTF-8",
-      "checked_at_utc": "2026-08-07T13:42:56.703701+00:00"
+      "checked_at_utc": "2026-08-07T13:58:38.166623+00:00"
     },
     {
       "source_id": "mapbiomas_federal_roads",
@@ -62,7 +62,26 @@
       "http_status": 200,
       "resolved_url": "https://brasil.mapbiomas.org/dados-de-infraestrutura/",
       "content_type": "text/html; charset=UTF-8",
-      "checked_at_utc": "2026-08-07T13:42:56.703701+00:00"
+      "checked_at_utc": "2026-08-07T13:58:38.166623+00:00"
+    },
+    {
+      "source_id": "mapbiomas_other_roads",
+      "agency": "MapBiomas",
+      "theme": "other_road_segments",
+      "official_page": "https://brasil.mapbiomas.org/dados-de-infraestrutura/",
+      "expected_formats": [
+        "shp"
+      ],
+      "map_reference_year": 2023,
+      "direct_urls": [
+        "https://brasil.mapbiomas.org/wp-content/uploads/sites/4/2023/08/outros-trechos.zip"
+      ],
+      "purpose": "Other road segments compiled by MapBiomas from institutional sources.",
+      "status": "available",
+      "http_status": 200,
+      "resolved_url": "https://brasil.mapbiomas.org/dados-de-infraestrutura/",
+      "content_type": "text/html; charset=UTF-8",
+      "checked_at_utc": "2026-08-07T13:58:38.166623+00:00"
     },
     {
       "source_id": "antaq_ports",
@@ -79,7 +98,7 @@
       "http_status": 200,
       "resolved_url": "https://www.gov.br/antaq/pt-br/central-de-conteudos/informacoes-geograficas",
       "content_type": "text/html;charset=utf-8",
-      "checked_at_utc": "2026-08-07T13:42:56.703701+00:00"
+      "checked_at_utc": "2026-08-07T13:58:38.166623+00:00"
     },
     {
       "source_id": "antaq_waterways",
@@ -95,7 +114,7 @@
       "http_status": 200,
       "resolved_url": "https://www.gov.br/antaq/pt-br/central-de-conteudos/informacoes-geograficas",
       "content_type": "text/html;charset=utf-8",
-      "checked_at_utc": "2026-08-07T13:42:56.703701+00:00"
+      "checked_at_utc": "2026-08-07T13:58:38.166623+00:00"
     },
     {
       "source_id": "anac_public_aerodromes",
@@ -112,7 +131,7 @@
       "http_status": 200,
       "resolved_url": "https://www.gov.br/anac/pt-br/assuntos/regulados/aeroportos-e-aerodromos/cadastro-publico/cadastro-de-aerodromos-de-uso-publico",
       "content_type": "text/html;charset=utf-8",
-      "checked_at_utc": "2026-08-07T13:42:56.703701+00:00"
+      "checked_at_utc": "2026-08-07T13:58:38.166623+00:00"
     },
     {
       "source_id": "decea_airports",
@@ -131,10 +150,11 @@
         "https://geoaisweb.decea.gov.br/geoserver/ICA/ows?service=WFS&version=2.0.0&request=GetFeature&typeNames=ICA:airport&outputFormat=SHAPE-ZIP"
       ],
       "purpose": "Operational aerodrome geometry from the official AIRAC-updated GeoAISWEB service.",
-      "status": "unreachable",
-      "error_type": "ConnectError",
-      "error": "[Errno -3] Temporary failure in name resolution",
-      "checked_at_utc": "2026-08-07T13:42:56.703701+00:00"
+      "status": "available",
+      "http_status": 200,
+      "resolved_url": "https://geoaisweb.decea.gov.br/geoserver/ICA/ows?service=WFS&version=2.0.0&request=GetCapabilities",
+      "content_type": "application/xml",
+      "checked_at_utc": "2026-08-07T13:58:38.166623+00:00"
     },
     {
       "source_id": "ibge_municipal_boundaries",
@@ -150,7 +170,7 @@
       "http_status": 403,
       "resolved_url": "https://www.ibge.gov.br/geociencias/organizacao-do-territorio/malhas-territoriais/15774-malhas.html",
       "content_type": "text/html; charset=UTF-8",
-      "checked_at_utc": "2026-08-07T13:42:56.703701+00:00"
+      "checked_at_utc": "2026-08-07T13:58:38.166623+00:00"
     }
   ]
 }

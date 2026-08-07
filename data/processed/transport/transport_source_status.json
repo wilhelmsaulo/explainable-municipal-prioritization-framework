@@ -1,8 +1,8 @@
 {
-  "generated_at_utc": "2026-08-07T13:42:56.703701+00:00",
-  "source_count": 8,
-  "available": 6,
-  "unavailable": 2,
+  "generated_at_utc": "2026-08-07T13:58:38.166623+00:00",
+  "source_count": 9,
+  "available": 8,
+  "unavailable": 1,
   "sources": {
     "dnit_roads": {
       "status": "available",
@@ -15,6 +15,11 @@
       "error": null
     },
     "mapbiomas_federal_roads": {
+      "status": "available",
+      "http_status": 200,
+      "error": null
+    },
+    "mapbiomas_other_roads": {
       "status": "available",
       "http_status": 200,
       "error": null
@@ -35,9 +40,9 @@
       "error": null
     },
     "decea_airports": {
-      "status": "unreachable",
-      "http_status": null,
-      "error": "[Errno -3] Temporary failure in name resolution"
+      "status": "available",
+      "http_status": 200,
+      "error": null
     },
     "ibge_municipal_boundaries": {
       "status": "http_error",
