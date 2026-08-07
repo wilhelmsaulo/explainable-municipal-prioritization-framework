@@ -35,8 +35,20 @@ TEXT = {
         "caption": "Pará · 144 municipalities · 48 audited configurations · read-only visualization",
         "language": "Language",
         "configuration": "Official configuration",
-        "transport_scenario": "Multimodal transport scenario",
+        "transport_scenario": "Transport submodel scenario",
         "macro_weights_selector": "Macro-dimension weights",
+        "framework_dimensions": "Framework dimensions",
+        "always_included": "Every final score combines all three macro-dimensions. The transport selector changes only the transport submodel; it does not remove or replace the other dimensions.",
+        "institutional_card": "1 · Institutional deficit",
+        "institutional_card_body": "Municipal institutional capacity for policies addressing women.",
+        "institutional_sources": "Source: MUNIC 2023",
+        "service_card": "2 · Service-network deficit",
+        "service_card_body": "Health services and professionals, specialized social assistance, justice access, and the specialized protection network.",
+        "service_sources": "Sources: CNES, MDS/SNAS, TJPA, and Ligue 180",
+        "transport_card": "3 · Transport barrier",
+        "transport_card_body": "Road, waterway, and air access represented through 12 predeclared multimodal scenarios.",
+        "transport_sources": "Sources: MapBiomas, ANTAQ, and DECEA/ICA",
+        "context_note": "IBGE population supports context and denominators where applicable. Police records from 2022–2025 are preserved in the repository but deliberately excluded from this framework.",
         "selected_configuration": "Selected audited configuration",
         "transport_interpretation": "Transport interpretation",
         "macro_weights_detail": "Macro weights",
@@ -107,8 +119,20 @@ TEXT = {
         "caption": "Pará · 144 municípios · 48 configurações auditadas · visualização somente leitura",
         "language": "Idioma",
         "configuration": "Configuração oficial",
-        "transport_scenario": "Cenário de transporte multimodal",
+        "transport_scenario": "Cenário do submodelo de transporte",
         "macro_weights_selector": "Pesos das macrodimensões",
+        "framework_dimensions": "Dimensões do framework",
+        "always_included": "Todo escore final combina as três macrodimensões. O seletor de transporte modifica apenas o submodelo de transporte; ele não remove nem substitui as demais dimensões.",
+        "institutional_card": "1 · Déficit institucional",
+        "institutional_card_body": "Capacidade institucional municipal para políticas destinadas às mulheres.",
+        "institutional_sources": "Fonte: MUNIC 2023",
+        "service_card": "2 · Déficit da rede de serviços",
+        "service_card_body": "Serviços e profissionais de saúde, assistência social especializada, acesso à justiça e rede especializada de proteção.",
+        "service_sources": "Fontes: CNES, MDS/SNAS, TJPA e Ligue 180",
+        "transport_card": "3 · Barreira de transporte",
+        "transport_card_body": "Acesso rodoviário, hidroviário e aéreo representado por 12 cenários multimodais previamente declarados.",
+        "transport_sources": "Fontes: MapBiomas, ANTAQ e DECEA/ICA",
+        "context_note": "A população do IBGE apoia o contexto e os denominadores quando aplicável. Os registros policiais de 2022–2025 estão preservados no repositório, mas foram deliberadamente excluídos deste framework.",
         "selected_configuration": "Configuração auditada selecionada",
         "transport_interpretation": "Interpretação do transporte",
         "macro_weights_detail": "Pesos macro",
@@ -193,11 +217,45 @@ def pct(value: float, language: str) -> str:
     return rendered.replace(".", ",") if language == "pt" else rendered
 
 
+def framework_dimensions(tx: dict[str, str]) -> None:
+    st.subheader(tx["framework_dimensions"])
+    st.info(tx["always_included"])
+    institutional, services, transport = st.columns(3)
+    cards = (
+        (
+            institutional,
+            tx["institutional_card"],
+            tx["institutional_card_body"],
+            tx["institutional_sources"],
+        ),
+        (
+            services,
+            tx["service_card"],
+            tx["service_card_body"],
+            tx["service_sources"],
+        ),
+        (
+            transport,
+            tx["transport_card"],
+            tx["transport_card_body"],
+            tx["transport_sources"],
+        ),
+    )
+    for column, title, body, sources in cards:
+        with column, st.container(border=True):
+            st.markdown(f"#### {title}")
+            st.write(body)
+            st.caption(sources)
+    st.caption(tx["context_note"])
+
+
 def scenario_table(data, scenario: str, language: str) -> pd.DataFrame:
     current = selected_scenario(data.scenarios, scenario)
     result = current.merge(data.profiles, on=["municipality_code", "municipality"])
     result = result.merge(data.municipalities, on=["municipality_code", "municipality"])
-    result["profile_label"] = result["priority_stability_profile"].map(PROFILE_LABELS[language])
+    result["profile_label"] = result["priority_stability_profile"].map(
+        PROFILE_LABELS[language]
+    )
     return result.sort_values(["selected_rank", "municipality"], kind="stable")
 
 
@@ -270,20 +328,14 @@ def municipal_profile_tab(data, scenario: str, language: str, tx: dict[str, str]
     c1, c2, c3, c4 = st.columns(4)
     c1.metric(tx["selected_rank"], int(row["selected_rank"]))
     c2.metric(tx["selected_score"], fmt(row["selected_score"], language))
-    c3.metric(
-        tx["best_worst"], f"{int(row['best_priority_rank'])}–{int(row['worst_priority_rank'])}"
-    )
+    c3.metric(tx["best_worst"], f"{int(row['best_priority_rank'])}–{int(row['worst_priority_rank'])}")
     c4.metric(tx["top_quartile"], f"{100 * row['top_quartile_frequency']:.1f}%")
 
     left, right = st.columns(2)
     with left:
         contributions = pd.DataFrame(
             {
-                tx["dimension"]: [
-                    tx["institutional"],
-                    tx["service_network"],
-                    tx["transport_barrier"],
-                ],
+                tx["dimension"]: [tx["institutional"], tx["service_network"], tx["transport_barrier"]],
                 tx["mean_contribution"]: [
                     explanation["mean_institutional_contribution"],
                     explanation["mean_service_network_contribution"],
@@ -377,9 +429,7 @@ def comparison_tab(data, scenario: str, language: str, tx: dict[str, str]) -> No
         "top_quartile_frequency": tx["top_quartile"],
         "profile_label": tx["stability"],
     }
-    st.dataframe(
-        compare[list(columns)].rename(columns=columns), hide_index=True, use_container_width=True
-    )
+    st.dataframe(compare[list(columns)].rename(columns=columns), hide_index=True, use_container_width=True)
 
 
 def methodology_tab(data, language: str, tx: dict[str, str]) -> None:
@@ -468,6 +518,7 @@ except (FileNotFoundError, KeyError, ValueError) as exc:
 
 st.title(tx["title"])
 st.caption(tx["caption"])
+framework_dimensions(tx)
 # The two selectors map only to precomputed, audited scenario columns.
 reference_transport, reference_weight = split_scenario(REFERENCE_SCENARIO)
 transport_options = tuple(sorted({split_scenario(name)[0] for name in data.scenario_names}))
