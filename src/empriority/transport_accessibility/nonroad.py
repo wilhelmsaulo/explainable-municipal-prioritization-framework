@@ -1,9 +1,7 @@
 from __future__ import annotations
 
-import csv
 import hashlib
 import json
-import re
 import unicodedata
 import zipfile
 from pathlib import Path
@@ -54,85 +52,6 @@ def _column(frame: Any, *candidates: str) -> str:
         if key in normalized:
             return normalized[key]
     raise ValueError(f"None of the expected columns exists: {candidates}")
-
-
-def _parse_coordinate(value: object) -> float | None:
-    if value is None:
-        return None
-    text = str(value).strip().upper().replace(",", ".")
-    try:
-        return float(text)
-    except ValueError:
-        pass
-    numbers = [float(item) for item in re.findall(r"\d+(?:\.\d+)?", text)]
-    if not numbers:
-        return None
-    coordinate = numbers[0]
-    if len(numbers) > 1:
-        coordinate += numbers[1] / 60
-    if len(numbers) > 2:
-        coordinate += numbers[2] / 3600
-    if "S" in text or "W" in text or "O" in text:
-        coordinate *= -1
-    return coordinate
-
-
-def _load_anac_points(csv_path: Path) -> Any:
-    import geopandas as gpd
-    import pandas as pd
-
-    frame = None
-    errors: list[str] = []
-    parse_attempts = (
-        {"sep": ";", "engine": "python", "on_bad_lines": "skip"},
-        {
-            "sep": ";",
-            "engine": "python",
-            "quoting": csv.QUOTE_NONE,
-            "on_bad_lines": "skip",
-        },
-        {"sep": ",", "engine": "python", "on_bad_lines": "skip"},
-        {
-            "sep": ",",
-            "engine": "python",
-            "quoting": csv.QUOTE_NONE,
-            "on_bad_lines": "skip",
-        },
-    )
-    for encoding in ("utf-8-sig", "latin1"):
-        for options in parse_attempts:
-            try:
-                candidate = pd.read_csv(csv_path, encoding=encoding, **options)
-                if len(candidate.columns) < 2:
-                    errors.append(
-                        f"{encoding}/{options['sep']}: only {len(candidate.columns)} column"
-                    )
-                    continue
-                _column(candidate, "Latitude", "LATGEOPOINT", "LATITUDE_DECIMAL")
-                _column(candidate, "Longitude", "LONGEOPOINT", "LONGITUDE_DECIMAL")
-                frame = candidate
-                break
-            except (UnicodeDecodeError, pd.errors.ParserError, ValueError) as error:
-                errors.append(
-                    f"{encoding}/{options['sep']}/quoting={options.get('quoting')}: "
-                    f"{type(error).__name__}: {error}"
-                )
-        if frame is not None:
-            break
-    if frame is None:
-        details = " | ".join(errors)
-        raise ValueError(
-            "Unable to parse the ANAC public-aerodrome CSV with the expected "
-            f"coordinate columns. Attempts: {details}"
-        )
-
-    latitude = _column(frame, "Latitude", "LATGEOPOINT", "LATITUDE_DECIMAL")
-    longitude = _column(frame, "Longitude", "LONGEOPOINT", "LONGITUDE_DECIMAL")
-    frame["_latitude"] = frame[latitude].map(_parse_coordinate)
-    frame["_longitude"] = frame[longitude].map(_parse_coordinate)
-    frame = frame.dropna(subset=["_latitude", "_longitude"]).copy()
-    geometry = gpd.points_from_xy(frame["_longitude"], frame["_latitude"])
-    return gpd.GeoDataFrame(frame, geometry=geometry, crs="EPSG:4326")
 
 
 def _municipalities(archive_path: Path, cache: Path) -> Any:
@@ -322,8 +241,7 @@ def build_nonroad_transport_indicators(
         "limitations": [
             "Distances use a representative point inside each municipal polygon.",
             "ANTAQ navigated-waterway geometry represents the published 2022 layer.",
-            "The ANAC CSV endpoint returned an anti-automation HTML challenge in the reproducible runner and is not used.",
-            "The aviation indicators therefore use the official DECEA airport WFS layer only.",
+            "Aviation indicators use the official DECEA airport WFS layer.",
             "No multimodal composite is calculated before indicator-level audit.",
         ],
     }
