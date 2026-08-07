@@ -1,7 +1,7 @@
 {
   "generated_at_utc": "2026-08-07T14:04:50.064676+00:00",
-  "source_count": 9,
-  "available": 8,
+  "source_count": 8,
+  "available": 7,
   "unavailable": 1,
   "sources": {
     "dnit_roads": {
@@ -34,11 +34,6 @@
       "http_status": 200,
       "error": null
     },
-    "anac_public_aerodromes": {
-      "status": "available",
-      "http_status": 200,
-      "error": null
-    },
     "decea_airports": {
       "status": "available",
       "http_status": 200,
@@ -53,6 +48,6 @@
   "provenance": {
     "reference_map": "Mapa Multimodal Pará - Ministério dos Transportes",
     "reference_map_updated": "2023-09-22",
-    "note": "Catalog follows agencies cited in the official multimodal map: DNIT, ANTAQ, ANAC and IBGE."
+    "note": "Catalog retains the official sources used by the reproducible pipeline: DNIT/MapBiomas, ANTAQ, DECEA/ICA and IBGE."
   }
 }
