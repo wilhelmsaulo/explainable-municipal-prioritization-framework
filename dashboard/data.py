@@ -6,6 +6,7 @@ the outputs produced by the audited pipeline.
 
 from __future__ import annotations
 
+import json
 from dataclasses import dataclass
 from pathlib import Path
 
@@ -95,6 +96,7 @@ class DashboardData:
     agreement: pd.DataFrame
     correlations: pd.DataFrame
     indicator_profile: pd.DataFrame
+    boundaries: dict
     scenario_names: tuple[str, ...]
 
 
@@ -161,6 +163,10 @@ def load_dashboard_data(root: Path) -> DashboardData:
     correlations = _read(results / "capacity_dimension_correlations.csv")
     indicator_profile = _read(processed / "capacity_framework_indicator_profile.csv")
     matrix = _read(processed / "integrated_municipal_matrix.csv")
+    boundary_path = root / "data" / "geospatial" / "pa_municipal_boundaries_2022_simplified.geojson"
+    if not boundary_path.exists():
+        raise FileNotFoundError(f"Required dashboard input is missing: {boundary_path}")
+    boundaries = json.loads(boundary_path.read_text(encoding="utf-8"))
 
     key = "municipality_code"
     required_coordinates = [
@@ -178,6 +184,12 @@ def load_dashboard_data(root: Path) -> DashboardData:
     )
 
     names = scenario_names(scenarios)
+    boundary_codes = {
+        str(feature["properties"]["CD_MUN"]) for feature in boundaries.get("features", [])
+    }
+    expected_codes = set(scenarios[key])
+    if len(boundary_codes) != EXPECTED_MUNICIPALITIES or boundary_codes != expected_codes:
+        raise ValueError("Municipal boundary codes do not match the 144 framework municipalities")
     for label, frame in {
         "profiles": profiles,
         "scenarios": scenarios,
@@ -185,9 +197,7 @@ def load_dashboard_data(root: Path) -> DashboardData:
         "municipalities": municipalities,
     }.items():
         if len(frame) != EXPECTED_MUNICIPALITIES or frame[key].nunique() != EXPECTED_MUNICIPALITIES:
-            raise ValueError(
-                f"{label} does not contain exactly {EXPECTED_MUNICIPALITIES} municipalities"
-            )
+            raise ValueError(f"{label} does not contain exactly {EXPECTED_MUNICIPALITIES} municipalities")
 
     if scenarios[[f"{name}__score" for name in names]].isna().any().any():
         raise ValueError("Scenario scores contain missing values")
@@ -202,5 +212,6 @@ def load_dashboard_data(root: Path) -> DashboardData:
         agreement=agreement,
         correlations=correlations,
         indicator_profile=indicator_profile,
+        boundaries=boundaries,
         scenario_names=names,
     )
