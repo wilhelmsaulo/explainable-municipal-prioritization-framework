@@ -94,6 +94,7 @@ class DashboardData:
     municipalities: pd.DataFrame
     agreement: pd.DataFrame
     correlations: pd.DataFrame
+    indicator_profile: pd.DataFrame
     scenario_names: tuple[str, ...]
 
 
@@ -158,6 +159,7 @@ def load_dashboard_data(root: Path) -> DashboardData:
     explanations = _read(results / "capacity_municipality_explanations.csv")
     agreement = _read(results / "capacity_scenario_agreement.csv")
     correlations = _read(results / "capacity_dimension_correlations.csv")
+    indicator_profile = _read(processed / "capacity_framework_indicator_profile.csv")
     matrix = _read(processed / "integrated_municipal_matrix.csv")
 
     key = "municipality_code"
@@ -183,9 +185,7 @@ def load_dashboard_data(root: Path) -> DashboardData:
         "municipalities": municipalities,
     }.items():
         if len(frame) != EXPECTED_MUNICIPALITIES or frame[key].nunique() != EXPECTED_MUNICIPALITIES:
-            raise ValueError(
-                f"{label} does not contain exactly {EXPECTED_MUNICIPALITIES} municipalities"
-            )
+            raise ValueError(f"{label} does not contain exactly {EXPECTED_MUNICIPALITIES} municipalities")
 
     if scenarios[[f"{name}__score" for name in names]].isna().any().any():
         raise ValueError("Scenario scores contain missing values")
@@ -199,5 +199,6 @@ def load_dashboard_data(root: Path) -> DashboardData:
         municipalities=municipalities,
         agreement=agreement,
         correlations=correlations,
+        indicator_profile=indicator_profile,
         scenario_names=names,
     )
