@@ -1,15 +1,15 @@
 # Table I. Active indicators, sources, and analytical roles
 
-| Macro-dimension | Component | Operational indicator | Source / reference | Direction after alignment | Coverage |
-|---|---|---|---|---|---:|
-| Institutional deficit | Institutional capacity | Negative responses among the two to four observed women's-policy institutional items; unavailable responses are not treated as deficits | IBGE MUNIC 2023 | More negative responses = greater priority | 144/144 |
-| Service-network deficit | Health services | Absence count for hospitals, CAPS, and emergency units (0--3) | CNES, June 2026 snapshot | More absent types = greater priority | 144/144 |
-| Service-network deficit | Health workforce | Absence count for psychologists and social workers (0--2) | CNES, June 2026 snapshot | More absent categories = greater priority | 144/144 |
-| Service-network deficit | Social protection | Absence of all mapped specialized social-assistance services (CREAS, Centro POP, Centro-Dia, and shelter units) | MDS/SNAS RMA; snapshot period pending final bibliographic registration | Absence = greater priority | 144/144 |
-| Service-network deficit | Justice | Absence of mapped local TJPA access | TJPA; snapshot period pending final bibliographic registration | Absence = greater priority | 144/144 |
-| Service-network deficit | Specialized protection network | Diversity of validated mapped service categories (0--8 observed) | Ligue 180 service panel; curated validation; snapshot period pending final bibliographic registration | Fewer categories = greater priority | 144/144 |
-| Service-network deficit | Specialized protection network | Validated specialized non-health services (0--15 observed) | Ligue 180 service panel; curated validation; snapshot period pending final bibliographic registration | Fewer services = greater priority | 144/144 |
-| Transport barrier | Multimodal access | One minus the access score under each of 12 predeclared transport scenarios | MapBiomas roads (registered as 2023), ANTAQ, and DECEA/ICA; remaining snapshot periods pending final bibliographic registration | Lower access = greater priority | 144/144 in every scenario |
+| Macro-dimension | Component | Operational indicator | Source / reference | Acquisition or registration | Direction after alignment | Coverage |
+|---|---|---|---|---|---|---:|
+| Institutional deficit | Institutional capacity | Negative responses among the two to four observed women's-policy institutional items; unavailable responses are not treated as deficits | IBGE MUNIC 2023 | Aug. 4, 2026 | More negative responses = greater priority | 144/144 |
+| Service-network deficit | Health services | Absence count for UBS, hospitals, CAPS, and emergency units (0--4; observed 0--3) | CNES, June 2026 competence | Aug. 4, 2026 | More absent types = greater priority | 144/144 |
+| Service-network deficit | Health workforce | Absence count for physicians, nurses, psychologists, and social workers (0--4; observed 0--2) | CNES, June 2026 competence | Aug. 5, 2026 | More absent categories = greater priority | 144/144 |
+| Service-network deficit | Social protection | Absence of a CREAS unit | MDS/SNAS RMA live administrative directory | Aug. 5, 2026 | Absence = greater priority | 144/144 |
+| Service-network deficit | Justice | Absence of mapped local TJPA access | TJPA Balcão Virtual live administrative directory | Aug. 5, 2026 | Absence = greater priority | 144/144 |
+| Service-network deficit | Specialized protection network | Diversity of validated mapped service categories (0--8 observed) | Ligue 180 live service panel; manual transcription and curated validation | Aug. 6, 2026 | Fewer categories = greater priority | 144/144 |
+| Service-network deficit | Specialized protection network | Validated specialized non-health services (0--15 observed) | Ligue 180 live service panel; manual transcription and curated validation | Aug. 6, 2026 | Fewer services = greater priority | 144/144 |
+| Transport barrier | Multimodal access | One minus the access score under each of 12 predeclared transport scenarios | MapBiomas roads 2023; ANTAQ ports/crossings 2025 and navigated waterways 2022; DECEA/ICA aerodromes 2026 | Aug. 7, 2026 | Lower access = greater priority | 144/144 in every scenario |
 
 ## Aggregation notes
 
@@ -32,7 +32,20 @@ on institutional deficit, service-network deficit, or transport barrier
 Population from the 2022 Demographic Census, released/processed in 2023, is
 used only for provenance and legacy rate fields. Police records for 2022--2025
 remain preserved in the broader matrix but are explicitly excluded from the
-capacity-priority criteria. Missing source-period metadata identified above
-must be resolved from acquisition records before manuscript submission; it is
-not inferred here.
+capacity-priority criteria. For live administrative directories and panels,
+the table reports the reproducible acquisition date rather than assigning an
+unsupported historical reference year.
 
+## Provenance evidence
+
+- MUNIC 2023 indicators were stored on Aug. 4, 2026.
+- The CNES archive is `BASE_DE_DADOS_CNES_202606.ZIP`; establishment indicators
+  were stored on Aug. 4 and professional indicators on Aug. 5, 2026.
+- MDS/SNAS RMA and TJPA snapshots were stored on Aug. 5, 2026.
+- The complete Ligue 180 transcription was stored and documented on Aug. 6,
+  2026; 111 records were retained, 105 of which passed primary validation.
+- The transport-source catalog was checked on Aug. 7, 2026. Its registered
+  reference years are 2023 for MapBiomas roads, 2025 for ANTAQ ports and
+  crossings, 2022 for navigated waterways, and 2026 for DECEA/ICA aerodromes.
+- ANAC is not an active source because the official DECEA/ICA aerodrome layer
+  supplies the aviation geometry used by the model.
