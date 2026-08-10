@@ -3,7 +3,6 @@ import pandas as pd
 from empriority.capacity_input_audit import _materialize_indicator
 from empriority.integrated_priority import _indicator_values
 
-
 DEFINITION = {
     "column": "institutional_deficit_available_4",
     "direction": "benefit",

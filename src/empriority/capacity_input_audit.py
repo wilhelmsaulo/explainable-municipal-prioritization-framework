@@ -26,9 +26,7 @@ def _framework_indicators(config: dict[str, Any]) -> list[dict[str, str]]:
                 **item,
             }
         )
-    for component, definition in config["dimensions"]["service_network"][
-        "components"
-    ].items():
+    for component, definition in config["dimensions"]["service_network"]["components"].items():
         for item in definition["indicators"]:
             indicators.append(
                 {
@@ -79,20 +77,14 @@ def build_capacity_input_audit(
     definitions = _framework_indicators(config)
     source_columns = [item["column"] for item in definitions]
     denominator_columns = [
-        item["denominator_column"]
-        for item in definitions
-        if item.get("denominator_column")
+        item["denominator_column"] for item in definitions if item.get("denominator_column")
     ]
-    missing_indicators = sorted(
-        set(source_columns + denominator_columns) - set(municipal.columns)
-    )
+    missing_indicators = sorted(set(source_columns + denominator_columns) - set(municipal.columns))
     if missing_indicators:
         raise ValueError(f"Framework indicators are missing: {missing_indicators}")
 
     transport_columns = [column for column in transport if column.endswith("__score")]
-    article = municipal[
-        [key, "municipality", "institutional_coverage", *source_columns]
-    ].copy()
+    article = municipal[[key, "municipality", "institutional_coverage", *source_columns]].copy()
     indicator_columns: list[str] = []
     for definition in definitions:
         output_column, values = _materialize_indicator(municipal, definition)
@@ -130,9 +122,7 @@ def build_capacity_input_audit(
     institutional_deficit = pd.to_numeric(
         article["institutional_deficit_available_4"], errors="raise"
     )
-    institutional_coverage = pd.to_numeric(
-        article["institutional_coverage"], errors="raise"
-    )
+    institutional_coverage = pd.to_numeric(article["institutional_coverage"], errors="raise")
     institutional_ratio = article["institutional_deficit_ratio"]
     published_rank = institutional_ratio.rank(method="average", pct=True)
     legacy_raw_count_rank = institutional_deficit.rank(method="average", pct=True)
@@ -158,15 +148,11 @@ def build_capacity_input_audit(
     )
 
     police_columns = [
-        column
-        for column in municipal
-        if column.startswith("police_") or column.startswith("rate_")
+        column for column in municipal if column.startswith("police_") or column.startswith("rate_")
     ]
     article_police_columns = [column for column in article if column in police_columns]
     numeric = article.select_dtypes(include="number")
-    coverage_counts = (
-        municipal["institutional_coverage"].value_counts().sort_index().to_dict()
-    )
+    coverage_counts = municipal["institutional_coverage"].value_counts().sort_index().to_dict()
     checks = {
         "municipal_rows_expected": len(municipal) == expected,
         "transport_rows_expected": len(transport) == expected,
@@ -174,13 +160,8 @@ def build_capacity_input_audit(
         "unique_municipalities_expected": article[key].nunique() == expected,
         "seven_nontransport_indicators": len(indicator_columns) == 7,
         "twelve_transport_scenarios": len(transport_columns) == 12,
-        "all_framework_indicators_complete": article[indicator_columns]
-        .notna()
-        .all()
-        .all(),
-        "all_article_numeric_values_finite": bool(
-            np.isfinite(numeric.to_numpy()).all()
-        ),
+        "all_framework_indicators_complete": article[indicator_columns].notna().all().all(),
+        "all_article_numeric_values_finite": bool(np.isfinite(numeric.to_numpy()).all()),
         "police_columns_excluded": not article_police_columns,
         "published_input_matrix_unchanged": True,
     }
@@ -203,8 +184,7 @@ def build_capacity_input_audit(
         },
         "institutional_coverage": {
             "available_item_counts": {
-                str(int(level)): int(count)
-                for level, count in coverage_counts.items()
+                str(int(level)): int(count) for level, count in coverage_counts.items()
             },
             "deficit_rule": "negative observed items divided by available observed items",
             "missing_responses_are_not_converted_to_deficit": True,
@@ -215,9 +195,7 @@ def build_capacity_input_audit(
             "diagnostic_only_sensitivity": {
                 "published_indicator": "observed deficit divided by observed coverage",
                 "comparison": "legacy raw observed-deficit count",
-                "spearman_rank_correlation": float(
-                    published_rank.corr(legacy_raw_count_rank)
-                ),
+                "spearman_rank_correlation": float(published_rank.corr(legacy_raw_count_rank)),
                 "mean_absolute_percentile_rank_shift": float(rank_shift.mean()),
                 "median_absolute_percentile_rank_shift": float(rank_shift.median()),
                 "maximum_absolute_percentile_rank_shift": float(rank_shift.max()),
@@ -260,9 +238,7 @@ def build_capacity_input_audit(
             audit,
             ensure_ascii=False,
             indent=2,
-            default=lambda value: value.item()
-            if isinstance(value, np.generic)
-            else str(value),
+            default=lambda value: value.item() if isinstance(value, np.generic) else str(value),
         ),
         encoding="utf-8",
     )
