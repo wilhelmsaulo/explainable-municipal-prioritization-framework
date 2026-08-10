@@ -197,7 +197,9 @@ def load_dashboard_data(root: Path) -> DashboardData:
         "municipalities": municipalities,
     }.items():
         if len(frame) != EXPECTED_MUNICIPALITIES or frame[key].nunique() != EXPECTED_MUNICIPALITIES:
-            raise ValueError(f"{label} does not contain exactly {EXPECTED_MUNICIPALITIES} municipalities")
+            raise ValueError(
+                f"{label} does not contain exactly {EXPECTED_MUNICIPALITIES} municipalities"
+            )
 
     if scenarios[[f"{name}__score" for name in names]].isna().any().any():
         raise ValueError("Scenario scores contain missing values")
