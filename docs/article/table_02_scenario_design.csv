@@ -1,0 +1,17 @@
+family,scenario_id,scenario_label,road_weight,water_weight,air_weight,availability_weight,proximity_weight,institutional_weight,service_network_weight,transport_barrier_weight,integrated_configurations
+transport,equal_modes__equal_roles,Equal modes; equal roles,0.3333333333,0.3333333333,0.3333333333,0.5,0.5,,,,4
+transport,equal_modes__availability_emphasis,Equal modes; availability emphasis,0.3333333333,0.3333333333,0.3333333333,0.6666666667,0.3333333333,,,,4
+transport,equal_modes__proximity_emphasis,Equal modes; proximity emphasis,0.3333333333,0.3333333333,0.3333333333,0.3333333333,0.6666666667,,,,4
+transport,road_emphasis__equal_roles,Road emphasis; equal roles,0.5,0.25,0.25,0.5,0.5,,,,4
+transport,road_emphasis__availability_emphasis,Road emphasis; availability emphasis,0.5,0.25,0.25,0.6666666667,0.3333333333,,,,4
+transport,road_emphasis__proximity_emphasis,Road emphasis; proximity emphasis,0.5,0.25,0.25,0.3333333333,0.6666666667,,,,4
+transport,water_emphasis__equal_roles,Waterway emphasis; equal roles,0.25,0.5,0.25,0.5,0.5,,,,4
+transport,water_emphasis__availability_emphasis,Waterway emphasis; availability emphasis,0.25,0.5,0.25,0.6666666667,0.3333333333,,,,4
+transport,water_emphasis__proximity_emphasis,Waterway emphasis; proximity emphasis,0.25,0.5,0.25,0.3333333333,0.6666666667,,,,4
+transport,air_emphasis__equal_roles,Air emphasis; equal roles,0.25,0.25,0.5,0.5,0.5,,,,4
+transport,air_emphasis__availability_emphasis,Air emphasis; availability emphasis,0.25,0.25,0.5,0.6666666667,0.3333333333,,,,4
+transport,air_emphasis__proximity_emphasis,Air emphasis; proximity emphasis,0.25,0.25,0.5,0.3333333333,0.6666666667,,,,4
+macro,equal_dimensions,Equal macro-dimensions,,,,,,0.3333333333,0.3333333333,0.3333333333,12
+macro,institutional_emphasis,Institutional-deficit emphasis,,,,,,0.5,0.25,0.25,12
+macro,service_network_emphasis,Service-network-deficit emphasis,,,,,,0.25,0.5,0.25,12
+macro,transport_emphasis,Transport-barrier emphasis,,,,,,0.25,0.25,0.5,12
