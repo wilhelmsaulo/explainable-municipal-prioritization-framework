@@ -15,6 +15,10 @@ profiles.
   scenarios and four macro-weight schemes.
 - `table_02_scenario_design.md`: manuscript-oriented rendering of the complete
   48-configuration factorial design.
+- `table_03_robustness_summary.csv`: machine-readable scenario-agreement,
+  municipal-profile, dimension-diagnostic, and reconstruction summary.
+- `table_03_robustness_summary.md`: manuscript-oriented robustness table based
+  on all 144 municipalities and the complete 48-configuration design.
 
 The police series for 2022--2025 and the population field remain preserved in
 the integrated municipal matrix but are not criteria in this framework.
