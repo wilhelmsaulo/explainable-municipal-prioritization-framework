@@ -23,6 +23,7 @@ def test_dashboard_contract_matches_audited_outputs():
     assert len(data.profiles) == EXPECTED_MUNICIPALITIES
     assert len(data.scenario_names) == EXPECTED_SCENARIOS
     assert REFERENCE_SCENARIO in data.scenario_names
+    assert len(data.indicator_profile) == 7
     assert data.municipalities[["latitude", "longitude"]].notna().all().all()
 
 
