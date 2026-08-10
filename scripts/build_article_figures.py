@@ -6,11 +6,11 @@ import json
 from pathlib import Path
 
 import matplotlib.pyplot as plt
+import numpy as np
+import pandas as pd
 from matplotlib.collections import PatchCollection
 from matplotlib.colors import Normalize
 from matplotlib.patches import Polygon as MplPolygon
-import numpy as np
-import pandas as pd
 
 ROOT = Path(__file__).resolve().parents[1]
 RESULTS = ROOT / "data" / "results"
