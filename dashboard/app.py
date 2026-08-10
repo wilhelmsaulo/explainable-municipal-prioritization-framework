@@ -73,7 +73,15 @@ TEXT = {
         "compare_tab": "Comparison",
         "method_tab": "Methodology",
         "state_title": "Statewide overview",
-        "map_caption": "Each point represents a municipal seat. The map does not alter any calculation.",
+        "map_caption": "The map presents precomputed results and does not alter any calculation.",
+        "map_source": "Municipal boundaries: IBGE Municipal Digital Mesh 2022 (SIRGAS 2000), simplified only for web visualization.",
+        "map_layer": "Map layer",
+        "boundary_layer": "Municipal boundaries",
+        "seat_layer": "Municipal seats",
+        "map_metric": "Map metric",
+        "priority_score": "Priority score",
+        "priority_rank": "Priority rank",
+        "top_quartile_map": "Top-quartile frequency",
         "municipalities": "Municipalities",
         "configurations": "Official configurations",
         "highest_score": "Highest score",
@@ -177,7 +185,15 @@ TEXT = {
         "compare_tab": "Comparação",
         "method_tab": "Metodologia",
         "state_title": "Visão estadual",
-        "map_caption": "Cada ponto representa a sede municipal. O mapa não altera nenhum cálculo.",
+        "map_caption": "O mapa apresenta resultados pré-calculados e não altera nenhum cálculo.",
+        "map_source": "Limites municipais: Malha Municipal Digital 2022 do IBGE (SIRGAS 2000), simplificada apenas para visualização web.",
+        "map_layer": "Camada do mapa",
+        "boundary_layer": "Limites municipais",
+        "seat_layer": "Sedes municipais",
+        "map_metric": "Métrica do mapa",
+        "priority_score": "Escore de prioridade",
+        "priority_rank": "Posição no ranking",
+        "top_quartile_map": "Frequência no quartil superior",
         "municipalities": "Municípios",
         "configurations": "Configurações oficiais",
         "highest_score": "Maior escore",
@@ -293,7 +309,9 @@ def scenario_table(data, scenario: str, language: str) -> pd.DataFrame:
     current = selected_scenario(data.scenarios, scenario)
     result = current.merge(data.profiles, on=["municipality_code", "municipality"])
     result = result.merge(data.municipalities, on=["municipality_code", "municipality"])
-    result["profile_label"] = result["priority_stability_profile"].map(PROFILE_LABELS[language])
+    result["profile_label"] = result["priority_stability_profile"].map(
+        PROFILE_LABELS[language]
+    )
     return result.sort_values(["selected_rank", "municipality"], kind="stable")
 
 
@@ -307,34 +325,83 @@ def statewide_tab(data, scenario: str, language: str, tx: dict[str, str]) -> Non
     c3.metric(tx["highest_score"], fmt(frame["selected_score"].max(), language))
     c4.metric(tx["minimum_correlation"], fmt(data.agreement["rank_correlation"].min(), language))
 
+    control_left, control_right = st.columns(2)
+    with control_left:
+        map_layer = st.radio(
+            tx["map_layer"],
+            ["boundaries", "seats"],
+            horizontal=True,
+            format_func=lambda value: {
+                "boundaries": tx["boundary_layer"],
+                "seats": tx["seat_layer"],
+            }[value],
+        )
+    metric_labels = {
+        "score": tx["priority_score"],
+        "rank": tx["priority_rank"],
+        "top_quartile": tx["top_quartile_map"],
+    }
+    with control_right:
+        map_metric = st.selectbox(
+            tx["map_metric"],
+            tuple(metric_labels),
+            format_func=metric_labels.get,
+        )
+    metric_columns = {
+        "score": "selected_score",
+        "rank": "selected_rank",
+        "top_quartile": "top_quartile_frequency",
+    }
+    metric_column = metric_columns[map_metric]
+    color_scale = "YlOrRd_r" if map_metric == "rank" else "YlOrRd"
+
     left, right = st.columns([1.45, 1])
     with left:
-        fig = px.scatter_map(
-            frame,
-            lat="latitude",
-            lon="longitude",
-            color="selected_score",
-            size="selected_score",
-            hover_name="municipality",
-            hover_data={
-                "selected_rank": True,
-                "selected_score": ":.3f",
-                "profile_label": True,
-                "latitude": False,
-                "longitude": False,
-            },
-            color_continuous_scale="YlOrRd",
-            size_max=22,
-            zoom=4.2,
-            height=620,
-            labels={
-                "selected_rank": tx["rank"],
-                "selected_score": tx["score"],
-                "profile_label": tx["stability"],
-            },
-        )
+        hover_data = {
+            "selected_rank": True,
+            "selected_score": ":.3f",
+            "top_quartile_frequency": ":.1%",
+            "profile_label": True,
+        }
+        labels = {
+            "selected_rank": tx["rank"],
+            "selected_score": tx["score"],
+            "top_quartile_frequency": tx["top_quartile_map"],
+            "profile_label": tx["stability"],
+        }
+        if map_layer == "boundaries":
+            fig = px.choropleth_map(
+                frame,
+                geojson=data.boundaries,
+                locations="municipality_code",
+                featureidkey="properties.CD_MUN",
+                color=metric_column,
+                hover_name="municipality",
+                hover_data=hover_data,
+                color_continuous_scale=color_scale,
+                center={"lat": -3.8, "lon": -52.3},
+                zoom=4.2,
+                opacity=0.78,
+                height=620,
+                labels=labels,
+            )
+        else:
+            fig = px.scatter_map(
+                frame,
+                lat="latitude",
+                lon="longitude",
+                color=metric_column,
+                hover_name="municipality",
+                hover_data={**hover_data, "latitude": False, "longitude": False},
+                color_continuous_scale=color_scale,
+                zoom=4.2,
+                height=620,
+                labels=labels,
+            )
+            fig.update_traces(marker={"size": 11})
         fig.update_layout(map_style="carto-positron", margin=dict(l=0, r=0, t=0, b=0))
         st.plotly_chart(fig, use_container_width=True)
+        st.caption(tx["map_source"])
 
     with right:
         st.markdown(f"##### {tx['rank_title']}")
@@ -366,20 +433,14 @@ def municipal_profile_tab(data, scenario: str, language: str, tx: dict[str, str]
     c1, c2, c3, c4 = st.columns(4)
     c1.metric(tx["selected_rank"], int(row["selected_rank"]))
     c2.metric(tx["selected_score"], fmt(row["selected_score"], language))
-    c3.metric(
-        tx["best_worst"], f"{int(row['best_priority_rank'])}–{int(row['worst_priority_rank'])}"
-    )
+    c3.metric(tx["best_worst"], f"{int(row['best_priority_rank'])}–{int(row['worst_priority_rank'])}")
     c4.metric(tx["top_quartile"], f"{100 * row['top_quartile_frequency']:.1f}%")
 
     left, right = st.columns(2)
     with left:
         contributions = pd.DataFrame(
             {
-                tx["dimension"]: [
-                    tx["institutional"],
-                    tx["service_network"],
-                    tx["transport_barrier"],
-                ],
+                tx["dimension"]: [tx["institutional"], tx["service_network"], tx["transport_barrier"]],
                 tx["mean_contribution"]: [
                     explanation["mean_institutional_contribution"],
                     explanation["mean_service_network_contribution"],
@@ -473,9 +534,7 @@ def comparison_tab(data, scenario: str, language: str, tx: dict[str, str]) -> No
         "top_quartile_frequency": tx["top_quartile"],
         "profile_label": tx["stability"],
     }
-    st.dataframe(
-        compare[list(columns)].rename(columns=columns), hide_index=True, use_container_width=True
-    )
+    st.dataframe(compare[list(columns)].rename(columns=columns), hide_index=True, use_container_width=True)
 
 
 def methodology_tab(data, language: str, tx: dict[str, str]) -> None:
