@@ -2,7 +2,7 @@
 
 | Macro-dimension | Component | Operational indicator | Source / reference | Acquisition or registration | Direction after alignment | Coverage |
 |---|---|---|---|---|---|---:|
-| Institutional deficit | Institutional capacity | Negative responses among the two to four observed women's-policy institutional items; unavailable responses are not treated as deficits | IBGE MUNIC 2023 | Aug. 4, 2026 | More negative responses = greater priority | 144/144 |
+| Institutional deficit | Institutional capacity | Proportion of negative responses among the two to four women's-policy institutional items actually observed; unavailable responses are neither deficits nor part of the denominator | IBGE MUNIC 2023 | Aug. 4, 2026 | Higher deficit proportion = greater priority | 144/144 |
 | Service-network deficit | Health services | Absence count for UBS, hospitals, CAPS, and emergency units (0--4; observed 0--3) | CNES, June 2026 competence | Aug. 4, 2026 | More absent types = greater priority | 144/144 |
 | Service-network deficit | Health workforce | Absence count for physicians, nurses, psychologists, and social workers (0--4; observed 0--2) | CNES, June 2026 competence | Aug. 5, 2026 | More absent categories = greater priority | 144/144 |
 | Service-network deficit | Social protection | Absence of a CREAS unit | MDS/SNAS RMA live administrative directory | Aug. 5, 2026 | Absence = greater priority | 144/144 |
@@ -13,7 +13,8 @@
 
 ## Aggregation notes
 
-All raw indicators are converted to within-sample percentile ranks on
+The institutional count is first divided by its observed-item coverage. All
+resulting indicators are then converted to within-sample percentile ranks on
 `[0, 1]`, using average ranks for ties and aligning directions so that higher
 values always represent greater relative priority for capacity strengthening.
 The two health indicators are averaged within the health component. The two

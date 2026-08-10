@@ -6,12 +6,11 @@ import json
 from pathlib import Path
 
 import matplotlib.pyplot as plt
-import numpy as np
-import pandas as pd
 from matplotlib.collections import PatchCollection
 from matplotlib.colors import Normalize
 from matplotlib.patches import Polygon as MplPolygon
-
+import numpy as np
+import pandas as pd
 
 ROOT = Path(__file__).resolve().parents[1]
 RESULTS = ROOT / "data" / "results"
@@ -39,13 +38,18 @@ def _style() -> None:
             "figure.facecolor": "white",
             "axes.facecolor": "white",
             "savefig.facecolor": "white",
+            "svg.hashsalt": "empriority-method-1.1.0",
         }
     )
 
 
 def _save(fig: plt.Figure, stem: str) -> None:
     OUTPUT.mkdir(parents=True, exist_ok=True)
-    fig.savefig(OUTPUT / f"{stem}.svg", bbox_inches="tight")
+    fig.savefig(
+        OUTPUT / f"{stem}.svg",
+        bbox_inches="tight",
+        metadata={"Date": None},
+    )
     fig.savefig(OUTPUT / f"{stem}.png", dpi=300, bbox_inches="tight")
     plt.close(fig)
 

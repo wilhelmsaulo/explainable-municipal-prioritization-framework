@@ -9,12 +9,12 @@
   </defs>
   <rect class="bg" width="1600" height="900"/>
   <text class="title" x="60" y="58">Explainable municipal priority for capacity strengthening</text>
-  <text class="sub" x="60" y="88">Fixed study universe: all 144 municipalities of Pará · method version 1.0.0 · no municipality-specific tuning</text>
+  <text class="sub" x="60" y="88">Fixed study universe: all 144 municipalities of Pará · method version 1.1.0 · no municipality-specific tuning</text>
 
   <text class="stage" x="60" y="132">1 · ACTIVE EVIDENCE</text>
   <rect class="inst" x="60" y="154" rx="14" width="345" height="126"/>
   <text class="h" x="82" y="184">Institutional capacity</text><text class="b" x="82" y="215">MUNIC 2023</text>
-  <text class="s" x="82" y="244">Observed institutional deficits</text><text class="s" x="82" y="264">(missing responses are not deficits)</text>
+  <text class="s" x="82" y="244">Deficit proportion among observed items</text><text class="s" x="82" y="264">(missing responses are outside the denominator)</text>
   <rect class="serv" x="60" y="298" rx="14" width="345" height="220"/>
   <text class="h" x="82" y="328">Service network</text><text class="b" x="82" y="359">CNES · MDS/SNAS · TJPA · Ligue 180</text>
   <text class="s" x="82" y="391">Health services and workforce</text><text class="s" x="82" y="419">Specialized social protection</text>

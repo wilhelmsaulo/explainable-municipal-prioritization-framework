@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "method_version": "1.0.0",
+  "method_version": "1.1.0",
   "configuration": "config/capacity_priority.yml",
   "checks": {
     "municipal_rows_expected": true,
@@ -17,7 +17,7 @@
   "scope": {
     "municipalities": 144,
     "nontransport_indicators": [
-      "institutional_deficit_available_4",
+      "institutional_deficit_ratio",
       "cnes_health_service_deficit",
       "cnes_multidisciplinary_staff_deficit",
       "social_specialized_service_deficit",
@@ -46,12 +46,13 @@
       "3": 93,
       "4": 48
     },
-    "deficit_rule": "available observed items minus positive observed items",
+    "deficit_rule": "negative observed items divided by available observed items",
     "missing_responses_are_not_converted_to_deficit": true,
     "comparability_caution": "Municipalities have two to four observed institutional items; coverage sensitivity must be reported without silently changing scores.",
     "diagnostic_only_sensitivity": {
-      "alternative": "observed deficit divided by observed coverage",
-      "spearman_rank_correlation": 0.9539725254812806,
+      "published_indicator": "observed deficit divided by observed coverage",
+      "comparison": "legacy raw observed-deficit count",
+      "spearman_rank_correlation": 0.9539725254812808,
       "mean_absolute_percentile_rank_shift": 0.0646219135802469,
       "median_absolute_percentile_rank_shift": 0.04513888888888884,
       "maximum_absolute_percentile_rank_shift": 0.38541666666666663,
@@ -81,7 +82,7 @@
           "median_deficit_ratio": 0.5
         }
       ],
-      "published_framework_changed": false
+      "published_framework_changed": true
     }
   },
   "indicator_ties": {

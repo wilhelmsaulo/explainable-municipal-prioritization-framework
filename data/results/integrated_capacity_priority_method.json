@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "method_version": "1.0.0",
+  "method_version": "1.1.0",
   "configuration": "config/capacity_priority.yml",
   "research_target": "Relative priority for strengthening municipal service capacity under multimodal access constraints.",
   "excluded_outcomes": [
@@ -15,43 +15,46 @@
   },
   "hierarchy": {
     "institutional_deficit": [
-      [
-        "institutional_deficit_available_4",
-        "benefit"
-      ]
+      {
+        "column": "institutional_deficit_available_4",
+        "direction": "benefit",
+        "transformation": "observed_ratio",
+        "denominator_column": "institutional_coverage",
+        "output_column": "institutional_deficit_ratio"
+      }
     ],
     "service_components": {
       "health": [
-        [
-          "cnes_health_service_deficit",
-          "benefit"
-        ],
-        [
-          "cnes_multidisciplinary_staff_deficit",
-          "benefit"
-        ]
+        {
+          "column": "cnes_health_service_deficit",
+          "direction": "benefit"
+        },
+        {
+          "column": "cnes_multidisciplinary_staff_deficit",
+          "direction": "benefit"
+        }
       ],
       "social_protection": [
-        [
-          "social_specialized_service_deficit",
-          "benefit"
-        ]
+        {
+          "column": "social_specialized_service_deficit",
+          "direction": "benefit"
+        }
       ],
       "justice": [
-        [
-          "justice_tjpa_access_deficit",
-          "benefit"
-        ]
+        {
+          "column": "justice_tjpa_access_deficit",
+          "direction": "benefit"
+        }
       ],
       "specialized_protection_network": [
-        [
-          "protection_network_validated_category_diversity",
-          "cost"
-        ],
-        [
-          "protection_network_specialized_non_health_services",
-          "cost"
-        ]
+        {
+          "column": "protection_network_validated_category_diversity",
+          "direction": "cost"
+        },
+        {
+          "column": "protection_network_specialized_non_health_services",
+          "direction": "cost"
+        }
       ]
     },
     "service_network_aggregation": "equal mean across health, social protection, justice, and specialized protection network components",

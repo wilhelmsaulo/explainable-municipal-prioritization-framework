@@ -1,15 +1,15 @@
 panel,metric,comparison_set,n,unit,minimum,median,maximum,value,percentage
-scenario_agreement,Spearman rank correlation,"47 alternative configurations versus T1 x W1 reference",47,coefficient,0.866068,0.966150,0.994992,,
-scenario_agreement,Top-10 overlap,"47 alternative configurations versus T1 x W1 reference",47,fraction,0.600000,0.700000,0.900000,,
-scenario_agreement,Top-quartile overlap,"47 alternative configurations versus T1 x W1 reference",47,fraction,0.638889,0.833333,0.972222,,
-scenario_agreement,Mean absolute rank shift,"47 alternative configurations versus T1 x W1 reference",47,rank positions,3.125000,7.805556,17.888889,,
-scenario_agreement,Median absolute rank shift,"47 alternative configurations versus T1 x W1 reference",47,rank positions,2.000000,5.000000,19.000000,,
-scenario_agreement,Maximum absolute rank shift,"47 alternative configurations versus T1 x W1 reference",47,rank positions,13.000000,36.000000,49.000000,,
-stability_profiles,Robust higher capacity-strengthening priority,"All municipalities across 48 configurations",144,municipalities,,,,26,18.055556
+scenario_agreement,Spearman rank correlation,"47 alternative configurations versus T1 x W1 reference",47,coefficient,0.883816,0.969054,0.996339,,
+scenario_agreement,Top-10 overlap,"47 alternative configurations versus T1 x W1 reference",47,fraction,0.500000,0.800000,1.000000,,
+scenario_agreement,Top-quartile overlap,"47 alternative configurations versus T1 x W1 reference",47,fraction,0.666667,0.833333,0.944444,,
+scenario_agreement,Mean absolute rank shift,"47 alternative configurations versus T1 x W1 reference",47,rank positions,2.666667,7.618056,16.916667,,
+scenario_agreement,Median absolute rank shift,"47 alternative configurations versus T1 x W1 reference",47,rank positions,2.000000,5.000000,18.000000,,
+scenario_agreement,Maximum absolute rank shift,"47 alternative configurations versus T1 x W1 reference",47,rank positions,11.000000,36.000000,43.000000,,
+stability_profiles,Robust higher capacity-strengthening priority,"All municipalities across 48 configurations",144,municipalities,,,,25,17.361111
 stability_profiles,Scenario-sensitive higher priority,"All municipalities across 48 configurations",144,municipalities,,,,23,15.972222
-stability_profiles,Intermediate or scenario-sensitive,"All municipalities across 48 configurations",144,municipalities,,,,63,43.750000
-stability_profiles,Robust lower relative priority,"All municipalities across 48 configurations",144,municipalities,,,,32,22.222222
-dimension_diagnostics,Institutional deficit versus service-network deficit,"144 municipalities; T1 transport reference",144,Spearman coefficient,,,,0.365331,
-dimension_diagnostics,Institutional deficit versus transport barrier,"144 municipalities; T1 transport reference",144,Spearman coefficient,,,,0.022087,
+stability_profiles,Intermediate or scenario-sensitive,"All municipalities across 48 configurations",144,municipalities,,,,66,45.833333
+stability_profiles,Robust lower relative priority,"All municipalities across 48 configurations",144,municipalities,,,,30,20.833333
+dimension_diagnostics,Institutional deficit versus service-network deficit,"144 municipalities; T1 transport reference",144,Spearman coefficient,,,,0.336789,
+dimension_diagnostics,Institutional deficit versus transport barrier,"144 municipalities; T1 transport reference",144,Spearman coefficient,,,,0.034500,
 dimension_diagnostics,Service-network deficit versus transport barrier,"144 municipalities; T1 transport reference",144,Spearman coefficient,,,,0.119853,
 reproducibility,Maximum score-reconstruction error,"All 144 municipalities and 48 configurations",6912,absolute score difference,,,,1.1102230246251565e-16,

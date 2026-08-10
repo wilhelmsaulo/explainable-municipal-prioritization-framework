@@ -1,7 +1,7 @@
 # Article artifacts
 
 This directory contains manuscript-ready artifacts derived from the frozen
-capacity-priority configuration (`method_version: 1.0.0`). The artifacts are
+capacity-priority configuration (`method_version: 1.1.0`). The artifacts are
 descriptive views of the existing method: they do not change source data,
 indicator construction, normalization, weights, scores, ranks, or robustness
 profiles.

@@ -31,14 +31,19 @@ def _load_framework_config(path: str | Path) -> dict[str, Any]:
     return document
 
 
-def _indicator_definitions(items: list[dict[str, str]]) -> list[tuple[str, str]]:
-    definitions: list[tuple[str, str]] = []
+def _indicator_definitions(items: list[dict[str, str]]) -> list[dict[str, str]]:
+    definitions: list[dict[str, str]] = []
     for item in items:
         column = item.get("column")
         direction = item.get("direction")
         if not column or direction not in {"benefit", "cost"}:
             raise ValueError(f"Invalid indicator definition: {item}")
-        definitions.append((column, direction))
+        transformation = item.get("transformation", "identity")
+        if transformation not in {"identity", "observed_ratio"}:
+            raise ValueError(f"Invalid indicator transformation: {item}")
+        if transformation == "observed_ratio" and not item.get("denominator_column"):
+            raise ValueError(f"Ratio indicator requires a denominator: {item}")
+        definitions.append(item)
     return definitions
 
 
@@ -59,8 +64,27 @@ def _percentile(values: pd.Series, direction: str) -> pd.Series:
     return normalized
 
 
-def _component(frame: pd.DataFrame, definitions: list[tuple[str, str]]) -> pd.Series:
-    values = [_percentile(frame[column], direction) for column, direction in definitions]
+def _indicator_values(frame: pd.DataFrame, definition: dict[str, str]) -> pd.Series:
+    values = pd.to_numeric(frame[definition["column"]], errors="coerce")
+    if definition.get("transformation", "identity") == "observed_ratio":
+        denominator = pd.to_numeric(
+            frame[definition["denominator_column"]], errors="coerce"
+        )
+        if denominator.isna().any() or denominator.le(0).any():
+            raise ValueError(
+                f"Invalid denominator for {definition['column']}: "
+                f"{definition['denominator_column']}"
+            )
+        values = values / denominator
+    values.name = definition.get("output_column", definition["column"])
+    return values
+
+
+def _component(frame: pd.DataFrame, definitions: list[dict[str, str]]) -> pd.Series:
+    values = [
+        _percentile(_indicator_values(frame, definition), definition["direction"])
+        for definition in definitions
+    ]
     return pd.concat(values, axis=1).mean(axis=1)
 
 
@@ -77,7 +101,9 @@ def build_integrated_priority_profiles(
     inputs = config["inputs"]
     outputs = config["outputs"]
     municipal_csv = municipal_csv or inputs["municipal_matrix"]
-    transport_scenarios_csv = transport_scenarios_csv or inputs["transport_scenarios"]
+    transport_scenarios_csv = (
+        transport_scenarios_csv or inputs["transport_scenarios"]
+    )
     output_csv = output_csv or outputs["profiles"]
     scenarios_csv = scenarios_csv or outputs["scenarios"]
     method_json = method_json or outputs["method"]
@@ -87,21 +113,29 @@ def build_integrated_priority_profiles(
     )
     service_indicators = {
         name: _indicator_definitions(component["indicators"])
-        for name, component in config["dimensions"]["service_network"]["components"].items()
+        for name, component in config["dimensions"]["service_network"][
+            "components"
+        ].items()
     }
     macro_weights = config["macro_weight_scenarios"]
     expected_municipalities = int(config["study_scope"]["expected_municipalities"])
-    expected_transport_scenarios = int(config["study_scope"]["expected_transport_scenarios"])
+    expected_transport_scenarios = int(
+        config["study_scope"]["expected_transport_scenarios"]
+    )
     top_k = int(config["robustness"]["top_k"])
 
     municipal = pd.read_csv(municipal_csv, dtype={"municipality_code": str})
-    transport = pd.read_csv(transport_scenarios_csv, dtype={"municipality_code": str})
+    transport = pd.read_csv(
+        transport_scenarios_csv, dtype={"municipality_code": str}
+    )
     if municipal["municipality_code"].duplicated().any():
         raise ValueError("Duplicate municipality codes in municipal matrix")
     if transport["municipality_code"].duplicated().any():
         raise ValueError("Duplicate municipality codes in transport matrix")
 
-    transport_score_columns = [column for column in transport if column.endswith("__score")]
+    transport_score_columns = [
+        column for column in transport if column.endswith("__score")
+    ]
     merged = municipal.merge(
         transport[["municipality_code", "municipality", *transport_score_columns]],
         on="municipality_code",
@@ -112,25 +146,28 @@ def build_integrated_priority_profiles(
 
     def canonical_name(value: str) -> str:
         decomposed = unicodedata.normalize("NFKD", str(value))
-        return "".join(character for character in decomposed if character.isalnum()).casefold()
+        return "".join(
+            character for character in decomposed if character.isalnum()
+        ).casefold()
 
     names_agree = merged.apply(
-        lambda row: (
-            canonical_name(row["municipality"]) == canonical_name(row["municipality_transport"])
-        ),
+        lambda row: canonical_name(row["municipality"])
+        == canonical_name(row["municipality_transport"]),
         axis=1,
     )
     if not names_agree.all():
         raise ValueError("Municipality names disagree after code-based integration")
     dimensions = merged[["municipality_code", "municipality"]].copy()
-    dimensions["institutional_deficit"] = _component(merged, institutional_indicators)
+    dimensions["institutional_deficit"] = _component(
+        merged, institutional_indicators
+    )
     service_components: dict[str, pd.Series] = {}
     for name, definitions in service_indicators.items():
         service_components[name] = _component(merged, definitions)
         dimensions[f"service_component_{name}_deficit"] = service_components[name]
-    dimensions["service_network_deficit"] = pd.concat(service_components.values(), axis=1).mean(
-        axis=1
-    )
+    dimensions["service_network_deficit"] = pd.concat(
+        service_components.values(), axis=1
+    ).mean(axis=1)
 
     scenario_output = dimensions[["municipality_code", "municipality"]].copy()
     rank_columns: list[str] = []
@@ -144,13 +181,15 @@ def build_integrated_priority_profiles(
             score_column = f"{scenario}__score"
             rank_column = f"{scenario}__rank"
             scenario_output[score_column] = (
-                dimensions["institutional_deficit"] * weights["institutional_deficit"]
-                + dimensions["service_network_deficit"] * weights["service_network_deficit"]
+                dimensions["institutional_deficit"]
+                * weights["institutional_deficit"]
+                + dimensions["service_network_deficit"]
+                * weights["service_network_deficit"]
                 + transport_barrier * weights["transport_barrier"]
             )
-            scenario_output[rank_column] = (
-                scenario_output[score_column].rank(ascending=False, method="min").astype(int)
-            )
+            scenario_output[rank_column] = scenario_output[score_column].rank(
+                ascending=False, method="min"
+            ).astype(int)
             score_columns.append(score_column)
             rank_columns.append(rank_column)
             scenario_metadata[scenario] = {
@@ -169,9 +208,12 @@ def build_integrated_priority_profiles(
     scenario_output["best_priority_rank"] = scenario_output[rank_columns].min(axis=1)
     scenario_output["worst_priority_rank"] = scenario_output[rank_columns].max(axis=1)
     scenario_output["priority_rank_range"] = (
-        scenario_output["worst_priority_rank"] - scenario_output["best_priority_rank"]
+        scenario_output["worst_priority_rank"]
+        - scenario_output["best_priority_rank"]
     )
-    scenario_output["top_10_frequency"] = scenario_output[rank_columns].le(top_k).mean(axis=1)
+    scenario_output["top_10_frequency"] = (
+        scenario_output[rank_columns].le(top_k).mean(axis=1)
+    )
     scenario_output["top_quartile_frequency"] = (
         scenario_output[rank_columns].le(top_quartile_cutoff).mean(axis=1)
     )
@@ -188,7 +230,9 @@ def build_integrated_priority_profiles(
             return "robust_lower_relative_priority"
         return "intermediate_or_scenario_sensitive"
 
-    scenario_output["priority_stability_profile"] = scenario_output.apply(stability_label, axis=1)
+    scenario_output["priority_stability_profile"] = scenario_output.apply(
+        stability_label, axis=1
+    )
     profiles = dimensions.merge(
         scenario_output[
             [
@@ -227,7 +271,8 @@ def build_integrated_priority_profiles(
             np.isclose(sum(weights.values()), 1) for weights in macro_weights.values()
         ),
         "no_missing_outputs": bool(
-            numeric_profiles.notna().all().all() and numeric_scenarios.notna().all().all()
+            numeric_profiles.notna().all().all()
+            and numeric_scenarios.notna().all().all()
         ),
         "finite_outputs": bool(
             np.isfinite(numeric_profiles.to_numpy()).all()
@@ -291,7 +336,9 @@ def build_integrated_priority_profiles(
             method,
             ensure_ascii=False,
             indent=2,
-            default=lambda value: value.item() if isinstance(value, np.generic) else str(value),
+            default=lambda value: value.item()
+            if isinstance(value, np.generic)
+            else str(value),
         ),
         encoding="utf-8",
     )
@@ -308,16 +355,16 @@ def build_integrated_priority_profiles(
                 "top_10_frequency",
                 "priority_stability_profile",
             ]
-        ]
-        .head(top_k)
-        .to_dict("records"),
+        ].head(top_k).to_dict("records"),
     }
     paths["audit"].write_text(
         json.dumps(
             audit,
             ensure_ascii=False,
             indent=2,
-            default=lambda value: value.item() if isinstance(value, np.generic) else str(value),
+            default=lambda value: value.item()
+            if isinstance(value, np.generic)
+            else str(value),
         ),
         encoding="utf-8",
     )

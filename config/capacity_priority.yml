@@ -1,5 +1,5 @@
 schema_version: "1.0"
-method_version: "1.0.0"
+method_version: "1.1.0"
 
 study_scope:
   territorial_unit: municipality
@@ -35,6 +35,9 @@ dimensions:
     indicators:
       - column: institutional_deficit_available_4
         direction: benefit
+        transformation: observed_ratio
+        denominator_column: institutional_coverage
+        output_column: institutional_deficit_ratio
   service_network:
     aggregation: equal_component_mean
     components:

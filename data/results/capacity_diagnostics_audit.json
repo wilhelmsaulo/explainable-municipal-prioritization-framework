@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "method_version": "1.0.0",
+  "method_version": "1.1.0",
   "configuration": "config/capacity_priority.yml",
   "diagnostic_scope": {
     "municipalities": 144,
@@ -20,12 +20,12 @@
     "all_diagnostics_finite": true,
     "reference_scenario_included": true
   },
-  "maximum_score_reconstruction_error": 1.1102230246251565e-16,
+  "maximum_score_reconstruction_error": 2.220446049250313e-16,
   "scenario_agreement_summary": {
-    "minimum_rank_correlation": 0.8660678402057714,
-    "median_rank_correlation": 0.9661810840923466,
+    "minimum_rank_correlation": 0.8838156096776787,
+    "median_rank_correlation": 0.9690659914797846,
     "maximum_rank_correlation": 1.0,
-    "minimum_top_k_overlap_fraction": 0.6,
+    "minimum_top_k_overlap_fraction": 0.5,
     "maximum_top_k_overlap_fraction": 1.0
   },
   "interpretation": "Diagnostics describe agreement and contribution patterns in the already published scenarios; they do not alter criteria, weights, scores, or ranks."

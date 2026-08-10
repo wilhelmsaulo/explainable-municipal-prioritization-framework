@@ -26,7 +26,9 @@ def _framework_indicators(config: dict[str, Any]) -> list[dict[str, str]]:
                 **item,
             }
         )
-    for component, definition in config["dimensions"]["service_network"]["components"].items():
+    for component, definition in config["dimensions"]["service_network"][
+        "components"
+    ].items():
         for item in definition["indicators"]:
             indicators.append(
                 {
@@ -36,6 +38,27 @@ def _framework_indicators(config: dict[str, Any]) -> list[dict[str, str]]:
                 }
             )
     return indicators
+
+
+def _materialize_indicator(
+    frame: pd.DataFrame, definition: dict[str, str]
+) -> tuple[str, pd.Series]:
+    column = definition["column"]
+    output_column = definition.get("output_column", column)
+    values = pd.to_numeric(frame[column], errors="coerce")
+    transformation = definition.get("transformation", "identity")
+    if transformation == "observed_ratio":
+        denominator_column = definition.get("denominator_column")
+        if not denominator_column or denominator_column not in frame:
+            raise ValueError(f"Ratio denominator is missing for {column}")
+        denominator = pd.to_numeric(frame[denominator_column], errors="coerce")
+        if denominator.isna().any() or denominator.le(0).any():
+            raise ValueError(f"Invalid ratio denominator for {column}")
+        values = values / denominator
+    elif transformation != "identity":
+        raise ValueError(f"Unknown indicator transformation: {transformation}")
+    values.name = output_column
+    return output_column, values
 
 
 def build_capacity_input_audit(
@@ -54,13 +77,28 @@ def build_capacity_input_audit(
         raise ValueError("Duplicate municipality codes in framework inputs")
 
     definitions = _framework_indicators(config)
-    indicator_columns = [item["column"] for item in definitions]
-    missing_indicators = sorted(set(indicator_columns) - set(municipal.columns))
+    source_columns = [item["column"] for item in definitions]
+    denominator_columns = [
+        item["denominator_column"]
+        for item in definitions
+        if item.get("denominator_column")
+    ]
+    missing_indicators = sorted(
+        set(source_columns + denominator_columns) - set(municipal.columns)
+    )
     if missing_indicators:
         raise ValueError(f"Framework indicators are missing: {missing_indicators}")
 
     transport_columns = [column for column in transport if column.endswith("__score")]
-    article = municipal[[key, "municipality", "institutional_coverage", *indicator_columns]].merge(
+    article = municipal[
+        [key, "municipality", "institutional_coverage", *source_columns]
+    ].copy()
+    indicator_columns: list[str] = []
+    for definition in definitions:
+        output_column, values = _materialize_indicator(municipal, definition)
+        article[output_column] = values
+        indicator_columns.append(output_column)
+    article = article.merge(
         transport[[key, *transport_columns]],
         on=key,
         how="inner",
@@ -69,7 +107,7 @@ def build_capacity_input_audit(
 
     profiles: list[dict[str, Any]] = []
     for definition in definitions:
-        column = definition["column"]
+        column = definition.get("output_column", definition["column"])
         values = pd.to_numeric(article[column], errors="coerce")
         counts = values.value_counts(dropna=False)
         profiles.append(
@@ -92,11 +130,13 @@ def build_capacity_input_audit(
     institutional_deficit = pd.to_numeric(
         article["institutional_deficit_available_4"], errors="raise"
     )
-    institutional_coverage = pd.to_numeric(article["institutional_coverage"], errors="raise")
-    institutional_ratio = institutional_deficit / institutional_coverage
-    published_rank = institutional_deficit.rank(method="average", pct=True)
-    coverage_adjusted_rank = institutional_ratio.rank(method="average", pct=True)
-    rank_shift = (published_rank - coverage_adjusted_rank).abs()
+    institutional_coverage = pd.to_numeric(
+        article["institutional_coverage"], errors="raise"
+    )
+    institutional_ratio = article["institutional_deficit_ratio"]
+    published_rank = institutional_ratio.rank(method="average", pct=True)
+    legacy_raw_count_rank = institutional_deficit.rank(method="average", pct=True)
+    rank_shift = (published_rank - legacy_raw_count_rank).abs()
     coverage_summary = (
         pd.DataFrame(
             {
@@ -118,11 +158,15 @@ def build_capacity_input_audit(
     )
 
     police_columns = [
-        column for column in municipal if column.startswith("police_") or column.startswith("rate_")
+        column
+        for column in municipal
+        if column.startswith("police_") or column.startswith("rate_")
     ]
     article_police_columns = [column for column in article if column in police_columns]
     numeric = article.select_dtypes(include="number")
-    coverage_counts = municipal["institutional_coverage"].value_counts().sort_index().to_dict()
+    coverage_counts = (
+        municipal["institutional_coverage"].value_counts().sort_index().to_dict()
+    )
     checks = {
         "municipal_rows_expected": len(municipal) == expected,
         "transport_rows_expected": len(transport) == expected,
@@ -130,8 +174,13 @@ def build_capacity_input_audit(
         "unique_municipalities_expected": article[key].nunique() == expected,
         "seven_nontransport_indicators": len(indicator_columns) == 7,
         "twelve_transport_scenarios": len(transport_columns) == 12,
-        "all_framework_indicators_complete": article[indicator_columns].notna().all().all(),
-        "all_article_numeric_values_finite": bool(np.isfinite(numeric.to_numpy()).all()),
+        "all_framework_indicators_complete": article[indicator_columns]
+        .notna()
+        .all()
+        .all(),
+        "all_article_numeric_values_finite": bool(
+            np.isfinite(numeric.to_numpy()).all()
+        ),
         "police_columns_excluded": not article_police_columns,
         "published_input_matrix_unchanged": True,
     }
@@ -154,22 +203,26 @@ def build_capacity_input_audit(
         },
         "institutional_coverage": {
             "available_item_counts": {
-                str(int(level)): int(count) for level, count in coverage_counts.items()
+                str(int(level)): int(count)
+                for level, count in coverage_counts.items()
             },
-            "deficit_rule": "available observed items minus positive observed items",
+            "deficit_rule": "negative observed items divided by available observed items",
             "missing_responses_are_not_converted_to_deficit": True,
             "comparability_caution": (
                 "Municipalities have two to four observed institutional items; "
                 "coverage sensitivity must be reported without silently changing scores."
             ),
             "diagnostic_only_sensitivity": {
-                "alternative": "observed deficit divided by observed coverage",
-                "spearman_rank_correlation": float(published_rank.corr(coverage_adjusted_rank)),
+                "published_indicator": "observed deficit divided by observed coverage",
+                "comparison": "legacy raw observed-deficit count",
+                "spearman_rank_correlation": float(
+                    published_rank.corr(legacy_raw_count_rank)
+                ),
                 "mean_absolute_percentile_rank_shift": float(rank_shift.mean()),
                 "median_absolute_percentile_rank_shift": float(rank_shift.median()),
                 "maximum_absolute_percentile_rank_shift": float(rank_shift.max()),
                 "coverage_group_summary": coverage_summary,
-                "published_framework_changed": False,
+                "published_framework_changed": True,
             },
         },
         "indicator_ties": {
@@ -207,7 +260,9 @@ def build_capacity_input_audit(
             audit,
             ensure_ascii=False,
             indent=2,
-            default=lambda value: value.item() if isinstance(value, np.generic) else str(value),
+            default=lambda value: value.item()
+            if isinstance(value, np.generic)
+            else str(value),
         ),
         encoding="utf-8",
     )

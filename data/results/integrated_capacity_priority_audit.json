@@ -13,100 +13,100 @@
     "all_profiles_assigned": true
   },
   "profile_counts": {
-    "intermediate_or_scenario_sensitive": 63,
-    "robust_lower_relative_priority": 32,
-    "robust_higher_capacity_strengthening_priority": 26,
+    "intermediate_or_scenario_sensitive": 66,
+    "robust_lower_relative_priority": 30,
+    "robust_higher_capacity_strengthening_priority": 25,
     "scenario_sensitive_higher_priority": 23
   },
   "top_by_mean_rank": [
     {
       "municipality_code": "1506401",
       "municipality": "Santa Cruz do Arari",
-      "mean_priority_rank": 1.0208333333333333,
+      "mean_priority_rank": 1.1458333333333333,
       "best_priority_rank": 1,
       "worst_priority_rank": 2,
       "top_10_frequency": 1.0,
       "priority_stability_profile": "robust_higher_capacity_strengthening_priority"
     },
     {
-      "municipality_code": "1505551",
-      "municipality": "Pau DArco",
-      "mean_priority_rank": 3.3125,
-      "best_priority_rank": 2,
-      "worst_priority_rank": 10,
-      "top_10_frequency": 1.0,
-      "priority_stability_profile": "robust_higher_capacity_strengthening_priority"
-    },
-    {
       "municipality_code": "1501253",
       "municipality": "Bannach",
-      "mean_priority_rank": 4.020833333333333,
+      "mean_priority_rank": 3.3541666666666665,
       "best_priority_rank": 1,
-      "worst_priority_rank": 28,
+      "worst_priority_rank": 20,
       "top_10_frequency": 0.9375,
       "priority_stability_profile": "robust_higher_capacity_strengthening_priority"
     },
     {
       "municipality_code": "1508050",
       "municipality": "Trairão",
-      "mean_priority_rank": 4.25,
+      "mean_priority_rank": 3.7708333333333335,
       "best_priority_rank": 2,
-      "worst_priority_rank": 15,
+      "worst_priority_rank": 12,
       "top_10_frequency": 0.9791666666666666,
       "priority_stability_profile": "robust_higher_capacity_strengthening_priority"
     },
     {
       "municipality_code": "1507961",
       "municipality": "Terra Alta",
-      "mean_priority_rank": 4.9375,
+      "mean_priority_rank": 3.9375,
       "best_priority_rank": 2,
-      "worst_priority_rank": 18,
+      "worst_priority_rank": 17,
       "top_10_frequency": 0.9583333333333334,
       "priority_stability_profile": "robust_higher_capacity_strengthening_priority"
     },
     {
       "municipality_code": "1504752",
       "municipality": "Mojuí dos Campos",
-      "mean_priority_rank": 8.0625,
-      "best_priority_rank": 3,
-      "worst_priority_rank": 22,
-      "top_10_frequency": 0.8333333333333334,
+      "mean_priority_rank": 6.979166666666667,
+      "best_priority_rank": 2,
+      "worst_priority_rank": 21,
+      "top_10_frequency": 0.875,
+      "priority_stability_profile": "robust_higher_capacity_strengthening_priority"
+    },
+    {
+      "municipality_code": "1505551",
+      "municipality": "Pau DArco",
+      "mean_priority_rank": 8.833333333333334,
+      "best_priority_rank": 4,
+      "worst_priority_rank": 21,
+      "top_10_frequency": 0.6458333333333334,
       "priority_stability_profile": "robust_higher_capacity_strengthening_priority"
     },
     {
       "municipality_code": "1506112",
       "municipality": "Quatipuru",
-      "mean_priority_rank": 11.041666666666666,
+      "mean_priority_rank": 9.8125,
       "best_priority_rank": 6,
       "worst_priority_rank": 20,
-      "top_10_frequency": 0.4166666666666667,
+      "top_10_frequency": 0.6875,
       "priority_stability_profile": "robust_higher_capacity_strengthening_priority"
     },
     {
       "municipality_code": "1501006",
       "municipality": "Aveiro",
-      "mean_priority_rank": 13.020833333333334,
-      "best_priority_rank": 3,
-      "worst_priority_rank": 27,
+      "mean_priority_rank": 11.229166666666666,
+      "best_priority_rank": 4,
+      "worst_priority_rank": 24,
       "top_10_frequency": 0.5625,
-      "priority_stability_profile": "robust_higher_capacity_strengthening_priority"
-    },
-    {
-      "municipality_code": "1505601",
-      "municipality": "Peixe-Boi",
-      "mean_priority_rank": 14.083333333333334,
-      "best_priority_rank": 7,
-      "worst_priority_rank": 31,
-      "top_10_frequency": 0.25,
       "priority_stability_profile": "robust_higher_capacity_strengthening_priority"
     },
     {
       "municipality_code": "1501956",
       "municipality": "Cachoeira do Piriá",
-      "mean_priority_rank": 15.208333333333334,
+      "mean_priority_rank": 12.9375,
       "best_priority_rank": 7,
-      "worst_priority_rank": 28,
-      "top_10_frequency": 0.20833333333333334,
+      "worst_priority_rank": 24,
+      "top_10_frequency": 0.2708333333333333,
+      "priority_stability_profile": "robust_higher_capacity_strengthening_priority"
+    },
+    {
+      "municipality_code": "1505106",
+      "municipality": "Óbidos",
+      "mean_priority_rank": 14.041666666666666,
+      "best_priority_rank": 2,
+      "worst_priority_rank": 38,
+      "top_10_frequency": 0.4166666666666667,
       "priority_stability_profile": "robust_higher_capacity_strengthening_priority"
     }
   ]

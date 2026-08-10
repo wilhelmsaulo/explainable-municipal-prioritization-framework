@@ -8,21 +8,21 @@ is excluded from the distribution below; therefore, `n = 47` comparisons.
 
 | Metric | Minimum | Median | Maximum |
 |---|---:|---:|---:|
-| Spearman rank correlation | 0.866 | 0.966 | 0.995 |
-| Top-10 overlap | 60.0% | 70.0% | 90.0% |
-| Top-quartile overlap | 63.9% | 83.3% | 97.2% |
-| Mean absolute rank shift | 3.13 | 7.81 | 17.89 |
-| Median absolute rank shift | 2.00 | 5.00 | 19.00 |
-| Maximum absolute rank shift | 13 | 36 | 49 |
+| Spearman rank correlation | 0.884 | 0.969 | 0.996 |
+| Top-10 overlap | 50.0% | 80.0% | 100.0% |
+| Top-quartile overlap | 66.7% | 83.3% | 94.4% |
+| Mean absolute rank shift | 2.67 | 7.62 | 16.92 |
+| Median absolute rank shift | 2.00 | 5.00 | 18.00 |
+| Maximum absolute rank shift | 11 | 36 | 43 |
 
 ## B. Municipal stability profiles across all 48 configurations
 
 | Stability profile | Municipalities | Share of 144 |
 |---|---:|---:|
-| Robust higher capacity-strengthening priority | 26 | 18.1% |
+| Robust higher capacity-strengthening priority | 25 | 17.4% |
 | Scenario-sensitive higher priority | 23 | 16.0% |
-| Intermediate or scenario-sensitive | 63 | 43.8% |
-| Robust lower relative priority | 32 | 22.2% |
+| Intermediate or scenario-sensitive | 66 | 45.8% |
+| Robust lower relative priority | 30 | 20.8% |
 | **Total** | **144** | **100.0%** |
 
 The higher-priority profiles are based on frequency in the top quartile across
@@ -36,8 +36,8 @@ funding decisions.
 
 | Dimension pair | Spearman correlation |
 |---|---:|
-| Institutional deficit vs. service-network deficit | 0.365 |
-| Institutional deficit vs. reference transport barrier | 0.022 |
+| Institutional deficit vs. service-network deficit | 0.337 |
+| Institutional deficit vs. reference transport barrier | 0.035 |
 | Service-network deficit vs. reference transport barrier | 0.120 |
 
 The dimension correlations use all 144 municipalities and the `T1` reference

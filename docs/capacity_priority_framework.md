@@ -29,17 +29,20 @@ silently recalibrated by editing constants in source code.
 
 ## Analytical hierarchy
 
-1. Indicator values are converted to within-sample percentile ranks on `[0, 1]`.
-2. Directions are aligned so higher values always mean greater strengthening
+1. The institutional deficit is divided by the number of institutional items
+   actually observed for each municipality; unavailable responses are neither
+   deficits nor part of the denominator.
+2. Indicator values are converted to within-sample percentile ranks on `[0, 1]`.
+3. Directions are aligned so higher values always mean greater strengthening
    priority.
-3. Health, social protection, justice, and specialized protection-network
+4. Health, social protection, justice, and specialized protection-network
    indicators are aggregated within components.
-4. Components receive equal influence in the service-network dimension,
+5. Components receive equal influence in the service-network dimension,
    preventing components with more source variables from dominating.
-5. Institutional deficit, service-network deficit, and multimodal transport
+6. Institutional deficit, service-network deficit, and multimodal transport
    barrier are combined under every declared macro-weight scenario.
-6. Every macro-weight scenario is crossed with every transport scenario.
-7. Municipal profiles summarize rank range and frequencies across the complete
+7. Every macro-weight scenario is crossed with every transport scenario.
+8. Municipal profiles summarize rank range and frequencies across the complete
    scenario set rather than privileging one ranking.
 
 ## Current Pará application
@@ -116,14 +119,3 @@ indicator schema. A new application must define its scope before observing
 results and must document any changed indicator, direction, weight, or
 threshold. Portability does not authorize transferring Pará-specific empirical
 conclusions to another territory.
-
-## Interactive scientific dashboard
-
-An experimental, read-only visualization of the audited outputs is available at:
-
-https://explainable-municipal-prioritization-framework-zyur6g28v6z5uba.streamlit.app/
-
-The dashboard reads the precomputed 48-scenario outputs and does not permit
-arbitrary weights, municipality-specific adjustments, or recalculation of the
-published framework. The URL currently tracks the development branch; the
-article version will be preserved in a tagged release before submission.
