@@ -1,0 +1,67 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900" role="img" aria-labelledby="title desc">
+  <title id="title">Architecture of the explainable municipal capacity-priority framework</title>
+  <desc id="desc">Data sources and active indicators are hierarchically aggregated into three macro-dimensions, crossed across twelve transport scenarios and four macro-weight schemes, and summarized through rankings, profiles, robustness, and explainability outputs for all 144 municipalities of Para.</desc>
+  <defs>
+    <style>
+      .bg{fill:#f8fafc}.title{font:700 34px Arial,sans-serif;fill:#172033}.sub{font:18px Arial,sans-serif;fill:#526071}.stage{font:700 16px Arial,sans-serif;fill:#405168;letter-spacing:1.5px}.h{font:700 20px Arial,sans-serif;fill:#172033}.b{font:16px Arial,sans-serif;fill:#253247}.s{font:14px Arial,sans-serif;fill:#526071}.box{fill:#fff;stroke:#cbd5e1;stroke-width:2}.inst{fill:#eff6ff;stroke:#60a5fa;stroke-width:2}.serv{fill:#f0fdf4;stroke:#4ade80;stroke-width:2}.trans{fill:#fff7ed;stroke:#fb923c;stroke-width:2}.proc{fill:#f5f3ff;stroke:#a78bfa;stroke-width:2}.out{fill:#fff1f2;stroke:#fb7185;stroke-width:2}.arrow{stroke:#64748b;stroke-width:3;fill:none;marker-end:url(#a)}.thin{stroke:#94a3b8;stroke-width:2;fill:none;marker-end:url(#a)}
+    </style>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#64748b"/></marker>
+  </defs>
+  <rect class="bg" width="1600" height="900"/>
+  <text class="title" x="60" y="58">Explainable municipal priority for capacity strengthening</text>
+  <text class="sub" x="60" y="88">Fixed study universe: all 144 municipalities of Pará · method version 1.0.0 · no municipality-specific tuning</text>
+
+  <text class="stage" x="60" y="132">1 · ACTIVE EVIDENCE</text>
+  <rect class="inst" x="60" y="154" rx="14" width="345" height="126"/>
+  <text class="h" x="82" y="184">Institutional capacity</text><text class="b" x="82" y="215">MUNIC 2023</text>
+  <text class="s" x="82" y="244">Observed institutional deficits</text><text class="s" x="82" y="264">(missing responses are not deficits)</text>
+  <rect class="serv" x="60" y="298" rx="14" width="345" height="220"/>
+  <text class="h" x="82" y="328">Service network</text><text class="b" x="82" y="359">CNES · MDS/SNAS · TJPA · Ligue 180</text>
+  <text class="s" x="82" y="391">Health services and workforce</text><text class="s" x="82" y="419">Specialized social protection</text>
+  <text class="s" x="82" y="447">Local justice access</text><text class="s" x="82" y="475">Specialized protection network</text>
+  <rect class="trans" x="60" y="536" rx="14" width="345" height="160"/>
+  <text class="h" x="82" y="566">Multimodal access</text><text class="b" x="82" y="597">MapBiomas · ANTAQ · DECEA/ICA</text>
+  <text class="s" x="82" y="629">Road · waterway · air</text><text class="s" x="82" y="657">Availability and proximity roles</text>
+
+  <text class="stage" x="482" y="132">2 · HIERARCHICAL CONSTRUCTION</text>
+  <rect class="proc" x="482" y="154" rx="14" width="390" height="126"/>
+  <text class="h" x="504" y="184">Direction alignment and normalization</text>
+  <text class="b" x="504" y="218">Within-sample percentile ranks [0, 1]</text><text class="s" x="504" y="247">Average ranks for ties · higher = greater priority</text>
+  <rect class="inst" x="482" y="316" rx="14" width="390" height="90"/>
+  <text class="h" x="504" y="348">Institutional deficit</text><text class="s" x="504" y="377">One active indicator</text>
+  <rect class="serv" x="482" y="424" rx="14" width="390" height="164"/>
+  <text class="h" x="504" y="456">Service-network deficit</text>
+  <text class="s" x="504" y="486">Equal mean across four components:</text><text class="s" x="504" y="512">health · social protection · justice ·</text><text class="s" x="504" y="538">specialized protection network</text><text class="s" x="504" y="566">(prevents indicator-count dominance)</text>
+  <rect class="trans" x="482" y="606" rx="14" width="390" height="90"/>
+  <text class="h" x="504" y="638">Transport barrier</text><text class="s" x="504" y="667">1 − multimodal access score</text>
+
+  <text class="stage" x="952" y="132">3 · PREDECLARED SCENARIO SPACE</text>
+  <rect class="box" x="952" y="154" rx="14" width="380" height="190"/>
+  <text class="h" x="974" y="186">12 transport scenarios</text>
+  <text class="b" x="974" y="219">4 modal structures × 3 role structures</text>
+  <text class="s" x="974" y="249">Modal: equal · road · waterway · air emphasis</text><text class="s" x="974" y="277">Roles: equal · availability · proximity emphasis</text><text class="s" x="974" y="309">All municipalities evaluated under every scenario</text>
+  <rect class="box" x="952" y="366" rx="14" width="380" height="190"/>
+  <text class="h" x="974" y="398">4 macro-weight schemes</text>
+  <text class="b" x="974" y="431">Institutional · service · transport</text>
+  <text class="s" x="974" y="461">Equal: 1/3 · 1/3 · 1/3</text><text class="s" x="974" y="489">Institutional emphasis: .50 · .25 · .25</text>
+  <text class="s" x="974" y="517">Service emphasis: .25 · .50 · .25</text><text class="s" x="974" y="545">Transport emphasis: .25 · .25 · .50</text>
+  <rect class="proc" x="952" y="594" rx="14" width="380" height="102"/>
+  <text class="h" x="974" y="626">Complete crossing</text><text class="b" x="974" y="660">12 × 4 = 48 integrated configurations</text><text class="s" x="974" y="684">No configuration receives extra frequency weight</text>
+
+  <text class="stage" x="1390" y="132">4 · OUTPUTS</text>
+  <rect class="out" x="1390" y="154" rx="14" width="160" height="542"/>
+  <text class="h" x="1412" y="188">Outputs</text><text class="b" x="1412" y="230">Scores</text><text class="b" x="1412" y="268">Ranks</text>
+  <text class="b" x="1412" y="306">Top-quartile</text><text class="b" x="1412" y="330">frequency</text><text class="b" x="1412" y="376">Rank range</text>
+  <text class="b" x="1412" y="414">Stability</text><text class="b" x="1412" y="452">Dimension</text><text class="b" x="1412" y="476">contributions</text>
+  <text class="b" x="1412" y="522">Scenario</text><text class="b" x="1412" y="546">agreement</text><text class="s" x="1412" y="600">Decision support,</text><text class="s" x="1412" y="622">not ground truth</text><text class="s" x="1412" y="654">or automatic</text><text class="s" x="1412" y="676">funding decisions</text>
+
+  <path class="arrow" d="M405 217H470"/><path class="arrow" d="M405 408H470"/><path class="arrow" d="M405 616H470"/>
+  <path class="thin" d="M677 280V305"/><path class="thin" d="M677 406V414"/><path class="thin" d="M677 588V596"/>
+  <path class="arrow" d="M872 361H930V249H942"/><path class="arrow" d="M872 506H930V461H942"/><path class="arrow" d="M872 651H942"/>
+  <path class="thin" d="M1142 344V356"/><path class="thin" d="M1142 556V584"/><path class="arrow" d="M1332 645H1380"/>
+
+  <rect class="box" x="60" y="750" rx="14" width="1490" height="102"/>
+  <text class="h" x="82" y="782">Scope and exclusions</text>
+  <text class="b" x="82" y="814">Target: relative priority for strengthening municipal service capacity under multimodal access constraints.</text>
+  <text class="s" x="82" y="840">Population is contextual only. Police records (2022–2025), occurrence rates, hidden-incidence inference, municipality-specific adjustments, and post-result tuning are excluded.</text>
+</svg>
