@@ -8,6 +8,7 @@ on:
       - "pyproject.toml"
       - "requirements.txt"
       - "data/results/**"
+      - "data/geospatial/**"
       - "data/processed/integrated_municipal_matrix.csv"
       - ".github/workflows/test-dashboard.yml"
   pull_request:
@@ -17,6 +18,7 @@ on:
       - "pyproject.toml"
       - "requirements.txt"
       - "data/results/**"
+      - "data/geospatial/**"
       - "data/processed/integrated_municipal_matrix.csv"
       - ".github/workflows/test-dashboard.yml"
   workflow_dispatch:
