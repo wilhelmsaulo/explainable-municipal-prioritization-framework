@@ -34,6 +34,12 @@ TEXT = {
         "title": "🧭 Municipal priority for capacity strengthening",
         "caption": "Pará · 144 municipalities · 48 audited configurations · read-only visualization",
         "language": "Language",
+        "navigation": "Navigation",
+        "analysis_settings": "Analysis configuration",
+        "overview_page": "Overview",
+        "robustness_page": "Robustness",
+        "data_method_page": "Data and methodology",
+        "about_page": "About the project",
         "configuration": "Official configuration",
         "transport_scenario": "Transport submodel scenario",
         "macro_weights_selector": "Macro-dimension weights",
@@ -106,6 +112,20 @@ TEXT = {
         "worst_rank": "Worst rank",
         "method_title": "Methodology, data, and limitations",
         "agreement_title": "Agreement with the reference configuration",
+        "robustness_title": "Robustness across 48 configurations",
+        "robustness_caption": "Sensitivity summaries compare each predeclared configuration with the reference configuration.",
+        "median_correlation": "Median rank correlation",
+        "minimum_top10": "Minimum top-10 overlap",
+        "maximum_shift": "Maximum rank shift",
+        "agreement_chart": "Rank agreement and top-10 overlap",
+        "indicator_dictionary": "Active indicator dictionary",
+        "indicator_dictionary_note": "These seven indicators are the non-transport inputs used by the active framework.",
+        "download_dictionary": "Download indicator dictionary (CSV)",
+        "about_title": "About the project",
+        "about_body": "This experimental dashboard presents precomputed outputs from the Explainable Municipal Prioritization Framework for all 144 municipalities of Pará, Brazil.",
+        "live_version": "Live development version",
+        "research_boundary": "Research boundary",
+        "research_boundary_body": "The framework prioritizes capacity strengthening under multimodal access constraints. It does not estimate violence, underreporting, individual risk, or automatic funding decisions.",
         "spearman": "Spearman correlation",
         "top10_overlap": "Top-10 overlap",
         "mean_shift": "Mean absolute rank shift",
@@ -118,6 +138,12 @@ TEXT = {
         "title": "🧭 Prioridade municipal para fortalecimento de capacidades",
         "caption": "Pará · 144 municípios · 48 configurações auditadas · visualização somente leitura",
         "language": "Idioma",
+        "navigation": "Navegação",
+        "analysis_settings": "Configuração da análise",
+        "overview_page": "Visão geral",
+        "robustness_page": "Robustez",
+        "data_method_page": "Dados e metodologia",
+        "about_page": "Sobre o projeto",
         "configuration": "Configuração oficial",
         "transport_scenario": "Cenário do submodelo de transporte",
         "macro_weights_selector": "Pesos das macrodimensões",
@@ -190,6 +216,20 @@ TEXT = {
         "worst_rank": "Pior posição",
         "method_title": "Metodologia, dados e limitações",
         "agreement_title": "Concordância com a configuração de referência",
+        "robustness_title": "Robustez nas 48 configurações",
+        "robustness_caption": "Os resumos de sensibilidade comparam cada configuração previamente declarada com a configuração de referência.",
+        "median_correlation": "Correlação mediana entre rankings",
+        "minimum_top10": "Menor sobreposição do top 10",
+        "maximum_shift": "Maior mudança de posição",
+        "agreement_chart": "Concordância dos rankings e sobreposição do top 10",
+        "indicator_dictionary": "Dicionário dos indicadores ativos",
+        "indicator_dictionary_note": "Estes sete indicadores são as entradas não relacionadas ao transporte utilizadas pelo framework ativo.",
+        "download_dictionary": "Baixar dicionário dos indicadores (CSV)",
+        "about_title": "Sobre o projeto",
+        "about_body": "Este dashboard experimental apresenta resultados pré-calculados do Explainable Municipal Prioritization Framework para os 144 municípios do Pará.",
+        "live_version": "Versão de desenvolvimento ativa",
+        "research_boundary": "Limite da pesquisa",
+        "research_boundary_body": "O framework prioriza o fortalecimento de capacidades sob restrições de acesso multimodal. Ele não estima violência, subnotificação, risco individual ou decisões automáticas de financiamento.",
         "spearman": "Correlação de Spearman",
         "top10_overlap": "Sobreposição top 10",
         "mean_shift": "Mudança média absoluta de posição",
@@ -253,7 +293,9 @@ def scenario_table(data, scenario: str, language: str) -> pd.DataFrame:
     current = selected_scenario(data.scenarios, scenario)
     result = current.merge(data.profiles, on=["municipality_code", "municipality"])
     result = result.merge(data.municipalities, on=["municipality_code", "municipality"])
-    result["profile_label"] = result["priority_stability_profile"].map(PROFILE_LABELS[language])
+    result["profile_label"] = result["priority_stability_profile"].map(
+        PROFILE_LABELS[language]
+    )
     return result.sort_values(["selected_rank", "municipality"], kind="stable")
 
 
@@ -326,20 +368,14 @@ def municipal_profile_tab(data, scenario: str, language: str, tx: dict[str, str]
     c1, c2, c3, c4 = st.columns(4)
     c1.metric(tx["selected_rank"], int(row["selected_rank"]))
     c2.metric(tx["selected_score"], fmt(row["selected_score"], language))
-    c3.metric(
-        tx["best_worst"], f"{int(row['best_priority_rank'])}–{int(row['worst_priority_rank'])}"
-    )
+    c3.metric(tx["best_worst"], f"{int(row['best_priority_rank'])}–{int(row['worst_priority_rank'])}")
     c4.metric(tx["top_quartile"], f"{100 * row['top_quartile_frequency']:.1f}%")
 
     left, right = st.columns(2)
     with left:
         contributions = pd.DataFrame(
             {
-                tx["dimension"]: [
-                    tx["institutional"],
-                    tx["service_network"],
-                    tx["transport_barrier"],
-                ],
+                tx["dimension"]: [tx["institutional"], tx["service_network"], tx["transport_barrier"]],
                 tx["mean_contribution"]: [
                     explanation["mean_institutional_contribution"],
                     explanation["mean_service_network_contribution"],
@@ -433,9 +469,7 @@ def comparison_tab(data, scenario: str, language: str, tx: dict[str, str]) -> No
         "top_quartile_frequency": tx["top_quartile"],
         "profile_label": tx["stability"],
     }
-    st.dataframe(
-        compare[list(columns)].rename(columns=columns), hide_index=True, use_container_width=True
-    )
+    st.dataframe(compare[list(columns)].rename(columns=columns), hide_index=True, use_container_width=True)
 
 
 def methodology_tab(data, language: str, tx: dict[str, str]) -> None:
@@ -476,11 +510,45 @@ def methodology_tab(data, language: str, tx: dict[str, str]) -> None:
             tempo real de viagem ou decisões automáticas de financiamento.
             """
         )
-    st.markdown(f"##### {tx['agreement_title']}")
+    st.markdown(f"##### {tx['indicator_dictionary']}")
+    st.caption(tx["indicator_dictionary_note"])
+    profile = data.indicator_profile.copy()
+    st.dataframe(profile, hide_index=True, use_container_width=True)
+    st.download_button(
+        tx["download_dictionary"],
+        profile.to_csv(index=False).encode("utf-8-sig"),
+        file_name=f"active_indicator_dictionary_{language}.csv",
+        mime="text/csv",
+    )
+
+
+def robustness_page(data, language: str, tx: dict[str, str]) -> None:
+    st.subheader(tx["robustness_title"])
+    st.caption(tx["robustness_caption"])
     agreement = data.agreement.copy()
     agreement[tx["configuration"]] = agreement["scenario"].map(
         lambda value: scenario_label(value, language)
     )
+    c1, c2, c3, c4 = st.columns(4)
+    c1.metric(tx["minimum_correlation"], fmt(agreement["rank_correlation"].min(), language))
+    c2.metric(tx["median_correlation"], fmt(agreement["rank_correlation"].median(), language))
+    c3.metric(tx["minimum_top10"], fmt(agreement["top_k_overlap_fraction"].min(), language))
+    c4.metric(tx["maximum_shift"], int(agreement["maximum_absolute_rank_shift"].max()))
+    figure = px.scatter(
+        agreement,
+        x="rank_correlation",
+        y="top_k_overlap_fraction",
+        color="macro_weight_scenario",
+        hover_name=tx["configuration"],
+        labels={
+            "rank_correlation": tx["spearman"],
+            "top_k_overlap_fraction": tx["top10_overlap"],
+            "macro_weight_scenario": tx["macro_weight"],
+        },
+        title=tx["agreement_chart"],
+    )
+    st.plotly_chart(figure, use_container_width=True)
+    st.markdown(f"##### {tx['agreement_title']}")
     columns = {
         "rank_correlation": tx["spearman"],
         "top_k_overlap_fraction": tx["top10_overlap"],
@@ -489,6 +557,22 @@ def methodology_tab(data, language: str, tx: dict[str, str]) -> None:
     }
     view = agreement[[tx["configuration"], *columns]].rename(columns=columns)
     st.dataframe(view, hide_index=True, use_container_width=True)
+
+
+def about_page(tx: dict[str, str]) -> None:
+    st.subheader(tx["about_title"])
+    st.write(tx["about_body"])
+    st.markdown(
+        "**GitHub:** [Explainable Municipal Prioritization Framework]"
+        "(https://github.com/wilhelmsaulo/explainable-municipal-prioritization-framework)"
+    )
+    st.markdown(
+        "**Dashboard:** [Streamlit Community Cloud]"
+        "(https://explainable-municipal-prioritization-framework-zyur6g28v6z5uba.streamlit.app/)"
+    )
+    st.info(f"**{tx['live_version']}:** branch `agent/transport-indicators` · draft PR #2")
+    st.markdown(f"#### {tx['research_boundary']}")
+    st.write(tx["research_boundary_body"])
 
 
 def explain_transport(transport: str, tx: dict[str, str]) -> str:
@@ -507,13 +591,13 @@ def explain_transport(transport: str, tx: dict[str, str]) -> str:
     return f"{tx[mode_key]}; {tx[role_key]}."
 
 
-language_name = st.radio(
-    "Language / Idioma",
-    ["English", "Português"],
-    horizontal=True,
-    label_visibility="collapsed",
-)
-language = "en" if language_name == "English" else "pt"
+with st.sidebar:
+    language = st.radio(
+        "Language / Idioma",
+        ["en", "pt"],
+        horizontal=True,
+        format_func=lambda value: "English" if value == "en" else "Português",
+    )
 tx = TEXT[language]
 
 try:
@@ -522,52 +606,70 @@ except (FileNotFoundError, KeyError, ValueError) as exc:
     st.error(f"{tx['validation_error']}: {exc}")
     st.stop()
 
-st.title(tx["title"])
-st.caption(tx["caption"])
-framework_dimensions(tx)
-# The two selectors map only to precomputed, audited scenario columns.
 reference_transport, reference_weight = split_scenario(REFERENCE_SCENARIO)
 transport_options = tuple(sorted({split_scenario(name)[0] for name in data.scenario_names}))
-selector_left, selector_right = st.columns(2)
-with selector_left:
-    transport = st.selectbox(
-        tx["transport_scenario"],
-        transport_options,
-        index=transport_options.index(reference_transport),
-        format_func=lambda name: transport_label(name, language),
+page_labels = {
+    "overview": tx["overview_page"],
+    "profile": tx["profile_tab"],
+    "comparison": tx["compare_tab"],
+    "robustness": tx["robustness_page"],
+    "data_method": tx["data_method_page"],
+    "about": tx["about_page"],
+}
+with st.sidebar:
+    st.divider()
+    st.subheader(tx["navigation"])
+    page = st.radio(
+        tx["navigation"],
+        tuple(page_labels),
+        format_func=page_labels.get,
+        label_visibility="collapsed",
     )
-with selector_right:
-    macro_weight = st.selectbox(
-        tx["macro_weights_selector"],
-        MACRO_WEIGHT_ORDER,
-        index=MACRO_WEIGHT_ORDER.index(reference_weight),
-        format_func=lambda name: weight_label(name, language),
-    )
+    st.divider()
+    with st.expander(tx["analysis_settings"], expanded=True):
+        transport = st.selectbox(
+            tx["transport_scenario"],
+            transport_options,
+            index=transport_options.index(reference_transport),
+            format_func=lambda name: transport_label(name, language),
+        )
+        macro_weight = st.selectbox(
+            tx["macro_weights_selector"],
+            MACRO_WEIGHT_ORDER,
+            index=MACRO_WEIGHT_ORDER.index(reference_weight),
+            format_func=lambda name: weight_label(name, language),
+        )
 scenario = compose_scenario(transport, macro_weight)
 if scenario not in data.scenario_names:
     st.error(f"{tx['validation_error']}: {scenario}")
     st.stop()
 institutional_weight, service_weight, transport_weight = MACRO_WEIGHTS[macro_weight]
-st.info(
-    f"**{tx['selected_configuration']}:** {scenario_label(scenario, language)}  \n"
-    f"**{tx['transport_interpretation']}:** {explain_transport(transport, tx)}  \n"
-    f"**{tx['macro_weights_detail']}:** {tx['institutional_weight']} "
-    f"{pct(institutional_weight, language)} · {tx['service_weight']} "
-    f"{pct(service_weight, language)} · {tx['transport_weight']} "
-    f"{pct(transport_weight, language)}"
-)
+st.title(tx["title"])
+st.caption(tx["caption"])
 
-tab_state, tab_profile, tab_compare, tab_method = st.tabs(
-    [tx["state_tab"], tx["profile_tab"], tx["compare_tab"], tx["method_tab"]]
-)
-with tab_state:
+if page in {"overview", "profile", "comparison"}:
+    st.info(
+        f"**{tx['selected_configuration']}:** {scenario_label(scenario, language)}  \n"
+        f"**{tx['transport_interpretation']}:** {explain_transport(transport, tx)}  \n"
+        f"**{tx['macro_weights_detail']}:** {tx['institutional_weight']} "
+        f"{pct(institutional_weight, language)} · {tx['service_weight']} "
+        f"{pct(service_weight, language)} · {tx['transport_weight']} "
+        f"{pct(transport_weight, language)}"
+    )
+
+if page == "overview":
+    framework_dimensions(tx)
     statewide_tab(data, scenario, language, tx)
-with tab_profile:
+elif page == "profile":
     municipal_profile_tab(data, scenario, language, tx)
-with tab_compare:
+elif page == "comparison":
     comparison_tab(data, scenario, language, tx)
-with tab_method:
+elif page == "robustness":
+    robustness_page(data, language, tx)
+elif page == "data_method":
     methodology_tab(data, language, tx)
+else:
+    about_page(tx)
 
 st.divider()
 st.caption(tx["footer"])
