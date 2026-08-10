@@ -2,11 +2,15 @@
 
 from __future__ import annotations
 
+import json
 from pathlib import Path
 
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
+from matplotlib.collections import PatchCollection
+from matplotlib.colors import Normalize
+from matplotlib.patches import Polygon as MplPolygon
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -232,11 +236,78 @@ def dimension_composition() -> None:
     _save(fig, "figure_04_dimension_composition")
 
 
+def _polygon_exteriors(geometry: dict) -> list[np.ndarray]:
+    """Return exterior rings from GeoJSON Polygon or MultiPolygon geometry."""
+    if geometry["type"] == "Polygon":
+        polygons = [geometry["coordinates"]]
+    elif geometry["type"] == "MultiPolygon":
+        polygons = geometry["coordinates"]
+    else:
+        raise ValueError(f"Unsupported municipal geometry: {geometry['type']}")
+    return [np.asarray(polygon[0], dtype=float) for polygon in polygons]
+
+
+def statewide_robustness_map() -> None:
+    boundaries_path = ROOT / "data" / "geospatial" / "pa_municipal_boundaries_2022_simplified.geojson"
+    boundaries = json.loads(boundaries_path.read_text(encoding="utf-8"))
+    profiles = pd.read_csv(RESULTS / "integrated_capacity_priority_profiles.csv")
+    frequency = profiles.assign(
+        municipality_code=profiles["municipality_code"].astype(str).str.zfill(7)
+    ).set_index("municipality_code")["top_quartile_frequency"]
+
+    boundary_codes = {str(feature["properties"]["CD_MUN"]) for feature in boundaries["features"]}
+    if len(boundary_codes) != 144 or boundary_codes != set(frequency.index):
+        raise ValueError("Municipal boundaries and profile codes do not match exactly")
+
+    patches: list[MplPolygon] = []
+    values: list[float] = []
+    for feature in boundaries["features"]:
+        code = str(feature["properties"]["CD_MUN"])
+        for ring in _polygon_exteriors(feature["geometry"]):
+            patches.append(MplPolygon(ring, closed=True))
+            values.append(float(frequency.loc[code]))
+
+    fig, ax = plt.subplots(figsize=(8.2, 7.2), constrained_layout=True)
+    norm = Normalize(vmin=0, vmax=1)
+    collection = PatchCollection(
+        patches,
+        cmap="viridis",
+        norm=norm,
+        edgecolor="#F8FAFC",
+        linewidth=0.28,
+    )
+    collection.set_array(np.asarray(values))
+    ax.add_collection(collection)
+    ax.autoscale_view()
+    ax.set_aspect("equal", adjustable="box")
+    ax.axis("off")
+    ax.set_title(
+        "Frequency of top-quartile classification across 48 configurations",
+        loc="left",
+        weight="bold",
+        pad=12,
+    )
+    colorbar = fig.colorbar(collection, ax=ax, fraction=0.035, pad=0.02)
+    colorbar.set_label("Share of configurations in the top quartile")
+    colorbar.set_ticks([0, 0.25, 0.5, 0.75, 1])
+    colorbar.set_ticklabels(["0%", "25%", "50%", "75%", "100%"])
+    fig.text(
+        0.01,
+        0.01,
+        "Municipal boundaries: IBGE 2022 Municipal Digital Mesh (SIRGAS 2000). "
+        "Geometry is used only for visualization.",
+        fontsize=8,
+        color=COLORS["gray"],
+    )
+    _save(fig, "figure_05_statewide_top_quartile_frequency")
+
+
 def main() -> None:
     _style()
     stability_profiles()
     scenario_agreement()
     dimension_composition()
+    statewide_robustness_map()
 
 
 if __name__ == "__main__":
