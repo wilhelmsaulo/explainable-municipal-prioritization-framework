@@ -1,5 +1,5 @@
 schema_version: "1.0"
-method_version: "1.1.0"
+method_version: "1.2.0"
 
 study_scope:
   territorial_unit: municipality
@@ -97,6 +97,37 @@ diagnostics:
     municipality_explanations: data/results/capacity_municipality_explanations.csv
     audit: data/results/capacity_diagnostics_audit.json
 
+multimethod_validation:
+  primary_method: hierarchical_additive
+  validation_methods:
+    topsis:
+      normalization: vector
+      criterion_direction: benefit
+    promethee_ii:
+      preference_function: usual
+      strict_superiority: preference
+      equality: indifference
+  comparison:
+    top_set_membership: tie_neutral_fractional
+    top_set_masses: [10, 36]
+  smaa:
+    macro_weight_draws: 10000
+    random_seed: 42
+    transport_scenario_frequency: equal
+    convex_hull_sampling: dirichlet_barycentric
+    dirichlet_parameters: [1, 1, 1]
+    convex_hull_vertices:
+      institutional_emphasis: {institutional_deficit: 0.50, service_network_deficit: 0.25, transport_barrier: 0.25}
+      service_network_emphasis: {institutional_deficit: 0.25, service_network_deficit: 0.50, transport_barrier: 0.25}
+      transport_emphasis: {institutional_deficit: 0.25, service_network_deficit: 0.25, transport_barrier: 0.50}
+  outputs:
+    scores: data/results/multimethod_capacity_scores.csv
+    agreement: data/results/multimethod_capacity_agreement.csv
+    profiles: data/results/multimethod_capacity_profiles.csv
+    smaa_summary: data/results/smaa_capacity_acceptability_summary.csv
+    smaa_rank_acceptability: data/results/smaa_capacity_rank_acceptability.csv
+    audit: data/results/multimethod_capacity_audit.json
+
 input_audit:
   outputs:
     matrix: data/processed/capacity_framework_input_matrix.csv
@@ -108,6 +139,7 @@ exclusions:
     - police occurrence counts
     - police occurrence rates
     - inferred or estimated hidden violence incidence
+    - population
   selection:
     - municipality-specific manual adjustments
     - post-result parameter tuning

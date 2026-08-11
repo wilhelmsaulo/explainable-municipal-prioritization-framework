@@ -1,12 +1,13 @@
 {
   "schema_version": "1.0",
-  "method_version": "1.1.0",
+  "method_version": "1.2.0",
   "configuration": "config/capacity_priority.yml",
   "research_target": "Relative priority for strengthening municipal service capacity under multimodal access constraints.",
   "excluded_outcomes": [
     "police occurrence counts",
     "police occurrence rates",
-    "inferred or estimated hidden violence incidence"
+    "inferred or estimated hidden violence incidence",
+    "population"
   ],
   "normalization": {
     "method": "within-sample percentile rank scaled to [0,1]",

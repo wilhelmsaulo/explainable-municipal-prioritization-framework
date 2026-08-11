@@ -10,6 +10,7 @@ from empriority.config import load_settings
 from empriority.connectors.sidra import SidraQuery
 from empriority.integrated_priority import build_integrated_priority_profiles
 from empriority.integration import build_integrated_matrix
+from empriority.multimethod_validation import build_multimethod_validation
 from empriority.pipeline import (
     build_municipality_reference,
     collect_catalog_indicator,
@@ -261,6 +262,19 @@ def diagnose_capacity_framework(
 ) -> None:
     """Diagnose robustness and contributions without changing published rankings."""
     paths = build_capacity_diagnostics(config_path=config)
+    for name, path in paths.items():
+        typer.echo(f"OK {name}: {path}")
+
+
+@app.command("validate-capacity-multimethod")
+def validate_capacity_multimethod(
+    config: str = typer.Option(
+        "config/capacity_priority.yml",
+        help="Path to the declarative capacity-priority framework configuration.",
+    ),
+) -> None:
+    """Validate the primary additive rankings with TOPSIS, PROMETHEE II, and SMAA."""
+    paths = build_multimethod_validation(config_path=config)
     for name, path in paths.items():
         typer.echo(f"OK {name}: {path}")
 
