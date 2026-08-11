@@ -115,3 +115,8 @@ manifests advanced the pull-request branch. Its sole purpose is to request the
 full release-candidate validation suite from a user-authored commit. It changes
 no source data, analytical input, parameter, score, rank, profile, table, or
 figure.
+
+The regenerated manifest was verified to contain exactly one registered URL
+for each MapBiomas road source, the expected file in each corresponding cache
+record, and zero acquisition errors for those three sources. Unrelated cached
+infrastructure files are not included in their provenance records.
