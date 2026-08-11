@@ -1,0 +1,38 @@
+{
+  "method_version": "1.2.0",
+  "checks": {
+    "municipalities": true,
+    "transport_scenarios": true,
+    "macro_weight_schemes": true,
+    "methods": true,
+    "method_scenario_configurations": true,
+    "deterministic_records": true,
+    "evaluations_per_municipality": true,
+    "sampled_weights_sum_one": true,
+    "sampled_weights_in_bounds": true,
+    "finite_valid_scores_and_ranks": true,
+    "rank_acceptability_complete": true,
+    "additive_reconstruction_within_1e_12": true,
+    "additive_ranks_reproduced": true,
+    "excluded_variables_inactive": true
+  },
+  "additive_reconstruction_max_absolute_error": 2.220446049250313e-16,
+  "additive_rank_mismatches": 0,
+  "counts": {
+    "municipalities": 144,
+    "transport_scenarios": 12,
+    "macro_weight_schemes": 4,
+    "methods": 3,
+    "method_scenario_configurations": 144,
+    "deterministic_records": 20736,
+    "monte_carlo_evaluations_per_municipality": 120000
+  },
+  "smaa": {
+    "random_seed": 42,
+    "macro_weight_draws": 10000,
+    "scenario_frequency": "equal",
+    "weight_minimum": 0.2500033122516512,
+    "weight_maximum": 0.49936408160057805,
+    "maximum_weight_sum_error": 4.440892098500626e-16
+  }
+}
