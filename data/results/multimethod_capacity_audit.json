@@ -12,6 +12,8 @@
     "sampled_weights_in_bounds": true,
     "finite_valid_scores_and_ranks": true,
     "rank_acceptability_complete": true,
+    "rank_position_mass_complete": true,
+    "tie_neutral_rank_allocations_applied": true,
     "additive_reconstruction_within_1e_12": true,
     "additive_ranks_reproduced": true,
     "excluded_variables_inactive": true
@@ -33,6 +35,7 @@
     "scenario_frequency": "equal",
     "weight_minimum": 0.2500033122516512,
     "weight_maximum": 0.49936408160057805,
-    "maximum_weight_sum_error": 4.440892098500626e-16
+    "maximum_weight_sum_error": 4.440892098500626e-16,
+    "tie_neutral_rank_allocations": 10000
   }
 }
