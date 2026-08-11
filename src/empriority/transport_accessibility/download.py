@@ -185,6 +185,11 @@ def discover_and_download_transport_layers(
             record: dict[str, Any] = {
                 "agency": source["agency"],
                 "official_page": source["official_page"],
+                "discovery_policy": (
+                    "registered_direct_urls_only"
+                    if source.get("direct_urls_only", False)
+                    else "official_page_plus_registered_urls"
+                ),
                 "discovered": [],
                 "downloads": [],
                 "preserved": [],
@@ -217,8 +222,15 @@ def discover_and_download_transport_layers(
             record["discovered"] = candidates
             target_dir = raw_root / source_id
             target_dir.mkdir(parents=True, exist_ok=True)
+            allowed_cached_names = (
+                {Path(urlparse(url).path).name for url in direct_urls}
+                if source.get("direct_urls_only", False)
+                else None
+            )
             for existing in sorted(target_dir.iterdir()):
                 if not (existing.is_file() and existing.suffix.lower() in _ALLOWED_EXTENSIONS):
+                    continue
+                if allowed_cached_names is not None and existing.name not in allowed_cached_names:
                     continue
                 try:
                     _validate_downloaded_file(existing)
