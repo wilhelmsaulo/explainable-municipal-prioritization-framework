@@ -1,0 +1,155 @@
+{
+  "schema_version": "1.0",
+  "selection_principles": [
+    "Retain one local-availability and one continuous-proximity indicator per component.",
+    "Exclude raw contextual lengths and municipal area from direct accessibility scoring.",
+    "Avoid deterministic count/presence and length/presence duplication.",
+    "Preserve excluded variables in the integrated matrix for sensitivity analysis.",
+    "Use hierarchical aggregation so components and modes, not variable counts, determine influence."
+  ],
+  "selected_count": 10,
+  "selected": {
+    "road_density_km_per_1000_km2": {
+      "component": "road",
+      "role": "availability",
+      "polarity": "benefit",
+      "rationale": "Area-adjusted road-network availability avoids raw municipal-size effects.",
+      "source_direction": "access_positive",
+      "unit": "km_per_1000_km2",
+      "year": 2023
+    },
+    "distance_to_mapped_road_km": {
+      "component": "road",
+      "role": "proximity",
+      "polarity": "cost",
+      "rationale": "Continuous measure of spatial separation from the mapped road network.",
+      "source_direction": "barrier_positive",
+      "unit": "km",
+      "year": 2023
+    },
+    "port_presence": {
+      "component": "port",
+      "role": "availability",
+      "polarity": "benefit",
+      "rationale": "Transparent local-availability measure; chosen instead of the highly skewed count.",
+      "source_direction": "access_positive",
+      "unit": "binary",
+      "year": 2025
+    },
+    "distance_to_port_km": {
+      "component": "port",
+      "role": "proximity",
+      "polarity": "cost",
+      "rationale": "Continuous measure of access barrier to the nearest port facility.",
+      "source_direction": "barrier_positive",
+      "unit": "km",
+      "year": 2025
+    },
+    "passenger_crossing_presence": {
+      "component": "passenger_crossing",
+      "role": "availability",
+      "polarity": "benefit",
+      "rationale": "Local crossing availability; chosen instead of raw line length.",
+      "source_direction": "access_positive",
+      "unit": "binary",
+      "year": 2025
+    },
+    "distance_to_passenger_crossing_km": {
+      "component": "passenger_crossing",
+      "role": "proximity",
+      "polarity": "cost",
+      "rationale": "Continuous measure of access barrier to a passenger-crossing line.",
+      "source_direction": "barrier_positive",
+      "unit": "km",
+      "year": 2025
+    },
+    "navigated_waterway_presence": {
+      "component": "navigated_waterway",
+      "role": "availability",
+      "polarity": "benefit",
+      "rationale": "Local navigated-waterway availability; chosen instead of raw segment length.",
+      "source_direction": "access_positive",
+      "unit": "binary",
+      "year": 2022
+    },
+    "distance_to_navigated_waterway_km": {
+      "component": "navigated_waterway",
+      "role": "proximity",
+      "polarity": "cost",
+      "rationale": "Continuous measure of access barrier to a published navigated waterway.",
+      "source_direction": "barrier_positive",
+      "unit": "km",
+      "year": 2022
+    },
+    "decea_airport_presence": {
+      "component": "air",
+      "role": "availability",
+      "polarity": "benefit",
+      "rationale": "Transparent local airport availability; chosen instead of the correlated count.",
+      "source_direction": "access_positive",
+      "unit": "binary",
+      "year": 2026
+    },
+    "distance_to_decea_airport_km": {
+      "component": "air",
+      "role": "proximity",
+      "polarity": "cost",
+      "rationale": "Continuous measure of spatial access barrier to the nearest DECEA/ICA airport.",
+      "source_direction": "barrier_positive",
+      "unit": "km",
+      "year": 2026
+    }
+  },
+  "component_structure": {
+    "road": [
+      "road_density_km_per_1000_km2",
+      "distance_to_mapped_road_km"
+    ],
+    "port": [
+      "port_presence",
+      "distance_to_port_km"
+    ],
+    "passenger_crossing": [
+      "passenger_crossing_presence",
+      "distance_to_passenger_crossing_km"
+    ],
+    "navigated_waterway": [
+      "navigated_waterway_presence",
+      "distance_to_navigated_waterway_km"
+    ],
+    "air": [
+      "decea_airport_presence",
+      "distance_to_decea_airport_km"
+    ]
+  },
+  "excluded": {
+    "road_federal_km": "Raw contextual length and part of the constructed road total.",
+    "road_state_km": "Raw contextual length and part of the constructed road total.",
+    "road_other_km": "Raw contextual length, part of road total, and highly correlated with it.",
+    "road_paved_km": "Raw contextual length affected by municipal extent; retain for sensitivity analysis.",
+    "road_unpaved_km": "Raw contextual length affected by municipal extent; retain for sensitivity analysis.",
+    "road_total_km": "Constructed sum of network classes and affected by municipal extent.",
+    "road_mapped_presence": "Less informative than the retained continuous road density and distance measures.",
+    "road_federal_presence": "Correlated with federal-road length and narrower than overall road accessibility.",
+    "road_state_presence": "Narrower network-class indicator; retain for sensitivity analysis.",
+    "municipality_area_km2": "Territorial denominator/context, not an accessibility indicator.",
+    "port_count": "Deterministically linked to port presence and strongly right-skewed.",
+    "decea_airport_count": "Deterministically linked to airport presence and correlated with it.",
+    "passenger_crossing_km": "Deterministically linked to crossing presence and nearly perfectly correlated with it.",
+    "navigated_waterway_km": "Deterministically linked to waterway presence and strongly correlated with it."
+  },
+  "aggregation_constraint": {
+    "required": true,
+    "reason": "Water transport has three components while road and air have one each; flat aggregation would implicitly overweight water indicators.",
+    "proposed_levels": [
+      "indicator",
+      "component",
+      "mode",
+      "multimodal transport construct"
+    ],
+    "weights_defined": false
+  },
+  "normalization_applied": false,
+  "weights_applied": false,
+  "composite_score_created": false
+}

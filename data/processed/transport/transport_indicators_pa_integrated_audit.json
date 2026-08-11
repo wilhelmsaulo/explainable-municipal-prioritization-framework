@@ -1,0 +1,47 @@
+{
+  "rows": 144,
+  "columns": 26,
+  "transport_variables": 24,
+  "sources": {
+    "road_indicators": {
+      "path": "data/processed/transport/road_indicators_pa_2023.csv",
+      "sha256": "11582aabfabc03ac0f3a19c4ebaa9e26a67675dee2d156fbb923f6f417eb591e"
+    },
+    "nonroad_indicators": {
+      "path": "data/processed/transport/nonroad_indicators_pa.csv",
+      "sha256": "6e0895f0b90b725783cd967aa594afce5050aa58a29a4829013d8fe31fc28d2d"
+    }
+  },
+  "mode_counts": {
+    "air": 3,
+    "road": 11,
+    "territorial_context": 1,
+    "water": 9
+  },
+  "direction_counts": {
+    "access_positive": 10,
+    "barrier_positive": 5,
+    "context": 9
+  },
+  "missing_columns": [],
+  "unexpected_columns": [],
+  "checks": {
+    "road_rows_144": true,
+    "nonroad_rows_144": true,
+    "integrated_rows_144": true,
+    "unique_codes_144": true,
+    "all_codes_para": true,
+    "same_code_sets": true,
+    "municipality_names_match": true,
+    "merge_complete": true,
+    "expected_columns_complete": true,
+    "no_unexpected_columns": true,
+    "no_missing_numeric": true,
+    "nonnegative_numeric": true
+  },
+  "limitations": [
+    "The matrix integrates indicators with different official reference years.",
+    "Raw lengths and municipal area are contextual and are not automatically interpreted as access.",
+    "No normalization, weighting, aggregation, or multimodal score is calculated here."
+  ]
+}

@@ -45,9 +45,7 @@ def _read_archive_csv(archive: zipfile.ZipFile, member: str) -> pd.DataFrame:
                     return frame
             except Exception as exc:  # noqa: BLE001
                 errors.append(f"{encoding}/{separator}: {exc}")
-    raise RuntimeError(
-        f"Unable to read CNES archive member {member}. " + " | ".join(errors[-4:])
-    )
+    raise RuntimeError(f"Unable to read CNES archive member {member}. " + " | ".join(errors[-4:]))
 
 
 def extract_unit_types_from_archive(archive_path: str | Path) -> pd.DataFrame:
@@ -111,9 +109,7 @@ def extract_unit_types_from_archive(archive_path: str | Path) -> pd.DataFrame:
                 )
                 return result
 
-    return pd.DataFrame(
-        columns=["codigo_tipo_unidade", "descricao_tipo_unidade"]
-    )
+    return pd.DataFrame(columns=["codigo_tipo_unidade", "descricao_tipo_unidade"])
 
 
 def _load_existing_types(path: Path) -> pd.DataFrame:
@@ -158,16 +154,14 @@ def collect_cnes_pa_from_archive(
             unit_types = fetch_cnes_unit_types()
         except Exception as exc:  # noqa: BLE001
             print(f"CNES unit-type API unavailable: {exc}", flush=True)
-            unit_types = pd.DataFrame(
-                columns=["codigo_tipo_unidade", "descricao_tipo_unidade"]
-            )
+            unit_types = pd.DataFrame(columns=["codigo_tipo_unidade", "descricao_tipo_unidade"])
     unit_types.to_csv(types_path, index=False, encoding="utf-8")
 
     indicators = build_cnes_municipal_indicators(establishments, unit_types)
     classified_total = int(
-        indicators[
-            ["cnes_ubs", "cnes_hospitals", "cnes_caps", "cnes_emergency_units"]
-        ].to_numpy().sum()
+        indicators[["cnes_ubs", "cnes_hospitals", "cnes_caps", "cnes_emergency_units"]]
+        .to_numpy()
+        .sum()
     )
     if len(establishments) > 0 and classified_total == 0:
         raise RuntimeError(

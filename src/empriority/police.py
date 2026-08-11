@@ -2,8 +2,8 @@ from __future__ import annotations
 
 import re
 import unicodedata
+from collections.abc import Iterable
 from pathlib import Path
-from typing import Iterable
 
 import pandas as pd
 
@@ -54,11 +54,7 @@ OUTPUT_COLUMNS = [
 
 
 def _normalize_name(value: str) -> str:
-    ascii_value = (
-        unicodedata.normalize("NFKD", value)
-        .encode("ascii", "ignore")
-        .decode("ascii")
-    )
+    ascii_value = unicodedata.normalize("NFKD", value).encode("ascii", "ignore").decode("ascii")
     return re.sub(r"[^a-zA-Z0-9]+", "_", ascii_value).strip("_").lower()
 
 
@@ -114,14 +110,11 @@ def _aggregate_raw_microdata(frame: pd.DataFrame) -> pd.DataFrame:
     local["all_female_records"] = 1
     local["lesao_corporal"] = crime.eq("LESAO CORPORAL").astype(int)
     local["violencia_domestica_lesao"] = (
-        crime.eq("LESAO CORPORAL")
-        & specification.str.contains("VIOLENCIA DOMESTICA", regex=False)
+        crime.eq("LESAO CORPORAL") & specification.str.contains("VIOLENCIA DOMESTICA", regex=False)
     ).astype(int)
     local["estupro"] = crime.eq("ESTUPRO").astype(int)
     local["estupro_vulneravel"] = crime.eq("ESTUPRO DE VULNERAVEL").astype(int)
-    local["violencia_sexual"] = crime.isin(
-        ["ESTUPRO", "ESTUPRO DE VULNERAVEL"]
-    ).astype(int)
+    local["violencia_sexual"] = crime.isin(["ESTUPRO", "ESTUPRO DE VULNERAVEL"]).astype(int)
     local["homicidio_mulher"] = crime.eq("HOMICIDIO").astype(int)
     local["feminicidio"] = (
         crime.eq("HOMICIDIO")
@@ -156,13 +149,16 @@ def load_police_file(path: str | Path) -> pd.DataFrame:
 
     frame["year"] = pd.to_numeric(frame["year"], errors="raise").astype("int64")
     frame["records"] = pd.to_numeric(frame["records"], errors="raise")
-    frame["municipality"] = _normalize_municipality(frame["municipality"])
+    municipality_display = frame["municipality"].fillna("").astype(str).str.strip()
+    municipality_key = _normalize_text(municipality_display)
+    frame["municipality"] = municipality_display.where(
+        ~municipality_key.isin(MUNICIPALITY_ALIASES),
+        municipality_key.map(MUNICIPALITY_ALIASES),
+    )
     frame["occurrence_type"] = frame["occurrence_type"].astype(str).str.strip()
     if "municipality_code" in frame:
         frame["municipality_code"] = (
-            frame["municipality_code"]
-            .astype(str)
-            .str.replace(r"\.0$", "", regex=True)
+            frame["municipality_code"].astype(str).str.replace(r"\.0$", "", regex=True)
         )
     return frame
 

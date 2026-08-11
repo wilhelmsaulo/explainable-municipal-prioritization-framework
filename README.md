@@ -2,7 +2,28 @@
 
 Explainable and reproducible framework for integrating official Brazilian public data sources and supporting municipal-level policy prioritization.
 
-## Current scope
+## Current article application
+
+The active Pará application estimates relative priority for strengthening
+municipal service capacity under multimodal access constraints. It covers all
+144 municipalities and crosses 12 transport scenarios with four declared
+macro-weight scenarios, producing 48 integrated scenarios.
+
+The application uses institutional capacity (MUNIC 2023), health services and
+professionals (CNES), specialized social assistance (MDS/SNAS), state judicial
+access (TJPA), the validated protection network (Ligue 180), and multimodal
+transport sources (MapBiomas, ANTAQ, and DECEA/ICA). The population field
+currently named `population_2023` represents the 2022 Demographic Census
+released/processed in 2023.
+
+Police data for 2022--2025 are preserved in the broad integrated dataset but
+are explicitly excluded from this application. The framework does not estimate
+violence incidence, hidden incidence, individual risk, or underreporting.
+
+See `docs/capacity_priority_framework.md` for the authoritative analytical
+contract and reproducible commands.
+
+## Repository capabilities and legacy components
 
 The framework currently provides:
 
@@ -112,4 +133,26 @@ pytest
 
 ## Development status
 
-This repository is private and under active development. The implemented core is sufficient to collect initial official data, receive the police dataset, execute the hybrid multicriteria model and generate explainable and sensitivity-aware municipal rankings. Additional thematic connectors and final indicator definitions will be added as the study dataset is consolidated.
+This repository is private and under active development. The capacity-priority
+application is isolated through a versioned declarative configuration, audited
+input matrix, complete 48-scenario outputs, and reproducibility workflows.
+Generic police-import and TOPSIS components remain available as legacy,
+reusable repository capabilities but are not part of the active article
+application.
+
+## Interactive scientific dashboard
+
+**Live experimental dashboard:** https://explainable-municipal-prioritization-framework-zyur6g28v6z5uba.streamlit.app/
+
+
+A read-only Streamlit dashboard visualizes the 144 municipalities and all 48
+audited configurations without recalculating scores or permitting arbitrary
+parameter changes. It includes the statewide view, municipal profiles,
+municipality comparison, stability diagnostics, and CSV export.
+
+```bash
+python -m pip install -e ".[dashboard]"
+streamlit run dashboard/app.py
+```
+
+See `dashboard/README.md` for the dashboard-specific data contract.

@@ -1,10 +1,25 @@
 {
-  "generated_at_utc": "2026-08-06T14:55:05.564059+00:00",
-  "source_count": 5,
-  "available": 4,
-  "unavailable": 1,
+  "generated_at_utc": "2026-08-11T18:34:29.272499+00:00",
+  "source_count": 8,
+  "available": 8,
+  "unavailable": 0,
   "sources": {
     "dnit_roads": {
+      "status": "available",
+      "http_status": 200,
+      "error": null
+    },
+    "mapbiomas_state_roads": {
+      "status": "available",
+      "http_status": 200,
+      "error": null
+    },
+    "mapbiomas_federal_roads": {
+      "status": "available",
+      "http_status": 200,
+      "error": null
+    },
+    "mapbiomas_other_roads": {
       "status": "available",
       "http_status": 200,
       "error": null
@@ -19,20 +34,20 @@
       "http_status": 200,
       "error": null
     },
-    "anac_public_aerodromes": {
+    "decea_airports": {
       "status": "available",
       "http_status": 200,
       "error": null
     },
     "ibge_municipal_boundaries": {
-      "status": "http_error",
-      "http_status": 403,
+      "status": "available",
+      "http_status": 200,
       "error": null
     }
   },
   "provenance": {
     "reference_map": "Mapa Multimodal Pará - Ministério dos Transportes",
     "reference_map_updated": "2023-09-22",
-    "note": "Catalog follows agencies cited in the official multimodal map: DNIT, ANTAQ, ANAC and IBGE."
+    "note": "Catalog retains the official sources used by the reproducible pipeline: DNIT/MapBiomas, ANTAQ, DECEA/ICA and IBGE."
   }
 }

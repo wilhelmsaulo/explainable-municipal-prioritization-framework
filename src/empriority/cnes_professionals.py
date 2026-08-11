@@ -4,8 +4,8 @@ import json
 import re
 import unicodedata
 import zipfile
+from collections.abc import Iterator
 from pathlib import Path
-from typing import Iterator
 
 import pandas as pd
 
@@ -26,7 +26,8 @@ def _column(frame: pd.DataFrame, *names: str) -> str | None:
 
 def _member(archive: zipfile.ZipFile, prefix: str) -> str:
     matches = [
-        name for name in archive.namelist()
+        name
+        for name in archive.namelist()
         if Path(name).name.lower().startswith(prefix.lower()) and name.lower().endswith(".csv")
     ]
     if not matches:
@@ -121,7 +122,9 @@ def build_cnes_professional_indicators(
     cbo_column = _column(activities, "CO_CBO")
     description_column = _column(activities, "DS_ATIVIDADE_PROFISSIONAL")
     if cbo_column is None or description_column is None:
-        raise RuntimeError(f"CNES CBO dictionary has unexpected columns: {list(activities.columns)}")
+        raise RuntimeError(
+            f"CNES CBO dictionary has unexpected columns: {list(activities.columns)}"
+        )
 
     cbo_dictionary = activities[[cbo_column, description_column]].copy()
     cbo_dictionary.columns = ["cbo", "profession_description"]
@@ -141,14 +144,27 @@ def build_cnes_professional_indicators(
         if unit is None or professional is None or cbo is None:
             raise RuntimeError(f"CNES workload table has unexpected columns: {list(chunk.columns)}")
 
-        local = pd.DataFrame({
-            "unit_code": chunk[unit].astype(str).str.replace(r"\.0$", "", regex=True).str.zfill(7),
-            "professional_id": chunk[professional].astype(str).str.replace(r"\.0$", "", regex=True),
-            "cbo": chunk[cbo].astype(str).str.replace(r"\.0$", "", regex=True),
-            "hours_ambulatory": pd.to_numeric(chunk[amb], errors="coerce").fillna(0) if amb else 0,
-            "hours_other": pd.to_numeric(chunk[other], errors="coerce").fillna(0) if other else 0,
-            "hours_hospital_sus": pd.to_numeric(chunk[hospital], errors="coerce").fillna(0) if hospital else 0,
-        })
+        local = pd.DataFrame(
+            {
+                "unit_code": chunk[unit]
+                .astype(str)
+                .str.replace(r"\.0$", "", regex=True)
+                .str.zfill(7),
+                "professional_id": chunk[professional]
+                .astype(str)
+                .str.replace(r"\.0$", "", regex=True),
+                "cbo": chunk[cbo].astype(str).str.replace(r"\.0$", "", regex=True),
+                "hours_ambulatory": pd.to_numeric(chunk[amb], errors="coerce").fillna(0)
+                if amb
+                else 0,
+                "hours_other": pd.to_numeric(chunk[other], errors="coerce").fillna(0)
+                if other
+                else 0,
+                "hours_hospital_sus": pd.to_numeric(chunk[hospital], errors="coerce").fillna(0)
+                if hospital
+                else 0,
+            }
+        )
         local = local.loc[local["unit_code"].isin(pa_units)]
         if not local.empty:
             selected.append(local)
@@ -158,14 +174,18 @@ def build_cnes_professional_indicators(
         )
 
     if not selected:
-        raise RuntimeError("No CNES professional workload records were matched to Pará establishments.")
+        raise RuntimeError(
+            "No CNES professional workload records were matched to Pará establishments."
+        )
 
     professionals = pd.concat(selected, ignore_index=True)
     professionals = professionals.merge(unit_map, on="unit_code", how="left")
     professionals = professionals.merge(cbo_dictionary, on="cbo", how="left")
     professionals["profession_group"] = [
         _classify_profession(description, cbo)
-        for description, cbo in zip(professionals["profession_description"], professionals["cbo"])
+        for description, cbo in zip(
+            professionals["profession_description"], professionals["cbo"], strict=False
+        )
     ]
     professionals = professionals.loc[professionals["profession_group"].notna()].copy()
     professionals["weekly_hours"] = (
@@ -176,12 +196,10 @@ def build_cnes_professional_indicators(
 
     # A professional may have multiple establishments or contracts in one municipality.
     # Count each professional once per municipality and category while summing declared workload.
-    person_municipality = (
-        professionals.groupby(
-            ["municipality_code", "profession_group", "professional_id"],
-            as_index=False,
-        )["weekly_hours"].sum()
-    )
+    person_municipality = professionals.groupby(
+        ["municipality_code", "profession_group", "professional_id"],
+        as_index=False,
+    )["weekly_hours"].sum()
 
     counts = person_municipality.pivot_table(
         index="municipality_code",

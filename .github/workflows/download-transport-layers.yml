@@ -18,7 +18,7 @@ concurrency:
 jobs:
   download:
     runs-on: ubuntu-latest
-    timeout-minutes: 45
+    timeout-minutes: 35
     steps:
       - uses: actions/checkout@v4
         with:
@@ -31,12 +31,33 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip install -e .
+      - name: Restore previously validated raw layers
+        uses: actions/cache/restore@v4
+        with:
+          path: data/raw/transport
+          key: transport-raw-${{ runner.os }}-${{ github.ref_name }}-${{ github.run_id }}
+          restore-keys: |
+            transport-raw-${{ runner.os }}-${{ github.ref_name }}-
       - name: Discover and download official transport layers
         run: |
-          python - <<'PY'
+          set +e
+          timeout --signal=TERM 25m python - <<'PY'
           from empriority.transport_accessibility.download import discover_and_download_transport_layers
           discover_and_download_transport_layers()
           PY
+          status=$?
+          set -e
+          if [ "$status" -eq 124 ]; then
+            echo "::warning::Transport acquisition reached the 25-minute safety limit."
+          elif [ "$status" -ne 0 ]; then
+            echo "::warning::Transport acquisition exited with status $status."
+          fi
+      - name: Preserve validated raw layers
+        if: always()
+        uses: actions/cache/save@v4
+        with:
+          path: data/raw/transport
+          key: transport-raw-${{ runner.os }}-${{ github.ref_name }}-${{ github.run_id }}
       - name: Upload raw transport layers
         if: always()
         uses: actions/upload-artifact@v4
@@ -56,5 +77,5 @@ jobs:
             [ -e "$file" ] && git add -f "$file"
           done
           git diff --cached --quiet || git commit -m "Store official transport layer download manifest"
-          git pull --rebase origin main
-          git push
+          git pull --rebase origin "${GITHUB_REF_NAME}"
+          git push origin "HEAD:${GITHUB_REF_NAME}"

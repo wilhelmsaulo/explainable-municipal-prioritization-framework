@@ -1,0 +1,1 @@
+"""Dashboard-specific contract tests."""

@@ -1,13 +1,12 @@
 from __future__ import annotations
 
 import json
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from pathlib import Path
 
 import pandas as pd
 
 from empriority.matrix_audit import audit_integrated_matrix
-
 
 DEPRECATED_JUSTICE_COLUMNS = {
     "justice_components_available",
@@ -86,7 +85,7 @@ def finalize_dataset(
     status_path.write_text(
         json.dumps(
             {
-                "generated_at_utc": datetime.now(timezone.utc).isoformat(),
+                "generated_at_utc": datetime.now(UTC).isoformat(),
                 "status": "ready_for_criterion_screening",
                 "rows": int(len(matrix)),
                 "columns_before_cleanup": len(original_columns),

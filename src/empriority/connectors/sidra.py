@@ -113,8 +113,7 @@ class SidraConnector:
             frame = frame.loc[:, ordered]
 
         column_labels = {
-            normalized: str(header[raw_code])
-            for raw_code, normalized in raw_to_normalized.items()
+            normalized: str(header[raw_code]) for raw_code, normalized in raw_to_normalized.items()
         }
         return frame.reset_index(drop=True), column_labels
 

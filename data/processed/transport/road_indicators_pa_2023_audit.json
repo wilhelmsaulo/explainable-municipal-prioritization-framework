@@ -1,0 +1,65 @@
+{
+  "reference_year": 2023,
+  "source": "MapBiomas infrastructure compilation",
+  "rows": 144,
+  "unique_municipality_codes": 144,
+  "state_road_sha256": "364a070e9394a812b8eab3956c6056203decfde66d7771c679854d28d8b4fe05",
+  "federal_road_sha256": "f507e9c2bdca50c1ee6814c07cd220c88e686c0aae2b88ca8baef0280d01ba94",
+  "other_road_sha256": "7df6c217fe2ea6bbfd556863fe21a426003042ad774ac7c73bf38e41d58d1585",
+  "municipality_boundary_sha256": "0996ffd1b26928dfbd518f67339baa36fd860f50693c1c156f9b4d86fb77c7ad",
+  "road_features_national": {
+    "state": 32910,
+    "federal": 14255,
+    "other": 81197
+  },
+  "road_features_para_bbox": 14115,
+  "intersection_features": 13506,
+  "total_road_km": 70382.387395,
+  "municipalities_with_mapped_roads": 136,
+  "municipalities_without_mapped_roads": [
+    {
+      "municipality_code": "1500305",
+      "municipality": "Afuá"
+    },
+    {
+      "municipality_code": "1500701",
+      "municipality": "Anajás"
+    },
+    {
+      "municipality_code": "1502509",
+      "municipality": "Chaves"
+    },
+    {
+      "municipality_code": "1503101",
+      "municipality": "Gurupá"
+    },
+    {
+      "municipality_code": "1504505",
+      "municipality": "Melgaço"
+    },
+    {
+      "municipality_code": "1504901",
+      "municipality": "Muaná"
+    },
+    {
+      "municipality_code": "1506401",
+      "municipality": "Santa Cruz do Arari"
+    },
+    {
+      "municipality_code": "1507706",
+      "municipality": "São Sebastião da Boa Vista"
+    }
+  ],
+  "checks": {
+    "rows_144": true,
+    "unique_codes_144": true,
+    "all_codes_para": true,
+    "no_missing_numeric": true,
+    "nonnegative_lengths": true
+  },
+  "limitations": [
+    "MapBiomas federal, state, and other road segments.",
+    "No claim of complete municipal, local, or rural branch-road coverage.",
+    "Lengths result from clipping national road geometry to 2023 IBGE boundaries."
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "executed_at_utc": "2026-08-07T18:32:28.054303+00:00",
+  "status": "success",
+  "outputs": {
+    "geocoded_services": "data/processed/protection_network_services_geocoded_pa.csv",
+    "review": "data/processed/protection_network_geocoding_review_pa.csv",
+    "municipal_seats": "data/processed/municipal_seats_geocoded_pa.csv",
+    "accessibility": "data/processed/protection_network_accessibility_pa.csv",
+    "geojson": "data/processed/protection_network_services_pa.geojson",
+    "metadata": "data/processed/protection_network_geospatial.metadata.json",
+    "matrix": "data/processed/integrated_municipal_matrix.csv",
+    "cache": "data/cache/nominatim_protection_network.json"
+  }
+}

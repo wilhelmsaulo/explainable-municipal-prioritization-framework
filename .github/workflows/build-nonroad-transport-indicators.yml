@@ -1,0 +1,165 @@
+name: build-nonroad-transport-indicators
+
+# Reproducible sources only: ANTAQ, DECEA, and IBGE.
+
+on:
+  push:
+    paths:
+      - ".github/workflows/build-nonroad-transport-indicators.yml"
+      - "src/empriority/transport_accessibility/nonroad.py"
+  pull_request:
+    branches:
+      - main
+    paths:
+      - ".github/workflows/build-nonroad-transport-indicators.yml"
+      - "src/empriority/transport_accessibility/nonroad.py"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: build-nonroad-transport-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+      - name: Install geospatial dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -e .
+          pip install "geopandas>=1.0,<2"
+      - name: Download and verify official non-road inputs
+        run: |
+          python - <<'PY'
+          import hashlib
+          import socket
+          import time
+          import urllib.request
+          from pathlib import Path
+
+          socket.setdefaulttimeout(45)
+
+          inputs = {
+              "data/raw/transport/antaq/ports_2025.zip": (
+                  "https://www.gov.br/antaq/pt-br/central-de-conteudos/Instalaesporturias06052025.zip",
+                  "79e28332bdd031388a6f2305e4f1e2e741c057a64a63724ea4278f78a040fb63",
+              ),
+              "data/raw/transport/antaq/crossings_2025.zip": (
+                  "https://www.gov.br/antaq/pt-br/central-de-conteudos/Linhasdetravessias06052025.zip",
+                  "13a72f45a311168f8d57c50d261a3aa4b39c3188ee069617e572a76cd502d215",
+              ),
+              "data/raw/transport/antaq/waterways_2022.zip": (
+                  "https://www.gov.br/antaq/pt-br/central-de-conteudos/SHP_VEN2022completo.zip",
+                  "a324b2af08d9fdea9ee45fcd20116a95851f39223efca97d4fb9b5d9c8738a2b",
+              ),
+              "data/raw/transport/decea/airports_2026.zip": (
+                  "https://geoaisweb.decea.gov.br/geoserver/ICA/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=ICA:airport&outputFormat=SHAPE-ZIP",
+                  None,
+              ),
+              "data/raw/transport/ibge/PA_Municipios_2023.zip": (
+                  "https://geoftp.ibge.gov.br/organizacao_do_territorio/malhas_territoriais/"
+                  "malhas_municipais/municipio_2023/UFs/PA/PA_Municipios_2023.zip",
+                  "0996ffd1b26928dfbd518f67339baa36fd860f50693c1c156f9b4d86fb77c7ad",
+              ),
+          }
+          download_errors = []
+          for path_text, (url, expected) in inputs.items():
+              path = Path(path_text)
+              path.parent.mkdir(parents=True, exist_ok=True)
+              last_error = None
+              for attempt in range(1, 4):
+                  try:
+                      urllib.request.urlretrieve(url, path)
+                      digest = hashlib.sha256(path.read_bytes()).hexdigest()
+                      if expected and digest != expected:
+                          raise RuntimeError(f"SHA-256 mismatch: {digest}")
+                      print(path, path.stat().st_size, digest)
+                      last_error = None
+                      break
+                  except Exception as exc:
+                      last_error = exc
+                      path.unlink(missing_ok=True)
+                      if attempt < 3:
+                          time.sleep(2 ** attempt)
+              if last_error is not None:
+                  download_errors.append(
+                      f"{path_text}: {type(last_error).__name__}: {last_error}"
+                  )
+          if download_errors:
+              diagnostic = Path(
+                  "data/processed/transport/nonroad_inputs_error.txt"
+              )
+              diagnostic.parent.mkdir(parents=True, exist_ok=True)
+              diagnostic.write_text("\n".join(download_errors), encoding="utf-8")
+              print(diagnostic.read_text(encoding="utf-8"))
+              raise SystemExit("Required non-road inputs could not be downloaded")
+          Path("data/processed/transport/nonroad_inputs_error.txt").unlink(missing_ok=True)
+          PY
+      - name: Build and audit municipal non-road indicators
+        run: |
+          python - <<'PY'
+          import traceback
+          from pathlib import Path
+
+          error_path = Path(
+              "data/processed/transport/nonroad_indicators_pa_error.txt"
+          )
+          error_path.unlink(missing_ok=True)
+          try:
+              from empriority.transport_accessibility.nonroad import (
+                  build_nonroad_transport_indicators,
+              )
+
+              outputs = build_nonroad_transport_indicators(
+                  "data/raw/transport/antaq/ports_2025.zip",
+                  "data/raw/transport/antaq/crossings_2025.zip",
+                  "data/raw/transport/antaq/waterways_2022.zip",
+                  "data/raw/transport/decea/airports_2026.zip",
+                  "data/raw/transport/ibge/PA_Municipios_2023.zip",
+              )
+              print(outputs)
+          except Exception:
+              error_path.parent.mkdir(parents=True, exist_ok=True)
+              error_path.write_text(traceback.format_exc(), encoding="utf-8")
+              print(error_path.read_text(encoding="utf-8"))
+              raise
+          PY
+      - name: Upload raw inputs and audited outputs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: nonroad-transport-indicators-pa
+          path: |
+            data/raw/transport/antaq
+            data/raw/transport/decea
+            data/raw/transport/ibge
+            data/processed/transport/nonroad_indicators_pa.csv
+            data/processed/transport/nonroad_indicators_pa_audit.json
+            data/processed/transport/nonroad_indicators_pa_error.txt
+            data/processed/transport/nonroad_inputs_error.txt
+          if-no-files-found: warn
+          retention-days: 30
+      - name: Commit audited outputs
+        if: github.event_name != 'pull_request'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A -- \
+            data/processed/transport/nonroad_indicators_pa.csv \
+            data/processed/transport/nonroad_indicators_pa_audit.json \
+            data/processed/transport/nonroad_indicators_pa_error.txt \
+            data/processed/transport/nonroad_inputs_error.txt
+          git diff --cached --quiet || git commit -m "Store municipal non-road transport result"
+          git pull --rebase origin "${GITHUB_REF_NAME}"
+          git push origin "HEAD:${GITHUB_REF_NAME}"

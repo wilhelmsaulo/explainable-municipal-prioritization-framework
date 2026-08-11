@@ -15,8 +15,7 @@ RMA_URL = "https://aplicacoes.mds.gov.br/sagi/atendimento/adm/lista_preenchiment
 def _read_valid_tables(url: str, timeout: float = 120.0) -> list[pd.DataFrame]:
     headers = {
         "User-Agent": (
-            "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 "
-            "Chrome/126.0 Safari/537.36"
+            "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 Chrome/126.0 Safari/537.36"
         )
     }
     response = httpx.get(url, headers=headers, timeout=timeout, follow_redirects=True)
@@ -54,8 +53,7 @@ def _find_table(tables: list[pd.DataFrame], keyword: str) -> pd.DataFrame:
             return table
     previews = [_table_text(table)[:180] for table in tables]
     raise RuntimeError(
-        f"Unable to locate {keyword} table in RMA page. "
-        f"Available table previews: {previews}"
+        f"Unable to locate {keyword} table in RMA page. Available table previews: {previews}"
     )
 
 
@@ -78,7 +76,10 @@ def _normalize_table(table: pd.DataFrame, indicator: str) -> pd.DataFrame:
 
     result = pd.DataFrame(rows, columns=["municipality_code", indicator])
     result = result.drop_duplicates("municipality_code", keep="last")
-    print(f"RMA parsed {indicator}: municipalities={len(result)}, total={int(result[indicator].sum())}", flush=True)
+    print(
+        f"RMA parsed {indicator}: municipalities={len(result)}, total={int(result[indicator].sum())}",
+        flush=True,
+    )
     return result
 
 

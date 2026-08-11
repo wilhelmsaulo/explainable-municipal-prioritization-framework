@@ -1,0 +1,62 @@
+{
+  "schema_version": "1.0",
+  "dataset_id": "mapbiomas_road_network_2023",
+  "reference_year": 2023,
+  "source": {
+    "publisher": "MapBiomas Brasil",
+    "page": "https://brasil.mapbiomas.org/dados-de-infraestrutura/",
+    "provenance_note": "Secondary infrastructure compilation from institutional sources; not presented as a direct DNIT download."
+  },
+  "files": [
+    {
+      "role": "state_roads",
+      "filename": "rodovia-estadual.zip",
+      "url": "https://brasil.mapbiomas.org/wp-content/uploads/sites/4/2023/08/rodovia-estadual.zip",
+      "sha256": "364a070e9394a812b8eab3956c6056203decfde66d7771c679854d28d8b4fe05",
+      "bytes": 11870908,
+      "internal_file_date": "2023-08-23",
+      "feature_count": 32910,
+      "geometry_type": "LineString",
+      "crs": "SIRGAS 2000"
+    },
+    {
+      "role": "federal_roads",
+      "filename": "rodovia-federal.zip",
+      "url": "https://brasil.mapbiomas.org/wp-content/uploads/sites/4/2023/08/rodovia-federal.zip",
+      "sha256": "f507e9c2bdca50c1ee6814c07cd220c88e686c0aae2b88ca8baef0280d01ba94",
+      "bytes": 4256367,
+      "internal_file_date": "2023-08-23",
+      "feature_count": 14255,
+      "geometry_type": "LineString",
+      "crs": "SIRGAS 2000"
+    },
+    {
+      "role": "other_road_segments",
+      "filename": "outros-trechos.zip",
+      "url": "https://brasil.mapbiomas.org/wp-content/uploads/sites/4/2023/08/outros-trechos.zip",
+      "sha256": "7df6c217fe2ea6bbfd556863fe21a426003042ad774ac7c73bf38e41d58d1585",
+      "feature_count": 81197,
+      "geometry_type": "LineString"
+    }
+  ],
+  "validation": {
+    "zip_components": [
+      ".shp",
+      ".shx",
+      ".dbf",
+      ".prj"
+    ],
+    "national_extent": true,
+    "intended_use": "Clip to Para and derive municipal access to the structured federal and state road network.",
+    "limitation": "Does not claim complete coverage of municipal roads, local roads, or Amazonian rural branches."
+  },
+  "municipal_boundary": {
+    "role": "calculation_boundaries",
+    "filename": "PA_Municipios_2023.zip",
+    "url": "https://geoftp.ibge.gov.br/organizacao_do_territorio/malhas_territoriais/malhas_municipais/municipio_2023/UFs/PA/PA_Municipios_2023.zip",
+    "sha256": "0996ffd1b26928dfbd518f67339baa36fd860f50693c1c156f9b4d86fb77c7ad",
+    "reference_year": 2023,
+    "municipality_count": 144,
+    "note": "Used for geospatial indicator construction; the simplified 2022 mesh is visualization-only."
+  }
+}

@@ -70,7 +70,10 @@ def _walk_resources(value: Any) -> list[dict[str, Any]]:
             resources.append(
                 {
                     "url": url,
-                    "name": value.get("name") or value.get("title") or value.get("description") or "",
+                    "name": value.get("name")
+                    or value.get("title")
+                    or value.get("description")
+                    or "",
                     "description": value.get("description") or value.get("name") or "",
                     "format": value.get("format") or value.get("mediaType") or "",
                 }
@@ -160,7 +163,9 @@ def discover(timeout: float = 90.0) -> dict[str, dict[str, str]]:
         url = str(resource.get("url", "")).strip()
         if url:
             existing = unique.get(url)
-            if existing is None or len(str(resource.get("name", ""))) > len(str(existing.get("name", ""))):
+            if existing is None or len(str(resource.get("name", ""))) > len(
+                str(existing.get("name", ""))
+            ):
                 unique[url] = resource
     resources = list(unique.values())
     print(f"CADSUAS catalog resources discovered: {len(resources)}", flush=True)
@@ -193,7 +198,9 @@ def read_csv(content: bytes) -> pd.DataFrame:
     for encoding in ("utf-8-sig", "utf-8", "latin1"):
         for sep in (";", ",", "\t"):
             try:
-                frame = pd.read_csv(io.BytesIO(content), encoding=encoding, sep=sep, low_memory=False)
+                frame = pd.read_csv(
+                    io.BytesIO(content), encoding=encoding, sep=sep, low_memory=False
+                )
                 if len(frame.columns) >= 2:
                     return frame
             except Exception:
@@ -213,12 +220,16 @@ def municipal_series(frame: pd.DataFrame, indicator: str) -> pd.DataFrame:
         "profissionais_cras": "cadsuas_qtd_profissionais_cras_i",
         "profissionais_creas": "cadsuas_qtd_profissionais_creas_i",
     }
-    value = column(frame, value_names.get(indicator, indicator), indicator, "valor", "quantidade", "qtd")
+    value = column(
+        frame, value_names.get(indicator, indicator), indicator, "valor", "quantidade", "qtd"
+    )
     date_col = column(frame, "anomes", "ano_mes", "competencia")
     if code is None:
         raise RuntimeError(f"No municipality code in {indicator}: {list(frame.columns)}")
     if value is None:
-        candidates = [c for c in frame.columns if c != code and pd.api.types.is_numeric_dtype(frame[c])]
+        candidates = [
+            c for c in frame.columns if c != code and pd.api.types.is_numeric_dtype(frame[c])
+        ]
         if date_col in candidates:
             candidates.remove(date_col)
         if not candidates:
@@ -267,7 +278,11 @@ def collect_social_assistance_pa(
             response.raise_for_status()
             source = read_csv(response.content)
             series = municipal_series(source, indicator)
-            merged = series if merged is None else merged.merge(series, on="municipality_code", how="outer")
+            merged = (
+                series
+                if merged is None
+                else merged.merge(series, on="municipality_code", how="outer")
+            )
             provenance[indicator] = {
                 "resource_name": resource["name"],
                 "resource_url": resource["url"],
@@ -290,7 +305,9 @@ def collect_social_assistance_pa(
     for final_name in rename.values():
         if final_name not in result:
             result[final_name] = 0
-        result[final_name] = pd.to_numeric(result[final_name], errors="coerce").fillna(0).round().astype(int)
+        result[final_name] = (
+            pd.to_numeric(result[final_name], errors="coerce").fillna(0).round().astype(int)
+        )
     result["social_basic_protection_deficit"] = result["social_cras"].eq(0).astype(int)
     result["social_specialized_service_deficit"] = (
         result["social_creas"].eq(0).astype(int)

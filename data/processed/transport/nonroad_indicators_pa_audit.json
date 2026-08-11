@@ -1,0 +1,55 @@
+{
+  "sources": {
+    "ports": {
+      "path": "data/raw/transport/antaq/ports_2025.zip",
+      "sha256": "79e28332bdd031388a6f2305e4f1e2e741c057a64a63724ea4278f78a040fb63"
+    },
+    "crossings": {
+      "path": "data/raw/transport/antaq/crossings_2025.zip",
+      "sha256": "13a72f45a311168f8d57c50d261a3aa4b39c3188ee069617e572a76cd502d215"
+    },
+    "waterways": {
+      "path": "data/raw/transport/antaq/waterways_2022.zip",
+      "sha256": "a324b2af08d9fdea9ee45fcd20116a95851f39223efca97d4fb9b5d9c8738a2b"
+    },
+    "decea_airports": {
+      "path": "data/raw/transport/decea/airports_2026.zip",
+      "sha256": "c59b017849b4b98e16eb1ec954bf704f7a18f4daebc2caccc18d222bd024b150"
+    },
+    "municipalities": {
+      "path": "data/raw/transport/ibge/PA_Municipios_2023.zip",
+      "sha256": "0996ffd1b26928dfbd518f67339baa36fd860f50693c1c156f9b4d86fb77c7ad"
+    }
+  },
+  "reference_years": {
+    "ports_and_crossings": 2025,
+    "navigated_waterways": 2022,
+    "decea_airports": 2026,
+    "municipal_boundaries": 2023
+  },
+  "rows": 144,
+  "unique_municipality_codes": 144,
+  "totals": {
+    "ports": 297,
+    "decea_airports": 311,
+    "passenger_crossing_km": 19.333291,
+    "navigated_waterway_km": 3856.6205630000004,
+    "crossing_intersections": 14,
+    "waterway_intersections": 194
+  },
+  "checks": {
+    "rows_144": true,
+    "unique_codes_144": true,
+    "all_codes_para": true,
+    "no_missing_numeric": true,
+    "nonnegative_metrics": true,
+    "ports_present": true,
+    "waterways_present": true
+  },
+  "limitations": [
+    "Distances use a representative point inside each municipal polygon.",
+    "ANTAQ navigated-waterway geometry represents the published 2022 layer.",
+    "Aviation indicators use the official DECEA airport WFS layer.",
+    "No multimodal composite is calculated before indicator-level audit."
+  ]
+}

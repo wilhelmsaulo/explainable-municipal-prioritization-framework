@@ -1,0 +1,120 @@
+schema_version: "1.0"
+method_version: "1.1.0"
+
+study_scope:
+  territorial_unit: municipality
+  state: Pará
+  state_code: "15"
+  expected_municipalities: 144
+  expected_transport_scenarios: 12
+  municipality_key: municipality_code
+  selection_rule: all official municipalities in the fixed study area
+
+research_target: >-
+  Relative priority for strengthening municipal service capacity under
+  multimodal access constraints.
+
+inputs:
+  municipal_matrix: data/processed/integrated_municipal_matrix.csv
+  transport_scenarios: data/processed/transport/transport_multimodal_scenarios.csv
+
+outputs:
+  profiles: data/results/integrated_capacity_priority_profiles.csv
+  scenarios: data/results/integrated_capacity_priority_scenarios.csv
+  method: data/results/integrated_capacity_priority_method.json
+  audit: data/results/integrated_capacity_priority_audit.json
+
+normalization:
+  method: within_sample_percentile_rank
+  range: [0, 1]
+  ties: average
+  interpretation: higher values always mean greater strengthening priority
+
+dimensions:
+  institutional_deficit:
+    indicators:
+      - column: institutional_deficit_available_4
+        direction: benefit
+        transformation: observed_ratio
+        denominator_column: institutional_coverage
+        output_column: institutional_deficit_ratio
+  service_network:
+    aggregation: equal_component_mean
+    components:
+      health:
+        indicators:
+          - column: cnes_health_service_deficit
+            direction: benefit
+          - column: cnes_multidisciplinary_staff_deficit
+            direction: benefit
+      social_protection:
+        indicators:
+          - column: social_specialized_service_deficit
+            direction: benefit
+      justice:
+        indicators:
+          - column: justice_tjpa_access_deficit
+            direction: benefit
+      specialized_protection_network:
+        indicators:
+          - column: protection_network_validated_category_diversity
+            direction: cost
+          - column: protection_network_specialized_non_health_services
+            direction: cost
+  transport_barrier:
+    source_rule: one_minus_each_transport_access_scenario
+
+macro_weight_scenarios:
+  equal_dimensions:
+    institutional_deficit: 0.3333333333333333
+    service_network_deficit: 0.3333333333333333
+    transport_barrier: 0.3333333333333333
+  institutional_emphasis:
+    institutional_deficit: 0.50
+    service_network_deficit: 0.25
+    transport_barrier: 0.25
+  service_network_emphasis:
+    institutional_deficit: 0.25
+    service_network_deficit: 0.50
+    transport_barrier: 0.25
+  transport_emphasis:
+    institutional_deficit: 0.25
+    service_network_deficit: 0.25
+    transport_barrier: 0.50
+
+robustness:
+  quartile_fraction: 0.25
+  robust_frequency: 0.75
+  sensitive_frequency: 0.25
+  top_k: 10
+
+diagnostics:
+  reference_transport_scenario: equal_modes__equal_roles
+  reference_macro_weight_scenario: equal_dimensions
+  outputs:
+    correlations: data/results/capacity_dimension_correlations.csv
+    scenario_agreement: data/results/capacity_scenario_agreement.csv
+    municipality_explanations: data/results/capacity_municipality_explanations.csv
+    audit: data/results/capacity_diagnostics_audit.json
+
+input_audit:
+  outputs:
+    matrix: data/processed/capacity_framework_input_matrix.csv
+    profile: data/processed/capacity_framework_indicator_profile.csv
+    audit: data/processed/capacity_framework_input_audit.json
+
+exclusions:
+  outcomes:
+    - police occurrence counts
+    - police occurrence rates
+    - inferred or estimated hidden violence incidence
+  selection:
+    - municipality-specific manual adjustments
+    - post-result parameter tuning
+    - personalized municipality highlighting
+
+warnings:
+  - The scores are relative decision-support constructs, not ground truth.
+  - The model prioritizes capacity strengthening and does not estimate violence incidence or underreporting.
+  - Facility presence and mapped proximity do not measure service quality, capacity, frequency, affordability, travel time, or seasonality.
+  - Profile labels are exploratory robustness summaries and not automatic funding decisions.

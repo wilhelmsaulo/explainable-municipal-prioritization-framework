@@ -63,9 +63,7 @@ class DataSourceManager:
         *,
         description: str = "",
     ) -> None:
-        self.register(
-            DataSourceOperation(name=name, handler=handler, description=description)
-        )
+        self.register(DataSourceOperation(name=name, handler=handler, description=description))
 
     def run(self, name: str, *args: Any, **kwargs: Any) -> Any:
         normalized_name = self._normalize_name(name)
@@ -82,10 +80,7 @@ class DataSourceManager:
         return tuple(sorted(self._operations))
 
     def describe(self) -> dict[str, str]:
-        return {
-            name: self._operations[name].description
-            for name in self.names()
-        }
+        return {name: self._operations[name].description for name in self.names()}
 
     def __contains__(self, name: object) -> bool:
         return isinstance(name, str) and self._normalize_name(name) in self._operations

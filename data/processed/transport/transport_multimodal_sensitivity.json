@@ -1,0 +1,1520 @@
+{
+  "baseline": "equal_modes__equal_roles",
+  "scenario_count": 12,
+  "scenario_comparison": {
+    "equal_modes__equal_roles": {
+      "spearman_rank_vs_baseline": 1.0,
+      "top_10_overlap_with_baseline": 10,
+      "median_absolute_rank_shift": 0.0,
+      "maximum_absolute_rank_shift": 0
+    },
+    "equal_modes__availability_emphasis": {
+      "spearman_rank_vs_baseline": 0.9447234362037241,
+      "top_10_overlap_with_baseline": 10,
+      "median_absolute_rank_shift": 7.5,
+      "maximum_absolute_rank_shift": 41
+    },
+    "equal_modes__proximity_emphasis": {
+      "spearman_rank_vs_baseline": 0.9553317448315929,
+      "top_10_overlap_with_baseline": 9,
+      "median_absolute_rank_shift": 9.5,
+      "maximum_absolute_rank_shift": 31
+    },
+    "road_emphasis__equal_roles": {
+      "spearman_rank_vs_baseline": 0.887218024704605,
+      "top_10_overlap_with_baseline": 9,
+      "median_absolute_rank_shift": 12.0,
+      "maximum_absolute_rank_shift": 46
+    },
+    "road_emphasis__availability_emphasis": {
+      "spearman_rank_vs_baseline": 0.9319163354879131,
+      "top_10_overlap_with_baseline": 9,
+      "median_absolute_rank_shift": 7.0,
+      "maximum_absolute_rank_shift": 40
+    },
+    "road_emphasis__proximity_emphasis": {
+      "spearman_rank_vs_baseline": 0.8196641646963229,
+      "top_10_overlap_with_baseline": 9,
+      "median_absolute_rank_shift": 18.5,
+      "maximum_absolute_rank_shift": 51
+    },
+    "water_emphasis__equal_roles": {
+      "spearman_rank_vs_baseline": 0.9276199349902816,
+      "top_10_overlap_with_baseline": 8,
+      "median_absolute_rank_shift": 12.0,
+      "maximum_absolute_rank_shift": 42
+    },
+    "water_emphasis__availability_emphasis": {
+      "spearman_rank_vs_baseline": 0.8449706630622058,
+      "top_10_overlap_with_baseline": 6,
+      "median_absolute_rank_shift": 18.5,
+      "maximum_absolute_rank_shift": 52
+    },
+    "water_emphasis__proximity_emphasis": {
+      "spearman_rank_vs_baseline": 0.9137697657382573,
+      "top_10_overlap_with_baseline": 8,
+      "median_absolute_rank_shift": 14.0,
+      "maximum_absolute_rank_shift": 44
+    },
+    "air_emphasis__equal_roles": {
+      "spearman_rank_vs_baseline": 0.9159960002424196,
+      "top_10_overlap_with_baseline": 8,
+      "median_absolute_rank_shift": 12.0,
+      "maximum_absolute_rank_shift": 47
+    },
+    "air_emphasis__availability_emphasis": {
+      "spearman_rank_vs_baseline": 0.8417262909022512,
+      "top_10_overlap_with_baseline": 9,
+      "median_absolute_rank_shift": 11.5,
+      "maximum_absolute_rank_shift": 55
+    },
+    "air_emphasis__proximity_emphasis": {
+      "spearman_rank_vs_baseline": 0.9532838646240213,
+      "top_10_overlap_with_baseline": 8,
+      "median_absolute_rank_shift": 6.0,
+      "maximum_absolute_rank_shift": 45
+    }
+  },
+  "municipal_rank_stability": [
+    {
+      "municipality_code": "1501501",
+      "municipality": "Benevides",
+      "mean_rank": 1.0,
+      "minimum_rank": 1,
+      "maximum_rank": 1,
+      "rank_range": 0,
+      "mean_score": 0.8717948717948718,
+      "score_range": 0.08100233100233101
+    },
+    {
+      "municipality_code": "1502608",
+      "municipality": "Colares",
+      "mean_rank": 2.5833333333333335,
+      "minimum_rank": 2,
+      "maximum_rank": 4,
+      "rank_range": 2,
+      "mean_score": 0.7851592851592852,
+      "score_range": 0.08275058275058278
+    },
+    {
+      "municipality_code": "1506203",
+      "municipality": "Salinópolis",
+      "mean_rank": 4.166666666666667,
+      "minimum_rank": 2,
+      "maximum_rank": 6,
+      "rank_range": 4,
+      "mean_score": 0.7622377622377621,
+      "score_range": 0.14918414918414924
+    },
+    {
+      "municipality_code": "1500107",
+      "municipality": "Abaetetuba",
+      "mean_rank": 4.583333333333333,
+      "minimum_rank": 3,
+      "maximum_rank": 9,
+      "rank_range": 6,
+      "mean_score": 0.763791763791764,
+      "score_range": 0.11519036519036507
+    },
+    {
+      "municipality_code": "1506351",
+      "municipality": "Santa Bárbara do Pará",
+      "mean_rank": 4.583333333333333,
+      "minimum_rank": 2,
+      "maximum_rank": 8,
+      "rank_range": 6,
+      "mean_score": 0.7606837606837608,
+      "score_range": 0.18706293706293697
+    },
+    {
+      "municipality_code": "1502202",
+      "municipality": "Capanema",
+      "mean_rank": 7.916666666666667,
+      "minimum_rank": 2,
+      "maximum_rank": 27,
+      "rank_range": 25,
+      "mean_score": 0.7389277389277389,
+      "score_range": 0.23659673659673675
+    },
+    {
+      "municipality_code": "1500958",
+      "municipality": "Aurora do Pará",
+      "mean_rank": 8.083333333333334,
+      "minimum_rank": 6,
+      "maximum_rank": 11,
+      "rank_range": 5,
+      "mean_score": 0.7156177156177157,
+      "score_range": 0.13480963480963482
+    },
+    {
+      "municipality_code": "1506500",
+      "municipality": "Santa Izabel do Pará",
+      "mean_rank": 10.25,
+      "minimum_rank": 8,
+      "maximum_rank": 16,
+      "rank_range": 8,
+      "mean_score": 0.6989121989121988,
+      "score_range": 0.11868686868686862
+    },
+    {
+      "municipality_code": "1502400",
+      "municipality": "Castanhal",
+      "mean_rank": 10.333333333333334,
+      "minimum_rank": 5,
+      "maximum_rank": 29,
+      "rank_range": 24,
+      "mean_score": 0.7206682206682208,
+      "score_range": 0.22902097902097907
+    },
+    {
+      "municipality_code": "1502103",
+      "municipality": "Cametá",
+      "mean_rank": 11.583333333333334,
+      "minimum_rank": 4,
+      "maximum_rank": 19,
+      "rank_range": 15,
+      "mean_score": 0.6868686868686869,
+      "score_range": 0.08275058275058278
+    },
+    {
+      "municipality_code": "1501402",
+      "municipality": "Belém",
+      "mean_rank": 13.583333333333334,
+      "minimum_rank": 5,
+      "maximum_rank": 31,
+      "rank_range": 26,
+      "mean_score": 0.6857031857031858,
+      "score_range": 0.1554001554001554
+    },
+    {
+      "municipality_code": "1506583",
+      "municipality": "Santa Maria das Barreiras",
+      "mean_rank": 14.75,
+      "minimum_rank": 9,
+      "maximum_rank": 26,
+      "rank_range": 17,
+      "mean_score": 0.6705516705516704,
+      "score_range": 0.14335664335664333
+    },
+    {
+      "municipality_code": "1505502",
+      "municipality": "Paragominas",
+      "mean_rank": 16.5,
+      "minimum_rank": 10,
+      "maximum_rank": 27,
+      "rank_range": 17,
+      "mean_score": 0.6647241647241647,
+      "score_range": 0.16608391608391615
+    },
+    {
+      "municipality_code": "1505635",
+      "municipality": "Piçarra",
+      "mean_rank": 18.666666666666668,
+      "minimum_rank": 12,
+      "maximum_rank": 29,
+      "rank_range": 17,
+      "mean_score": 0.6542346542346542,
+      "score_range": 0.14801864801864806
+    },
+    {
+      "municipality_code": "1508407",
+      "municipality": "Xinguara",
+      "mean_rank": 22.0,
+      "minimum_rank": 15,
+      "maximum_rank": 40,
+      "rank_range": 25,
+      "mean_score": 0.6379176379176379,
+      "score_range": 0.15268065268065278
+    },
+    {
+      "municipality_code": "1507979",
+      "municipality": "Terra Santa",
+      "mean_rank": 22.75,
+      "minimum_rank": 16,
+      "maximum_rank": 39,
+      "rank_range": 23,
+      "mean_score": 0.6359751359751359,
+      "score_range": 0.14160839160839167
+    },
+    {
+      "municipality_code": "1503044",
+      "municipality": "Floresta do Araguaia",
+      "mean_rank": 23.0,
+      "minimum_rank": 7,
+      "maximum_rank": 48,
+      "rank_range": 41,
+      "mean_score": 0.634032634032634,
+      "score_range": 0.15306915306915303
+    },
+    {
+      "municipality_code": "1508100",
+      "municipality": "Tucuruí",
+      "mean_rank": 23.75,
+      "minimum_rank": 11,
+      "maximum_rank": 57,
+      "rank_range": 46,
+      "mean_score": 0.6344211344211345,
+      "score_range": 0.1814296814296814
+    },
+    {
+      "municipality_code": "1502301",
+      "municipality": "Capitão Poço",
+      "mean_rank": 25.333333333333332,
+      "minimum_rank": 12,
+      "maximum_rank": 47,
+      "rank_range": 35,
+      "mean_score": 0.618104118104118,
+      "score_range": 0.1664724164724165
+    },
+    {
+      "municipality_code": "1503457",
+      "municipality": "Ipixuna do Pará",
+      "mean_rank": 25.416666666666668,
+      "minimum_rank": 11,
+      "maximum_rank": 50,
+      "rank_range": 39,
+      "mean_score": 0.6208236208236207,
+      "score_range": 0.2027972027972027
+    },
+    {
+      "municipality_code": "1507755",
+      "municipality": "Sapucaia",
+      "mean_rank": 26.416666666666668,
+      "minimum_rank": 15,
+      "maximum_rank": 56,
+      "rank_range": 41,
+      "mean_score": 0.6204351204351204,
+      "score_range": 0.2127039627039627
+    },
+    {
+      "municipality_code": "1501303",
+      "municipality": "Barcarena",
+      "mean_rank": 28.75,
+      "minimum_rank": 9,
+      "maximum_rank": 69,
+      "rank_range": 60,
+      "mean_score": 0.6048951048951049,
+      "score_range": 0.2198912198912199
+    },
+    {
+      "municipality_code": "1507003",
+      "municipality": "Santo Antônio do Tauá",
+      "mean_rank": 29.666666666666668,
+      "minimum_rank": 8,
+      "maximum_rank": 70,
+      "rank_range": 62,
+      "mean_score": 0.6041181041181042,
+      "score_range": 0.26981351981351975
+    },
+    {
+      "municipality_code": "1506161",
+      "municipality": "Rio Maria",
+      "mean_rank": 29.916666666666668,
+      "minimum_rank": 14,
+      "maximum_rank": 59,
+      "rank_range": 45,
+      "mean_score": 0.6091686091686092,
+      "score_range": 0.2319347319347319
+    },
+    {
+      "municipality_code": "1506005",
+      "municipality": "Prainha",
+      "mean_rank": 30.5,
+      "minimum_rank": 10,
+      "maximum_rank": 69,
+      "rank_range": 59,
+      "mean_score": 0.6138306138306138,
+      "score_range": 0.1864801864801865
+    },
+    {
+      "municipality_code": "1503408",
+      "municipality": "Inhangapi",
+      "mean_rank": 31.166666666666668,
+      "minimum_rank": 13,
+      "maximum_rank": 68,
+      "rank_range": 55,
+      "mean_score": 0.5928515928515928,
+      "score_range": 0.17016317016317012
+    },
+    {
+      "municipality_code": "1508308",
+      "municipality": "Viseu",
+      "mean_rank": 31.916666666666668,
+      "minimum_rank": 15,
+      "maximum_rank": 56,
+      "rank_range": 41,
+      "mean_score": 0.6010101010101009,
+      "score_range": 0.13170163170163174
+    },
+    {
+      "municipality_code": "1507508",
+      "municipality": "São João do Araguaia",
+      "mean_rank": 32.666666666666664,
+      "minimum_rank": 12,
+      "maximum_rank": 71,
+      "rank_range": 59,
+      "mean_score": 0.6017871017871017,
+      "score_range": 0.16977466977466982
+    },
+    {
+      "municipality_code": "1507607",
+      "municipality": "São Miguel do Guamá",
+      "mean_rank": 33.916666666666664,
+      "minimum_rank": 10,
+      "maximum_rank": 77,
+      "rank_range": 67,
+      "mean_score": 0.5874125874125873,
+      "score_range": 0.24844599844599846
+    },
+    {
+      "municipality_code": "1501600",
+      "municipality": "Bonito",
+      "mean_rank": 34.25,
+      "minimum_rank": 13,
+      "maximum_rank": 76,
+      "rank_range": 63,
+      "mean_score": 0.5827505827505827,
+      "score_range": 0.2451437451437451
+    },
+    {
+      "municipality_code": "1504703",
+      "municipality": "Moju",
+      "mean_rank": 34.916666666666664,
+      "minimum_rank": 17,
+      "maximum_rank": 63,
+      "rank_range": 46,
+      "mean_score": 0.5920745920745921,
+      "score_range": 0.1437451437451437
+    },
+    {
+      "municipality_code": "1505494",
+      "municipality": "Palestina do Pará",
+      "mean_rank": 35.583333333333336,
+      "minimum_rank": 29,
+      "maximum_rank": 49,
+      "rank_range": 20,
+      "mean_score": 0.5831390831390831,
+      "score_range": 0.10780885780885785
+    },
+    {
+      "municipality_code": "1506195",
+      "municipality": "Rurópolis",
+      "mean_rank": 35.75,
+      "minimum_rank": 16,
+      "maximum_rank": 63,
+      "rank_range": 47,
+      "mean_score": 0.5928515928515928,
+      "score_range": 0.18900543900543887
+    },
+    {
+      "municipality_code": "1506906",
+      "municipality": "Santarém Novo",
+      "mean_rank": 38.583333333333336,
+      "minimum_rank": 15,
+      "maximum_rank": 78,
+      "rank_range": 63,
+      "mean_score": 0.5687645687645687,
+      "score_range": 0.24747474747474763
+    },
+    {
+      "municipality_code": "1503606",
+      "municipality": "Itaituba",
+      "mean_rank": 40.083333333333336,
+      "minimum_rank": 8,
+      "maximum_rank": 74,
+      "rank_range": 66,
+      "mean_score": 0.5784770784770784,
+      "score_range": 0.17637917637917644
+    },
+    {
+      "municipality_code": "1504208",
+      "municipality": "Marabá",
+      "mean_rank": 41.166666666666664,
+      "minimum_rank": 21,
+      "maximum_rank": 81,
+      "rank_range": 60,
+      "mean_score": 0.5753690753690756,
+      "score_range": 0.1946386946386946
+    },
+    {
+      "municipality_code": "1504422",
+      "municipality": "Marituba",
+      "mean_rank": 41.583333333333336,
+      "minimum_rank": 23,
+      "maximum_rank": 75,
+      "rank_range": 52,
+      "mean_score": 0.559052059052059,
+      "score_range": 0.1738539238539238
+    },
+    {
+      "municipality_code": "1506138",
+      "municipality": "Redenção",
+      "mean_rank": 43.083333333333336,
+      "minimum_rank": 22,
+      "maximum_rank": 73,
+      "rank_range": 51,
+      "mean_score": 0.5648795648795649,
+      "score_range": 0.21153846153846145
+    },
+    {
+      "municipality_code": "1506708",
+      "municipality": "Santana do Araguaia",
+      "mean_rank": 43.083333333333336,
+      "minimum_rank": 25,
+      "maximum_rank": 66,
+      "rank_range": 41,
+      "mean_score": 0.5644910644910645,
+      "score_range": 0.15209790209790208
+    },
+    {
+      "municipality_code": "1501451",
+      "municipality": "Belterra",
+      "mean_rank": 43.75,
+      "minimum_rank": 27,
+      "maximum_rank": 68,
+      "rank_range": 41,
+      "mean_score": 0.5567210567210567,
+      "score_range": 0.10936285936285939
+    },
+    {
+      "municipality_code": "1506302",
+      "municipality": "Salvaterra",
+      "mean_rank": 45.083333333333336,
+      "minimum_rank": 24,
+      "maximum_rank": 80,
+      "rank_range": 56,
+      "mean_score": 0.5485625485625486,
+      "score_range": 0.18123543123543118
+    },
+    {
+      "municipality_code": "1502772",
+      "municipality": "Curionópolis",
+      "mean_rank": 48.0,
+      "minimum_rank": 30,
+      "maximum_rank": 78,
+      "rank_range": 48,
+      "mean_score": 0.548951048951049,
+      "score_range": 0.1998834498834498
+    },
+    {
+      "municipality_code": "1508126",
+      "municipality": "Ulianópolis",
+      "mean_rank": 51.166666666666664,
+      "minimum_rank": 27,
+      "maximum_rank": 84,
+      "rank_range": 57,
+      "mean_score": 0.5431235431235429,
+      "score_range": 0.2214452214452215
+    },
+    {
+      "municipality_code": "1506559",
+      "municipality": "Santa Luzia do Pará",
+      "mean_rank": 51.833333333333336,
+      "minimum_rank": 28,
+      "maximum_rank": 70,
+      "rank_range": 42,
+      "mean_score": 0.5396270396270396,
+      "score_range": 0.18822843822843816
+    },
+    {
+      "municipality_code": "1508209",
+      "municipality": "Vigia",
+      "mean_rank": 53.083333333333336,
+      "minimum_rank": 22,
+      "maximum_rank": 87,
+      "rank_range": 65,
+      "mean_score": 0.5174825174825175,
+      "score_range": 0.2657342657342658
+    },
+    {
+      "municipality_code": "1505700",
+      "municipality": "Ponta de Pedras",
+      "mean_rank": 53.666666666666664,
+      "minimum_rank": 30,
+      "maximum_rank": 95,
+      "rank_range": 65,
+      "mean_score": 0.5330225330225329,
+      "score_range": 0.20415695415695412
+    },
+    {
+      "municipality_code": "1505007",
+      "municipality": "Nova Timboteua",
+      "mean_rank": 54.083333333333336,
+      "minimum_rank": 18,
+      "maximum_rank": 86,
+      "rank_range": 68,
+      "mean_score": 0.5155400155400156,
+      "score_range": 0.2797202797202797
+    },
+    {
+      "municipality_code": "1507953",
+      "municipality": "Tailândia",
+      "mean_rank": 56.75,
+      "minimum_rank": 29,
+      "maximum_rank": 80,
+      "rank_range": 51,
+      "mean_score": 0.5271950271950271,
+      "score_range": 0.20629370629370625
+    },
+    {
+      "municipality_code": "1501907",
+      "municipality": "Bujaru",
+      "mean_rank": 57.75,
+      "minimum_rank": 33,
+      "maximum_rank": 90,
+      "rank_range": 57,
+      "mean_score": 0.5066045066045065,
+      "score_range": 0.18414918414918413
+    },
+    {
+      "municipality_code": "1507201",
+      "municipality": "São Domingos do Capim",
+      "mean_rank": 57.833333333333336,
+      "minimum_rank": 31,
+      "maximum_rank": 89,
+      "rank_range": 58,
+      "mean_score": 0.5073815073815074,
+      "score_range": 0.159090909090909
+    },
+    {
+      "municipality_code": "1507409",
+      "municipality": "São Francisco do Pará",
+      "mean_rank": 58.0,
+      "minimum_rank": 21,
+      "maximum_rank": 91,
+      "rank_range": 70,
+      "mean_score": 0.506993006993007,
+      "score_range": 0.2773892773892773
+    },
+    {
+      "municipality_code": "1502707",
+      "municipality": "Conceição do Araguaia",
+      "mean_rank": 58.083333333333336,
+      "minimum_rank": 42,
+      "maximum_rank": 83,
+      "rank_range": 41,
+      "mean_score": 0.5221445221445221,
+      "score_range": 0.1365578865578866
+    },
+    {
+      "municipality_code": "1508357",
+      "municipality": "Vitória do Xingu",
+      "mean_rank": 59.083333333333336,
+      "minimum_rank": 19,
+      "maximum_rank": 87,
+      "rank_range": 68,
+      "mean_score": 0.5112665112665112,
+      "score_range": 0.2092074592074592
+    },
+    {
+      "municipality_code": "1505064",
+      "municipality": "Novo Repartimento",
+      "mean_rank": 59.75,
+      "minimum_rank": 40,
+      "maximum_rank": 85,
+      "rank_range": 45,
+      "mean_score": 0.5155400155400155,
+      "score_range": 0.1625874125874126
+    },
+    {
+      "municipality_code": "1503507",
+      "municipality": "Irituia",
+      "mean_rank": 60.416666666666664,
+      "minimum_rank": 40,
+      "maximum_rank": 85,
+      "rank_range": 45,
+      "mean_score": 0.5000000000000001,
+      "score_range": 0.16414141414141414
+    },
+    {
+      "municipality_code": "1501253",
+      "municipality": "Bannach",
+      "mean_rank": 60.75,
+      "minimum_rank": 36,
+      "maximum_rank": 92,
+      "rank_range": 56,
+      "mean_score": 0.5174825174825175,
+      "score_range": 0.2156177156177156
+    },
+    {
+      "municipality_code": "1505403",
+      "municipality": "Ourém",
+      "mean_rank": 62.666666666666664,
+      "minimum_rank": 27,
+      "maximum_rank": 96,
+      "rank_range": 69,
+      "mean_score": 0.49533799533799533,
+      "score_range": 0.2564102564102564
+    },
+    {
+      "municipality_code": "1501782",
+      "municipality": "Breu Branco",
+      "mean_rank": 63.083333333333336,
+      "minimum_rank": 42,
+      "maximum_rank": 90,
+      "rank_range": 48,
+      "mean_score": 0.4941724941724941,
+      "score_range": 0.21775446775446772
+    },
+    {
+      "municipality_code": "1504307",
+      "municipality": "Maracanã",
+      "mean_rank": 63.25,
+      "minimum_rank": 25,
+      "maximum_rank": 99,
+      "rank_range": 74,
+      "mean_score": 0.4945609945609945,
+      "score_range": 0.26981351981351975
+    },
+    {
+      "municipality_code": "1500800",
+      "municipality": "Ananindeua",
+      "mean_rank": 63.5,
+      "minimum_rank": 30,
+      "maximum_rank": 102,
+      "rank_range": 72,
+      "mean_score": 0.4957264957264957,
+      "score_range": 0.1893939393939394
+    },
+    {
+      "municipality_code": "1508001",
+      "municipality": "Tomé-Açu",
+      "mean_rank": 63.583333333333336,
+      "minimum_rank": 39,
+      "maximum_rank": 87,
+      "rank_range": 48,
+      "mean_score": 0.508158508158508,
+      "score_range": 0.18881118881118886
+    },
+    {
+      "municipality_code": "1507904",
+      "municipality": "Soure",
+      "mean_rank": 63.666666666666664,
+      "minimum_rank": 34,
+      "maximum_rank": 104,
+      "rank_range": 70,
+      "mean_score": 0.5066045066045065,
+      "score_range": 0.22843822843822836
+    },
+    {
+      "municipality_code": "1505809",
+      "municipality": "Portel",
+      "mean_rank": 64.5,
+      "minimum_rank": 32,
+      "maximum_rank": 105,
+      "rank_range": 73,
+      "mean_score": 0.5034965034965034,
+      "score_range": 0.22940947940947942
+    },
+    {
+      "municipality_code": "1502004",
+      "municipality": "Cachoeira do Arari",
+      "mean_rank": 65.91666666666667,
+      "minimum_rank": 41,
+      "maximum_rank": 97,
+      "rank_range": 56,
+      "mean_score": 0.5011655011655012,
+      "score_range": 0.1767676767676768
+    },
+    {
+      "municipality_code": "1502905",
+      "municipality": "Curuçá",
+      "mean_rank": 66.83333333333333,
+      "minimum_rank": 36,
+      "maximum_rank": 104,
+      "rank_range": 68,
+      "mean_score": 0.47979797979797983,
+      "score_range": 0.26010101010101
+    },
+    {
+      "municipality_code": "1507474",
+      "municipality": "São João de Pirabas",
+      "mean_rank": 67.16666666666667,
+      "minimum_rank": 33,
+      "maximum_rank": 109,
+      "rank_range": 76,
+      "mean_score": 0.4867909867909867,
+      "score_range": 0.2645687645687645
+    },
+    {
+      "municipality_code": "1501709",
+      "municipality": "Bragança",
+      "mean_rank": 67.33333333333333,
+      "minimum_rank": 38,
+      "maximum_rank": 99,
+      "rank_range": 61,
+      "mean_score": 0.480963480963481,
+      "score_range": 0.25660450660450657
+    },
+    {
+      "municipality_code": "1503093",
+      "municipality": "Goianésia do Pará",
+      "mean_rank": 67.58333333333333,
+      "minimum_rank": 41,
+      "maximum_rank": 99,
+      "rank_range": 58,
+      "mean_score": 0.4972804972804972,
+      "score_range": 0.1891996891996891
+    },
+    {
+      "municipality_code": "1505908",
+      "municipality": "Porto de Moz",
+      "mean_rank": 67.83333333333333,
+      "minimum_rank": 35,
+      "maximum_rank": 110,
+      "rank_range": 75,
+      "mean_score": 0.4941724941724941,
+      "score_range": 0.24339549339549338
+    },
+    {
+      "municipality_code": "1507102",
+      "municipality": "São Caetano de Odivelas",
+      "mean_rank": 68.5,
+      "minimum_rank": 24,
+      "maximum_rank": 105,
+      "rank_range": 81,
+      "mean_score": 0.47863247863247865,
+      "score_range": 0.2871017871017871
+    },
+    {
+      "municipality_code": "1500503",
+      "municipality": "Almeirim",
+      "mean_rank": 68.75,
+      "minimum_rank": 22,
+      "maximum_rank": 117,
+      "rank_range": 95,
+      "mean_score": 0.4891219891219892,
+      "score_range": 0.32128982128982125
+    },
+    {
+      "municipality_code": "1504604",
+      "municipality": "Mocajuba",
+      "mean_rank": 71.83333333333333,
+      "minimum_rank": 54,
+      "maximum_rank": 91,
+      "rank_range": 37,
+      "mean_score": 0.47202797202797203,
+      "score_range": 0.15598290598290604
+    },
+    {
+      "municipality_code": "1506609",
+      "municipality": "Santa Maria do Pará",
+      "mean_rank": 71.83333333333333,
+      "minimum_rank": 33,
+      "maximum_rank": 102,
+      "rank_range": 69,
+      "mean_score": 0.47047397047397044,
+      "score_range": 0.26787101787101786
+    },
+    {
+      "municipality_code": "1504059",
+      "municipality": "Mãe do Rio",
+      "mean_rank": 73.16666666666667,
+      "minimum_rank": 41,
+      "maximum_rank": 101,
+      "rank_range": 60,
+      "mean_score": 0.46814296814296813,
+      "score_range": 0.2544677544677545
+    },
+    {
+      "municipality_code": "1507961",
+      "municipality": "Terra Alta",
+      "mean_rank": 74.58333333333333,
+      "minimum_rank": 37,
+      "maximum_rank": 106,
+      "rank_range": 69,
+      "mean_score": 0.4658119658119657,
+      "score_range": 0.2527195027195027
+    },
+    {
+      "municipality_code": "1503705",
+      "municipality": "Itupiranga",
+      "mean_rank": 74.66666666666667,
+      "minimum_rank": 53,
+      "maximum_rank": 103,
+      "rank_range": 50,
+      "mean_score": 0.4638694638694638,
+      "score_range": 0.20182595182595192
+    },
+    {
+      "municipality_code": "1505650",
+      "municipality": "Placas",
+      "mean_rank": 75.08333333333333,
+      "minimum_rank": 49,
+      "maximum_rank": 99,
+      "rank_range": 50,
+      "mean_score": 0.47552447552447547,
+      "score_range": 0.19580419580419584
+    },
+    {
+      "municipality_code": "1505601",
+      "municipality": "Peixe-Boi",
+      "mean_rank": 76.16666666666667,
+      "minimum_rank": 54,
+      "maximum_rank": 108,
+      "rank_range": 54,
+      "mean_score": 0.4662004662004661,
+      "score_range": 0.19580419580419578
+    },
+    {
+      "municipality_code": "1503903",
+      "municipality": "Juruti",
+      "mean_rank": 76.41666666666667,
+      "minimum_rank": 37,
+      "maximum_rank": 111,
+      "rank_range": 74,
+      "mean_score": 0.4634809634809634,
+      "score_range": 0.20629370629370625
+    },
+    {
+      "municipality_code": "1506104",
+      "municipality": "Primavera",
+      "mean_rank": 78.0,
+      "minimum_rank": 46,
+      "maximum_rank": 103,
+      "rank_range": 57,
+      "mean_score": 0.45804195804195796,
+      "score_range": 0.2354312354312354
+    },
+    {
+      "municipality_code": "1508035",
+      "municipality": "Tracuateua",
+      "mean_rank": 78.66666666666667,
+      "minimum_rank": 32,
+      "maximum_rank": 114,
+      "rank_range": 82,
+      "mean_score": 0.45454545454545453,
+      "score_range": 0.3036130536130537
+    },
+    {
+      "municipality_code": "1500206",
+      "municipality": "Acará",
+      "mean_rank": 79.25,
+      "minimum_rank": 51,
+      "maximum_rank": 95,
+      "rank_range": 44,
+      "mean_score": 0.45337995337995335,
+      "score_range": 0.1503496503496503
+    },
+    {
+      "municipality_code": "1505486",
+      "municipality": "Pacajá",
+      "mean_rank": 81.66666666666667,
+      "minimum_rank": 44,
+      "maximum_rank": 105,
+      "rank_range": 61,
+      "mean_score": 0.45998445998446,
+      "score_range": 0.20629370629370625
+    },
+    {
+      "municipality_code": "1504976",
+      "municipality": "Nova Ipixuna",
+      "mean_rank": 81.83333333333333,
+      "minimum_rank": 44,
+      "maximum_rank": 105,
+      "rank_range": 61,
+      "mean_score": 0.4456099456099456,
+      "score_range": 0.2062937062937063
+    },
+    {
+      "municipality_code": "1508050",
+      "municipality": "Trairão",
+      "mean_rank": 82.0,
+      "minimum_rank": 61,
+      "maximum_rank": 101,
+      "rank_range": 40,
+      "mean_score": 0.44832944832944827,
+      "score_range": 0.1285936285936286
+    },
+    {
+      "municipality_code": "1502756",
+      "municipality": "Concórdia do Pará",
+      "mean_rank": 82.41666666666667,
+      "minimum_rank": 55,
+      "maximum_rank": 107,
+      "rank_range": 52,
+      "mean_score": 0.44755244755244755,
+      "score_range": 0.20745920745920748
+    },
+    {
+      "municipality_code": "1503200",
+      "municipality": "Igarapé-Açu",
+      "mean_rank": 82.91666666666667,
+      "minimum_rank": 44,
+      "maximum_rank": 110,
+      "rank_range": 66,
+      "mean_score": 0.44483294483294483,
+      "score_range": 0.2591297591297592
+    },
+    {
+      "municipality_code": "1502509",
+      "municipality": "Chaves",
+      "mean_rank": 83.16666666666667,
+      "minimum_rank": 44,
+      "maximum_rank": 119,
+      "rank_range": 75,
+      "mean_score": 0.43842268842268844,
+      "score_range": 0.25874125874125875
+    },
+    {
+      "municipality_code": "1502939",
+      "municipality": "Dom Eliseu",
+      "mean_rank": 83.25,
+      "minimum_rank": 56,
+      "maximum_rank": 111,
+      "rank_range": 55,
+      "mean_score": 0.4487179487179487,
+      "score_range": 0.17948717948717952
+    },
+    {
+      "municipality_code": "1506807",
+      "municipality": "Santarém",
+      "mean_rank": 83.33333333333333,
+      "minimum_rank": 41,
+      "maximum_rank": 115,
+      "rank_range": 74,
+      "mean_score": 0.44094794094794093,
+      "score_range": 0.2344599844599845
+    },
+    {
+      "municipality_code": "1502764",
+      "municipality": "Cumaru do Norte",
+      "mean_rank": 85.83333333333333,
+      "minimum_rank": 39,
+      "maximum_rank": 114,
+      "rank_range": 75,
+      "mean_score": 0.45104895104895104,
+      "score_range": 0.2377622377622377
+    },
+    {
+      "municipality_code": "1500859",
+      "municipality": "Anapu",
+      "mean_rank": 87.16666666666667,
+      "minimum_rank": 43,
+      "maximum_rank": 118,
+      "rank_range": 75,
+      "mean_score": 0.4296814296814297,
+      "score_range": 0.23076923076923073
+    },
+    {
+      "municipality_code": "1506112",
+      "municipality": "Quatipuru",
+      "mean_rank": 87.75,
+      "minimum_rank": 68,
+      "maximum_rank": 107,
+      "rank_range": 39,
+      "mean_score": 0.43006993006993,
+      "score_range": 0.18045843045843046
+    },
+    {
+      "municipality_code": "1502152",
+      "municipality": "Canaã dos Carajás",
+      "mean_rank": 91.25,
+      "minimum_rank": 60,
+      "maximum_rank": 116,
+      "rank_range": 56,
+      "mean_score": 0.42579642579642574,
+      "score_range": 0.17540792540792538
+    },
+    {
+      "municipality_code": "1506187",
+      "municipality": "Rondon do Pará",
+      "mean_rank": 91.75,
+      "minimum_rank": 63,
+      "maximum_rank": 114,
+      "rank_range": 51,
+      "mean_score": 0.42035742035742035,
+      "score_range": 0.15617715617715622
+    },
+    {
+      "municipality_code": "1507300",
+      "municipality": "São Félix do Xingu",
+      "mean_rank": 92.91666666666667,
+      "minimum_rank": 55,
+      "maximum_rank": 126,
+      "rank_range": 71,
+      "mean_score": 0.41491841491841486,
+      "score_range": 0.2331002331002331
+    },
+    {
+      "municipality_code": "1501808",
+      "municipality": "Breves",
+      "mean_rank": 93.41666666666667,
+      "minimum_rank": 54,
+      "maximum_rank": 120,
+      "rank_range": 66,
+      "mean_score": 0.4079254079254078,
+      "score_range": 0.23989898989898983
+    },
+    {
+      "municipality_code": "1501956",
+      "municipality": "Cachoeira do Piriá",
+      "mean_rank": 94.0,
+      "minimum_rank": 63,
+      "maximum_rank": 118,
+      "rank_range": 55,
+      "mean_score": 0.40792540792540793,
+      "score_range": 0.15617715617715622
+    },
+    {
+      "municipality_code": "1503077",
+      "municipality": "Garrafão do Norte",
+      "mean_rank": 94.58333333333333,
+      "minimum_rank": 52,
+      "maximum_rank": 121,
+      "rank_range": 69,
+      "mean_score": 0.4102564102564102,
+      "score_range": 0.26515151515151514
+    },
+    {
+      "municipality_code": "1504109",
+      "municipality": "Magalhães Barata",
+      "mean_rank": 94.66666666666667,
+      "minimum_rank": 62,
+      "maximum_rank": 118,
+      "rank_range": 56,
+      "mean_score": 0.4106449106449106,
+      "score_range": 0.21348096348096346
+    },
+    {
+      "municipality_code": "1504802",
+      "municipality": "Monte Alegre",
+      "mean_rank": 95.83333333333333,
+      "minimum_rank": 52,
+      "maximum_rank": 123,
+      "rank_range": 71,
+      "mean_score": 0.4020979020979021,
+      "score_range": 0.25621600621600626
+    },
+    {
+      "municipality_code": "1503804",
+      "municipality": "Jacundá",
+      "mean_rank": 95.91666666666667,
+      "minimum_rank": 80,
+      "maximum_rank": 113,
+      "rank_range": 33,
+      "mean_score": 0.4075369075369076,
+      "score_range": 0.1785159285159285
+    },
+    {
+      "municipality_code": "1502855",
+      "municipality": "Curuá",
+      "mean_rank": 96.75,
+      "minimum_rank": 73,
+      "maximum_rank": 116,
+      "rank_range": 43,
+      "mean_score": 0.40404040404040403,
+      "score_range": 0.1713286713286713
+    },
+    {
+      "municipality_code": "1502954",
+      "municipality": "Eldorado do Carajás",
+      "mean_rank": 97.08333333333333,
+      "minimum_rank": 51,
+      "maximum_rank": 123,
+      "rank_range": 72,
+      "mean_score": 0.4052059052059052,
+      "score_range": 0.27195027195027194
+    },
+    {
+      "municipality_code": "1505551",
+      "municipality": "Pau D'Arco",
+      "mean_rank": 99.75,
+      "minimum_rank": 75,
+      "maximum_rank": 126,
+      "rank_range": 51,
+      "mean_score": 0.3993783993783993,
+      "score_range": 0.2068764568764569
+    },
+    {
+      "municipality_code": "1501758",
+      "municipality": "Brejo Grande do Araguaia",
+      "mean_rank": 100.83333333333333,
+      "minimum_rank": 64,
+      "maximum_rank": 129,
+      "rank_range": 65,
+      "mean_score": 0.3927738927738927,
+      "score_range": 0.24184149184149184
+    },
+    {
+      "municipality_code": "1507805",
+      "municipality": "Senador José Porfírio",
+      "mean_rank": 103.41666666666667,
+      "minimum_rank": 62,
+      "maximum_rank": 130,
+      "rank_range": 68,
+      "mean_score": 0.3733488733488733,
+      "score_range": 0.26126651126651124
+    },
+    {
+      "municipality_code": "1500909",
+      "municipality": "Augusto Corrêa",
+      "mean_rank": 103.5,
+      "minimum_rank": 88,
+      "maximum_rank": 126,
+      "rank_range": 38,
+      "mean_score": 0.37606837606837606,
+      "score_range": 0.15792540792540788
+    },
+    {
+      "municipality_code": "1503754",
+      "municipality": "Jacareacanga",
+      "mean_rank": 104.0,
+      "minimum_rank": 59,
+      "maximum_rank": 129,
+      "rank_range": 70,
+      "mean_score": 0.3741258741258741,
+      "score_range": 0.26884226884226886
+    },
+    {
+      "municipality_code": "1504406",
+      "municipality": "Marapanim",
+      "mean_rank": 106.0,
+      "minimum_rank": 80,
+      "maximum_rank": 124,
+      "rank_range": 44,
+      "mean_score": 0.3752913752913753,
+      "score_range": 0.21678321678321677
+    },
+    {
+      "municipality_code": "1505106",
+      "municipality": "Óbidos",
+      "mean_rank": 106.25,
+      "minimum_rank": 64,
+      "maximum_rank": 134,
+      "rank_range": 70,
+      "mean_score": 0.36130536130536123,
+      "score_range": 0.2929292929292929
+    },
+    {
+      "municipality_code": "1508084",
+      "municipality": "Tucumã",
+      "mean_rank": 107.0,
+      "minimum_rank": 78,
+      "maximum_rank": 131,
+      "rank_range": 53,
+      "mean_score": 0.37373737373737376,
+      "score_range": 0.22261072261072257
+    },
+    {
+      "municipality_code": "1500404",
+      "municipality": "Alenquer",
+      "mean_rank": 107.16666666666667,
+      "minimum_rank": 65,
+      "maximum_rank": 133,
+      "rank_range": 68,
+      "mean_score": 0.3578088578088578,
+      "score_range": 0.28885003885003874
+    },
+    {
+      "municipality_code": "1505205",
+      "municipality": "Oeiras do Pará",
+      "mean_rank": 108.16666666666667,
+      "minimum_rank": 82,
+      "maximum_rank": 125,
+      "rank_range": 43,
+      "mean_score": 0.36402486402486395,
+      "score_range": 0.1583139083139083
+    },
+    {
+      "municipality_code": "1504505",
+      "municipality": "Melgaço",
+      "mean_rank": 109.25,
+      "minimum_rank": 71,
+      "maximum_rank": 130,
+      "rank_range": 59,
+      "mean_score": 0.35411810411810407,
+      "score_range": 0.2086247086247086
+    },
+    {
+      "municipality_code": "1507466",
+      "municipality": "São João da Ponta",
+      "mean_rank": 109.5,
+      "minimum_rank": 90,
+      "maximum_rank": 128,
+      "rank_range": 38,
+      "mean_score": 0.36674436674436667,
+      "score_range": 0.18570318570318572
+    },
+    {
+      "municipality_code": "1501725",
+      "municipality": "Brasil Novo",
+      "mean_rank": 110.5,
+      "minimum_rank": 87,
+      "maximum_rank": 135,
+      "rank_range": 48,
+      "mean_score": 0.3578088578088578,
+      "score_range": 0.21503496503496503
+    },
+    {
+      "municipality_code": "1507458",
+      "municipality": "São Geraldo do Araguaia",
+      "mean_rank": 111.33333333333333,
+      "minimum_rank": 100,
+      "maximum_rank": 120,
+      "rank_range": 20,
+      "mean_score": 0.3547008547008547,
+      "score_range": 0.12354312354312352
+    },
+    {
+      "municipality_code": "1504752",
+      "municipality": "Mojuí dos Campos",
+      "mean_rank": 112.75,
+      "minimum_rank": 72,
+      "maximum_rank": 132,
+      "rank_range": 60,
+      "mean_score": 0.3512043512043512,
+      "score_range": 0.2659285159285159
+    },
+    {
+      "municipality_code": "1505437",
+      "municipality": "Ourilândia do Norte",
+      "mean_rank": 113.58333333333333,
+      "minimum_rank": 67,
+      "maximum_rank": 135,
+      "rank_range": 68,
+      "mean_score": 0.34071484071484076,
+      "score_range": 0.21620046620046612
+    },
+    {
+      "municipality_code": "1505536",
+      "municipality": "Parauapebas",
+      "mean_rank": 117.41666666666667,
+      "minimum_rank": 73,
+      "maximum_rank": 137,
+      "rank_range": 64,
+      "mean_score": 0.32867132867132864,
+      "score_range": 0.20221445221445222
+    },
+    {
+      "municipality_code": "1505304",
+      "municipality": "Oriximiná",
+      "mean_rank": 117.75,
+      "minimum_rank": 72,
+      "maximum_rank": 139,
+      "rank_range": 67,
+      "mean_score": 0.31002331002330996,
+      "score_range": 0.2865190365190365
+    },
+    {
+      "municipality_code": "1505031",
+      "municipality": "Novo Progresso",
+      "mean_rank": 119.25,
+      "minimum_rank": 74,
+      "maximum_rank": 140,
+      "rank_range": 66,
+      "mean_score": 0.3131313131313131,
+      "score_range": 0.24708624708624705
+    },
+    {
+      "municipality_code": "1501006",
+      "municipality": "Aveiro",
+      "mean_rank": 119.75,
+      "minimum_rank": 89,
+      "maximum_rank": 133,
+      "rank_range": 44,
+      "mean_score": 0.30885780885780884,
+      "score_range": 0.15850815850815853
+    },
+    {
+      "municipality_code": "1500131",
+      "municipality": "Abel Figueiredo",
+      "mean_rank": 120.91666666666667,
+      "minimum_rank": 92,
+      "maximum_rank": 138,
+      "rank_range": 46,
+      "mean_score": 0.3166278166278166,
+      "score_range": 0.22824397824397819
+    },
+    {
+      "municipality_code": "1507151",
+      "municipality": "São Domingos do Araguaia",
+      "mean_rank": 121.08333333333333,
+      "minimum_rank": 106,
+      "maximum_rank": 136,
+      "rank_range": 30,
+      "mean_score": 0.31351981351981345,
+      "score_range": 0.16433566433566427
+    },
+    {
+      "municipality_code": "1501204",
+      "municipality": "Baião",
+      "mean_rank": 121.25,
+      "minimum_rank": 114,
+      "maximum_rank": 128,
+      "rank_range": 14,
+      "mean_score": 0.3123543123543124,
+      "score_range": 0.11305361305361303
+    },
+    {
+      "municipality_code": "1501576",
+      "municipality": "Bom Jesus do Tocantins",
+      "mean_rank": 121.41666666666667,
+      "minimum_rank": 106,
+      "maximum_rank": 137,
+      "rank_range": 31,
+      "mean_score": 0.3123543123543124,
+      "score_range": 0.16666666666666663
+    },
+    {
+      "municipality_code": "1504000",
+      "municipality": "Limoeiro do Ajuru",
+      "mean_rank": 122.66666666666667,
+      "minimum_rank": 93,
+      "maximum_rank": 134,
+      "rank_range": 41,
+      "mean_score": 0.292929292929293,
+      "score_range": 0.1631701631701632
+    },
+    {
+      "municipality_code": "1503309",
+      "municipality": "Igarapé-Miri",
+      "mean_rank": 123.5,
+      "minimum_rank": 115,
+      "maximum_rank": 131,
+      "rank_range": 16,
+      "mean_score": 0.3014763014763014,
+      "score_range": 0.12412587412587414
+    },
+    {
+      "municipality_code": "1500602",
+      "municipality": "Altamira",
+      "mean_rank": 124.16666666666667,
+      "minimum_rank": 79,
+      "maximum_rank": 141,
+      "rank_range": 62,
+      "mean_score": 0.290986790986791,
+      "score_range": 0.23232323232323232
+    },
+    {
+      "municipality_code": "1500347",
+      "municipality": "Água Azul do Norte",
+      "mean_rank": 127.5,
+      "minimum_rank": 112,
+      "maximum_rank": 141,
+      "rank_range": 29,
+      "mean_score": 0.2816627816627817,
+      "score_range": 0.14627039627039626
+    },
+    {
+      "municipality_code": "1502806",
+      "municipality": "Curralinho",
+      "mean_rank": 128.75,
+      "minimum_rank": 113,
+      "maximum_rank": 135,
+      "rank_range": 22,
+      "mean_score": 0.2645687645687646,
+      "score_range": 0.1318958818958819
+    },
+    {
+      "municipality_code": "1503101",
+      "municipality": "Gurupá",
+      "mean_rank": 130.5,
+      "minimum_rank": 111,
+      "maximum_rank": 139,
+      "rank_range": 28,
+      "mean_score": 0.243006993006993,
+      "score_range": 0.17103729603729598
+    },
+    {
+      "municipality_code": "1500305",
+      "municipality": "Afuá",
+      "mean_rank": 132.16666666666666,
+      "minimum_rank": 115,
+      "maximum_rank": 139,
+      "rank_range": 24,
+      "mean_score": 0.24028749028749027,
+      "score_range": 0.1520979020979021
+    },
+    {
+      "municipality_code": "1508159",
+      "municipality": "Uruará",
+      "mean_rank": 133.25,
+      "minimum_rank": 109,
+      "maximum_rank": 142,
+      "rank_range": 33,
+      "mean_score": 0.23659673659673652,
+      "score_range": 0.21503496503496505
+    },
+    {
+      "municipality_code": "1504950",
+      "municipality": "Nova Esperança do Piriá",
+      "mean_rank": 133.66666666666666,
+      "minimum_rank": 122,
+      "maximum_rank": 140,
+      "rank_range": 18,
+      "mean_score": 0.24125874125874125,
+      "score_range": 0.1177156177156177
+    },
+    {
+      "municipality_code": "1504901",
+      "municipality": "Muaná",
+      "mean_rank": 134.08333333333334,
+      "minimum_rank": 119,
+      "maximum_rank": 138,
+      "rank_range": 19,
+      "mean_score": 0.22902097902097898,
+      "score_range": 0.13888888888888887
+    },
+    {
+      "municipality_code": "1500701",
+      "municipality": "Anajás",
+      "mean_rank": 135.33333333333334,
+      "minimum_rank": 117,
+      "maximum_rank": 140,
+      "rank_range": 23,
+      "mean_score": 0.21775446775446772,
+      "score_range": 0.16346153846153846
+    },
+    {
+      "municipality_code": "1507706",
+      "municipality": "São Sebastião da Boa Vista",
+      "mean_rank": 137.66666666666666,
+      "minimum_rank": 122,
+      "maximum_rank": 141,
+      "rank_range": 19,
+      "mean_score": 0.20571095571095566,
+      "score_range": 0.15763403263403264
+    },
+    {
+      "municipality_code": "1501105",
+      "municipality": "Bagre",
+      "mean_rank": 138.08333333333334,
+      "minimum_rank": 134,
+      "maximum_rank": 141,
+      "rank_range": 7,
+      "mean_score": 0.2086247086247086,
+      "score_range": 0.10606060606060605
+    },
+    {
+      "municipality_code": "1503002",
+      "municipality": "Faro",
+      "mean_rank": 141.66666666666666,
+      "minimum_rank": 134,
+      "maximum_rank": 144,
+      "rank_range": 10,
+      "mean_score": 0.1526806526806527,
+      "score_range": 0.16142191142191148
+    },
+    {
+      "municipality_code": "1504455",
+      "municipality": "Medicilândia",
+      "mean_rank": 142.75,
+      "minimum_rank": 142,
+      "maximum_rank": 143,
+      "rank_range": 1,
+      "mean_score": 0.1227661227661228,
+      "score_range": 0.07420357420357422
+    },
+    {
+      "municipality_code": "1506401",
+      "municipality": "Santa Cruz do Arari",
+      "mean_rank": 143.83333333333334,
+      "minimum_rank": 142,
+      "maximum_rank": 144,
+      "rank_range": 2,
+      "mean_score": 0.08644133644133645,
+      "score_range": 0.07313519813519814
+    }
+  ]
+}

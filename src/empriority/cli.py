@@ -3,9 +3,12 @@ from __future__ import annotations
 import typer
 
 from empriority.analysis import run_prioritization
+from empriority.capacity_diagnostics import build_capacity_diagnostics
+from empriority.capacity_input_audit import build_capacity_input_audit
 from empriority.catalog import load_indicator_catalog
 from empriority.config import load_settings
 from empriority.connectors.sidra import SidraQuery
+from empriority.integrated_priority import build_integrated_priority_profiles
 from empriority.integration import build_integrated_matrix
 from empriority.pipeline import (
     build_municipality_reference,
@@ -81,9 +84,7 @@ def sidra(
         periods=periods,
         classifications=classifications,
     )
-    frame, data_path, metadata_path = collect_sidra_table(
-        settings, query, output, refresh=refresh
-    )
+    frame, data_path, metadata_path = collect_sidra_table(settings, query, output, refresh=refresh)
     typer.echo(
         f"Collected {len(frame)} SIDRA records. Data: {data_path}. Metadata: {metadata_path}"
     )
@@ -152,9 +153,7 @@ def collect_all_indicators(
             continue
 
         completed += 1
-        typer.echo(
-            f"OK {name}: {len(frame)} records. Data: {data_path}. Metadata: {metadata_path}"
-        )
+        typer.echo(f"OK {name}: {len(frame)} records. Data: {data_path}. Metadata: {metadata_path}")
 
     typer.echo(f"Completed {completed} of {len(loaded.names())} indicators.")
     if failures:
@@ -236,6 +235,45 @@ def prioritize(
         sensitivity_iterations=iterations,
         seed=seed,
     )
+    for name, path in paths.items():
+        typer.echo(f"OK {name}: {path}")
+
+
+@app.command("run-capacity-framework")
+def run_capacity_framework(
+    config: str = typer.Option(
+        "config/capacity_priority.yml",
+        help="Path to the declarative capacity-priority framework configuration.",
+    ),
+) -> None:
+    """Run the configured hierarchical capacity-priority framework."""
+    paths = build_integrated_priority_profiles(config_path=config)
+    for name, path in paths.items():
+        typer.echo(f"OK {name}: {path}")
+
+
+@app.command("diagnose-capacity-framework")
+def diagnose_capacity_framework(
+    config: str = typer.Option(
+        "config/capacity_priority.yml",
+        help="Path to the declarative capacity-priority framework configuration.",
+    ),
+) -> None:
+    """Diagnose robustness and contributions without changing published rankings."""
+    paths = build_capacity_diagnostics(config_path=config)
+    for name, path in paths.items():
+        typer.echo(f"OK {name}: {path}")
+
+
+@app.command("audit-capacity-inputs")
+def audit_capacity_inputs(
+    config: str = typer.Option(
+        "config/capacity_priority.yml",
+        help="Path to the declarative capacity-priority framework configuration.",
+    ),
+) -> None:
+    """Audit and isolate the inputs actually used by the capacity framework."""
+    paths = build_capacity_input_audit(config_path=config)
     for name, path in paths.items():
         typer.echo(f"OK {name}: {path}")
 

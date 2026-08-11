@@ -50,7 +50,9 @@ def _municipal_tables(frames: list[pd.DataFrame]) -> list[pd.DataFrame]:
             continue
         count = int(_mask(frame.iloc[:, 0]).sum())
         if count:
-            print(f"RMA municipal table {index}: rows={count}, columns={frame.shape[1]}", flush=True)
+            print(
+                f"RMA municipal table {index}: rows={count}, columns={frame.shape[1]}", flush=True
+            )
             result.append(frame)
     if len(result) < 3:
         raise RuntimeError(f"Expected three municipal tables; found {len(result)}")
@@ -77,7 +79,9 @@ def _series(frame: pd.DataFrame, name: str) -> pd.DataFrame:
     return result
 
 
-def collect_social_assistance_rma_pa(output_directory: str | Path = "data/processed") -> dict[str, Path]:
+def collect_social_assistance_rma_pa(
+    output_directory: str | Path = "data/processed",
+) -> dict[str, Path]:
     output = Path(output_directory)
     output.mkdir(parents=True, exist_ok=True)
     cras_t, creas_t, pop_t = _municipal_tables(_tables())
