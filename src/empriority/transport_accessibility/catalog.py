@@ -59,6 +59,7 @@ SOURCES: list[dict[str, Any]] = [
         "direct_urls": [
             "https://brasil.mapbiomas.org/wp-content/uploads/sites/4/2023/08/outros-trechos.zip"
         ],
+        "expected_sha256": "7df6c217fe2ea6bbfd556863fe21a426003042ad774ac7c73bf38e41d58d1585",
         "purpose": "Other road segments compiled by MapBiomas from institutional sources.",
     },
     {
@@ -97,9 +98,14 @@ SOURCES: list[dict[str, Any]] = [
         "source_id": "ibge_municipal_boundaries",
         "agency": "IBGE",
         "theme": "municipal_boundaries",
-        "official_page": "https://www.ibge.gov.br/geociencias/organizacao-do-territorio/malhas-territoriais/15774-malhas.html",
+        "official_page": (
+            "https://geoftp.ibge.gov.br/organizacao_do_territorio/malhas_territoriais/"
+            "malhas_municipais/municipio_2023/UFs/PA/PA_Municipios_2023.zip"
+        ),
+        "metadata_page": "https://www.ibge.gov.br/geociencias/organizacao-do-territorio/malhas-territoriais/15774-malhas.html",
         "expected_formats": ["shp"],
         "map_reference_year": 2023,
+        "expected_sha256": "0996ffd1b26928dfbd518f67339baa36fd860f50693c1c156f9b4d86fb77c7ad",
         "purpose": "Municipal boundaries and territorial reference geometry.",
     },
 ]

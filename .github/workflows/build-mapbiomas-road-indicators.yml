@@ -50,12 +50,12 @@ jobs:
               ),
               "data/raw/transport/mapbiomas_other_roads/outros-trechos.zip": (
                   "https://brasil.mapbiomas.org/wp-content/uploads/sites/4/2023/08/outros-trechos.zip",
-                  None,
+                  "7df6c217fe2ea6bbfd556863fe21a426003042ad774ac7c73bf38e41d58d1585",
               ),
               "data/raw/transport/ibge/PA_Municipios_2023.zip": (
                   "https://geoftp.ibge.gov.br/organizacao_do_territorio/malhas_territoriais/"
                   "malhas_municipais/municipio_2023/UFs/PA/PA_Municipios_2023.zip",
-                  None,
+                  "0996ffd1b26928dfbd518f67339baa36fd860f50693c1c156f9b4d86fb77c7ad",
               ),
           }
           for path_text, (url, expected_sha256) in inputs.items():

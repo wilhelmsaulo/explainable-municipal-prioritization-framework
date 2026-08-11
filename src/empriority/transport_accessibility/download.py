@@ -26,6 +26,7 @@ _KEYWORDS = {
     "dnit_roads": ("rodov", "shapefile", "shp", "snv", "geo"),
     "mapbiomas_state_roads": ("rodovia", "estadual", "shp", "zip"),
     "mapbiomas_federal_roads": ("rodovia", "federal", "shp", "zip"),
+    "mapbiomas_other_roads": ("outros-trechos", "outros", "trechos", "shp", "zip"),
     "antaq_ports": ("porto", "instala", "travess", "geograf", "shp", "kml"),
     "antaq_waterways": ("hidrovia", "navega", "via interior", "geograf", "shp"),
     "decea_airports": ("airport", "aerodromo", "aeródromo", "wfs", "getfeature"),
