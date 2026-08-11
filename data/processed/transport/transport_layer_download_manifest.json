@@ -1,13 +1,12 @@
 {
-  "generated_at_utc": "2026-08-11T18:27:18.596876+00:00",
+  "generated_at_utc": "2026-08-11T18:34:17.682104+00:00",
   "sources": {
     "mapbiomas_state_roads": {
       "agency": "MapBiomas",
       "official_page": "https://brasil.mapbiomas.org/dados-de-infraestrutura/",
+      "discovery_policy": "registered_direct_urls_only",
       "discovered": [
-        "https://brasil.mapbiomas.org/wp-content/uploads/sites/4/2023/08/rodovia-estadual.zip",
-        "https://brasil.mapbiomas.org/wp-content/uploads/sites/4/2023/08/rodovia-federal.zip",
-        "https://brasil.mapbiomas.org/wp-content/uploads/sites/4/2023/08/Aerodromos_Privados.zip"
+        "https://brasil.mapbiomas.org/wp-content/uploads/sites/4/2023/08/rodovia-estadual.zip"
       ],
       "downloads": [
         {
@@ -39,30 +38,14 @@
           ]
         }
       ],
-      "errors": [
-        {
-          "stage": "download",
-          "url": "https://brasil.mapbiomas.org/wp-content/uploads/sites/4/2023/08/rodovia-federal.zip",
-          "type": "RuntimeError",
-          "message": "download SHA-256 differs from the registered manual file",
-          "attempts": 3
-        },
-        {
-          "stage": "download",
-          "url": "https://brasil.mapbiomas.org/wp-content/uploads/sites/4/2023/08/Aerodromos_Privados.zip",
-          "type": "RuntimeError",
-          "message": "download SHA-256 differs from the registered manual file",
-          "attempts": 3
-        }
-      ]
+      "errors": []
     },
     "mapbiomas_federal_roads": {
       "agency": "MapBiomas",
       "official_page": "https://brasil.mapbiomas.org/dados-de-infraestrutura/",
+      "discovery_policy": "registered_direct_urls_only",
       "discovered": [
-        "https://brasil.mapbiomas.org/wp-content/uploads/sites/4/2023/08/rodovia-federal.zip",
-        "https://brasil.mapbiomas.org/wp-content/uploads/sites/4/2023/08/rodovia-estadual.zip",
-        "https://brasil.mapbiomas.org/wp-content/uploads/sites/4/2023/08/Aerodromos_Privados.zip"
+        "https://brasil.mapbiomas.org/wp-content/uploads/sites/4/2023/08/rodovia-federal.zip"
       ],
       "downloads": [
         {
@@ -94,30 +77,14 @@
           ]
         }
       ],
-      "errors": [
-        {
-          "stage": "download",
-          "url": "https://brasil.mapbiomas.org/wp-content/uploads/sites/4/2023/08/rodovia-estadual.zip",
-          "type": "RuntimeError",
-          "message": "download SHA-256 differs from the registered manual file",
-          "attempts": 3
-        },
-        {
-          "stage": "download",
-          "url": "https://brasil.mapbiomas.org/wp-content/uploads/sites/4/2023/08/Aerodromos_Privados.zip",
-          "type": "RuntimeError",
-          "message": "download SHA-256 differs from the registered manual file",
-          "attempts": 3
-        }
-      ]
+      "errors": []
     },
     "mapbiomas_other_roads": {
       "agency": "MapBiomas",
       "official_page": "https://brasil.mapbiomas.org/dados-de-infraestrutura/",
+      "discovery_policy": "registered_direct_urls_only",
       "discovered": [
-        "https://brasil.mapbiomas.org/wp-content/uploads/sites/4/2023/08/outros-trechos.zip",
-        "https://brasil.mapbiomas.org/wp-content/uploads/sites/4/2023/08/MinaOutrosProdutos.zip",
-        "https://brasil.mapbiomas.org/wp-content/uploads/sites/4/2023/08/Aerodromos_Privados.zip"
+        "https://brasil.mapbiomas.org/wp-content/uploads/sites/4/2023/08/outros-trechos.zip"
       ],
       "downloads": [
         {
@@ -138,29 +105,6 @@
       ],
       "preserved": [
         {
-          "path": "data/raw/transport/mapbiomas_other_roads/Aerodromos_publicos.zip",
-          "bytes": 83241,
-          "sha256": "48657e37e9eb6a2a543ded6a65a0f62bf732baa26ad118b869c933fc46f0acab",
-          "zip_inventory": [
-            "Aerodromos_publicos.dbf",
-            "Aerodromos_publicos.prj",
-            "Aerodromos_publicos.shp",
-            "Aerodromos_publicos.shx"
-          ]
-        },
-        {
-          "path": "data/raw/transport/mapbiomas_other_roads/Barragens.zip",
-          "bytes": 627883,
-          "sha256": "aa8a01253578e07b916ee12b0e52d9817872d20f3897646e274c0c61663d9118",
-          "zip_inventory": [
-            "Barragens.csv",
-            "Barragens.dbf",
-            "Barragens.prj",
-            "Barragens.shp",
-            "Barragens.shx"
-          ]
-        },
-        {
           "path": "data/raw/transport/mapbiomas_other_roads/outros-trechos.zip",
           "bytes": 31596135,
           "sha256": "7df6c217fe2ea6bbfd556863fe21a426003042ad774ac7c73bf38e41d58d1585",
@@ -172,26 +116,12 @@
           ]
         }
       ],
-      "errors": [
-        {
-          "stage": "download",
-          "url": "https://brasil.mapbiomas.org/wp-content/uploads/sites/4/2023/08/MinaOutrosProdutos.zip",
-          "type": "RuntimeError",
-          "message": "download SHA-256 differs from the registered manual file",
-          "attempts": 3
-        },
-        {
-          "stage": "download",
-          "url": "https://brasil.mapbiomas.org/wp-content/uploads/sites/4/2023/08/Aerodromos_Privados.zip",
-          "type": "RuntimeError",
-          "message": "download SHA-256 differs from the registered manual file",
-          "attempts": 3
-        }
-      ]
+      "errors": []
     },
     "antaq_ports": {
       "agency": "ANTAQ",
       "official_page": "https://www.gov.br/antaq/pt-br/central-de-conteudos/informacoes-geograficas",
+      "discovery_policy": "official_page_plus_registered_urls",
       "discovered": [
         "https://www.gov.br/antaq/pt-br/central-de-conteudos/Instalacoes_Portuarias_20212.zip",
         "https://www.gov.br/antaq/pt-br/central-de-conteudos/Instalaesporturias06052025.zip",
@@ -304,6 +234,7 @@
     "antaq_waterways": {
       "agency": "ANTAQ",
       "official_page": "https://www.gov.br/antaq/pt-br/central-de-conteudos/informacoes-geograficas",
+      "discovery_policy": "official_page_plus_registered_urls",
       "discovered": [
         "https://www.gov.br/antaq/pt-br/central-de-conteudos/SHPTKU2023cabotagem.zip",
         "https://www.gov.br/antaq/pt-br/central-de-conteudos/SHPTKUinterior2023.zip",
@@ -416,6 +347,7 @@
     "decea_airports": {
       "agency": "DECEA/ICA",
       "official_page": "https://geoaisweb.decea.gov.br/geoserver/ICA/ows?service=WFS&version=2.0.0&request=GetCapabilities",
+      "discovery_policy": "official_page_plus_registered_urls",
       "discovered": [
         "https://geoaisweb.decea.gov.br/geoserver/ICA/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=ICA:airport&outputFormat=SHAPE-ZIP",
         "https://geoaisweb.decea.gov.br/geoserver/ICA/ows?service=WFS&version=2.0.0&request=GetFeature&typeNames=ICA:airport&outputFormat=SHAPE-ZIP",
@@ -427,7 +359,7 @@
           "resolved_url": "https://geoaisweb.decea.gov.br/geoserver/ICA/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=ICA:airport&outputFormat=SHAPE-ZIP",
           "path": "data/raw/transport/decea_airports/candidate_1.zip",
           "bytes": 728363,
-          "sha256": "061e0a8022efca066b8353afcd782beb60386d80d8071928cb6f2d753c6956b5",
+          "sha256": "a3b551b85e6d2b4a1275f36aa7da7a56dd8609f57b8b5a0647371b29ed691bcd",
           "content_type": "application/zip",
           "zip_inventory": [
             "airport.dbf",
@@ -443,7 +375,7 @@
           "resolved_url": "https://geoaisweb.decea.gov.br/geoserver/ICA/ows?service=WFS&version=2.0.0&request=GetFeature&typeNames=ICA:airport&outputFormat=SHAPE-ZIP",
           "path": "data/raw/transport/decea_airports/candidate_2.zip",
           "bytes": 728824,
-          "sha256": "c0b2b2d96b9661d5d257a17f12e0b386dd9efa3d7fe183c4025aed7185498459",
+          "sha256": "f1f0564cd958c1c5700ab3a06841c3e6cbf636ded2bfa8eb18080bb0e2a1c2bc",
           "content_type": "application/zip",
           "zip_inventory": [
             "airport.dbf",
@@ -459,7 +391,7 @@
           "resolved_url": "https://geoaisweb.decea.gov.br/geoserver/ICA/ows?service=WFS&version=2.0.0&request=GetFeature&typeNames=ICA:airport&outputFormat=application/json",
           "path": "data/raw/transport/decea_airports/candidate_3.geojson",
           "bytes": 3115559,
-          "sha256": "950a019fd2c07a94e2e7a81b912867b1e7ed6b8cab4fbb831f0c363106bc3060",
+          "sha256": "4e7c0005d6bce81a4fa3ff9c2cbfca76dbbb92b07e536a28a3f550afacc0e181",
           "content_type": "application/json;charset=UTF-8",
           "zip_inventory": [],
           "attempt": 1
@@ -469,7 +401,7 @@
         {
           "path": "data/raw/transport/decea_airports/candidate_1.zip",
           "bytes": 728363,
-          "sha256": "c69ffca19cd60eee40ecc8f701a0583294f323ebd6a20b085680a4d2daef0cd9",
+          "sha256": "ba4faae09bb918d1298a52ccf20b1e42c90ccb67daac33cfa370753d78c295ec",
           "zip_inventory": [
             "airport.dbf",
             "airport.shx",
@@ -481,7 +413,7 @@
         {
           "path": "data/raw/transport/decea_airports/candidate_2.zip",
           "bytes": 728824,
-          "sha256": "8e640dc7648e99c31cf6ffe37418f8acecca0459e55f355fa1a0903be09f19c5",
+          "sha256": "7fc9dd30ca82a4a8e79512063b0b7c7f1648792cebcafbd4bf7954e3845f9980",
           "zip_inventory": [
             "airport.dbf",
             "airport.shx",
@@ -493,7 +425,7 @@
         {
           "path": "data/raw/transport/decea_airports/candidate_3.geojson",
           "bytes": 3115559,
-          "sha256": "4e8f1db4e275c085f49cb441092cd7ef86d91e054754a8d579dc75876d6749e9",
+          "sha256": "17369c39c5b2ff2d3bba820a0acf422e6119ad283ca1eb99d33287d767884c4a",
           "zip_inventory": []
         }
       ],
