@@ -5,6 +5,7 @@ from empriority.multimethod_validation import (
     fractional_top_membership,
     promethee_ii,
     sample_convex_weights,
+    tie_neutral_rank_counts,
     topsis,
 )
 
@@ -46,6 +47,23 @@ def test_fractional_top_membership_is_tie_neutral_and_exact() -> None:
     membership = fractional_top_membership(np.array([5.0, 4.0, 4.0, 4.0, 1.0]), 2)
     assert np.allclose(membership, [1.0, 1 / 3, 1 / 3, 1 / 3, 0.0])
     assert np.isclose(membership.sum(), 2)
+
+
+def test_smaa_rank_counts_are_tie_neutral_and_mass_preserving() -> None:
+    values = np.array(
+        [
+            [3.0, 2.0],
+            [2.0, 1.0],
+            [2.0, 1.0],
+            [1.0, 0.0],
+        ]
+    )
+    counts, allocations = tie_neutral_rank_counts(values)
+    assert allocations == 2
+    assert np.allclose(counts[1], counts[2])
+    assert np.allclose(counts[1], [0.0, 1.0, 1.0, 0.0])
+    assert np.allclose(counts.sum(axis=0), values.shape[1])
+    assert np.allclose(counts.sum(axis=1), values.shape[1])
 
 
 def test_published_outputs_have_complete_territorial_and_scenario_coverage() -> None:
