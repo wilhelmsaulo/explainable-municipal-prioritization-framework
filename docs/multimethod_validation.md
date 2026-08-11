@@ -40,7 +40,9 @@ and each component remains in `[0.25, 0.50]`. Every draw is evaluated under all 
 scenarios with equal frequency: 120,000 evaluations per municipality.
 
 Outputs include mean and standard deviation of rank, rank-1, top-10 and top-quartile
-acceptability, and the complete rank 1–144 distribution. The analysis describes robustness
+acceptability, and the complete rank 1–144 distribution. When alternatives have identical
+scores in a draw, their probability mass is shared equally across the occupied rank
+positions, preventing input-row order from breaking ties. The analysis describes robustness
 to predeclared uncertainties; it does not replace the primary results.
 
 ## Reproduction
