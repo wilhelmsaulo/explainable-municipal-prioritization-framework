@@ -1,8 +1,8 @@
 {
-  "generated_at_utc": "2026-08-07T14:04:50.064676+00:00",
+  "generated_at_utc": "2026-08-11T17:41:49.573337+00:00",
   "source_count": 8,
-  "available": 7,
-  "unavailable": 1,
+  "available": 8,
+  "unavailable": 0,
   "sources": {
     "dnit_roads": {
       "status": "available",
@@ -40,8 +40,8 @@
       "error": null
     },
     "ibge_municipal_boundaries": {
-      "status": "http_error",
-      "http_status": 403,
+      "status": "available",
+      "http_status": 200,
       "error": null
     }
   },
