@@ -4,8 +4,9 @@
 
 This audit reviews the release candidate for the Pará capacity-strengthening
 application under `method_version: 1.1.0`. The analytical package passes the
-scientific and computational checks below. It must be tagged only after the
-provenance corrections identified here are committed and their workflows pass.
+scientific and computational checks below. The provenance corrections
+identified during the audit have been implemented and must remain covered by
+the release-candidate validation suite before tagging.
 
 The application estimates relative priority for strengthening municipal
 service capacity under multimodal access constraints. It does not estimate
@@ -60,7 +61,7 @@ parameter tuning is permitted.
 | Failed input-audit checks | 0 |
 | Failed integrated-framework checks | 0 |
 | Failed diagnostic/reconstruction checks | 0 |
-| Maximum score reconstruction error | 1.11 × 10⁻¹⁶ |
+| Maximum score reconstruction error | 2.22 × 10⁻¹⁶ |
 
 ## Release-candidate checksums
 
@@ -77,28 +78,33 @@ These hashes identify the audited analytical files before the release tag.
 | `data/results/integrated_capacity_priority_audit.json` | `d8547f1299ffeeb4409a18381394b320d1a5f3a500fe4470e2c34afa8dae8109` |
 | `data/results/capacity_diagnostics_audit.json` | `46cb105111566b3154756aeb65dcdfda4b25eb0c5b83988c13f999ae57bbc494` |
 
-## Provenance finding and correction required before tagging
+## Provenance correction completed
 
-The generic transport-discovery manifest grouped unrelated MapBiomas links
-(aerodromes and dams) under `mapbiomas_other_roads`. Those files were not used
-by the road-indicator builder. The builder independently downloaded and used
-the correct `outros-trechos.zip`, recorded with SHA-256
+The audit identified that generic page discovery could group unrelated
+MapBiomas infrastructure links with the three registered road sources. Those
+unrelated files were never used by the road-indicator builder or by any
+analytical output.
+
+The acquisition workflow now restricts each checksum-registered MapBiomas road
+source to its exact official URL: `rodovia-estadual.zip`,
+`rodovia-federal.zip`, and `outros-trechos.zip`. The latter is validated
+against SHA-256
 `7df6c217fe2ea6bbfd556863fe21a426003042ad774ac7c73bf38e41d58d1585`.
-
-Before tagging, the source catalog and acquisition workflow must register and
-validate that checksum explicitly, prioritize `outros-trechos.zip`, and record
-the IBGE 2023 municipal-mesh checksum
+The catalog also records the IBGE 2023 municipal-mesh checksum
 `0996ffd1b26928dfbd518f67339baa36fd860f50693c1c156f9b4d86fb77c7ad`.
-This correction affects provenance metadata only; it does not change the
-already audited analytical inputs, scores, ranks, profiles, tables, or figures.
+
+This correction affects acquisition and provenance metadata only. It does not
+change analytical inputs, normalization, weights, scores, ranks, profiles,
+tables, or figures.
 
 ## Freeze gate
 
 The package may be merged and tagged when all of the following are true:
 
-1. the provenance correction above is committed;
-2. all required GitHub Actions workflows pass on the resulting head commit;
-3. the pull request remains mergeable and is reviewed once more as a whole;
+1. the completed provenance correction is present on the release-candidate
+   head commit;
+2. all required GitHub Actions workflows pass on that head commit;
+3. the pull request remains mergeable after the final whole-package review;
 4. the release tag is created from the integrated `main` commit, not from the
    development branch.
 
