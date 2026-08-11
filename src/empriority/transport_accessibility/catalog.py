@@ -34,6 +34,7 @@ SOURCES: list[dict[str, Any]] = [
             "https://brasil.mapbiomas.org/wp-content/uploads/sites/4/2023/08/rodovia-estadual.zip"
         ],
         "expected_sha256": "364a070e9394a812b8eab3956c6056203decfde66d7771c679854d28d8b4fe05",
+        "direct_urls_only": True,
         "purpose": "State-road network compiled by MapBiomas from institutional sources.",
     },
     {
@@ -47,6 +48,7 @@ SOURCES: list[dict[str, Any]] = [
             "https://brasil.mapbiomas.org/wp-content/uploads/sites/4/2023/08/rodovia-federal.zip"
         ],
         "expected_sha256": "f507e9c2bdca50c1ee6814c07cd220c88e686c0aae2b88ca8baef0280d01ba94",
+        "direct_urls_only": True,
         "purpose": "Federal-road network compiled by MapBiomas from institutional sources.",
     },
     {
@@ -60,6 +62,7 @@ SOURCES: list[dict[str, Any]] = [
             "https://brasil.mapbiomas.org/wp-content/uploads/sites/4/2023/08/outros-trechos.zip"
         ],
         "expected_sha256": "7df6c217fe2ea6bbfd556863fe21a426003042ad774ac7c73bf38e41d58d1585",
+        "direct_urls_only": True,
         "purpose": "Other road segments compiled by MapBiomas from institutional sources.",
     },
     {
