@@ -101,3 +101,11 @@ The package may be merged and tagged when all of the following are true:
 3. the pull request remains mergeable and is reviewed once more as a whole;
 4. the release tag is created from the integrated `main` commit, not from the
    development branch.
+
+## Validation rerun
+
+A documentation-only commit was issued after the automated provenance
+manifests advanced the pull-request branch. Its sole purpose is to request the
+full release-candidate validation suite from a user-authored commit. It changes
+no source data, analytical input, parameter, score, rank, profile, table, or
+figure.
