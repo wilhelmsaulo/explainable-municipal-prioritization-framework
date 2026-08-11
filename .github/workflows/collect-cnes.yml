@@ -2,6 +2,8 @@ name: collect-cnes
 
 on:
   push:
+    branches:
+      - main
     paths:
       - ".github/workflows/collect-cnes.yml"
       - "src/empriority/cnes.py"
@@ -10,6 +12,10 @@ on:
 
 permissions:
   contents: write
+
+concurrency:
+  group: cnes-establishments-main
+  cancel-in-progress: false
 
 jobs:
   collect:
@@ -64,9 +70,50 @@ jobs:
           if "municipality" in cnes.columns:
               cnes = cnes.drop(columns="municipality")
 
-          old_cnes = [column for column in matrix.columns if column.startswith("cnes_")]
-          if old_cnes:
-              matrix = matrix.drop(columns=old_cnes)
+          professional_columns = [
+              "cnes_physicians",
+              "cnes_physicians_weekly_hours",
+              "cnes_nurses",
+              "cnes_nurses_weekly_hours",
+              "cnes_psychologists",
+              "cnes_psychologists_weekly_hours",
+              "cnes_social_workers",
+              "cnes_social_workers_weekly_hours",
+              "cnes_multidisciplinary_staff_deficit",
+              "cnes_physicians_per_100k_population",
+              "cnes_nurses_per_100k_population",
+              "cnes_psychologists_per_100k_population",
+              "cnes_social_workers_per_100k_population",
+          ]
+          missing_professional = [
+              column for column in professional_columns if column not in matrix.columns
+          ]
+          if missing_professional:
+              raise AssertionError(
+                  "Refusing to overwrite the integrated matrix without the audited "
+                  f"CNES professional indicators: {missing_professional}"
+              )
+
+          establishment_columns = [
+              "cnes_active_establishments",
+              "cnes_ubs",
+              "cnes_hospitals",
+              "cnes_caps",
+              "cnes_emergency_units",
+              "cnes_obstetric_centers",
+              "cnes_health_service_deficit",
+              "cnes_active_establishments_per_100k_population",
+              "cnes_ubs_per_100k_population",
+              "cnes_hospitals_per_100k_population",
+              "cnes_caps_per_100k_population",
+              "cnes_emergency_units_per_100k_population",
+              "cnes_obstetric_centers_per_100k_population",
+          ]
+          refresh_columns = [
+              column for column in establishment_columns if column in matrix.columns
+          ]
+          if refresh_columns:
+              matrix = matrix.drop(columns=refresh_columns)
 
           matrix = matrix.merge(cnes, on="_cnes_municipality_code", how="left")
           matrix = matrix.drop(columns="_cnes_municipality_code")
@@ -115,6 +162,7 @@ jobs:
           assert len(matrix) == 144
           assert matrix["municipality_code"].nunique() == 144
           assert matrix["cnes_active_establishments"].notna().sum() == 144
+          assert matrix[professional_columns].notna().all().all()
 
           matrix.to_csv(matrix_path, index=False, encoding="utf-8")
           print(
