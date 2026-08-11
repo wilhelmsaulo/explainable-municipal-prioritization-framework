@@ -55,6 +55,38 @@ def sample_convex_weights(draws: int, seed: int, vertices: np.ndarray) -> np.nda
     return barycentric @ vertices
 
 
+def tie_neutral_rank_counts(values: np.ndarray) -> tuple[np.ndarray, int]:
+    """Accumulate rank counts, sharing tied rank positions equally among alternatives."""
+    order = np.argsort(-values, axis=0, kind="stable")
+    ranks = np.empty_like(order)
+    ranks[order, np.arange(order.shape[1])] = np.arange(1, len(values) + 1)[:, None]
+    counts = np.zeros((len(values), len(values)), dtype=float)
+    for alternative in range(len(values)):
+        counts[alternative] = np.bincount(
+            ranks[alternative] - 1, minlength=len(values)
+        )
+
+    sorted_values = np.take_along_axis(values, order, axis=0)
+    tied_draws = np.flatnonzero(
+        np.any(sorted_values[1:] == sorted_values[:-1], axis=0)
+    )
+    allocations = 0
+    for draw in tied_draws:
+        boundaries = np.flatnonzero(
+            np.r_[True, sorted_values[1:, draw] != sorted_values[:-1, draw], True]
+        )
+        for start, stop in zip(boundaries[:-1], boundaries[1:], strict=True):
+            size = stop - start
+            if size == 1:
+                continue
+            members = order[start:stop, draw]
+            positions = np.arange(start, stop)
+            counts[members, ranks[members, draw] - 1] -= 1.0
+            counts[np.ix_(members, positions)] += 1.0 / size
+            allocations += 1
+    return counts, allocations
+
+
 def _rank(scores: np.ndarray) -> np.ndarray:
     return pd.Series(scores).rank(ascending=False, method="min").to_numpy(dtype=int)
 
@@ -157,26 +189,26 @@ def build_multimethod_validation(
 
     vertices = np.array([[vector[name] for name in DIMENSIONS] for vector in smaa["convex_hull_vertices"].values()])
     sampled = sample_convex_weights(int(smaa["macro_weight_draws"]), int(smaa["random_seed"]), vertices)
-    rank_counts = np.zeros((len(merged), len(merged)), dtype=np.int64)
-    rank_sums = np.zeros(len(merged))
-    rank_squared_sums = np.zeros(len(merged))
+    rank_counts = np.zeros((len(merged), len(merged)), dtype=float)
+    tie_neutral_allocations = 0
     evaluations = 0
     for transport_column in transport_columns:
         matrix = np.column_stack([merged[DIMENSIONS[0]], merged[DIMENSIONS[1]], 1 - merged[transport_column]])
         for weight_chunk in np.array_split(sampled, 20):
             values = matrix @ weight_chunk.T
-            order = np.argsort(-values, axis=0, kind="stable")
-            ranks = np.empty_like(order)
-            ranks[order, np.arange(order.shape[1])] = np.arange(1, len(merged) + 1)[:, None]
-            rank_sums += ranks.sum(axis=1)
-            rank_squared_sums += (ranks * ranks).sum(axis=1)
-            for municipality in range(len(merged)):
-                rank_counts[municipality] += np.bincount(ranks[municipality] - 1, minlength=len(merged))
-            evaluations += ranks.shape[1]
+            chunk_counts, chunk_allocations = tie_neutral_rank_counts(values)
+            rank_counts += chunk_counts
+            tie_neutral_allocations += chunk_allocations
+            evaluations += values.shape[1]
     acceptability = rank_counts / evaluations
+    rank_positions = np.arange(1, len(merged) + 1)
+    mean_rank = acceptability @ rank_positions
+    mean_squared_rank = acceptability @ (rank_positions * rank_positions)
     summary = merged[["municipality_code", "municipality"]].copy()
-    summary["mean_rank"] = rank_sums / evaluations
-    summary["rank_standard_deviation"] = np.sqrt(rank_squared_sums / evaluations - summary["mean_rank"] ** 2)
+    summary["mean_rank"] = mean_rank
+    summary["rank_standard_deviation"] = np.sqrt(
+        np.maximum(0.0, mean_squared_rank - mean_rank * mean_rank)
+    )
     summary["rank_1_acceptability"] = acceptability[:, 0]
     summary["top_10_acceptability"] = acceptability[:, :10].sum(axis=1)
     summary["top_quartile_acceptability"] = acceptability[:, :36].sum(axis=1)
@@ -203,6 +235,8 @@ def build_multimethod_validation(
         "sampled_weights_in_bounds": bool(((sampled >= 0.25) & (sampled <= 0.50)).all()),
         "finite_valid_scores_and_ranks": bool(np.isfinite(scores_frame[["score", "rank"]]).all().all() and scores_frame["rank"].between(1, 144).all()),
         "rank_acceptability_complete": bool(np.allclose(acceptability.sum(axis=1), 1)),
+        "rank_position_mass_complete": bool(np.allclose(acceptability.sum(axis=0), 1)),
+        "tie_neutral_rank_allocations_applied": tie_neutral_allocations > 0,
         "additive_reconstruction_within_1e_12": reconstruction_error <= 1e-12,
         "additive_ranks_reproduced": additive_rank_mismatches == 0,
         "excluded_variables_inactive": not any(term in " ".join(DIMENSIONS) for term in ("police", "population", "violence")),
@@ -216,5 +250,33 @@ def build_multimethod_validation(
     method_profiles.to_csv(paths["profiles"], index=False)
     summary.to_csv(paths["smaa_summary"], index=False)
     distribution.to_csv(paths["smaa_rank_acceptability"], index=False)
-    paths["audit"].write_text(json.dumps({"method_version": config["method_version"], "checks": checks, "additive_reconstruction_max_absolute_error": reconstruction_error, "additive_rank_mismatches": additive_rank_mismatches, "counts": {"municipalities": len(merged), "transport_scenarios": len(transport_columns), "macro_weight_schemes": len(weights_by_name), "methods": len(METHODS), "method_scenario_configurations": 144, "deterministic_records": len(scores_frame), "monte_carlo_evaluations_per_municipality": evaluations}, "smaa": {"random_seed": smaa["random_seed"], "macro_weight_draws": smaa["macro_weight_draws"], "scenario_frequency": "equal", "weight_minimum": float(sampled.min()), "weight_maximum": float(sampled.max()), "maximum_weight_sum_error": float(np.abs(sampled.sum(axis=1) - 1).max())}}, indent=2), encoding="utf-8")
+    audit_payload = {
+        "method_version": config["method_version"],
+        "checks": checks,
+        "additive_reconstruction_max_absolute_error": reconstruction_error,
+        "additive_rank_mismatches": additive_rank_mismatches,
+        "counts": {
+            "municipalities": len(merged),
+            "transport_scenarios": len(transport_columns),
+            "macro_weight_schemes": len(weights_by_name),
+            "methods": len(METHODS),
+            "method_scenario_configurations": 144,
+            "deterministic_records": len(scores_frame),
+            "monte_carlo_evaluations_per_municipality": evaluations,
+        },
+        "smaa": {
+            "random_seed": smaa["random_seed"],
+            "macro_weight_draws": smaa["macro_weight_draws"],
+            "scenario_frequency": "equal",
+            "weight_minimum": float(sampled.min()),
+            "weight_maximum": float(sampled.max()),
+            "maximum_weight_sum_error": float(
+                np.abs(sampled.sum(axis=1) - 1).max()
+            ),
+            "tie_neutral_rank_allocations": tie_neutral_allocations,
+        },
+    }
+    paths["audit"].write_text(
+        json.dumps(audit_payload, indent=2), encoding="utf-8"
+    )
     return paths
