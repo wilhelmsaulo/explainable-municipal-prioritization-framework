@@ -1,0 +1,60 @@
+name: validate-capacity-multimethod
+
+on:
+  workflow_dispatch:
+  pull_request:
+    branches:
+      - main
+    paths:
+      - ".github/workflows/validate-capacity-multimethod.yml"
+      - "config/capacity_priority.yml"
+      - "src/empriority/multimethod_validation.py"
+      - "src/empriority/cli.py"
+      - "data/results/integrated_capacity_priority_profiles.csv"
+      - "data/results/integrated_capacity_priority_scenarios.csv"
+      - "data/processed/transport/transport_multimodal_scenarios.csv"
+      - "data/results/multimethod_capacity_*.csv"
+      - "data/results/smaa_capacity_*.csv"
+      - "data/results/multimethod_capacity_audit.json"
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - name: Install project
+        run: python -m pip install -e .
+      - name: Regenerate multimethod and SMAA validation
+        run: >-
+          empriority validate-capacity-multimethod
+          --config config/capacity_priority.yml
+      - name: Verify validation outputs are reproducible
+        run: |
+          git diff --exit-code -- \
+            data/results/multimethod_capacity_scores.csv \
+            data/results/multimethod_capacity_agreement.csv \
+            data/results/multimethod_capacity_profiles.csv \
+            data/results/smaa_capacity_acceptability_summary.csv \
+            data/results/smaa_capacity_rank_acceptability.csv \
+            data/results/multimethod_capacity_audit.json
+      - name: Upload validation outputs
+        uses: actions/upload-artifact@v4
+        with:
+          name: capacity-multimethod-validation
+          path: |
+            data/results/multimethod_capacity_scores.csv
+            data/results/multimethod_capacity_agreement.csv
+            data/results/multimethod_capacity_profiles.csv
+            data/results/smaa_capacity_acceptability_summary.csv
+            data/results/smaa_capacity_rank_acceptability.csv
+            data/results/multimethod_capacity_audit.json
+          if-no-files-found: error
+          retention-days: 30
