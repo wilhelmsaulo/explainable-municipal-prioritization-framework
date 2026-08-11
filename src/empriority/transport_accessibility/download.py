@@ -192,15 +192,20 @@ def discover_and_download_transport_layers(
             }
             manifest["sources"][source_id] = record
             direct_urls = list(source.get("direct_urls", []))
-            try:
-                page = _get_page_with_retry(client, source["official_page"])
-                links = _extract_links(page.text, str(page.url))
-            except Exception as exc:
-                record["errors"].append(
-                    {"stage": "page", "type": type(exc).__name__, "message": str(exc)}
-                )
-                links = []
-            links = sorted(set(links) | set(direct_urls))
+            if source.get("direct_urls_only", False):
+                # Sources with registered checksums must not inherit unrelated
+                # download links discovered on broad infrastructure pages.
+                links = sorted(set(direct_urls))
+            else:
+                try:
+                    page = _get_page_with_retry(client, source["official_page"])
+                    links = _extract_links(page.text, str(page.url))
+                except Exception as exc:
+                    record["errors"].append(
+                        {"stage": "page", "type": type(exc).__name__, "message": str(exc)}
+                    )
+                    links = []
+                links = sorted(set(links) | set(direct_urls))
 
             ranked = sorted(
                 ((url, _score(source_id, url)) for url in links),
