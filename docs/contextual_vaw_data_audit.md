@@ -2,23 +2,49 @@
 
 This audit separates the primary municipal-capacity model from contextual evidence on violence against women.
 
-## Findings
+## Sources and coverage
 
-- The primary model remains unchanged. Population and police records are not scoring criteria.
-- The repository contains all 144 municipal rows in `data/processed/police_aggregated_2022_2025_pa.csv`, and every row reports four observed years.
-- The police file is a four-year municipal aggregate. The annual source files are not present in `data/source` or `data/manual`; therefore, annual trends and persistence cannot be reproduced from the current `main` branch.
-- The integrated matrix contains `population_2023`, documented as total population from the 2022 Demographic Census released or processed in 2023. It does not contain female population.
-- Existing police rate fields use total population as denominator. They must not be described as rates per 100,000 women.
+Female population comes from IBGE SIDRA table 9514 (variable 93, sex classification 5, year 2022). The extraction returns all 144 municipalities of Pará and 4,068,318 women.
+
+The four police workbooks supplied for this study contain 642,281 records:
+
+| Year | Source rows | Female-victim rows |
+|---:|---:|---:|
+| 2022 | 170,649 | 71,797 |
+| 2023 | 166,749 | 69,180 |
+| 2024 | 156,945 | 65,711 |
+| 2025 | 148,938 | 59,970 |
+
+The label `ALTAMIRA/CASTELO DOS SONHOS` is consolidated into Altamira. This converts the 145 territorial labels in each source file into the 144 official municipalities. `ELDORADO DOS CARAJAS` is matched to the official IBGE name `Eldorado do Carajás`.
+
+## Outputs
+
+- `data/processed/contextual/ibge_female_population_2022_pa.csv`: female population and IBGE municipality codes.
+- `data/processed/contextual/police_municipal_year_2022_2025_pa.csv`: municipality-year counts.
+- `data/processed/contextual/contextual_vaw_municipal_year_2022_2025_pa.csv`: audited counts and rates per 100,000 women.
+- `data/processed/contextual_vaw_data_audit.json`: source hashes and machine-readable checks.
+- `scripts/build_contextual_vaw_data.py`: processing code.
+
+The raw police workbooks are not committed because they contain individual-level age, location, and other record attributes. Their SHA-256 hashes are recorded in the audit.
+
+## Classification rules
+
+The focused contextual measure includes female-victim records classified as:
+
+- bodily injury with an explicit domestic-violence specification;
+- rape;
+- rape of a vulnerable person;
+- feminicide, whether represented as a direct consolidated category or as a homicide specification;
+- explicit attempted feminicide.
+
+Feminicide remains a separate supplementary outcome because rare municipal counts and structural zeros limit comparison. The broad `all_female_records` field is retained for source auditing, but it includes offenses outside the study focus and must not be interpreted as violence-against-women incidence.
+
+Exact duplicate rows are retained. The workbooks have no unique occurrence identifier, so equality across exported fields is not sufficient evidence that two records represent the same event.
 
 ## Scientific use
 
-The police aggregate may support labelled descriptive and sensitivity analyses. It cannot estimate incidence, hidden violence, individual risk, or underreporting. Municipal differences may also reflect access to reporting, availability of services, administrative recording, and institutional capacity.
+Population and police records are contextual variables and do not enter the primary score. The new tables do not change indicators, normalization, weights, scores, ranks, or profiles.
 
-Feminicide is retained only as a supplementary descriptive outcome because rare municipal counts and structural zeros limit its use for comparison.
+Administrative records do not estimate incidence, hidden violence, individual risk, or underreporting. Municipal differences may also reflect access to reporting, service availability, recording practices, and institutional capacity.
 
-## Inputs still required
-
-1. Official IBGE 2022 Census female population for all 144 municipalities, with the table identifier, source URL, and extraction date.
-2. The four original police files (2022–2025), or an audited municipality–year–category table with provenance metadata.
-
-Until these inputs are restored and audited, the contextual analysis must not report rates per 100,000 women, annual trends, or persistence.
+The female population is fixed at the 2022 Census value for annual rate denominators. These rates describe recorded events relative to the female population; they are not estimates of individual probability or annual incidence.
