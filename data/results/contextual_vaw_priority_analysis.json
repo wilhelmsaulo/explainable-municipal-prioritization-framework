@@ -1,0 +1,37 @@
+{
+  "schema_version": "1.0",
+  "scope": "contextual analysis only; primary score unchanged",
+  "municipalities": 144,
+  "years": [
+    2022,
+    2023,
+    2024,
+    2025
+  ],
+  "state_annual_median_selected_rate_per_100k_women": {
+    "2022": 323.65699967557924,
+    "2023": 367.8836693749388,
+    "2024": 358.144572646214,
+    "2025": 363.47868129654796
+  },
+  "municipal_mean_rate_median": 350.88556006207693,
+  "associations": {
+    "additive_mean_priority_score_vs_mean_selected_rate_spearman": -0.06914235190097259,
+    "additive_mean_priority_rank_vs_mean_selected_rate_spearman": 0.06521789367607753,
+    "additive_mean_score_vs_mean_selected_rate_spearman": -0.06914235190097259,
+    "topsis_mean_score_vs_mean_selected_rate_spearman": -0.03933767382043244,
+    "promethee_ii_mean_score_vs_mean_selected_rate_spearman": -0.05223856603166948
+  },
+  "patterns": {
+    "higher_priority_higher_observed_rate": 12,
+    "higher_priority_lower_observed_rate": 13,
+    "other_priority_lower_observed_rate": 59,
+    "other_priority_higher_observed_rate": 60
+  },
+  "interpretation_limits": [
+    "Administrative records do not estimate incidence, hidden violence, individual risk, or underreporting.",
+    "Associations are descriptive and do not establish causality.",
+    "Observed rates may reflect reporting access, service availability, recording practices, and institutional capacity.",
+    "Contextual results do not alter indicators, weights, scores, ranks, or profiles."
+  ]
+}
