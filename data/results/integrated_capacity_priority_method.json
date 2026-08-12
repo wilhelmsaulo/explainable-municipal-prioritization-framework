@@ -2,7 +2,7 @@
   "schema_version": "1.0",
   "method_version": "1.2.0",
   "configuration": "config/capacity_priority.yml",
-  "research_target": "Relative priority for strengthening municipal service capacity under multimodal access constraints.",
+  "research_target": "Municipal prioritization for strengthening intersectoral response capacity to violence against women in Pará, considering institutional deficits, service-network availability, and multimodal accessibility constraints.",
   "excluded_outcomes": [
     "police occurrence counts",
     "police occurrence rates",
@@ -110,7 +110,7 @@
   },
   "warnings": [
     "The scores are relative decision-support constructs, not ground truth.",
-    "The model prioritizes capacity strengthening and does not estimate violence incidence or underreporting.",
+    "The model prioritizes strengthening intersectoral response capacity to violence against women and does not estimate violence incidence or underreporting.",
     "Facility presence and mapped proximity do not measure service quality, capacity, frequency, affordability, travel time, or seasonality.",
     "Profile labels are exploratory robustness summaries and not automatic funding decisions."
   ]
