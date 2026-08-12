@@ -1,13 +1,15 @@
 # Explainable Municipal Prioritization Framework
 
-Explainable and reproducible framework for integrating official Brazilian public data sources and supporting municipal-level policy prioritization.
+Multicriteria model for municipal prioritization of response capacity to violence against women in Pará, Brazil.
 
 ## Current article application
 
-The active Pará application estimates relative priority for strengthening
-municipal service capacity under multimodal access constraints. It covers all
-144 municipalities and crosses 12 transport scenarios with four declared
-macro-weight scenarios, producing 48 integrated scenarios.
+The active Pará application prioritizes the strengthening of municipal and
+intersectoral response capacity to violence against women. It covers all 144
+municipalities and jointly considers institutional deficits, service-network
+availability, and multimodal accessibility constraints. The analysis crosses
+12 accessibility scenarios with four declared macro-weight schemes, producing
+48 integrated configurations.
 
 The application uses institutional capacity (MUNIC 2023), health services and
 professionals (CNES), specialized social assistance (MDS/SNAS), state judicial
@@ -16,9 +18,11 @@ transport sources (MapBiomas, ANTAQ, and DECEA/ICA). The population field
 currently named `population_2023` represents the 2022 Demographic Census
 released/processed in 2023.
 
-Police data for 2022--2025 are preserved in the broad integrated dataset but
-are explicitly excluded from this application. The framework does not estimate
-violence incidence, hidden incidence, individual risk, or underreporting.
+Police data for 2022--2025 are preserved for contextual and sensitivity
+analyses but are not criteria in the primary score. Female population from the
+2022 Demographic Census supports contextual analyses and denominators where
+applicable. The model does not estimate violence incidence, hidden incidence,
+individual risk, or underreporting.
 
 See `docs/capacity_priority_framework.md` for the authoritative analytical
 contract and reproducible commands.
@@ -145,8 +149,8 @@ application.
 **Live experimental dashboard:** https://explainable-municipal-prioritization-framework-zyur6g28v6z5uba.streamlit.app/
 
 
-A read-only Streamlit dashboard visualizes the 144 municipalities and all 48
-audited configurations without recalculating scores or permitting arbitrary
+A read-only Streamlit dashboard presents the 144 municipalities and all 48
+precomputed configurations without recalculating scores or permitting arbitrary
 parameter changes. It includes the statewide view, municipal profiles,
 municipality comparison, stability diagnostics, and CSV export.
 
