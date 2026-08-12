@@ -18,8 +18,8 @@ transport sources (MapBiomas, ANTAQ, and DECEA/ICA). The population field
 currently named `population_2023` represents the 2022 Demographic Census
 released/processed in 2023.
 
-Police data for 2022--2025 are preserved for contextual and sensitivity
-analyses but are not criteria in the primary score. Female population from the
+Police data for 2022--2025 are preserved for contextual analyses but are not
+criteria in the primary score. Female population from the
 2022 Demographic Census supports contextual analyses and denominators where
 applicable. The model does not estimate violence incidence, hidden incidence,
 individual risk, or underreporting.
@@ -27,29 +27,31 @@ individual risk, or underreporting.
 See `docs/capacity_priority_framework.md` for the authoritative analytical
 contract and reproducible commands.
 
-## Repository capabilities and legacy components
+## Active analytical workflow
 
-The framework currently provides:
+The current article application provides:
 
-- an authoritative municipality reference collected from the IBGE Localities API;
-- standardization and validation of the 144 municipalities of Pará;
-- a generic connector for the official SIDRA values API;
-- a unified `DataSourceManager`;
-- declarative indicator and criteria catalogs in YAML;
-- cache, snapshots and provenance metadata;
-- police-data import from CSV/XLSX;
-- hybrid Entropy-CRITIC weighting;
-- TOPSIS municipal prioritization;
-- criterion-level local explanations;
-- perturbation-based rank sensitivity analysis;
-- command-line execution, automated tests and continuous integration.
+- an audited input matrix covering all 144 municipalities;
+- a hierarchical additive model as the primary prioritization method;
+- 12 predeclared multimodal accessibility scenarios;
+- four predeclared macro-dimension weighting schemes;
+- independent TOPSIS and PROMETHEE II comparisons;
+- an SMAA-inspired Monte Carlo analysis of weight uncertainty;
+- contextual analysis of female population and 2022--2025 police records;
+- machine-readable audits, automated tests, and continuous integration.
+
+Generic connectors, police-file import, Entropy-CRITIC weighting, and other
+earlier components remain in the repository as reusable or legacy
+capabilities. They are not part of the active article application unless the
+versioned contract in `config/capacity_priority.yml` explicitly declares them.
 
 ## Architecture
 
 ```text
-Official sources -> Connectors -> DataSourceManager -> Validation -> Standardization
-                 -> Integration -> Indicators -> Hybrid MCDA -> Explainability
-                 -> Sensitivity -> Results
+Official sources -> Validation -> Audited municipal matrix
+                 -> Three model dimensions -> Primary additive prioritization
+                 -> TOPSIS / PROMETHEE II / SMAA comparisons
+                 -> Stability and contextual analyses -> Results
 ```
 
 The repository is API-first. Local files are generated only as reproducible outputs, cache or audit snapshots.
@@ -146,7 +148,7 @@ application.
 
 ## Interactive scientific dashboard
 
-**Live experimental dashboard:** https://explainable-municipal-prioritization-framework-zyur6g28v6z5uba.streamlit.app/
+**Live experimental dashboard:** https://municipal-response-capacity-vaw-pa.streamlit.app/
 
 
 A read-only Streamlit dashboard presents the 144 municipalities and all 48
