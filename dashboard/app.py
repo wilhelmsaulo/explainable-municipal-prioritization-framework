@@ -37,6 +37,22 @@ TEXT = {
         "navigation": "Navigation",
         "analysis_settings": "Analysis configuration",
         "overview_page": "Overview",
+        "contextual_page": "Contextual evidence",
+        "contextual_title": "Contextual evidence from administrative records",
+        "contextual_intro": "This section describes 2022–2025 police records in relation to the published capacity-priority outputs. Female population from the 2022 Census is used only as the rate denominator. Neither source changes the priority score or ranking.",
+        "contextual_boundary": "Administrative records do not estimate incidence, hidden violence, individual risk, or underreporting. Differences may also reflect access to reporting, services, recording practices, and institutional capacity. The associations below are descriptive and do not establish causality.",
+        "female_population": "Female population (Census 2022)",
+        "selected_records": "Selected records, 2022–2025",
+        "mean_rate": "Mean annual rate per 100,000 women",
+        "annual_series": "Annual selected administrative-record series",
+        "year": "Year",
+        "record_count": "Selected records",
+        "observed_rate": "Observed rate per 100,000 women",
+        "method_associations": "Descriptive association with mean observed rate",
+        "method_associations_note": "Spearman correlations compare each method's mean priority score with the municipality's mean 2022–2025 observed rate.",
+        "method": "Method",
+        "correlation": "Spearman correlation",
+        "contextual_pattern": "Descriptive cross-tabulation",
         "robustness_page": "Stability analysis",
         "data_method_page": "Data and methodology",
         "about_page": "About the project",
@@ -149,6 +165,22 @@ TEXT = {
         "navigation": "Navegação",
         "analysis_settings": "Configuração da análise",
         "overview_page": "Visão geral",
+        "contextual_page": "Evidência contextual",
+        "contextual_title": "Evidência contextual dos registros administrativos",
+        "contextual_intro": "Esta seção descreve os registros policiais de 2022–2025 em relação aos resultados publicados de prioridade da capacidade de resposta. A população feminina do Censo 2022 é usada apenas como denominador das taxas. Nenhuma dessas fontes altera o escore ou o ranking de prioridade.",
+        "contextual_boundary": "Registros administrativos não estimam incidência, violência oculta, risco individual ou subnotificação. As diferenças também podem refletir acesso ao registro, serviços, práticas de registro e capacidade institucional. As associações abaixo são descritivas e não estabelecem causalidade.",
+        "female_population": "População feminina (Censo 2022)",
+        "selected_records": "Registros selecionados, 2022–2025",
+        "mean_rate": "Taxa média anual por 100 mil mulheres",
+        "annual_series": "Série anual dos registros administrativos selecionados",
+        "year": "Ano",
+        "record_count": "Registros selecionados",
+        "observed_rate": "Taxa observada por 100 mil mulheres",
+        "method_associations": "Associação descritiva com a taxa média observada",
+        "method_associations_note": "As correlações de Spearman comparam o escore médio de prioridade de cada método com a taxa municipal média observada em 2022–2025.",
+        "method": "Método",
+        "correlation": "Correlação de Spearman",
+        "contextual_pattern": "Cruzamento descritivo",
         "robustness_page": "Análise de estabilidade",
         "data_method_page": "Dados e metodologia",
         "about_page": "Sobre o projeto",
@@ -543,6 +575,49 @@ def comparison_tab(data, scenario: str, language: str, tx: dict[str, str]) -> No
     )
 
 
+def contextual_evidence_page(data, language: str, tx: dict[str, str]) -> None:
+    st.subheader(tx["contextual_title"])
+    st.write(tx["contextual_intro"])
+    st.warning(tx["contextual_boundary"])
+
+    names = sorted(data.contextual_profiles["municipality"].tolist())
+    municipality = st.selectbox(tx["municipality"], names, key="contextual_municipality")
+    profile = data.contextual_profiles.set_index("municipality").loc[municipality]
+    series = data.contextual_series.loc[
+        data.contextual_series["municipality"] == municipality,
+        ["year", "selected_vaw_records", "rate_selected_vaw_records_per_100k_women"],
+    ].sort_values("year")
+
+    c1, c2, c3 = st.columns(3)
+    c1.metric(tx["female_population"], f"{int(profile['female_population_2022']):,}")
+    c2.metric(tx["selected_records"], f"{int(profile['selected_vaw_records_2022_2025']):,}")
+    c3.metric(tx["mean_rate"], fmt(profile["mean_annual_selected_vaw_rate_per_100k_women"], language, 1))
+
+    chart = series.rename(columns={"year": tx["year"], "selected_vaw_records": tx["record_count"], "rate_selected_vaw_records_per_100k_women": tx["observed_rate"]})
+    fig = px.line(chart, x=tx["year"], y=tx["observed_rate"], markers=True, title=tx["annual_series"], hover_data=[tx["record_count"]])
+    fig.update_xaxes(dtick=1)
+    fig.update_layout(height=380)
+    st.plotly_chart(fig, use_container_width=True)
+    st.dataframe(chart, hide_index=True, use_container_width=True)
+
+    associations = data.contextual_analysis["associations"]
+    methods = pd.DataFrame({tx["method"]: ["Additive", "PROMETHEE II", "TOPSIS"], tx["correlation"]: [associations["additive_mean_score_vs_mean_selected_rate_spearman"], associations["promethee_ii_mean_score_vs_mean_selected_rate_spearman"], associations["topsis_mean_score_vs_mean_selected_rate_spearman"]]})
+    st.markdown(f"#### {tx['method_associations']}")
+    st.caption(tx["method_associations_note"])
+    st.dataframe(methods, hide_index=True, use_container_width=True)
+
+    patterns = data.contextual_analysis["patterns"]
+    labels = {
+        "higher_priority_higher_observed_rate": "Higher priority · higher observed rate" if language == "en" else "Maior prioridade · maior taxa observada",
+        "higher_priority_lower_observed_rate": "Higher priority · lower observed rate" if language == "en" else "Maior prioridade · menor taxa observada",
+        "other_priority_higher_observed_rate": "Other priorities · higher observed rate" if language == "en" else "Demais prioridades · maior taxa observada",
+        "other_priority_lower_observed_rate": "Other priorities · lower observed rate" if language == "en" else "Demais prioridades · menor taxa observada",
+    }
+    pattern_frame = pd.DataFrame({tx["contextual_pattern"]: [labels[key] for key in labels], tx["municipalities"]: [patterns[key] for key in labels]})
+    st.dataframe(pattern_frame, hide_index=True, use_container_width=True)
+
+
+
 def methodology_tab(data, language: str, tx: dict[str, str]) -> None:
     st.subheader(tx["method_title"])
     if language == "en":
@@ -682,6 +757,7 @@ page_labels = {
     "overview": tx["overview_page"],
     "profile": tx["profile_tab"],
     "comparison": tx["compare_tab"],
+    "contextual": tx["contextual_page"],
     "robustness": tx["robustness_page"],
     "data_method": tx["data_method_page"],
     "about": tx["about_page"],
@@ -734,6 +810,8 @@ elif page == "profile":
     municipal_profile_tab(data, scenario, language, tx)
 elif page == "comparison":
     comparison_tab(data, scenario, language, tx)
+elif page == "contextual":
+    contextual_evidence_page(data, language, tx)
 elif page == "robustness":
     robustness_page(data, language, tx)
 elif page == "data_method":
