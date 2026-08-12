@@ -48,3 +48,27 @@ Population and police records are contextual variables and do not enter the prim
 Administrative records do not estimate incidence, hidden violence, individual risk, or underreporting. Municipal differences may also reflect access to reporting, service availability, recording practices, and institutional capacity.
 
 The female population is fixed at the 2022 Census value for annual rate denominators. These rates describe recorded events relative to the female population; they are not estimates of individual probability or annual incidence.
+
+
+## Contextual relationship with municipal priority
+
+The contextual analysis compares each municipality's four-year mean selected-record rate with the previously calculated capacity-priority outputs. It is descriptive and does not modify the model.
+
+Spearman associations between the mean observed rate and the mean priority score are:
+
+| Method | Spearman correlation |
+|---|---:|
+| Hierarchical additive | -0.069 |
+| PROMETHEE II | -0.052 |
+| TOPSIS | -0.039 |
+
+Year-specific associations for the additive score range from -0.0497 to -0.1013. These values indicate little monotonic correspondence between administrative-record rates and capacity-priority scores. The capacity model therefore does not reproduce the ordering of police records.
+
+For descriptive comparison, municipalities are divided using two previously declared or sample-based references: priority in the upper quartile in at least 75% of configurations and a four-year mean observed rate above or below the municipal median. The resulting counts are:
+
+- 12 municipalities: higher capacity-strengthening priority and higher observed rate;
+- 13 municipalities: higher capacity-strengthening priority and lower observed rate;
+- 60 municipalities: other priority profiles and higher observed rate;
+- 59 municipalities: other priority profiles and lower observed rate.
+
+These groups are interpretive cross-tabulations, not new priority classes. In particular, a lower observed rate cannot be interpreted as lower violence, hidden violence, or underreporting.
