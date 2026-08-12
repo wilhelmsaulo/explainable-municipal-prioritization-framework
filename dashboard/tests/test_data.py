@@ -24,6 +24,10 @@ def test_dashboard_contract_matches_audited_outputs():
     assert len(data.scenario_names) == EXPECTED_SCENARIOS
     assert REFERENCE_SCENARIO in data.scenario_names
     assert len(data.indicator_profile) == 7
+    assert len(data.contextual_profiles) == EXPECTED_MUNICIPALITIES
+    assert len(data.contextual_series) == EXPECTED_MUNICIPALITIES * 4
+    assert set(data.contextual_series["year"].astype(int)) == {2022, 2023, 2024, 2025}
+    assert data.contextual_analysis["scope"] == "contextual analysis only; primary score unchanged"
     assert len(data.boundaries["features"]) == EXPECTED_MUNICIPALITIES
     assert data.municipalities[["latitude", "longitude"]].notna().all().all()
 
