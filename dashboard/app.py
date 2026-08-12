@@ -30,23 +30,23 @@ from dashboard.data import (  # noqa: E402
 
 TEXT = {
     "en": {
-        "page_title": "Municipal Priority · Pará",
-        "title": "🧭 Municipal priority for capacity strengthening",
-        "caption": "Pará · 144 municipalities · 48 audited configurations · read-only visualization",
+        "page_title": "Response Capacity to Violence Against Women · Pará",
+        "title": "Municipal prioritization of response capacity to violence against women",
+        "caption": "Pará · 144 municipalities · 48 precomputed configurations · read-only visualization",
         "language": "Language",
         "navigation": "Navigation",
         "analysis_settings": "Analysis configuration",
         "overview_page": "Overview",
-        "robustness_page": "Robustness",
+        "robustness_page": "Stability analysis",
         "data_method_page": "Data and methodology",
         "about_page": "About the project",
-        "configuration": "Official configuration",
+        "configuration": "Analysis configuration",
         "transport_scenario": "Transport submodel scenario",
         "macro_weights_selector": "Macro-dimension weights",
         "framework_dimensions": "Framework dimensions",
-        "always_included": "Every final score combines all three macro-dimensions. The transport selector changes only the transport submodel; it does not remove or replace the other dimensions.",
+        "always_included": "Every score combines institutional capacity, the service network, and multimodal accessibility. The accessibility selector changes only that dimension; it does not remove or replace the others.",
         "institutional_card": "1 · Institutional deficit",
-        "institutional_card_body": "Municipal institutional capacity for policies addressing women.",
+        "institutional_card_body": "Municipal institutional capacity for policies addressing violence against women.",
         "institutional_sources": "Source: MUNIC 2023",
         "service_card": "2 · Service-network deficit",
         "service_card_body": "Health services and professionals, specialized social assistance, justice access, and the specialized protection network.",
@@ -54,8 +54,8 @@ TEXT = {
         "transport_card": "3 · Transport barrier",
         "transport_card_body": "Road, waterway, and air access represented through 12 predeclared multimodal scenarios.",
         "transport_sources": "Sources: MapBiomas, ANTAQ, and DECEA/ICA",
-        "context_note": "IBGE population supports context and denominators where applicable. Police records from 2022–2025 are preserved in the repository but deliberately excluded from this framework.",
-        "selected_configuration": "Selected audited configuration",
+        "context_note": "Female population from the 2022 Demographic Census supports contextual analyses and denominators. Police records from 2022–2025 are used only for contextual and sensitivity analyses; neither source is a criterion in the primary score.",
+        "selected_configuration": "Selected configuration",
         "transport_interpretation": "Transport interpretation",
         "macro_weights_detail": "Macro weights",
         "institutional_weight": "institutional",
@@ -83,7 +83,7 @@ TEXT = {
         "priority_rank": "Priority rank",
         "top_quartile_map": "Top-quartile frequency",
         "municipalities": "Municipalities",
-        "configurations": "Official configurations",
+        "configurations": "Analysis configurations",
         "highest_score": "Highest score",
         "minimum_correlation": "Minimum rank correlation",
         "rank_title": "Ranking for the selected configuration",
@@ -106,7 +106,7 @@ TEXT = {
         "macro_weight": "Macro weight",
         "rank_48": "Rank across 48 configurations",
         "stability_profile": "Stability profile",
-        "stability_note": "This label summarizes robustness across configurations; it is not an automatic allocation decision.",
+        "stability_note": "This label summarizes stability across configurations; it is not an automatic allocation decision.",
         "compare_title": "Municipality comparison",
         "choose_municipalities": "Select 2 to 5 municipalities",
         "choose_warning": "Select at least two municipalities.",
@@ -120,7 +120,7 @@ TEXT = {
         "worst_rank": "Worst rank",
         "method_title": "Methodology, data, and limitations",
         "agreement_title": "Agreement with the reference configuration",
-        "robustness_title": "Robustness across 48 configurations",
+        "robustness_title": "Stability analysis across 48 configurations",
         "robustness_caption": "Sensitivity summaries compare each predeclared configuration with the reference configuration.",
         "median_correlation": "Median rank correlation",
         "minimum_top10": "Minimum top-10 overlap",
@@ -130,35 +130,35 @@ TEXT = {
         "indicator_dictionary_note": "These seven indicators are the non-transport inputs used by the active framework.",
         "download_dictionary": "Download indicator dictionary (CSV)",
         "about_title": "About the project",
-        "about_body": "This experimental dashboard presents precomputed outputs from the Explainable Municipal Prioritization Framework for all 144 municipalities of Pará, Brazil.",
+        "about_body": "This dashboard presents precomputed results from the multicriteria model for municipal prioritization of response capacity to violence against women in all 144 municipalities of Pará, Brazil.",
         "live_version": "Live development version",
         "research_boundary": "Research boundary",
-        "research_boundary_body": "The framework prioritizes capacity strengthening under multimodal access constraints. It does not estimate violence, underreporting, individual risk, or automatic funding decisions.",
+        "research_boundary_body": "The model prioritizes the strengthening of municipal and intersectoral response capacity to violence against women. It does not estimate violence incidence, underreporting, individual risk, or automatic funding decisions.",
         "spearman": "Spearman correlation",
         "top10_overlap": "Top-10 overlap",
         "mean_shift": "Mean absolute rank shift",
         "max_shift": "Maximum absolute rank shift",
         "validation_error": "Result validation failed",
-        "footer": "Explainable municipal prioritization framework · official precomputed outputs · dashboard parameters cannot be changed.",
+        "footer": "Municipal prioritization of response capacity to violence against women · precomputed results · dashboard parameters cannot be changed.",
     },
     "pt": {
-        "page_title": "Prioridade Municipal · Pará",
-        "title": "🧭 Prioridade municipal para fortalecimento de capacidades",
-        "caption": "Pará · 144 municípios · 48 configurações auditadas · visualização somente leitura",
+        "page_title": "Capacidade de resposta à violência contra a mulher · Pará",
+        "title": "Priorização municipal da capacidade de resposta à violência contra a mulher",
+        "caption": "Pará · 144 municípios · 48 configurações pré-calculadas · visualização somente leitura",
         "language": "Idioma",
         "navigation": "Navegação",
         "analysis_settings": "Configuração da análise",
         "overview_page": "Visão geral",
-        "robustness_page": "Robustez",
+        "robustness_page": "Análise de estabilidade",
         "data_method_page": "Dados e metodologia",
         "about_page": "Sobre o projeto",
-        "configuration": "Configuração oficial",
+        "configuration": "Configuração da análise",
         "transport_scenario": "Cenário do submodelo de transporte",
         "macro_weights_selector": "Pesos das macrodimensões",
         "framework_dimensions": "Dimensões do framework",
-        "always_included": "Todo escore final combina as três macrodimensões. O seletor de transporte modifica apenas o submodelo de transporte; ele não remove nem substitui as demais dimensões.",
+        "always_included": "Todo escore combina capacidade institucional, rede de serviços e acessibilidade multimodal. O seletor de acessibilidade modifica apenas essa dimensão; ele não remove nem substitui as demais.",
         "institutional_card": "1 · Déficit institucional",
-        "institutional_card_body": "Capacidade institucional municipal para políticas destinadas às mulheres.",
+        "institutional_card_body": "Capacidade institucional municipal para políticas de enfrentamento à violência contra a mulher.",
         "institutional_sources": "Fonte: MUNIC 2023",
         "service_card": "2 · Déficit da rede de serviços",
         "service_card_body": "Serviços e profissionais de saúde, assistência social especializada, acesso à justiça e rede especializada de proteção.",
@@ -166,8 +166,8 @@ TEXT = {
         "transport_card": "3 · Barreira de transporte",
         "transport_card_body": "Acesso rodoviário, hidroviário e aéreo representado por 12 cenários multimodais previamente declarados.",
         "transport_sources": "Fontes: MapBiomas, ANTAQ e DECEA/ICA",
-        "context_note": "A população do IBGE apoia o contexto e os denominadores quando aplicável. Os registros policiais de 2022–2025 estão preservados no repositório, mas foram deliberadamente excluídos deste framework.",
-        "selected_configuration": "Configuração auditada selecionada",
+        "context_note": "A população feminina do Censo 2022 apoia análises contextuais e denominadores. Os registros policiais de 2022–2025 são usados somente em análises contextuais e de sensibilidade; nenhuma dessas fontes integra o escore principal.",
+        "selected_configuration": "Configuração selecionada",
         "transport_interpretation": "Interpretação do transporte",
         "macro_weights_detail": "Pesos macro",
         "institutional_weight": "institucional",
@@ -195,7 +195,7 @@ TEXT = {
         "priority_rank": "Posição no ranking",
         "top_quartile_map": "Frequência no quartil superior",
         "municipalities": "Municípios",
-        "configurations": "Configurações oficiais",
+        "configurations": "Configurações",
         "highest_score": "Maior escore",
         "minimum_correlation": "Correlação mínima entre rankings",
         "rank_title": "Ranking da configuração selecionada",
@@ -218,7 +218,7 @@ TEXT = {
         "macro_weight": "Peso macro",
         "rank_48": "Posição nas 48 configurações",
         "stability_profile": "Perfil de estabilidade",
-        "stability_note": "Este rótulo resume a robustez entre configurações; não constitui decisão automática de alocação.",
+        "stability_note": "Este rótulo resume a estabilidade entre configurações; não constitui decisão automática de alocação.",
         "compare_title": "Comparação entre municípios",
         "choose_municipalities": "Selecione de 2 a 5 municípios",
         "choose_warning": "Selecione pelo menos dois municípios.",
@@ -232,7 +232,7 @@ TEXT = {
         "worst_rank": "Pior posição",
         "method_title": "Metodologia, dados e limitações",
         "agreement_title": "Concordância com a configuração de referência",
-        "robustness_title": "Robustez nas 48 configurações",
+        "robustness_title": "Análise de estabilidade nas 48 configurações",
         "robustness_caption": "Os resumos de sensibilidade comparam cada configuração previamente declarada com a configuração de referência.",
         "median_correlation": "Correlação mediana entre rankings",
         "minimum_top10": "Menor sobreposição do top 10",
@@ -242,16 +242,16 @@ TEXT = {
         "indicator_dictionary_note": "Estes sete indicadores são as entradas não relacionadas ao transporte utilizadas pelo framework ativo.",
         "download_dictionary": "Baixar dicionário dos indicadores (CSV)",
         "about_title": "Sobre o projeto",
-        "about_body": "Este dashboard experimental apresenta resultados pré-calculados do Explainable Municipal Prioritization Framework para os 144 municípios do Pará.",
+        "about_body": "Este dashboard apresenta resultados pré-calculados do modelo multicritério de priorização municipal da capacidade de resposta à violência contra a mulher nos 144 municípios do Pará.",
         "live_version": "Versão de desenvolvimento ativa",
         "research_boundary": "Limite da pesquisa",
-        "research_boundary_body": "O framework prioriza o fortalecimento de capacidades sob restrições de acesso multimodal. Ele não estima violência, subnotificação, risco individual ou decisões automáticas de financiamento.",
+        "research_boundary_body": "O modelo prioriza o fortalecimento da capacidade municipal e intersetorial de resposta à violência contra a mulher. Ele não estima incidência de violência, subnotificação, risco individual ou decisões automáticas de financiamento.",
         "spearman": "Correlação de Spearman",
         "top10_overlap": "Sobreposição top 10",
         "mean_shift": "Mudança média absoluta de posição",
         "max_shift": "Mudança máxima absoluta de posição",
         "validation_error": "Falha na validação dos resultados",
-        "footer": "Framework explicável de priorização municipal · resultados oficiais pré-calculados · os parâmetros não podem ser alterados.",
+        "footer": "Priorização municipal da capacidade de resposta à violência contra a mulher · resultados pré-calculados · os parâmetros não podem ser alterados.",
     },
 }
 
@@ -554,7 +554,7 @@ def methodology_tab(data, language: str, tx: dict[str, str]) -> None:
 
             - **Target:** relative priority for strengthening municipal capacity under multimodal access constraints.
             - **Dimensions:** institutional deficit, service-network deficit, and transport barrier.
-            - **Robustness:** 12 multimodal scenarios × 4 macro-weight configurations = 48 configurations.
+            - **Stability analysis:** 12 multimodal scenarios × 4 macro-weight configurations = 48 configurations.
             - **Normalization:** within-sample percentile rank with average treatment of ties.
             - **Deliberate exclusion:** police records do not enter the active framework.
             - **Population:** 2022 Demographic Census, released and processed in 2023.
@@ -572,7 +572,7 @@ def methodology_tab(data, language: str, tx: dict[str, str]) -> None:
 
             - **Objeto:** prioridade relativa para fortalecimento da capacidade municipal sob restrições de acesso multimodal.
             - **Dimensões:** déficit institucional, déficit da rede de serviços e barreira de transporte.
-            - **Robustez:** 12 cenários multimodais × 4 configurações de pesos macro = 48 configurações.
+            - **Análise de estabilidade:** 12 cenários multimodais × 4 configurações de pesos macro = 48 configurações.
             - **Normalização:** posição percentílica dentro da amostra, com média para empates.
             - **Exclusão deliberada:** registros policiais não integram o framework atual.
             - **População:** Censo Demográfico 2022, publicado e processado em 2023.
@@ -634,14 +634,13 @@ def about_page(tx: dict[str, str]) -> None:
     st.subheader(tx["about_title"])
     st.write(tx["about_body"])
     st.markdown(
-        "**GitHub:** [Explainable Municipal Prioritization Framework]"
+        "**GitHub:** [Municipal Response Capacity Prioritization Model]"
         "(https://github.com/wilhelmsaulo/explainable-municipal-prioritization-framework)"
     )
     st.markdown(
         "**Dashboard:** [Streamlit Community Cloud]"
         "(https://explainable-municipal-prioritization-framework-zyur6g28v6z5uba.streamlit.app/)"
     )
-    st.info(f"**{tx['live_version']}:** branch `agent/transport-indicators` · draft PR #2")
     st.markdown(f"#### {tx['research_boundary']}")
     st.write(tx["research_boundary_body"])
 
