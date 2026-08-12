@@ -1,4 +1,3 @@
-/bin/bash: line 1: ruff: command not found
 from __future__ import annotations
 
 import argparse
