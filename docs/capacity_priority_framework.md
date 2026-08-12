@@ -52,7 +52,7 @@ silently recalibrated by editing constants in source code.
 The current configuration combines 12 accessibility scenarios and four
 macro-weight schemes, generating 48 integrated configurations for 144
 municipalities. Police occurrences and police rates are not criteria in the
-primary score. They are retained for contextual and sensitivity analyses and
+primary score. They are retained for contextual analyses and
 must not be interpreted as violence incidence or underreporting. Female
 population from the 2022 Demographic Census supports contextual analyses and
 denominators where applicable.
@@ -70,7 +70,7 @@ same command and rejects missing municipalities, invalid weights, missing or
 infinite outputs, out-of-range scores, or regression differences introduced
 during the initial migration from code constants to configuration.
 
-## Diagnostics and explainability
+## Diagnostics and contribution analysis
 
 ```bash
 empriority diagnose-capacity-framework \
@@ -113,7 +113,7 @@ The field currently stored as `population_2023` represents the 2022
 Demographic Census released and processed in 2023. Population supports legacy
 rates and provenance checks but is not a criterion in the capacity-priority
 framework. Police data for 2022--2025 remain preserved in the broad integrated matrix for
-contextual and sensitivity analyses but are inactive in the primary score.
+contextual analyses but are inactive in the primary score.
 
 ## Portability
 
