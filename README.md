@@ -1,4 +1,4 @@
-# Explainable Municipal Prioritization Framework
+# Municipal Prioritization of Response Capacity to Violence Against Women
 
 Multicriteria model for municipal prioritization of response capacity to violence against women in Pará, Brazil.
 
