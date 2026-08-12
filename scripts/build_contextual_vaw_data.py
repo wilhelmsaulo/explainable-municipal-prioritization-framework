@@ -1,11 +1,12 @@
+/bin/bash: line 1: ruff: command not found
 from __future__ import annotations
 
+import argparse
 import hashlib
 import json
 import re
 import unicodedata
-import argparse
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from pathlib import Path
 
 import pandas as pd
@@ -152,7 +153,7 @@ def main() -> None:
     contextual.to_csv(out / "contextual_vaw_municipal_year_2022_2025_pa.csv", index=False)
     audit = {
         "schema_version": "1.1",
-        "generated_at_utc": datetime.now(timezone.utc).isoformat(),
+        "generated_at_utc": datetime.now(UTC).isoformat(),
         "ibge": {
             "source": SIDRA_URL,
             "table": 9514,
