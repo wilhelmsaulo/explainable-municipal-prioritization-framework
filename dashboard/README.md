@@ -12,9 +12,13 @@ The dashboard combines three dimensions in every configuration:
 3. multimodal accessibility.
 
 Female population from the 2022 Demographic Census and police records from
-2022--2025 support contextual and sensitivity analyses. They are not criteria
+2022--2025 support contextual analyses. They are not criteria
 in the primary score, and police records are not interpreted as violence
 incidence or underreporting.
+
+## Published application
+
+https://municipal-response-capacity-vaw-pa.streamlit.app/
 
 ## Run locally
 

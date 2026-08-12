@@ -30,7 +30,7 @@ interpretive_context:
     role: contextual_and_denominator
     active_in_primary_score: false
   police_records_2022_2025:
-    role: contextual_and_sensitivity_analysis
+    role: contextual_analysis
     active_in_primary_score: false
     interpretation: >-
       Observed records do not estimate incidence, hidden violence, individual
