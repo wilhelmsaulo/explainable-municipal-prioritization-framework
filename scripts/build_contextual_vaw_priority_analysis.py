@@ -7,7 +7,6 @@ from pathlib import Path
 import numpy as np
 import pandas as pd
 
-
 RATE = "rate_selected_vaw_records_per_100k_women"
 
 
