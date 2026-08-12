@@ -1,55 +1,79 @@
 {
-  "schema_version": "1.0",
-  "audit_date": "2026-08-12",
-  "scope": "Contextual data for violence-against-women interpretation; no change to the primary prioritization model.",
-  "female_population_2022": {
-    "required_role": "Denominator for contextual rates per 100,000 women and descriptive context only.",
-    "active_in_primary_score": false,
-    "status": "missing_from_repository",
-    "finding": "The repository contains population_2023, documented as the total population from the 2022 Demographic Census released or processed in 2023. It does not contain municipal female population.",
-    "rule": "Do not label rates calculated with population_2023 as rates per 100,000 women. Do not construct female-population rates until an official municipal female-population table from the 2022 Census is added and audited."
-  },
-  "police_records_2022_2025": {
-    "required_role": "Contextual and sensitivity analysis only.",
-    "active_in_primary_score": false,
-    "municipal_aggregate_file": "data/processed/police_aggregated_2022_2025_pa.csv",
+  "schema_version": "1.1",
+  "generated_at_utc": "2026-08-12T16:42:08.234208+00:00",
+  "ibge": {
+    "source": "https://apisidra.ibge.gov.br/values/t/9514/n6/in%20n3%2015/v/93/p/2022/c2/5?formato=json",
+    "table": 9514,
+    "variable": 93,
+    "sex_classification": 5,
+    "year": 2022,
     "municipalities": 144,
-    "years_observed_per_municipality": 4,
-    "status": "municipal_four_year_aggregate_available_but_annual_source_files_missing",
-    "available_fields": [
-      "all_female_records",
-      "violencia_domestica_lesao",
-      "lesao_corporal",
-      "violencia_sexual",
-      "estupro",
-      "estupro_vulneravel",
-      "homicidio_mulher",
-      "feminicidio",
-      "tentativa_feminicidio",
-      "feminicidio_any"
-    ],
-    "limitations": [
-      "The committed aggregate does not preserve annual municipal values, so temporal trend, persistence, and year-specific coverage cannot be independently reconstructed from main.",
-      "Raw annual source files and their source metadata are not committed in data/source or data/manual.",
-      "Observed records do not estimate incidence, hidden violence, individual risk, or underreporting.",
-      "Differences between municipalities may reflect reporting access, service availability, recording practices, and institutional capacity."
-    ],
-    "rules": [
-      "Do not include police counts or rates in the primary score.",
-      "Use the four-year aggregate only for clearly labelled descriptive or sensitivity analyses.",
-      "Do not claim annual trends or persistence until the annual files are restored and audited.",
-      "Treat feminicide counts as a supplementary descriptive outcome because rare counts and structural zeros limit municipal discrimination."
-    ]
+    "sum_female_population": 4068318
   },
-  "current_rate_fields": {
-    "status": "not_suitable_as_female_population_rates",
-    "denominator": "population_2023 (total population; 2022 Census provenance)",
-    "location": "data/processed/integrated_municipal_matrix.csv",
-    "rule": "Retain only as legacy total-population-normalized fields; do not use them as the planned per-100,000-women contextual analysis."
+  "police": {
+    "reference_period": "2022-2025",
+    "annual_rows": 576,
+    "municipalities_per_year": {
+      "2022": 144,
+      "2023": 144,
+      "2024": 144,
+      "2025": 144
+    },
+    "raw_files": [
+      {
+        "year": 2022,
+        "original_filename": "17_06_26(5).xlsx",
+        "sha256": "b9dce76f37fca6708476822d1b06727f3f0f87d20f1cd940a3ccd5d1655367b2",
+        "rows": 170649,
+        "female_rows": 71797,
+        "exact_duplicate_rows_retained": 195,
+        "municipality_labels_before_alias": 145,
+        "municipalities_after_alias": 144
+      },
+      {
+        "year": 2023,
+        "original_filename": "17_06_26 (1)(2).xlsx",
+        "sha256": "174d7625c52422abcaa6505de8eb444a3b171bc26971308798b52010b6f71dda",
+        "rows": 166749,
+        "female_rows": 69180,
+        "exact_duplicate_rows_retained": 454,
+        "municipality_labels_before_alias": 145,
+        "municipalities_after_alias": 144
+      },
+      {
+        "year": 2024,
+        "original_filename": "17_06_26 (2)(2).xlsx",
+        "sha256": "b2250c2d49d988a01050eff52f77d923393fd1492f873276dfecaeb42bcecc1c",
+        "rows": 156945,
+        "female_rows": 65711,
+        "exact_duplicate_rows_retained": 318,
+        "municipality_labels_before_alias": 145,
+        "municipalities_after_alias": 144
+      },
+      {
+        "year": 2025,
+        "original_filename": "17_06_26 (3)(2).xlsx",
+        "sha256": "597d87028ab5209bc76192398607d64b0e07b295e851ed70875be9cac09844c6",
+        "rows": 148938,
+        "female_rows": 59970,
+        "exact_duplicate_rows_retained": 279,
+        "municipality_labels_before_alias": 145,
+        "municipalities_after_alias": 144
+      }
+    ],
+    "duplicates_rule": "Exact duplicate rows are retained because the source has no unique occurrence identifier; equality across all exported fields is not sufficient evidence of duplicate events.",
+    "selected_vaw_definition": "Female-victim records classified as domestic-violence bodily injury, rape, rape of a vulnerable person, feminicide, or explicit attempted feminicide."
   },
-  "primary_model_changed": false,
-  "required_next_inputs": [
-    "Official IBGE 2022 Census female population by municipality for all 144 municipalities, with table identifier, extraction date, and source URL.",
-    "Original police files for 2022, 2023, 2024, and 2025, or an audited municipal-year-category table plus provenance metadata."
-  ]
+  "contextual_table": {
+    "rows": 576,
+    "municipalities": 144,
+    "years": [
+      2022,
+      2023,
+      2024,
+      2025
+    ],
+    "missing_female_population": 0
+  },
+  "primary_model_changed": false
 }
