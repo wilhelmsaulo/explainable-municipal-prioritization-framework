@@ -10,7 +10,6 @@ from pathlib import Path
 
 import pandas as pd
 
-
 SIDRA_URL = (
     "https://apisidra.ibge.gov.br/values/t/9514/n6/in%20n3%2015/"
     "v/93/p/2022/c2/5?formato=json"
