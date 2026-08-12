@@ -61,17 +61,17 @@ WEIGHT_LABELS_EN = {
 }
 
 PROFILE_LABELS_PT = {
-    "robust_higher_capacity_strengthening_priority": "Prioridade superior estável",
+    "robust_higher_capacity_strengthening_priority": "Prioridade superior robusta",
     "scenario_sensitive_higher_priority": "Prioridade superior sensível ao cenário",
     "intermediate_or_scenario_sensitive": "Intermediária ou sensível ao cenário",
-    "robust_lower_relative_priority": "Prioridade relativa inferior estável",
+    "robust_lower_relative_priority": "Prioridade relativa inferior robusta",
 }
 
 PROFILE_LABELS_EN = {
-    "robust_higher_capacity_strengthening_priority": "Stable higher priority",
+    "robust_higher_capacity_strengthening_priority": "Robust higher priority",
     "scenario_sensitive_higher_priority": "Scenario-sensitive higher priority",
     "intermediate_or_scenario_sensitive": "Intermediate or scenario-sensitive",
-    "robust_lower_relative_priority": "Stable lower relative priority",
+    "robust_lower_relative_priority": "Robust lower relative priority",
 }
 
 TRANSPORT_LABELS = {"en": TRANSPORT_LABELS_EN, "pt": TRANSPORT_LABELS_PT}
@@ -96,6 +96,9 @@ class DashboardData:
     agreement: pd.DataFrame
     correlations: pd.DataFrame
     indicator_profile: pd.DataFrame
+    contextual_profiles: pd.DataFrame
+    contextual_series: pd.DataFrame
+    contextual_analysis: dict
     boundaries: dict
     scenario_names: tuple[str, ...]
 
@@ -162,6 +165,16 @@ def load_dashboard_data(root: Path) -> DashboardData:
     agreement = _read(results / "capacity_scenario_agreement.csv")
     correlations = _read(results / "capacity_dimension_correlations.csv")
     indicator_profile = _read(processed / "capacity_framework_indicator_profile.csv")
+    contextual_profiles = _read(results / "contextual_vaw_priority_profiles.csv")
+    contextual_series = _read(
+        processed / "contextual" / "contextual_vaw_municipal_year_2022_2025_pa.csv"
+    )
+    contextual_analysis_path = results / "contextual_vaw_priority_analysis.json"
+    if not contextual_analysis_path.exists():
+        raise FileNotFoundError(
+            f"Required dashboard input is missing: {contextual_analysis_path}"
+        )
+    contextual_analysis = json.loads(contextual_analysis_path.read_text(encoding="utf-8"))
     matrix = _read(processed / "integrated_municipal_matrix.csv")
     boundary_path = root / "data" / "geospatial" / "pa_municipal_boundaries_2022_simplified.geojson"
     if not boundary_path.exists():
@@ -195,11 +208,20 @@ def load_dashboard_data(root: Path) -> DashboardData:
         "scenarios": scenarios,
         "explanations": explanations,
         "municipalities": municipalities,
+        "contextual_profiles": contextual_profiles,
     }.items():
         if len(frame) != EXPECTED_MUNICIPALITIES or frame[key].nunique() != EXPECTED_MUNICIPALITIES:
-            raise ValueError(
-                f"{label} does not contain exactly {EXPECTED_MUNICIPALITIES} municipalities"
-            )
+            raise ValueError(f"{label} does not contain exactly {EXPECTED_MUNICIPALITIES} municipalities")
+
+    expected_contextual_rows = EXPECTED_MUNICIPALITIES * 4
+    if len(contextual_series) != expected_contextual_rows:
+        raise ValueError(
+            f"contextual_series does not contain exactly {expected_contextual_rows} rows"
+        )
+    if set(contextual_series["year"].astype(int)) != {2022, 2023, 2024, 2025}:
+        raise ValueError("contextual_series does not cover exactly 2022–2025")
+    if contextual_series["municipality_code"].nunique() != EXPECTED_MUNICIPALITIES:
+        raise ValueError("contextual_series does not cover all framework municipalities")
 
     if scenarios[[f"{name}__score" for name in names]].isna().any().any():
         raise ValueError("Scenario scores contain missing values")
@@ -214,6 +236,9 @@ def load_dashboard_data(root: Path) -> DashboardData:
         agreement=agreement,
         correlations=correlations,
         indicator_profile=indicator_profile,
+        contextual_profiles=contextual_profiles,
+        contextual_series=contextual_series,
+        contextual_analysis=contextual_analysis,
         boundaries=boundaries,
         scenario_names=names,
     )
