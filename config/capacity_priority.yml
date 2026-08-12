@@ -11,8 +11,30 @@ study_scope:
   selection_rule: all official municipalities in the fixed study area
 
 research_target: >-
-  Relative priority for strengthening municipal service capacity under
-  multimodal access constraints.
+  Municipal prioritization for strengthening intersectoral response capacity
+  to violence against women in Pará, considering institutional deficits,
+  service-network availability, and multimodal accessibility constraints.
+
+research_questions:
+  primary: >-
+    Which municipalities in Pará should be prioritized for strengthening
+    intersectoral response capacity to violence against women when institutional
+    deficits, service-network availability, and multimodal accessibility
+    constraints are jointly considered?
+  complementary: >-
+    To what extent does municipal prioritization remain consistent across
+    different aggregation methods and dimension-weighting schemes?
+
+interpretive_context:
+  female_population:
+    role: contextual_and_denominator
+    active_in_primary_score: false
+  police_records_2022_2025:
+    role: contextual_and_sensitivity_analysis
+    active_in_primary_score: false
+    interpretation: >-
+      Observed records do not estimate incidence, hidden violence, individual
+      risk, or underreporting.
 
 inputs:
   municipal_matrix: data/processed/integrated_municipal_matrix.csv
@@ -147,6 +169,6 @@ exclusions:
 
 warnings:
   - The scores are relative decision-support constructs, not ground truth.
-  - The model prioritizes capacity strengthening and does not estimate violence incidence or underreporting.
+  - The model prioritizes strengthening intersectoral response capacity to violence against women and does not estimate violence incidence or underreporting.
   - Facility presence and mapped proximity do not measure service quality, capacity, frequency, affordability, travel time, or seasonality.
   - Profile labels are exploratory robustness summaries and not automatic funding decisions.
