@@ -2,10 +2,12 @@
 
 ## Purpose
 
-The framework estimates relative municipal priority for strengthening service
-capacity under multimodal access constraints. It is a decision-support model,
-not an estimator of violence incidence, hidden incidence, causality, individual
-risk, or automatic funding entitlement.
+The model prioritizes municipalities for strengthening municipal and
+intersectoral response capacity to violence against women in Pará. It jointly
+considers institutional deficits, service-network availability, and multimodal
+accessibility constraints. It does not estimate violence incidence, hidden
+incidence, causality, individual risk, underreporting, or automatic funding
+entitlement.
 
 The Pará application fixes the universe before analysis as all 144 official
 municipalities. No municipality-specific adjustment, personalized selection, or
@@ -47,11 +49,13 @@ silently recalibrated by editing constants in source code.
 
 ## Current Pará application
 
-The current configuration combines 12 transport scenarios and four
-macro-weight scenarios, generating 48 integrated scenarios for 144
-municipalities. Police occurrences and police rates are explicitly excluded
-from this application so its target remains capacity strengthening rather than
-underreporting.
+The current configuration combines 12 accessibility scenarios and four
+macro-weight schemes, generating 48 integrated configurations for 144
+municipalities. Police occurrences and police rates are not criteria in the
+primary score. They are retained for contextual and sensitivity analyses and
+must not be interpreted as violence incidence or underreporting. Female
+population from the 2022 Demographic Census supports contextual analyses and
+denominators where applicable.
 
 ## Reproducible execution
 
@@ -108,8 +112,8 @@ matrix.
 The field currently stored as `population_2023` represents the 2022
 Demographic Census released and processed in 2023. Population supports legacy
 rates and provenance checks but is not a criterion in the capacity-priority
-framework. Police data for 2022--2025 remain preserved in the broad integrated
-matrix but are excluded from this application by its declared research target.
+framework. Police data for 2022--2025 remain preserved in the broad integrated matrix for
+contextual and sensitivity analyses but are inactive in the primary score.
 
 ## Portability
 

@@ -2,14 +2,17 @@
 
 ## Scientific scope
 
-The research target remains **“Relative priority for strengthening municipal service
-capacity under multimodal access constraints.”** The audited hierarchical additive model
+The research target is municipal prioritization for strengthening intersectoral
+response capacity to violence against women in Pará, considering institutional
+deficits, service-network availability, and multimodal accessibility constraints. The audited hierarchical additive model
 remains the primary method. Its 144 Pará municipalities, seven active non-transport
 indicators, direction-aligned within-sample percentile ranks, equal-component service
 hierarchy, 12 transport scenarios, and four predeclared macro-weight schemes are unchanged.
 
-Police records and rates, population, hidden-incidence or underreporting estimates,
-individual risk, and violence incidence are not active criteria. Validation neither tunes
+Police records and rates and population are not active criteria in the primary
+score. Female population and police records from 2022--2025 are retained for
+contextual and sensitivity analyses. Hidden-incidence or underreporting estimates,
+individual risk, and violence incidence are outside the model. Validation neither tunes
 results nor introduces municipality-specific adjustments, clustering, supervised learning,
 neural networks, or generated rankings.
 
