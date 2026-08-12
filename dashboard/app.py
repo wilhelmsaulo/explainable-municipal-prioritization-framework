@@ -70,7 +70,7 @@ TEXT = {
         "transport_card": "3 · Transport barrier",
         "transport_card_body": "Road, waterway, and air access represented through 12 predeclared multimodal scenarios.",
         "transport_sources": "Sources: MapBiomas, ANTAQ, and DECEA/ICA",
-        "context_note": "Female population from the 2022 Demographic Census supports contextual analyses and denominators. Police records from 2022–2025 are used only for contextual and sensitivity analyses; neither source is a criterion in the primary score.",
+        "context_note": "Female population from the 2022 Demographic Census supports contextual analyses and denominators. Police records from 2022–2025 are used only for contextual analyses; neither source is a criterion in the primary score.",
         "selected_configuration": "Selected configuration",
         "transport_interpretation": "Transport interpretation",
         "macro_weights_detail": "Macro weights",
@@ -198,7 +198,7 @@ TEXT = {
         "transport_card": "3 · Barreira de transporte",
         "transport_card_body": "Acesso rodoviário, hidroviário e aéreo representado por 12 cenários multimodais previamente declarados.",
         "transport_sources": "Fontes: MapBiomas, ANTAQ e DECEA/ICA",
-        "context_note": "A população feminina do Censo 2022 apoia análises contextuais e denominadores. Os registros policiais de 2022–2025 são usados somente em análises contextuais e de sensibilidade; nenhuma dessas fontes integra o escore principal.",
+        "context_note": "A população feminina do Censo 2022 apoia análises contextuais e denominadores. Os registros policiais de 2022–2025 são usados somente em análises contextuais; nenhuma dessas fontes integra o escore principal.",
         "selected_configuration": "Configuração selecionada",
         "transport_interpretation": "Interpretação do transporte",
         "macro_weights_detail": "Pesos macro",
@@ -298,6 +298,11 @@ def get_data():
 def fmt(value: float, language: str, decimals: int = 3) -> str:
     rendered = f"{value:.{decimals}f}"
     return rendered.replace(".", ",") if language == "pt" else rendered
+
+
+def fmt_integer(value: int, language: str) -> str:
+    rendered = f"{value:,}"
+    return rendered.replace(",", ".") if language == "pt" else rendered
 
 
 def pct(value: float, language: str) -> str:
@@ -589,8 +594,8 @@ def contextual_evidence_page(data, language: str, tx: dict[str, str]) -> None:
     ].sort_values("year")
 
     c1, c2, c3 = st.columns(3)
-    c1.metric(tx["female_population"], f"{int(profile['female_population_2022']):,}")
-    c2.metric(tx["selected_records"], f"{int(profile['selected_vaw_records_2022_2025']):,}")
+    c1.metric(tx["female_population"], fmt_integer(int(profile["female_population_2022"]), language))
+    c2.metric(tx["selected_records"], fmt_integer(int(profile["selected_vaw_records_2022_2025"]), language))
     c3.metric(tx["mean_rate"], fmt(profile["mean_annual_selected_vaw_rate_per_100k_women"], language, 1))
 
     chart = series.rename(columns={"year": tx["year"], "selected_vaw_records": tx["record_count"], "rate_selected_vaw_records_per_100k_women": tx["observed_rate"]})
@@ -631,7 +636,7 @@ def methodology_tab(data, language: str, tx: dict[str, str]) -> None:
             - **Dimensions:** institutional deficit, service-network deficit, and multimodal accessibility barrier.
             - **Stability analysis:** 12 multimodal scenarios × 4 macro-weight configurations = 48 configurations.
             - **Normalization:** within-sample percentile rank with average treatment of ties.
-            - **Police records (2022–2025):** contextual and sensitivity analyses; inactive in the primary score.
+            - **Police records (2022–2025):** contextual analyses; inactive in the primary score.
             - **Female population:** 2022 Demographic Census; contextual analyses and denominators.
 
             Results support municipal prioritization. They do not estimate violence incidence,
@@ -649,7 +654,7 @@ def methodology_tab(data, language: str, tx: dict[str, str]) -> None:
             - **Dimensões:** déficit institucional, déficit da rede de serviços e barreira de acessibilidade multimodal.
             - **Análise de estabilidade:** 12 cenários multimodais × 4 configurações de pesos macro = 48 configurações.
             - **Normalização:** posição percentílica dentro da amostra, com média para empates.
-            - **Registros policiais (2022–2025):** análises contextuais e de sensibilidade; inativos no escore principal.
+            - **Registros policiais (2022–2025):** análises contextuais; inativos no escore principal.
             - **População feminina:** Censo Demográfico 2022; análises contextuais e denominadores.
 
             Os resultados apoiam a priorização municipal. Não estimam incidência de violência,
@@ -714,7 +719,7 @@ def about_page(tx: dict[str, str]) -> None:
     )
     st.markdown(
         "**Dashboard:** [Streamlit Community Cloud]"
-        "(https://explainable-municipal-prioritization-framework-zyur6g28v6z5uba.streamlit.app/)"
+        "(https://municipal-response-capacity-vaw-pa.streamlit.app/)"
     )
     st.markdown(f"#### {tx['research_boundary']}")
     st.write(tx["research_boundary_body"])
