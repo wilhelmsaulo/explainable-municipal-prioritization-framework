@@ -14,19 +14,25 @@
     "2024": 358.144572646214,
     "2025": 363.47868129654796
   },
-  "municipal_mean_rate_median": 350.88556006207693,
+  "municipal_mean_rate_median": 350.885560062077,
   "associations": {
     "additive_mean_priority_score_vs_mean_selected_rate_spearman": -0.06914235190097259,
     "additive_mean_priority_rank_vs_mean_selected_rate_spearman": 0.06521789367607753,
     "additive_mean_score_vs_mean_selected_rate_spearman": -0.06914235190097259,
-    "topsis_mean_score_vs_mean_selected_rate_spearman": -0.03933767382043244,
-    "promethee_ii_mean_score_vs_mean_selected_rate_spearman": -0.05223856603166948
+    "promethee_ii_mean_score_vs_mean_selected_rate_spearman": -0.05223856603166949,
+    "topsis_mean_score_vs_mean_selected_rate_spearman": -0.03933767382043245
+  },
+  "year_specific_additive_score_associations": {
+    "2022": -0.09441765131420303,
+    "2023": -0.04974680491921872,
+    "2024": -0.0767623181416285,
+    "2025": -0.1012860702515875
   },
   "patterns": {
-    "higher_priority_higher_observed_rate": 12,
-    "higher_priority_lower_observed_rate": 13,
+    "other_priority_higher_observed_rate": 60,
     "other_priority_lower_observed_rate": 59,
-    "other_priority_higher_observed_rate": 60
+    "higher_priority_lower_observed_rate": 13,
+    "higher_priority_higher_observed_rate": 12
   },
   "interpretation_limits": [
     "Administrative records do not estimate incidence, hidden violence, individual risk, or underreporting.",
