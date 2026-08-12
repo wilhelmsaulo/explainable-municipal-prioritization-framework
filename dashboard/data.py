@@ -61,17 +61,17 @@ WEIGHT_LABELS_EN = {
 }
 
 PROFILE_LABELS_PT = {
-    "robust_higher_capacity_strengthening_priority": "Prioridade superior robusta",
+    "robust_higher_capacity_strengthening_priority": "Prioridade superior estável",
     "scenario_sensitive_higher_priority": "Prioridade superior sensível ao cenário",
     "intermediate_or_scenario_sensitive": "Intermediária ou sensível ao cenário",
-    "robust_lower_relative_priority": "Prioridade relativa inferior robusta",
+    "robust_lower_relative_priority": "Prioridade relativa inferior estável",
 }
 
 PROFILE_LABELS_EN = {
-    "robust_higher_capacity_strengthening_priority": "Robust higher priority",
+    "robust_higher_capacity_strengthening_priority": "Stable higher priority",
     "scenario_sensitive_higher_priority": "Scenario-sensitive higher priority",
     "intermediate_or_scenario_sensitive": "Intermediate or scenario-sensitive",
-    "robust_lower_relative_priority": "Robust lower relative priority",
+    "robust_lower_relative_priority": "Stable lower relative priority",
 }
 
 TRANSPORT_LABELS = {"en": TRANSPORT_LABELS_EN, "pt": TRANSPORT_LABELS_PT}
