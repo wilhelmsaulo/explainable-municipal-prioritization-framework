@@ -552,15 +552,15 @@ def methodology_tab(data, language: str, tx: dict[str, str]) -> None:
             the audited pipeline and are not recalculated here. All 144 municipalities receive the
             same methodological treatment.
 
-            - **Target:** relative priority for strengthening municipal capacity under multimodal access constraints.
-            - **Dimensions:** institutional deficit, service-network deficit, and transport barrier.
+            - **Study object:** municipal and intersectoral response capacity to violence against women.
+            - **Dimensions:** institutional deficit, service-network deficit, and multimodal accessibility barrier.
             - **Stability analysis:** 12 multimodal scenarios × 4 macro-weight configurations = 48 configurations.
             - **Normalization:** within-sample percentile rank with average treatment of ties.
-            - **Deliberate exclusion:** police records do not enter the active framework.
-            - **Population:** 2022 Demographic Census, released and processed in 2023.
+            - **Police records (2022–2025):** contextual and sensitivity analyses; inactive in the primary score.
+            - **Female population:** 2022 Demographic Census; contextual analyses and denominators.
 
-            Results support decision-making; they do not estimate violence, underreporting, service
-            quality, real travel time, or automatic funding decisions.
+            Results support municipal prioritization. They do not estimate violence incidence,
+            underreporting, service quality, real travel time, or automatic funding decisions.
             """
         )
     else:
@@ -570,15 +570,15 @@ def methodology_tab(data, language: str, tx: dict[str, str]) -> None:
             previamente pelo pipeline auditado e não são recalculados aqui. Todos os 144 municípios
             recebem o mesmo tratamento metodológico.
 
-            - **Objeto:** prioridade relativa para fortalecimento da capacidade municipal sob restrições de acesso multimodal.
-            - **Dimensões:** déficit institucional, déficit da rede de serviços e barreira de transporte.
+            - **Objeto de estudo:** capacidade municipal e intersetorial de resposta à violência contra a mulher.
+            - **Dimensões:** déficit institucional, déficit da rede de serviços e barreira de acessibilidade multimodal.
             - **Análise de estabilidade:** 12 cenários multimodais × 4 configurações de pesos macro = 48 configurações.
             - **Normalização:** posição percentílica dentro da amostra, com média para empates.
-            - **Exclusão deliberada:** registros policiais não integram o framework atual.
-            - **População:** Censo Demográfico 2022, publicado e processado em 2023.
+            - **Registros policiais (2022–2025):** análises contextuais e de sensibilidade; inativos no escore principal.
+            - **População feminina:** Censo Demográfico 2022; análises contextuais e denominadores.
 
-            Os resultados apoiam decisões; não estimam violência, subnotificação, qualidade do serviço,
-            tempo real de viagem ou decisões automáticas de financiamento.
+            Os resultados apoiam a priorização municipal. Não estimam incidência de violência,
+            subnotificação, qualidade dos serviços, tempo real de viagem ou decisões automáticas de financiamento.
             """
         )
     st.markdown(f"##### {tx['indicator_dictionary']}")
