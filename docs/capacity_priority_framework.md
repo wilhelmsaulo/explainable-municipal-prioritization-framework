@@ -87,13 +87,18 @@ not recalculate or replace them. It produces:
   shifts;
 - a municipality-complete explanation table with mean weighted contributions
   and dominant-dimension frequencies across all scenarios;
+- global Moran's I for top-quartile frequency using first-order queen
+  contiguity, row-standardized weights, and a 999-permutation test;
 - a machine-readable audit that reconstructs every published score and fails
   if any criterion, weight, score, rank, municipality, or scenario is missing or
   inconsistent.
 
 The reference scenario is an interpretive baseline only. It does not receive
 extra weight in the municipal profiles, and the diagnostic outputs do not
-alter criteria, weights, scores, ranks, or stability classifications.
+alter criteria, weights, scores, ranks, or stability classifications. The
+spatial diagnostic evaluates whether the final top-quartile frequencies are
+globally autocorrelated; municipal geometry is not introduced into the
+priority calculation.
 
 ## Input audit and article matrix
 
