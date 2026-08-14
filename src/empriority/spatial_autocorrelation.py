@@ -85,6 +85,10 @@ def calculate_spatial_autocorrelation(
     precision: int = 6,
 ) -> dict[str, Any]:
     """Calculate audited global Moran's I for one municipal profile variable."""
+    if permutations < 1:
+        raise ValueError("Permutation count must be positive")
+    if precision < 0:
+        raise ValueError("Coordinate precision cannot be negative")
     if municipality_key not in profiles or variable not in profiles:
         raise ValueError(f"Profiles must contain {municipality_key} and {variable}")
     if profiles[municipality_key].duplicated().any():
@@ -101,7 +105,7 @@ def calculate_spatial_autocorrelation(
         .to_dict()
     )
     geometry_codes = [str(feature.get("properties", {}).get(id_property, "")) for feature in features]
-    if len(set(geometry_codes)) != len(geometry_codes):
+    if any(not code for code in geometry_codes) or len(set(geometry_codes)) != len(geometry_codes):
         raise ValueError("Duplicate or empty municipality identifiers in municipal GeoJSON")
     missing_profiles = sorted(set(geometry_codes) - set(profile_values))
     extra_profiles = sorted(set(profile_values) - set(geometry_codes))
