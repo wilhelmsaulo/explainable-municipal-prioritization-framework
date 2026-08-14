@@ -18,15 +18,45 @@
     "published_scores_reconstructed": true,
     "all_diagnostics_complete": true,
     "all_diagnostics_finite": true,
-    "reference_scenario_included": true
+    "reference_scenario_included": true,
+    "spatial_municipalities_expected": true,
+    "spatial_weights_have_no_islands": true,
+    "spatial_permutations_expected": true,
+    "spatial_p_value_valid": true
   },
   "maximum_score_reconstruction_error": 2.220446049250313e-16,
   "scenario_agreement_summary": {
     "minimum_rank_correlation": 0.8838156096776787,
     "median_rank_correlation": 0.9690659914797846,
-    "maximum_rank_correlation": 1.0,
+    "maximum_rank_correlation": 1,
     "minimum_top_k_overlap_fraction": 0.5,
-    "maximum_top_k_overlap_fraction": 1.0
+    "maximum_top_k_overlap_fraction": 1
   },
-  "interpretation": "Diagnostics describe agreement and contribution patterns in the already published scenarios; they do not alter criteria, weights, scores, or ranks."
+  "interpretation": "Diagnostics describe agreement and contribution patterns in the already published scenarios; they do not alter criteria, weights, scores, or ranks.",
+  "spatial_autocorrelation": {
+    "variable": "top_quartile_frequency",
+    "municipalities": 144,
+    "spatial_weights": {
+      "contiguity": "first_order_queen",
+      "row_standardized": true,
+      "coordinate_precision": 6,
+      "undirected_edges": 384,
+      "minimum_neighbors": 2,
+      "maximum_neighbors": 12,
+      "mean_neighbors": 5.333333333333333,
+      "islands": []
+    },
+    "moran_i": 0.005900235912784742,
+    "expected_i_under_randomness": -0.006993006993006993,
+    "permutation_test": {
+      "alternative": "greater",
+      "permutations": 999,
+      "random_seed": 42,
+      "greater_or_equal_permutations": 419,
+      "pseudo_p_value": 0.42,
+      "permuted_mean": -0.004615084519784117,
+      "permuted_standard_deviation": 0.052786950133974275
+    },
+    "interpretation": "Global spatial autocorrelation is not statistically significant at alpha=0.05."
+  }
 }
