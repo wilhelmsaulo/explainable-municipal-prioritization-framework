@@ -39,6 +39,21 @@ def build_capacity_diagnostics(
     expected_integrated_scenarios = expected_transport_scenarios * len(macro_weights)
     top_k = int(config["robustness"]["top_k"])
     spatial_config = diagnostic_config["spatial_autocorrelation"]
+    supported_spatial_specification = {
+        "contiguity": "first_order_queen",
+        "row_standardized": True,
+        "alternative": "greater",
+    }
+    invalid_spatial_specification = {
+        key: spatial_config.get(key)
+        for key, expected in supported_spatial_specification.items()
+        if spatial_config.get(key) != expected
+    }
+    if invalid_spatial_specification:
+        raise ValueError(
+            "Unsupported spatial diagnostic specification: "
+            f"{invalid_spatial_specification}"
+        )
 
     profiles = pd.read_csv(outputs["profiles"], dtype={municipality_key: str})
     scenarios = pd.read_csv(outputs["scenarios"], dtype={municipality_key: str})
