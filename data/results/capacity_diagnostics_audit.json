@@ -54,9 +54,9 @@
   "scenario_agreement_summary": {
     "minimum_rank_correlation": 0.8838156096776787,
     "median_rank_correlation": 0.9690659914797846,
-    "maximum_rank_correlation": 1,
+    "maximum_rank_correlation": 1.0,
     "minimum_top_k_overlap_fraction": 0.5,
-    "maximum_top_k_overlap_fraction": 1
+    "maximum_top_k_overlap_fraction": 1.0
   },
   "interpretation": "Diagnostics describe agreement and contribution patterns in the already published scenarios; they do not alter criteria, weights, scores, or ranks."
 }
