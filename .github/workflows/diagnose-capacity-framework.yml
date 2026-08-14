@@ -16,6 +16,8 @@ on:
     paths:
       - "config/capacity_priority.yml"
       - "src/empriority/capacity_diagnostics.py"
+      - "src/empriority/spatial_autocorrelation.py"
+      - "data/geospatial/pa_municipal_boundaries_2022_simplified.geojson"
       - "src/empriority/cli.py"
       - "data/processed/transport/transport_multimodal_scenarios.csv"
       - "data/results/integrated_capacity_priority_profiles.csv"
