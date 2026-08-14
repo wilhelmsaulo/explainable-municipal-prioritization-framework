@@ -25,14 +25,6 @@
     "spatial_p_value_valid": true
   },
   "maximum_score_reconstruction_error": 2.220446049250313e-16,
-  "scenario_agreement_summary": {
-    "minimum_rank_correlation": 0.8838156096776787,
-    "median_rank_correlation": 0.9690659914797846,
-    "maximum_rank_correlation": 1,
-    "minimum_top_k_overlap_fraction": 0.5,
-    "maximum_top_k_overlap_fraction": 1
-  },
-  "interpretation": "Diagnostics describe agreement and contribution patterns in the already published scenarios; they do not alter criteria, weights, scores, or ranks.",
   "spatial_autocorrelation": {
     "variable": "top_quartile_frequency",
     "municipalities": 144,
@@ -58,5 +50,13 @@
       "permuted_standard_deviation": 0.052786950133974275
     },
     "interpretation": "Global spatial autocorrelation is not statistically significant at alpha=0.05."
-  }
+  },
+  "scenario_agreement_summary": {
+    "minimum_rank_correlation": 0.8838156096776787,
+    "median_rank_correlation": 0.9690659914797846,
+    "maximum_rank_correlation": 1,
+    "minimum_top_k_overlap_fraction": 0.5,
+    "maximum_top_k_overlap_fraction": 1
+  },
+  "interpretation": "Diagnostics describe agreement and contribution patterns in the already published scenarios; they do not alter criteria, weights, scores, or ranks."
 }
