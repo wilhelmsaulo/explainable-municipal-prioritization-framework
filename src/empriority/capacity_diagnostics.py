@@ -8,6 +8,8 @@ import numpy as np
 import pandas as pd
 import yaml
 
+from empriority.spatial_autocorrelation import calculate_spatial_autocorrelation
+
 
 def _load_config(path: str | Path) -> dict[str, Any]:
     document = yaml.safe_load(Path(path).read_text(encoding="utf-8"))
@@ -36,6 +38,7 @@ def build_capacity_diagnostics(
     macro_weights = config["macro_weight_scenarios"]
     expected_integrated_scenarios = expected_transport_scenarios * len(macro_weights)
     top_k = int(config["robustness"]["top_k"])
+    spatial_config = diagnostic_config["spatial_autocorrelation"]
 
     profiles = pd.read_csv(outputs["profiles"], dtype={municipality_key: str})
     scenarios = pd.read_csv(outputs["scenarios"], dtype={municipality_key: str})
@@ -218,6 +221,16 @@ def build_capacity_diagnostics(
         ]
     ]
 
+    spatial_autocorrelation = calculate_spatial_autocorrelation(
+        explanation,
+        geometry_path=config["inputs"]["municipal_boundaries"],
+        municipality_key=municipality_key,
+        variable=spatial_config["variable"],
+        permutations=int(spatial_config["permutations"]),
+        seed=int(spatial_config["random_seed"]),
+        precision=int(spatial_config["coordinate_precision"]),
+    )
+
     numeric_outputs = [correlations, agreement, explanation]
     checks = {
         "municipalities_expected": len(joined) == expected_municipalities,
@@ -235,6 +248,16 @@ def build_capacity_diagnostics(
             for frame in numeric_outputs
         ),
         "reference_scenario_included": reference_scenario in set(agreement["scenario"]),
+        "spatial_municipalities_expected": spatial_autocorrelation["municipalities"]
+        == expected_municipalities,
+        "spatial_weights_have_no_islands": not spatial_autocorrelation["spatial_weights"]["islands"],
+        "spatial_permutations_expected": (
+            spatial_autocorrelation["permutation_test"]["permutations"]
+            == int(spatial_config["permutations"])
+        ),
+        "spatial_p_value_valid": 0.0
+        <= spatial_autocorrelation["permutation_test"]["pseudo_p_value"]
+        <= 1.0,
     }
     if not all(checks.values()):
         raise ValueError(f"Capacity diagnostics audit failed: {checks}")
@@ -245,6 +268,10 @@ def build_capacity_diagnostics(
     correlations.to_csv(paths["correlations"], index=False, encoding="utf-8")
     agreement.to_csv(paths["scenario_agreement"], index=False, encoding="utf-8")
     explanation.to_csv(paths["municipality_explanations"], index=False, encoding="utf-8")
+    paths["spatial_autocorrelation"].write_text(
+        json.dumps(spatial_autocorrelation, ensure_ascii=False, indent=2),
+        encoding="utf-8",
+    )
     audit = {
         "schema_version": config["schema_version"],
         "method_version": config["method_version"],
@@ -258,6 +285,7 @@ def build_capacity_diagnostics(
         },
         "checks": checks,
         "maximum_score_reconstruction_error": max(reconstruction_errors),
+        "spatial_autocorrelation": spatial_autocorrelation,
         "scenario_agreement_summary": {
             "minimum_rank_correlation": float(agreement["rank_correlation"].min()),
             "median_rank_correlation": float(agreement["rank_correlation"].median()),
