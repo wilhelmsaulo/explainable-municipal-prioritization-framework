@@ -39,6 +39,7 @@ interpretive_context:
 inputs:
   municipal_matrix: data/processed/integrated_municipal_matrix.csv
   transport_scenarios: data/processed/transport/transport_multimodal_scenarios.csv
+  municipal_boundaries: data/geospatial/pa_municipal_boundaries_2022_simplified.geojson
 
 outputs:
   profiles: data/results/integrated_capacity_priority_profiles.csv
@@ -113,10 +114,19 @@ robustness:
 diagnostics:
   reference_transport_scenario: equal_modes__equal_roles
   reference_macro_weight_scenario: equal_dimensions
+  spatial_autocorrelation:
+    variable: top_quartile_frequency
+    contiguity: first_order_queen
+    row_standardized: true
+    coordinate_precision: 6
+    permutations: 999
+    random_seed: 42
+    alternative: greater
   outputs:
     correlations: data/results/capacity_dimension_correlations.csv
     scenario_agreement: data/results/capacity_scenario_agreement.csv
     municipality_explanations: data/results/capacity_municipality_explanations.csv
+    spatial_autocorrelation: data/results/capacity_spatial_autocorrelation.json
     audit: data/results/capacity_diagnostics_audit.json
 
 multimethod_validation:
