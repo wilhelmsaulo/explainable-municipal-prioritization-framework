@@ -6,6 +6,8 @@ on:
     paths:
       - "config/capacity_priority.yml"
       - "src/empriority/capacity_diagnostics.py"
+      - "src/empriority/spatial_autocorrelation.py"
+      - "data/geospatial/pa_municipal_boundaries_2022_simplified.geojson"
       - "src/empriority/cli.py"
       - "data/processed/transport/transport_multimodal_scenarios.csv"
       - "data/results/integrated_capacity_priority_profiles.csv"
@@ -14,6 +16,8 @@ on:
     paths:
       - "config/capacity_priority.yml"
       - "src/empriority/capacity_diagnostics.py"
+      - "src/empriority/spatial_autocorrelation.py"
+      - "data/geospatial/pa_municipal_boundaries_2022_simplified.geojson"
       - "src/empriority/cli.py"
       - "data/processed/transport/transport_multimodal_scenarios.csv"
       - "data/results/integrated_capacity_priority_profiles.csv"
@@ -44,6 +48,7 @@ jobs:
             data/results/capacity_dimension_correlations.csv \
             data/results/capacity_scenario_agreement.csv \
             data/results/capacity_municipality_explanations.csv \
+            data/results/capacity_spatial_autocorrelation.json \
             data/results/capacity_diagnostics_audit.json
       - name: Upload diagnostics
         uses: actions/upload-artifact@v4
@@ -53,4 +58,5 @@ jobs:
             data/results/capacity_dimension_correlations.csv
             data/results/capacity_scenario_agreement.csv
             data/results/capacity_municipality_explanations.csv
+            data/results/capacity_spatial_autocorrelation.json
             data/results/capacity_diagnostics_audit.json

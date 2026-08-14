@@ -1,0 +1,26 @@
+{
+  "variable": "top_quartile_frequency",
+  "municipalities": 144,
+  "spatial_weights": {
+    "contiguity": "first_order_queen",
+    "row_standardized": true,
+    "coordinate_precision": 6,
+    "undirected_edges": 384,
+    "minimum_neighbors": 2,
+    "maximum_neighbors": 12,
+    "mean_neighbors": 5.333333333333333,
+    "islands": []
+  },
+  "moran_i": 0.005900235912784742,
+  "expected_i_under_randomness": -0.006993006993006993,
+  "permutation_test": {
+    "alternative": "greater",
+    "permutations": 999,
+    "random_seed": 42,
+    "greater_or_equal_permutations": 419,
+    "pseudo_p_value": 0.42,
+    "permuted_mean": -0.004615084519784117,
+    "permuted_standard_deviation": 0.052786950133974275
+  },
+  "interpretation": "Global spatial autocorrelation is not statistically significant at alpha=0.05."
+}
