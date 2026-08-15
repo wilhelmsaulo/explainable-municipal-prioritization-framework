@@ -1,67 +1,564 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900" role="img" aria-labelledby="title desc">
-  <title id="title">Architecture of the explainable municipal capacity-priority framework</title>
-  <desc id="desc">Data sources and active indicators are hierarchically aggregated into three macro-dimensions, crossed across twelve transport scenarios and four macro-weight schemes, and summarized through rankings, profiles, robustness, and explainability outputs for all 144 municipalities of Para.</desc>
-  <defs>
-    <style>
-      .bg{fill:#f8fafc}.title{font:700 34px Arial,sans-serif;fill:#172033}.sub{font:18px Arial,sans-serif;fill:#526071}.stage{font:700 16px Arial,sans-serif;fill:#405168;letter-spacing:1.5px}.h{font:700 20px Arial,sans-serif;fill:#172033}.b{font:16px Arial,sans-serif;fill:#253247}.s{font:14px Arial,sans-serif;fill:#526071}.box{fill:#fff;stroke:#cbd5e1;stroke-width:2}.inst{fill:#eff6ff;stroke:#60a5fa;stroke-width:2}.serv{fill:#f0fdf4;stroke:#4ade80;stroke-width:2}.trans{fill:#fff7ed;stroke:#fb923c;stroke-width:2}.proc{fill:#f5f3ff;stroke:#a78bfa;stroke-width:2}.out{fill:#fff1f2;stroke:#fb7185;stroke-width:2}.arrow{stroke:#64748b;stroke-width:3;fill:none;marker-end:url(#a)}.thin{stroke:#94a3b8;stroke-width:2;fill:none;marker-end:url(#a)}
-    </style>
-    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#64748b"/></marker>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   width="1400"
+   height="1480"
+   viewBox="0 0 1400 1480"
+   version="1.1"
+   id="svg189"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs7">
+    <marker
+       id="a"
+       viewBox="0 0 10 10"
+       refX="9"
+       refY="5"
+       markerWidth="8"
+       markerHeight="8"
+       orient="auto">
+      <path
+         d="M0 0L10 5 0 10z"
+         fill="#425466"
+         id="path2" />
+    </marker>
+    <style
+       id="style5">.p{font:700 22px Arial;fill:#294052;letter-spacing:.7px}.t{font:700 23px Arial;fill:#17324d}.b{font:400 19px Arial;fill:#425466}.s{font:400 17px Arial;fill:#536779}.n{font:700 20px Arial;fill:#fff}.l{stroke:#425466;stroke-width:3;fill:none;marker-end:url(#a)}.q{stroke:#718291;stroke-width:2.5;fill:none;marker-end:url(#a)}.g{fill:#f8fbfd;stroke:#8ba0b2;stroke-width:2.3;stroke-dasharray:10 8}.x{fill:#eaf3f8;stroke:#6f91a9;stroke-width:2.2}.y{fill:#edf6f2;stroke:#77a28f;stroke-width:2.2}.z{fill:#fff5df;stroke:#c89a43;stroke-width:2.2}.v{fill:#f2eef8;stroke:#8d79ad;stroke-width:2.2}.o{fill:#eef4f6;stroke:#688595;stroke-width:2.2}</style>
   </defs>
-  <rect class="bg" width="1600" height="900"/>
-  <text class="title" x="60" y="58">Explainable municipal priority for capacity strengthening</text>
-  <text class="sub" x="60" y="88">Fixed study universe: all 144 municipalities of Pará · method version 1.1.0 · no municipality-specific tuning</text>
-
-  <text class="stage" x="60" y="132">1 · ACTIVE EVIDENCE</text>
-  <rect class="inst" x="60" y="154" rx="14" width="345" height="126"/>
-  <text class="h" x="82" y="184">Institutional capacity</text><text class="b" x="82" y="215">MUNIC 2023</text>
-  <text class="s" x="82" y="244">Deficit proportion among observed items</text><text class="s" x="82" y="264">(missing responses are outside the denominator)</text>
-  <rect class="serv" x="60" y="298" rx="14" width="345" height="220"/>
-  <text class="h" x="82" y="328">Service network</text><text class="b" x="82" y="359">CNES · MDS/SNAS · TJPA · Ligue 180</text>
-  <text class="s" x="82" y="391">Health services and workforce</text><text class="s" x="82" y="419">Specialized social protection</text>
-  <text class="s" x="82" y="447">Local justice access</text><text class="s" x="82" y="475">Specialized protection network</text>
-  <rect class="trans" x="60" y="536" rx="14" width="345" height="160"/>
-  <text class="h" x="82" y="566">Multimodal access</text><text class="b" x="82" y="597">MapBiomas · ANTAQ · DECEA/ICA</text>
-  <text class="s" x="82" y="629">Road · waterway · air</text><text class="s" x="82" y="657">Availability and proximity roles</text>
-
-  <text class="stage" x="482" y="132">2 · HIERARCHICAL CONSTRUCTION</text>
-  <rect class="proc" x="482" y="154" rx="14" width="390" height="126"/>
-  <text class="h" x="504" y="184">Direction alignment and normalization</text>
-  <text class="b" x="504" y="218">Within-sample percentile ranks [0, 1]</text><text class="s" x="504" y="247">Average ranks for ties · higher = greater priority</text>
-  <rect class="inst" x="482" y="316" rx="14" width="390" height="90"/>
-  <text class="h" x="504" y="348">Institutional deficit</text><text class="s" x="504" y="377">One active indicator</text>
-  <rect class="serv" x="482" y="424" rx="14" width="390" height="164"/>
-  <text class="h" x="504" y="456">Service-network deficit</text>
-  <text class="s" x="504" y="486">Equal mean across four components:</text><text class="s" x="504" y="512">health · social protection · justice ·</text><text class="s" x="504" y="538">specialized protection network</text><text class="s" x="504" y="566">(prevents indicator-count dominance)</text>
-  <rect class="trans" x="482" y="606" rx="14" width="390" height="90"/>
-  <text class="h" x="504" y="638">Transport barrier</text><text class="s" x="504" y="667">1 − multimodal access score</text>
-
-  <text class="stage" x="952" y="132">3 · PREDECLARED SCENARIO SPACE</text>
-  <rect class="box" x="952" y="154" rx="14" width="380" height="190"/>
-  <text class="h" x="974" y="186">12 transport scenarios</text>
-  <text class="b" x="974" y="219">4 modal structures × 3 role structures</text>
-  <text class="s" x="974" y="249">Modal: equal · road · waterway · air emphasis</text><text class="s" x="974" y="277">Roles: equal · availability · proximity emphasis</text><text class="s" x="974" y="309">All municipalities evaluated under every scenario</text>
-  <rect class="box" x="952" y="366" rx="14" width="380" height="190"/>
-  <text class="h" x="974" y="398">4 macro-weight schemes</text>
-  <text class="b" x="974" y="431">Institutional · service · transport</text>
-  <text class="s" x="974" y="461">Equal: 1/3 · 1/3 · 1/3</text><text class="s" x="974" y="489">Institutional emphasis: .50 · .25 · .25</text>
-  <text class="s" x="974" y="517">Service emphasis: .25 · .50 · .25</text><text class="s" x="974" y="545">Transport emphasis: .25 · .25 · .50</text>
-  <rect class="proc" x="952" y="594" rx="14" width="380" height="102"/>
-  <text class="h" x="974" y="626">Complete crossing</text><text class="b" x="974" y="660">12 × 4 = 48 integrated configurations</text><text class="s" x="974" y="684">No configuration receives extra frequency weight</text>
-
-  <text class="stage" x="1390" y="132">4 · OUTPUTS</text>
-  <rect class="out" x="1390" y="154" rx="14" width="160" height="542"/>
-  <text class="h" x="1412" y="188">Outputs</text><text class="b" x="1412" y="230">Scores</text><text class="b" x="1412" y="268">Ranks</text>
-  <text class="b" x="1412" y="306">Top-quartile</text><text class="b" x="1412" y="330">frequency</text><text class="b" x="1412" y="376">Rank range</text>
-  <text class="b" x="1412" y="414">Stability</text><text class="b" x="1412" y="452">Dimension</text><text class="b" x="1412" y="476">contributions</text>
-  <text class="b" x="1412" y="522">Scenario</text><text class="b" x="1412" y="546">agreement</text><text class="s" x="1412" y="600">Decision support,</text><text class="s" x="1412" y="622">not ground truth</text><text class="s" x="1412" y="654">or automatic</text><text class="s" x="1412" y="676">funding decisions</text>
-
-  <path class="arrow" d="M405 217H470"/><path class="arrow" d="M405 408H470"/><path class="arrow" d="M405 616H470"/>
-  <path class="thin" d="M677 280V305"/><path class="thin" d="M677 406V414"/><path class="thin" d="M677 588V596"/>
-  <path class="arrow" d="M872 361H930V249H942"/><path class="arrow" d="M872 506H930V461H942"/><path class="arrow" d="M872 651H942"/>
-  <path class="thin" d="M1142 344V356"/><path class="thin" d="M1142 556V584"/><path class="arrow" d="M1332 645H1380"/>
-
-  <rect class="box" x="60" y="750" rx="14" width="1490" height="102"/>
-  <text class="h" x="82" y="782">Scope and exclusions</text>
-  <text class="b" x="82" y="814">Target: relative priority for strengthening municipal service capacity under multimodal access constraints.</text>
-  <text class="s" x="82" y="840">Population is contextual only. Police records (2022–2025), occurrence rates, hidden-incidence inference, municipality-specific adjustments, and post-result tuning are excluded.</text>
+  <rect
+     width="1400"
+     height="1580"
+     fill="white"
+     id="rect9" />
+  <line
+     x1="115"
+     y1="105"
+     x2="115"
+     y2="1455"
+     stroke="#c7d1d8"
+     stroke-width="5"
+     id="line11" />
+  <circle
+     cx="115"
+     cy="115"
+     r="30"
+     fill="#3b6f8f"
+     id="circle13" />
+  <text
+     x="115"
+     y="122"
+     text-anchor="middle"
+     class="n"
+     id="text15">1</text>
+  <text
+     x="165"
+     y="123"
+     class="p"
+     id="text17">PHASE 1</text>
+  <rect
+     x="350"
+     y="70"
+     width="350"
+     height="112"
+     rx="10"
+     class="x"
+     id="rect19" />
+  <text
+     x="525"
+     y="112"
+     text-anchor="middle"
+     class="t"
+     id="text21">Administrative data</text>
+  <text
+     x="525"
+     y="145"
+     text-anchor="middle"
+     class="b"
+     id="text23">7 non-transport indicators</text>
+  <rect
+     x="780"
+     y="70"
+     width="350"
+     height="112"
+     rx="10"
+     class="x"
+     id="rect25" />
+  <text
+     x="955"
+     y="112"
+     text-anchor="middle"
+     class="t"
+     id="text27">Geospatial data</text>
+  <text
+     x="955"
+     y="145"
+     text-anchor="middle"
+     class="b"
+     id="text29">10 transport indicators</text>
+  <path
+     d="M525 182V225H700"
+     style="fill:none;stroke:#718291;stroke-width:2.5"
+     id="path31" />
+  <path
+     d="M955 182V225H700"
+     style="fill:none;stroke:#718291;stroke-width:2.5"
+     id="path33" />
+  <path d="M700 225V270" class="q" />
+  <circle
+     cx="115"
+     cy="320"
+     r="30"
+     fill="#438674"
+     id="circle35" />
+  <text
+     x="115"
+     y="327"
+     text-anchor="middle"
+     class="n"
+     id="text37">2</text>
+  <text
+     x="165"
+     y="328"
+     class="p"
+     id="text39">PHASE 2</text>
+  <rect
+     x="285"
+     y="270"
+     width="830"
+     height="265"
+     rx="14"
+     class="g"
+     id="rect41" />
+  <rect
+     x="330"
+     y="315"
+     width="235"
+     height="105"
+     rx="10"
+     class="y"
+     id="rect43" />
+  <text
+     x="447"
+     y="357"
+     text-anchor="middle"
+     class="t"
+     id="text45">Institutional</text>
+  <text
+     x="447"
+     y="389"
+     text-anchor="middle"
+     class="b"
+     id="text47">deficit</text>
+  <rect
+     x="583"
+     y="315"
+     width="235"
+     height="105"
+     rx="10"
+     class="y"
+     id="rect49" />
+  <text
+     x="700"
+     y="357"
+     text-anchor="middle"
+     class="t"
+     id="text51">Service-network</text>
+  <text
+     x="700"
+     y="389"
+     text-anchor="middle"
+     class="b"
+     id="text53">deficit</text>
+  <rect
+     x="836"
+     y="315"
+     width="235"
+     height="105"
+     rx="10"
+     class="y"
+     id="rect55" />
+  <text
+     x="953"
+     y="357"
+     text-anchor="middle"
+     class="t"
+     id="text57">Road · Water · Air</text>
+  <text
+     x="953"
+     y="389"
+     text-anchor="middle"
+     class="b"
+     id="text59">access components</text>
+  <path d="M953 420V448" class="q" />
+  <rect
+     x="860"
+     y="448"
+     width="187"
+     height="48"
+     rx="8"
+     fill="white"
+     stroke="#8fb2a3"
+     stroke-width="2"
+     id="rect61" />
+  <text
+     x="953"
+     y="479"
+     text-anchor="middle"
+     class="s"
+     id="text63">Transport barrier</text>
+  <path
+     d="M447 420V468H595"
+     class="q"
+     id="path65" />
+  <path
+     d="M700 420V450"
+     class="q"
+     id="path67" />
+  <path
+     d="M953 496V518H805"
+     class="q"
+     id="path69" />
+  <rect
+     x="595"
+     y="450"
+     width="210"
+     height="68"
+     rx="10"
+     fill="#d9ebe4"
+     stroke="#679680"
+     stroke-width="2.2"
+     id="rect71" />
+  <text
+     x="700"
+     y="479"
+     text-anchor="middle"
+     class="t"
+     id="text73">Three-dimensional</text>
+  <text
+     x="700"
+     y="505"
+     text-anchor="middle"
+     class="s"
+     id="text75">municipal matrix</text>
+  <path
+     d="M700 535V585"
+     class="l"
+     id="path77" />
+  <circle
+     cx="115"
+     cy="650"
+     r="30"
+     fill="#b27a24"
+     id="circle79" />
+  <text
+     x="115"
+     y="657"
+     text-anchor="middle"
+     class="n"
+     id="text81">3</text>
+  <text
+     x="165"
+     y="658"
+     class="p"
+     id="text83">PHASE 3</text>
+  <rect
+     x="350"
+     y="600"
+     width="350"
+     height="112"
+     rx="10"
+     class="z"
+     id="rect85" />
+  <text
+     x="525"
+     y="643"
+     text-anchor="middle"
+     class="t"
+     id="text87">12 transport scenarios</text>
+  <text
+     x="525"
+     y="676"
+     text-anchor="middle"
+     class="b"
+     id="text89">Mode and access-role assumptions</text>
+  <rect
+     x="780"
+     y="600"
+     width="350"
+     height="112"
+     rx="10"
+     class="z"
+     id="rect91" />
+  <text
+     x="955"
+     y="643"
+     text-anchor="middle"
+     class="t"
+     id="text93">4 macro-weight schemes</text>
+  <text
+     x="955"
+     y="676"
+     text-anchor="middle"
+     class="b"
+     id="text95">Equal and dimension emphasis</text>
+  <path
+     d="M525 712V758H545"
+     class="q"
+     id="path97" />
+  <path
+     d="M955 712V758H855"
+     class="q"
+     id="path99" />
+  <rect
+     x="545"
+     y="735"
+     width="310"
+     height="82"
+     rx="11"
+     fill="#f5dfac"
+     stroke="#bd8730"
+     stroke-width="2.4"
+     id="rect101" />
+  <text
+     x="700"
+     y="772"
+     text-anchor="middle"
+     class="t"
+     id="text103">48 primary configurations</text>
+  <text
+     x="700"
+     y="800"
+     text-anchor="middle"
+     class="s"
+     id="text105">Same criteria and hierarchy</text>
+  <path
+     d="M700 817V875"
+     class="l"
+     id="path107" />
+  <circle
+     cx="115"
+     cy="945"
+     r="30"
+     fill="#725a9a"
+     id="circle109" />
+  <text
+     x="115"
+     y="952"
+     text-anchor="middle"
+     class="n"
+     id="text111">4</text>
+  <text
+     x="165"
+     y="953"
+     class="p"
+     id="text113">PHASE 4</text>
+  <rect
+     x="260"
+     y="890"
+     width="880"
+     height="250"
+     rx="14"
+     class="g"
+     id="rect115" />
+  <path
+     d="M700 875V925H400V955"
+     class="q"
+     id="path117" />
+  <path
+     d="M700 925V955"
+     class="q"
+     id="path119" />
+  <path
+     d="M700 925H1000V955"
+     class="q"
+     id="path121" />
+  <rect
+     x="285"
+     y="955"
+     width="230"
+     height="120"
+     rx="10"
+     class="v"
+     id="rect123" />
+  <text
+     x="400"
+     y="994"
+     text-anchor="middle"
+     class="t"
+     id="text125">Hierarchical</text>
+  <text
+     x="400"
+     y="1024"
+     text-anchor="middle"
+     class="t"
+     id="text127">additive model</text>
+  <text
+     x="400"
+     y="1055"
+     text-anchor="middle"
+     class="s"
+     id="text129">Primary analysis</text>
+  <rect
+     x="585"
+     y="955"
+     width="230"
+     height="120"
+     rx="10"
+     class="v"
+     id="rect131" />
+  <text
+     x="700"
+     y="994"
+     text-anchor="middle"
+     class="t"
+     id="text133">TOPSIS and</text>
+  <text
+     x="700"
+     y="1024"
+     text-anchor="middle"
+     class="t"
+     id="text135">PROMETHEE II</text>
+  <text
+     x="700"
+     y="1055"
+     text-anchor="middle"
+     class="s"
+     id="text137">Method comparison</text>
+  <rect
+     x="885"
+     y="955"
+     width="230"
+     height="120"
+     rx="10"
+     class="v"
+     id="rect139" />
+  <text
+     x="1000"
+     y="994"
+     text-anchor="middle"
+     class="t"
+     id="text141">SMAA-inspired</text>
+  <text
+     x="1000"
+     y="1024"
+     text-anchor="middle"
+     class="t"
+     id="text143">analysis</text>
+  <text
+     x="1000"
+     y="1055"
+     text-anchor="middle"
+     class="s"
+     id="text145">Weight uncertainty</text>
+  <path
+     d="M400 1075V1185H470"
+     class="q"
+     id="path147" />
+  <path
+     d="M700 1075V1145H580V1185"
+     class="q"
+     id="path149" />
+  <path
+     d="M1000 1075V1185H930"
+     class="q"
+     id="path151" />
+  <circle
+     cx="115"
+     cy="1260"
+     r="30"
+     fill="#4f7484"
+     id="circle153" />
+  <text
+     x="115"
+     y="1267"
+     text-anchor="middle"
+     class="n"
+     id="text155">5</text>
+  <text
+     x="165"
+     y="1268"
+     class="p"
+     id="text157">PHASE 5</text>
+  <rect
+     x="300"
+     y="1185"
+     width="340"
+     height="125"
+     rx="10"
+     class="o"
+     id="rect159" />
+  <text
+     x="470"
+     y="1227"
+     text-anchor="middle"
+     class="t"
+     id="text161">Deterministic evidence</text>
+  <text
+     x="470"
+     y="1260"
+     text-anchor="middle"
+     class="b"
+     id="text163">Ranks and method agreement</text>
+  <text
+     x="470"
+     y="1290"
+     text-anchor="middle"
+     class="s"
+     id="text165">Profiles and contributions</text>
+  <rect
+     x="760"
+     y="1185"
+     width="340"
+     height="125"
+     rx="10"
+     class="o"
+     id="rect167" />
+  <text
+     x="930"
+     y="1227"
+     text-anchor="middle"
+     class="t"
+     id="text169">Stochastic evidence</text>
+  <text
+     x="930"
+     y="1260"
+     text-anchor="middle"
+     class="b"
+     id="text171">Rank acceptability</text>
+  <text
+     x="930"
+     y="1290"
+     text-anchor="middle"
+     class="s"
+     id="text173">Top-set membership probability</text>
+  <path
+     d="M470 1310V1365H455"
+     class="q"
+     id="path175" />
+  <path
+     d="M930 1310V1365H945"
+     class="q"
+     id="path177" />
+  <rect
+     x="455"
+     y="1340"
+     width="490"
+     height="108"
+     rx="11"
+     fill="#dce9ed"
+     stroke="#557989"
+     stroke-width="2.5"
+     id="rect179" />
+  <text
+     x="700"
+     y="1381"
+     text-anchor="middle"
+     class="t"
+     id="text181">Municipal priority and stability profiles</text>
+  <text
+     x="700"
+     y="1415"
+     text-anchor="middle"
+     class="b"
+     id="text183">Dimensional and spatial interpretation</text>
 </svg>
