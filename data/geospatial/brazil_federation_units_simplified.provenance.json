@@ -1,0 +1,10 @@
+{
+  "title": "Simplified Brazilian federation-unit boundaries for article locator inset",
+  "source_authority": "Instituto Brasileiro de Geografia e Estatística (IBGE)",
+  "source_service": "IBGE Data Services",
+  "intermediate_repository": "https://github.com/filipemeneses/geojson-brazil",
+  "retrieved_on": "2026-08-15",
+  "purpose": "Visualization of Pará within Brazil in the article map only",
+  "analytical_role": "none",
+  "notes": "The 27 federation-unit geometries were assembled into one FeatureCollection. Municipal scores, ranks, scenarios, and spatial-autocorrelation calculations do not use this file."
+}

@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import json
+import math
 from pathlib import Path
 
 import matplotlib.pyplot as plt
@@ -10,7 +11,7 @@ import numpy as np
 import pandas as pd
 from matplotlib.collections import PatchCollection
 from matplotlib.colors import Normalize
-from matplotlib.patches import Polygon as MplPolygon
+from matplotlib.patches import FancyBboxPatch, Polygon as MplPolygon
 
 ROOT = Path(__file__).resolve().parents[1]
 RESULTS = ROOT / "data" / "results"
@@ -38,7 +39,7 @@ def _style() -> None:
             "figure.facecolor": "white",
             "axes.facecolor": "white",
             "savefig.facecolor": "white",
-            "svg.hashsalt": "empriority-method-1.1.0",
+            "svg.hashsalt": "empriority-method-1.2.0",
         }
     )
 
@@ -271,7 +272,11 @@ def statewide_robustness_map() -> None:
             patches.append(MplPolygon(ring, closed=True))
             values.append(float(frequency.loc[code]))
 
-    fig, ax = plt.subplots(figsize=(8.2, 7.2), constrained_layout=True)
+    all_points = np.vstack([patch.get_xy() for patch in patches])
+    minx, miny = all_points.min(axis=0)
+    maxx, maxy = all_points.max(axis=0)
+
+    fig, ax = plt.subplots(figsize=(8.5, 7.4), constrained_layout=True)
     norm = Normalize(vmin=0, vmax=1)
     collection = PatchCollection(
         patches,
@@ -282,7 +287,8 @@ def statewide_robustness_map() -> None:
     )
     collection.set_array(np.asarray(values))
     ax.add_collection(collection)
-    ax.autoscale_view()
+    ax.set_xlim(minx - 0.35, maxx + 0.35)
+    ax.set_ylim(miny - 0.35, maxy + 0.35)
     ax.set_aspect("equal", adjustable="box")
     ax.axis("off")
     ax.set_title(
@@ -291,6 +297,107 @@ def statewide_robustness_map() -> None:
         weight="bold",
         pad=12,
     )
+
+    # Four-point compass rose in axes coordinates.
+    cx, cy, radius = 0.905, 0.875, 0.055
+    rose = [
+        ([(cx, cy), (cx - radius * 0.20, cy + radius * 0.30),
+          (cx, cy + radius), (cx + radius * 0.20, cy + radius * 0.30)], "#17324D"),
+        ([(cx, cy), (cx - radius * 0.20, cy - radius * 0.30),
+          (cx, cy - radius), (cx + radius * 0.20, cy - radius * 0.30)], "#8CA0AF"),
+        ([(cx, cy), (cx + radius * 0.30, cy - radius * 0.20),
+          (cx + radius, cy), (cx + radius * 0.30, cy + radius * 0.20)], "#FFFFFF"),
+        ([(cx, cy), (cx - radius * 0.30, cy - radius * 0.20),
+          (cx - radius, cy), (cx - radius * 0.30, cy + radius * 0.20)], "#FFFFFF"),
+    ]
+    for vertices, color in rose:
+        ax.add_patch(
+            MplPolygon(
+                vertices,
+                transform=ax.transAxes,
+                closed=True,
+                facecolor=color,
+                edgecolor="#17324D",
+                linewidth=1.0,
+                zorder=9,
+            )
+        )
+    for label, x, y, ha, va, size in [
+        ("N", cx, cy + radius + 0.014, "center", "bottom", 11),
+        ("S", cx, cy - radius - 0.012, "center", "top", 7.5),
+        ("E", cx + radius + 0.012, cy, "left", "center", 7.5),
+        ("W", cx - radius - 0.012, cy, "right", "center", 7.5),
+    ]:
+        ax.text(
+            x, y, label, transform=ax.transAxes, ha=ha, va=va,
+            fontsize=size, fontweight="bold", color="#17324D",
+        )
+
+    # Approximate local east-west scale at the latitude where the bar is drawn.
+    scale_km = 300
+    bar_lat = miny + 0.72
+    km_per_degree_lon = 111.320 * math.cos(math.radians(bar_lat))
+    bar_degrees = scale_km / km_per_degree_lon
+    bar_x, bar_y = minx + 0.75, bar_lat
+    ax.add_patch(
+        FancyBboxPatch(
+            (bar_x - 0.22, bar_y - 0.42),
+            bar_degrees + 0.44,
+            0.82,
+            boxstyle="round,pad=0.03",
+            facecolor="white",
+            edgecolor="#64748B",
+            linewidth=0.8,
+            alpha=0.93,
+            zorder=6,
+        )
+    )
+    half = bar_degrees / 2
+    ax.plot([bar_x, bar_x + half], [bar_y, bar_y], color="#17324D", linewidth=5, zorder=7)
+    ax.plot(
+        [bar_x + half, bar_x + bar_degrees], [bar_y, bar_y],
+        color="#FFFFFF", linewidth=5, zorder=7,
+    )
+    ax.plot(
+        [bar_x + half, bar_x + bar_degrees], [bar_y, bar_y],
+        color="#17324D", linewidth=1, zorder=8,
+    )
+    for x in (bar_x, bar_x + half, bar_x + bar_degrees):
+        ax.plot([x, x], [bar_y - 0.09, bar_y + 0.09], color="#17324D", linewidth=1.2, zorder=8)
+    for x, label in [(bar_x, "0"), (bar_x + half, "150"), (bar_x + bar_degrees, "300 km")]:
+        ax.text(x, bar_y - 0.16, label, ha="center", va="top", fontsize=8, color="#17324D", zorder=8)
+
+    # Locator inset showing Pará within Brazil.
+    locator_path = ROOT / "data" / "geospatial" / "brazil_federation_units_simplified.geojson"
+    brazil = json.loads(locator_path.read_text(encoding="utf-8"))
+    locator = ax.inset_axes([0.785, 0.035, 0.19, 0.28])
+    locator.set_facecolor("white")
+    brazil_points: list[np.ndarray] = []
+    for feature in brazil["features"]:
+        is_para = str(feature.get("properties", {}).get("codarea", "")) == "15"
+        for ring in _polygon_exteriors(feature["geometry"]):
+            locator.add_patch(
+                MplPolygon(
+                    ring,
+                    closed=True,
+                    facecolor="#D97706" if is_para else "#DCE4E9",
+                    edgecolor="#FFFFFF",
+                    linewidth=0.35,
+                    zorder=3 if is_para else 2,
+                )
+            )
+            brazil_points.append(ring)
+    locator_points = np.vstack(brazil_points)
+    locator.set_xlim(locator_points[:, 0].min() - 1, locator_points[:, 0].max() + 1)
+    locator.set_ylim(locator_points[:, 1].min() - 1, locator_points[:, 1].max() + 1)
+    locator.set_aspect("equal", adjustable="box")
+    locator.set_xticks([])
+    locator.set_yticks([])
+    for spine in locator.spines.values():
+        spine.set_color("#64748B")
+        spine.set_linewidth(0.8)
+    locator.set_title("Pará in Brazil", fontsize=8.5, fontweight="bold", color="#17324D", pad=3)
+
     colorbar = fig.colorbar(collection, ax=ax, fraction=0.035, pad=0.02)
     colorbar.set_label("Share of configurations in the top quartile")
     colorbar.set_ticks([0, 0.25, 0.5, 0.75, 1])
@@ -298,9 +405,9 @@ def statewide_robustness_map() -> None:
     fig.text(
         0.01,
         0.01,
-        "Municipal boundaries: IBGE 2022 Municipal Digital Mesh (SIRGAS 2000). "
-        "Geometry is used only for visualization.",
-        fontsize=8,
+        "Municipal boundaries: IBGE 2022 Municipal Digital Mesh. Source CRS: SIRGAS 2000. "
+        "Locator boundaries: IBGE Data Services. Geometry is used only for visualization.",
+        fontsize=7.5,
         color=COLORS["gray"],
     )
     _save(fig, "figure_05_statewide_top_quartile_frequency")
